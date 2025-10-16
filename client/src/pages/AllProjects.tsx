@@ -76,21 +76,12 @@ const AllProjects = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/projects/db');
-      
-      if (response.success) {
-        setProjects(response.data);
-        toast({
-          title: "Projects loaded",
-          description: `Successfully loaded ${response.data.length} projects from database`,
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: response.message || "Failed to load projects",
-          variant: "destructive",
-        });
-      }
+      const projects = await api.get('/projects/db');
+      setProjects(projects);
+      toast({
+        title: "Projects loaded",
+        description: `Successfully loaded ${projects.length} projects from database`,
+      });
     } catch (error) {
       toast({
         title: "Error",
@@ -105,21 +96,12 @@ const AllProjects = () => {
   const syncProjects = async () => {
     try {
       setSyncing(true);
-      const response = await api.post('/projects/sync', {});
-      
-      if (response.success) {
-        setProjects(response.data);
-        toast({
-          title: "Projects synced",
-          description: response.message || `Successfully synced ${response.data.length} projects from GitLab`,
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: response.message || "Failed to sync projects",
-          variant: "destructive",
-        });
-      }
+      const projects = await api.post('/projects/sync', {});
+      setProjects(projects);
+      toast({
+        title: "Projects synced",
+        description: `Successfully synced ${projects.length} projects from GitLab`,
+      });
     } catch (error) {
       toast({
         title: "Error",
@@ -134,24 +116,16 @@ const AllProjects = () => {
   const syncSingleProject = async (id: number) => {
     try {
       setSyncingProjectId(id);
-      const response = await api.post(`/projects/sync/${id}`, {});
+      const project = await api.post(`/projects/sync/${id}`, {});
       
-      if (response.success && response.data) {
-        // Update only the synced project in the list
-        setProjects(projects.map(p => 
-          p.id === id ? response.data : p
-        ));
-        toast({
-          title: "Project synced",
-          description: response.message || `Successfully synced project from GitLab`,
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: response.message || "Failed to sync project",
-          variant: "destructive",
-        });
-      }
+      // Update only the synced project in the list
+      setProjects(projects.map(p => 
+        p.id === id ? project : p
+      ));
+      toast({
+        title: "Project synced",
+        description: `Successfully synced project from GitLab`,
+      });
     } catch (error) {
       toast({
         title: "Error",
@@ -170,44 +144,28 @@ const AllProjects = () => {
     try {
       if (project.isTracked) {
         // Untrack
-        const response = await api.patch(`/projects/untrack/${id}`);
+        await api.patch(`/projects/untrack/${id}`);
         
-        if (response.success) {
-          setProjects(projects.map(p => 
-            p.id === id ? { ...p, isTracked: false } : p
-          ));
-          toast({
-            title: "Project untracked",
-            description: `${project.name} is now untracked`,
-          });
-        } else {
-          toast({
-            title: "Error",
-            description: response.message || "Failed to untrack project",
-            variant: "destructive",
-          });
-        }
+        setProjects(projects.map(p => 
+          p.id === id ? { ...p, isTracked: false } : p
+        ));
+        toast({
+          title: "Project untracked",
+          description: `${project.name} is now untracked`,
+        });
       } else {
         // Track
-        const response = await api.post('/projects/track', {
+        await api.post('/projects/track', {
           id: project.id,
         });
         
-        if (response.success) {
-          setProjects(projects.map(p => 
-            p.id === id ? { ...p, isTracked: true } : p
-          ));
-          toast({
-            title: "Project tracked",
-            description: `${project.name} is now tracked`,
-          });
-        } else {
-          toast({
-            title: "Error",
-            description: response.message || "Failed to track project",
-            variant: "destructive",
-          });
-        }
+        setProjects(projects.map(p => 
+          p.id === id ? { ...p, isTracked: true } : p
+        ));
+        toast({
+          title: "Project tracked",
+          description: `${project.name} is now tracked`,
+        });
       }
     } catch (error) {
       toast({

@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS tracked_projects (
   group_path TEXT,                           -- Full group hierarchy path (parent1/parent2/...)
   full_path TEXT,                            -- Full project path with groups (projectname/parent1/parent2)
   tracked BOOLEAN DEFAULT FALSE,             -- Track status (true = tracked, false = not tracked)
+  total_issues INTEGER DEFAULT 0,            -- Total count of issues
+  total_mrs INTEGER DEFAULT 0,               -- Total count of merge requests
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- When first synced from GitLab
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- When tracking status was last changed
   synced_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    -- When last synced from GitLab API

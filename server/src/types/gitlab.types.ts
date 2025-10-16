@@ -76,3 +76,38 @@ export interface GitLabGroup {
   full_path?: string;
   parent_id?: number;
 }
+
+export interface GitLabIssues{
+  id: number;
+  iid: number;
+  project_id: number;
+  title: string;
+  description: string;
+  state: string;
+  created_at: string;
+  updated_at: string;
+  closed_at: string | null;
+  closed_by: GitLabUser | null;
+  labels: string[];
+  milestone: any; 
+  assignees: GitLabUser[];
+}
+
+export interface GitLabMergeRequest {
+  id: number;
+  iid: number;
+  project_id: number;
+  title: string;
+  description: string;
+  state: string;
+  created_at: string;
+  updated_at: string;
+  merged_at: string | null;
+  merged_by: GitLabUser | null;
+  closed_at: string | null;
+  closed_by: GitLabUser | null;
+  target_branch: string;
+  source_branch: string;
+  upvotes: number;
+  downvotes: number;
+}

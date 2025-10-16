@@ -21,6 +21,8 @@ export const initializeTables = async (): Promise<void> => {
       group_path TEXT,
       full_path TEXT,
       tracked BOOLEAN DEFAULT FALSE,
+      total_issues INTEGER DEFAULT 0,
+      total_mrs INTEGER DEFAULT 0,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       synced_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -113,6 +115,22 @@ export const initializeTables = async (): Promise<void> => {
       ) THEN
         ALTER TABLE tracked_projects ADD COLUMN full_path TEXT;
       END IF;
+      
+      -- Add total_issues column
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'total_issues'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN total_issues INTEGER DEFAULT 0;
+      END IF;
+      
+      -- Add total_mrs column
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'total_mrs'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN total_mrs INTEGER DEFAULT 0;
+      END IF;
     END $$;
   `;
   
@@ -141,6 +159,8 @@ export const syncProject = async (projectData: {
   parent_id?: number;
   group_path?: string;
   full_path?: string;
+  total_issues?: number;
+  total_mrs?: number;
 }): Promise<any> => {
   const pool = getPool();
   
@@ -148,9 +168,9 @@ export const syncProject = async (projectData: {
     INSERT INTO tracked_projects (
       id, name, description, web_url, last_activity_at, 
       visibility, star_count, forks_count, parent_id, 
-      group_path, full_path, synced_at, tracked
+      group_path, full_path, total_issues, total_mrs, synced_at, tracked
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP, FALSE)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, CURRENT_TIMESTAMP, FALSE)
     ON CONFLICT (id) 
     DO UPDATE SET 
       name = EXCLUDED.name,
@@ -163,6 +183,8 @@ export const syncProject = async (projectData: {
       parent_id = EXCLUDED.parent_id,
       group_path = EXCLUDED.group_path,
       full_path = EXCLUDED.full_path,
+      total_issues = COALESCE(EXCLUDED.total_issues, tracked_projects.total_issues),
+      total_mrs = COALESCE(EXCLUDED.total_mrs, tracked_projects.total_mrs),
       synced_at = CURRENT_TIMESTAMP
     RETURNING *;
   `;
@@ -180,6 +202,8 @@ export const syncProject = async (projectData: {
       projectData.parent_id || null,
       projectData.group_path || null,
       projectData.full_path || null,
+      projectData.total_issues ?? null,
+      projectData.total_mrs ?? null,
     ]);
     return result.rows[0];
   } catch (error: any) {
@@ -203,6 +227,8 @@ export const syncProjects = async (projects: Array<{
   parent_id?: number;
   group_path?: string;
   full_path?: string;
+  total_issues?: number;
+  total_mrs?: number;
 }>): Promise<void> => {
   const pool = getPool();
   
@@ -300,7 +326,7 @@ export const getAllProjectsFromDB = async (): Promise<any[]> => {
     SELECT 
       id, name, description, web_url, last_activity_at,
       visibility, star_count, forks_count, parent_id,
-      group_path, full_path, tracked, 
+      group_path, full_path, tracked, total_issues, total_mrs,
       created_at, updated_at, synced_at
     FROM tracked_projects
     ORDER BY synced_at DESC, name ASC;
