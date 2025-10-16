@@ -5,3 +5,4 @@ export { default as gitlabProjectService } from './gitlabProjectService';
 export { default as gitlabGroupService } from './gitlabGroupService';
 export { default as gitLabIssueService } from './gitLabIssueService';
 export { default as gitLabMRService } from './gitLabMRService';
+export { default as gitLabMilestoneService } from './gitlabMilestoneService';

@@ -11,7 +11,7 @@ class GitLabMRService {
       const client = gitlabClient.getClient();
       const response = await client.get(`/projects/${projectId}/merge_requests`, {
         params: {
-          state: 'all',
+          state: 'opened', // Fetch only open merge requests
           order_by: 'updated_at',
           sort: 'desc',
           per_page: 100,

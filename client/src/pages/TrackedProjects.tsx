@@ -22,6 +22,7 @@ interface TrackedProject {
   group_path?: string;
   total_issues: number;
   total_mrs: number;
+  open_milestones_count: number;
   tracked: boolean;
   synced_at: string;
   // Computed/dummy fields
@@ -71,28 +72,32 @@ const TrackedProjects = () => {
       const trackedOnly = allProjects.filter((p: any) => p.isTracked === true);
       
       // Enhance projects with quality metrics
-      const enhancedProjects = trackedOnly.map((project: any) => ({
-        ...project,
-        id: project.id,
-        name: project.name,
-        description: project.description,
-        web_url: project.web_url,
-        last_activity_at: project.last_activity_at,
-        visibility: project.visibility,
-        star_count: project.star_count,
-        forks_count: project.forks_count,
-        full_path: project.fullPath || project.full_path,
-        group_path: project.groupPath || project.group_path,
-        total_issues: project.totalIssues || project.total_issues || 0,
-        total_mrs: project.totalMrs || project.total_mrs || 0,
-        tracked: project.isTracked || project.tracked,
-        synced_at: project.synced_at,
-        ...calculateQualityMetrics({
-          ...project,
-          total_issues: project.totalIssues || project.total_issues || 0,
-          total_mrs: project.totalMrs || project.total_mrs || 0,
-        })
-      }));
+        const enhancedProjects = trackedOnly.map((project: any) => {
+          const openMilestones = project.openMilestonesCount ?? project.open_milestones_count ?? 0;
+          return {
+            ...project,
+            id: project.id,
+            name: project.name,
+            description: project.description,
+            web_url: project.web_url,
+            last_activity_at: project.last_activity_at,
+            visibility: project.visibility,
+            star_count: project.star_count,
+            forks_count: project.forks_count,
+            full_path: project.fullPath || project.full_path,
+            group_path: project.groupPath || project.group_path,
+            total_issues: project.totalIssues || project.total_issues || 0,
+            total_mrs: project.totalMrs || project.total_mrs || 0,
+            open_milestones_count: openMilestones,
+            tracked: project.isTracked || project.tracked,
+            synced_at: project.synced_at,
+            ...calculateQualityMetrics({
+              ...project,
+              total_issues: project.totalIssues || project.total_issues || 0,
+              total_mrs: project.totalMrs || project.total_mrs || 0,
+            })
+          };
+        });
       setProjects(enhancedProjects);
       toast({
         title: "Tracked projects loaded",
@@ -124,28 +129,32 @@ const TrackedProjects = () => {
       const trackedOnly = allProjects.filter((p: any) => p.isTracked === true);
       
       // Enhance projects with quality metrics
-      const enhancedProjects = trackedOnly.map((project: any) => ({
-        ...project,
-        id: project.id,
-        name: project.name,
-        description: project.description,
-        web_url: project.web_url,
-        last_activity_at: project.last_activity_at,
-        visibility: project.visibility,
-        star_count: project.star_count,
-        forks_count: project.forks_count,
-        full_path: project.fullPath || project.full_path,
-        group_path: project.groupPath || project.group_path,
-        total_issues: project.totalIssues || project.total_issues || 0,
-        total_mrs: project.totalMrs || project.total_mrs || 0,
-        tracked: project.isTracked || project.tracked,
-        synced_at: project.synced_at,
-        ...calculateQualityMetrics({
-          ...project,
-          total_issues: project.totalIssues || project.total_issues || 0,
-          total_mrs: project.totalMrs || project.total_mrs || 0,
-        })
-      }));
+        const enhancedProjects = trackedOnly.map((project: any) => {
+          const openMilestones = project.openMilestonesCount ?? project.open_milestones_count ?? 0;
+          return {
+            ...project,
+            id: project.id,
+            name: project.name,
+            description: project.description,
+            web_url: project.web_url,
+            last_activity_at: project.last_activity_at,
+            visibility: project.visibility,
+            star_count: project.star_count,
+            forks_count: project.forks_count,
+            full_path: project.fullPath || project.full_path,
+            group_path: project.groupPath || project.group_path,
+            total_issues: project.totalIssues || project.total_issues || 0,
+            total_mrs: project.totalMrs || project.total_mrs || 0,
+            open_milestones_count: openMilestones,
+            tracked: project.isTracked || project.tracked,
+            synced_at: project.synced_at,
+            ...calculateQualityMetrics({
+              ...project,
+              total_issues: project.totalIssues || project.total_issues || 0,
+              total_mrs: project.totalMrs || project.total_mrs || 0,
+            })
+          };
+        });
       setProjects(enhancedProjects);
       setLastSyncTime(new Date());
       toast({
@@ -188,6 +197,7 @@ const TrackedProjects = () => {
         group_path: project.groupPath || project.group_path,
         total_issues: project.totalIssues || project.total_issues || 0,
         total_mrs: project.totalMrs || project.total_mrs || 0,
+        open_milestones_count: project.openMilestonesCount || project.open_milestones_count || 0,
         tracked: project.isTracked || project.tracked,
         synced_at: project.synced_at,
         ...calculateQualityMetrics({
@@ -317,7 +327,8 @@ const TrackedProjects = () => {
                 <th className="text-left p-3 font-semibold text-sm min-w-[100px]">CI Health</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[100px]">Test Coverage</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[80px]">Issues</th>
-                <th className="text-left p-3 font-semibold text-sm min-w-[80px]">MRs</th>
+                <th className="text-left p-3 font-semibold text-sm min-w-[80px]">Open MRs</th>
+                <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Open Milestones</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Last Updated</th>
                 <th className="text-right p-3 font-semibold text-sm min-w-[100px]">Actions</th>
               </tr>
@@ -392,6 +403,14 @@ const TrackedProjects = () => {
                   <td className="p-3">
                     <Badge variant="outline" className="text-xs">
                       {project.total_mrs}
+                    </Badge>
+                  </td>
+                  <td className="p-3">
+                    <Badge 
+                      variant="secondary"
+                      className="text-xs"
+                    >
+                      {project.open_milestones_count}
                     </Badge>
                   </td>
                   <td className="p-3 text-sm text-muted-foreground">

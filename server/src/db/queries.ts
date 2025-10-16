@@ -131,6 +131,14 @@ export const initializeTables = async (): Promise<void> => {
       ) THEN
         ALTER TABLE tracked_projects ADD COLUMN total_mrs INTEGER DEFAULT 0;
       END IF;
+
+      -- Add Open Milestone Number columns if they don't exist
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'open_milestones_count'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN open_milestones_count INTEGER DEFAULT 0;
+      END IF;
     END $$;
   `;
   
@@ -161,6 +169,7 @@ export const syncProject = async (projectData: {
   full_path?: string;
   total_issues?: number;
   total_mrs?: number;
+  open_milestones_count?: number;
 }): Promise<any> => {
   const pool = getPool();
   
@@ -168,9 +177,9 @@ export const syncProject = async (projectData: {
     INSERT INTO tracked_projects (
       id, name, description, web_url, last_activity_at, 
       visibility, star_count, forks_count, parent_id, 
-      group_path, full_path, total_issues, total_mrs, synced_at, tracked
+      group_path, full_path, total_issues, total_mrs, open_milestones_count, synced_at, tracked
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, CURRENT_TIMESTAMP, FALSE)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, CURRENT_TIMESTAMP, FALSE)
     ON CONFLICT (id) 
     DO UPDATE SET 
       name = EXCLUDED.name,
@@ -185,6 +194,7 @@ export const syncProject = async (projectData: {
       full_path = EXCLUDED.full_path,
       total_issues = COALESCE(EXCLUDED.total_issues, tracked_projects.total_issues),
       total_mrs = COALESCE(EXCLUDED.total_mrs, tracked_projects.total_mrs),
+      open_milestones_count = COALESCE(EXCLUDED.open_milestones_count, tracked_projects.open_milestones_count),
       synced_at = CURRENT_TIMESTAMP
     RETURNING *;
   `;
@@ -204,6 +214,7 @@ export const syncProject = async (projectData: {
       projectData.full_path || null,
       projectData.total_issues ?? null,
       projectData.total_mrs ?? null,
+      projectData.open_milestones_count ?? null,
     ]);
     return result.rows[0];
   } catch (error: any) {
@@ -229,6 +240,7 @@ export const syncProjects = async (projects: Array<{
   full_path?: string;
   total_issues?: number;
   total_mrs?: number;
+  open_milestones_count?: number;
 }>): Promise<void> => {
   const pool = getPool();
   
@@ -327,7 +339,7 @@ export const getAllProjectsFromDB = async (): Promise<any[]> => {
       id, name, description, web_url, last_activity_at,
       visibility, star_count, forks_count, parent_id,
       group_path, full_path, tracked, total_issues, total_mrs,
-      created_at, updated_at, synced_at
+      created_at, updated_at, synced_at , open_milestones_count
     FROM tracked_projects
     ORDER BY synced_at DESC, name ASC;
   `;

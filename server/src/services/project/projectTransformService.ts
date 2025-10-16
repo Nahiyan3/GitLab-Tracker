@@ -14,6 +14,7 @@ interface DbProject {
   tracked: boolean;
   total_issues?: number;
   total_mrs?: number;
+  open_milestones_count?: number;
   synced_at?: string;
 }
 
@@ -37,6 +38,7 @@ class ProjectTransformService {
       isTracked: dbProject.tracked,
       totalIssues: dbProject.total_issues || 0,
       totalMrs: dbProject.total_mrs || 0,
+      openMilestonesCount: dbProject.open_milestones_count || 0,
       synced_at: dbProject.synced_at,
     };
   };

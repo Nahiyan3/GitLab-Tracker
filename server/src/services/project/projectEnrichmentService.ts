@@ -3,6 +3,7 @@ import { GitLabProject } from '../../types';
 import gitlabGroupService from '../gitlab/gitlabGroupService';
 import gitLabIssueService from '../gitlab/gitLabIssueService';
 import gitLabMRService from '../gitlab/gitLabMRService';
+import gitLabMilestoneService from '../gitlab/gitlabMilestoneService';
 
 interface EnrichedProject {
   id: number;
@@ -18,6 +19,7 @@ interface EnrichedProject {
   full_path?: string;
   total_issues: number;
   total_mrs: number;
+  open_milestones_count: number;
 }
 
 class ProjectEnrichmentService {
@@ -56,16 +58,29 @@ class ProjectEnrichmentService {
       return 0;
     }
   };
+   
+  private getMilestonesCount = async (projectId: number): Promise<number> => {
+    try {
+      const milestones = await gitLabMilestoneService.getProjectMilestones(projectId);
+      return milestones.length;
+    } catch (error: any) {
+      console.warn(`⚠️ Failed to fetch milestones for project ${projectId}:`, error.message);
+      return 0;
+    }
+  };
 
   /**
    * Enrich a single project with GitLab data (group path, issues, MRs)
    */
   enrichProject = async (project: GitLabProject): Promise<EnrichedProject> => {
-    const [groupPath, totalIssues, totalMrs] = await Promise.all([
+    const [groupPath, totalIssues, totalMrs, totalMilestones] = await Promise.all([
       this.getGroupPath(project),
       this.getIssuesCount(project.id),
       this.getMRsCount(project.id),
+      this.getMilestonesCount(project.id),
     ]);
+
+
 
     return {
       id: project.id,
@@ -81,6 +96,7 @@ class ProjectEnrichmentService {
       full_path: groupPath ? `${project.name}/${groupPath}` : project.name,
       total_issues: totalIssues,
       total_mrs: totalMrs,
+      open_milestones_count: totalMilestones,
     };
   };
 

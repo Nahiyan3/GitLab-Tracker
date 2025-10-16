@@ -111,3 +111,19 @@ export interface GitLabMergeRequest {
   upvotes: number;
   downvotes: number;
 }
+
+export interface GitLabMilestone {
+  id: number;
+  iid: number;
+  project_id: number;
+  title: string;
+  description: string;
+  state: string;
+  created_at: string;
+  updated_at: string;
+  due_date: string | null;
+  start_date: string | null;
+  web_url: string;
+  open_issues_count?: number;
+  closed_issues_count?: number;
+}
