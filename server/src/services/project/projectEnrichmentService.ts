@@ -4,6 +4,8 @@ import gitlabGroupService from '../gitlab/gitlabGroupService';
 import gitLabIssueService from '../gitlab/gitLabIssueService';
 import gitLabMRService from '../gitlab/gitLabMRService';
 import gitLabMilestoneService from '../gitlab/gitlabMilestoneService';
+import { SonarQubeService } from '../sonarqube/sonarQubeService';
+import { getSonarProjectKey } from '../sonarqube/autoMapSonarProjectKeys';
 
 interface EnrichedProject {
   id: number;
@@ -20,6 +22,14 @@ interface EnrichedProject {
   total_issues: number;
   total_mrs: number;
   open_milestones_count: number;
+  // SonarQube data
+  sonar_project_key?: string;
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
 }
 
 class ProjectEnrichmentService {
@@ -80,7 +90,28 @@ class ProjectEnrichmentService {
       this.getMilestonesCount(project.id),
     ]);
 
-
+    // SonarQube metrics: fetch from database mapping
+    const sonarProjectKey = await getSonarProjectKey(project.id);
+    let sonarMetrics = {
+      security_high: 0,
+      security_blocker: 0,
+      reliability_high: 0,
+      reliability_blocker: 0,
+      maintainability_high: 0,
+      maintainability_blocker: 0,
+    };
+    
+    if (sonarProjectKey) {
+      try {
+        const sonarQubeService = new SonarQubeService();
+        sonarMetrics = await sonarQubeService.fetchIssueCounts(sonarProjectKey);
+        console.log(`✅ Fetched SonarQube metrics for ${project.name} (key: ${sonarProjectKey})`);
+      } catch (e) {
+        console.warn(`⚠️ Failed to fetch SonarQube metrics for ${sonarProjectKey}:`, (e as any).message);
+      }
+    } else {
+      console.warn(`⚠️ No SonarCloud key mapped for project ${project.name} (ID: ${project.id})`);
+    }
 
     return {
       id: project.id,
@@ -97,6 +128,13 @@ class ProjectEnrichmentService {
       total_issues: totalIssues,
       total_mrs: totalMrs,
       open_milestones_count: totalMilestones,
+      sonar_project_key: sonarProjectKey || undefined,
+      sonar_security_high: sonarMetrics.security_high,
+      sonar_security_blocker: sonarMetrics.security_blocker,
+      sonar_reliability_high: sonarMetrics.reliability_high,
+      sonar_reliability_blocker: sonarMetrics.reliability_blocker,
+      sonar_maintainability_high: sonarMetrics.maintainability_high,
+      sonar_maintainability_blocker: sonarMetrics.maintainability_blocker,
     };
   };
 

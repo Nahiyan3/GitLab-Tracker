@@ -25,34 +25,41 @@ interface TrackedProject {
   open_milestones_count: number;
   tracked: boolean;
   synced_at: string;
-  // Computed/dummy fields
-  qualityScore?: number;
-  codeQuality?: number;
-  ciHealth?: number;
+  // SonarCloud metrics
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
+  // Computed/dummy fields (commented out for future use)
+  // qualityScore?: number;
+  // codeQuality?: number;
+  // ciHealth?: number;
   testCoverage?: number;
 }
 
 const AUTO_REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
-// Calculate dummy quality metrics based on real data
-const calculateQualityMetrics = (project: TrackedProject) => {
-  // Base quality score on issues and MRs (inverse relationship with issues)
-  const issueScore = Math.max(0, 100 - (project.total_issues * 2));
-  const mrScore = Math.min(100, 50 + (project.total_mrs * 5));
-  const qualityScore = Math.round((issueScore * 0.6 + mrScore * 0.4));
-  
-  // Generate dummy but consistent metrics (could be replaced with real data later)
-  const codeQuality = Math.min(100, qualityScore + Math.floor(Math.random() * 20) - 10);
-  const ciHealth = Math.min(100, qualityScore + Math.floor(Math.random() * 15));
-  const testCoverage = Math.max(0, Math.min(100, qualityScore - Math.floor(Math.random() * 25)));
-  
-  return {
-    qualityScore,
-    codeQuality,
-    ciHealth,
-    testCoverage
-  };
-};
+// Calculate dummy quality metrics based on real data (COMMENTED OUT FOR FUTURE USE)
+// const calculateQualityMetrics = (project: TrackedProject) => {
+//   // Base quality score on issues and MRs (inverse relationship with issues)
+//   const issueScore = Math.max(0, 100 - (project.total_issues * 2));
+//   const mrScore = Math.min(100, 50 + (project.total_mrs * 5));
+//   const qualityScore = Math.round((issueScore * 0.6 + mrScore * 0.4));
+//   
+//   // Generate dummy but consistent metrics (could be replaced with real data later)
+//   const codeQuality = Math.min(100, qualityScore + Math.floor(Math.random() * 20) - 10);
+//   const ciHealth = Math.min(100, qualityScore + Math.floor(Math.random() * 15));
+//   const testCoverage = Math.max(0, Math.min(100, qualityScore - Math.floor(Math.random() * 25)));
+//   
+//   return {
+//     qualityScore,
+//     codeQuality,
+//     ciHealth,
+//     testCoverage
+//   };
+// };
 
 const TrackedProjects = () => {
   const [projects, setProjects] = useState<TrackedProject[]>([]);
@@ -71,7 +78,7 @@ const TrackedProjects = () => {
       // Filter only tracked projects
       const trackedOnly = allProjects.filter((p: any) => p.isTracked === true);
       
-      // Enhance projects with quality metrics
+      // Map API response to TrackedProject interface
         const enhancedProjects = trackedOnly.map((project: any) => {
           const openMilestones = project.openMilestonesCount ?? project.open_milestones_count ?? 0;
           return {
@@ -91,11 +98,13 @@ const TrackedProjects = () => {
             open_milestones_count: openMilestones,
             tracked: project.isTracked || project.tracked,
             synced_at: project.synced_at,
-            ...calculateQualityMetrics({
-              ...project,
-              total_issues: project.totalIssues || project.total_issues || 0,
-              total_mrs: project.totalMrs || project.total_mrs || 0,
-            })
+            // SonarCloud metrics
+            sonar_security_high: project.sonarSecurityHigh ?? project.sonar_security_high ?? 0,
+            sonar_security_blocker: project.sonarSecurityBlocker ?? project.sonar_security_blocker ?? 0,
+            sonar_reliability_high: project.sonarReliabilityHigh ?? project.sonar_reliability_high ?? 0,
+            sonar_reliability_blocker: project.sonarReliabilityBlocker ?? project.sonar_reliability_blocker ?? 0,
+            sonar_maintainability_high: project.sonarMaintainabilityHigh ?? project.sonar_maintainability_high ?? 0,
+            sonar_maintainability_blocker: project.sonarMaintainabilityBlocker ?? project.sonar_maintainability_blocker ?? 0,
           };
         });
       setProjects(enhancedProjects);
@@ -128,7 +137,7 @@ const TrackedProjects = () => {
       // Filter only tracked projects
       const trackedOnly = allProjects.filter((p: any) => p.isTracked === true);
       
-      // Enhance projects with quality metrics
+      // Map API response to TrackedProject interface
         const enhancedProjects = trackedOnly.map((project: any) => {
           const openMilestones = project.openMilestonesCount ?? project.open_milestones_count ?? 0;
           return {
@@ -148,11 +157,13 @@ const TrackedProjects = () => {
             open_milestones_count: openMilestones,
             tracked: project.isTracked || project.tracked,
             synced_at: project.synced_at,
-            ...calculateQualityMetrics({
-              ...project,
-              total_issues: project.totalIssues || project.total_issues || 0,
-              total_mrs: project.totalMrs || project.total_mrs || 0,
-            })
+            // SonarCloud metrics
+            sonar_security_high: project.sonarSecurityHigh ?? project.sonar_security_high ?? 0,
+            sonar_security_blocker: project.sonarSecurityBlocker ?? project.sonar_security_blocker ?? 0,
+            sonar_reliability_high: project.sonarReliabilityHigh ?? project.sonar_reliability_high ?? 0,
+            sonar_reliability_blocker: project.sonarReliabilityBlocker ?? project.sonar_reliability_blocker ?? 0,
+            sonar_maintainability_high: project.sonarMaintainabilityHigh ?? project.sonar_maintainability_high ?? 0,
+            sonar_maintainability_blocker: project.sonarMaintainabilityBlocker ?? project.sonar_maintainability_blocker ?? 0,
           };
         });
       setProjects(enhancedProjects);
@@ -183,7 +194,7 @@ const TrackedProjects = () => {
 
       const project = await api.post(`/tracking/sync/${projectId}`, {});
       
-      // Enhance project with quality metrics
+      // Map API response to TrackedProject interface
       const enhancedProject = {
         id: project.id,
         name: project.name,
@@ -200,11 +211,13 @@ const TrackedProjects = () => {
         open_milestones_count: project.openMilestonesCount || project.open_milestones_count || 0,
         tracked: project.isTracked || project.tracked,
         synced_at: project.synced_at,
-        ...calculateQualityMetrics({
-          ...project,
-          total_issues: project.totalIssues || project.total_issues || 0,
-          total_mrs: project.totalMrs || project.total_mrs || 0,
-        })
+        // SonarCloud metrics
+        sonar_security_high: project.sonarSecurityHigh ?? project.sonar_security_high ?? 0,
+        sonar_security_blocker: project.sonarSecurityBlocker ?? project.sonar_security_blocker ?? 0,
+        sonar_reliability_high: project.sonarReliabilityHigh ?? project.sonar_reliability_high ?? 0,
+        sonar_reliability_blocker: project.sonarReliabilityBlocker ?? project.sonar_reliability_blocker ?? 0,
+        sonar_maintainability_high: project.sonarMaintainabilityHigh ?? project.sonar_maintainability_high ?? 0,
+        sonar_maintainability_blocker: project.sonarMaintainabilityBlocker ?? project.sonar_maintainability_blocker ?? 0,
       };
       // Update the project in the list
       setProjects(prev => 
@@ -280,8 +293,8 @@ const TrackedProjects = () => {
 
   const sortedProjects = [...projects].sort((a, b) => 
     sortOrder === "asc" 
-      ? (a.qualityScore || 0) - (b.qualityScore || 0)
-      : (b.qualityScore || 0) - (a.qualityScore || 0)
+      ? (a.total_issues || 0) - (b.total_issues || 0)
+      : (b.total_issues || 0) - (a.total_issues || 0)
   );
 
   return (
@@ -290,7 +303,7 @@ const TrackedProjects = () => {
         <div>
           <h1 className="text-3xl font-bold mb-2">Tracked Projects</h1>
           <p className="text-muted-foreground">
-            {projects.length} projects sorted by quality score
+            {projects.length} projects sorted by total issues
             {lastSyncTime && ` • Last synced: ${formatDate(lastSyncTime.toISOString())}`}
           </p>
         </div>
@@ -322,10 +335,15 @@ const TrackedProjects = () => {
             <thead className="bg-muted/50 border-b sticky top-0">
               <tr>
                 <th className="text-left p-3 font-semibold text-sm min-w-[200px]">Project</th>
-                <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Quality Score</th>
-                <th className="text-left p-3 font-semibold text-sm min-w-[100px]">Code Quality</th>
-                <th className="text-left p-3 font-semibold text-sm min-w-[100px]">CI Health</th>
-                <th className="text-left p-3 font-semibold text-sm min-w-[100px]">Test Coverage</th>
+                {/* <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Quality Score</th> */}
+                {/* <th className="text-left p-3 font-semibold text-sm min-w-[100px]">Code Quality</th> */}
+                {/* <th className="text-left p-3 font-semibold text-sm min-w-[100px]">CI Health</th> */}
+                <th className="text-left p-3 font-semibold text-sm min-w-[100px]">Security High</th>
+                <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Security Blocker</th>
+                <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Reliability High</th>
+                <th className="text-left p-3 font-semibold text-sm min-w-[140px]">Reliability Blocker</th>
+                <th className="text-left p-3 font-semibold text-sm min-w-[150px]">Maintainability High</th>
+                <th className="text-left p-3 font-semibold text-sm min-w-[160px]">Maintainability Blocker</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[80px]">Issues</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[80px]">Open MRs</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Open Milestones</th>
@@ -347,10 +365,10 @@ const TrackedProjects = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="p-3">
+                  {/* <td className="p-3">
                     <QualityBadge score={project.qualityScore || 0} size="sm" />
-                  </td>
-                  <td className="p-3">
+                  </td> */}
+                  {/* <td className="p-3">
                     <div className="flex items-center gap-2">
                       <div className="w-12 h-2 bg-muted rounded-full overflow-hidden">
                         <div 
@@ -363,8 +381,8 @@ const TrackedProjects = () => {
                       </div>
                       <span className="text-sm">{project.codeQuality || 0}%</span>
                     </div>
-                  </td>
-                  <td className="p-3">
+                  </td> */}
+                  {/* <td className="p-3">
                     <div className="flex items-center gap-2">
                       <div className="w-12 h-2 bg-muted rounded-full overflow-hidden">
                         <div 
@@ -377,20 +395,24 @@ const TrackedProjects = () => {
                       </div>
                       <span className="text-sm">{project.ciHealth || 0}%</span>
                     </div>
+                  </td> */}
+                  <td className="p-3">
+                    <span className="text-sm">{project.sonar_security_high || 0}</span>
                   </td>
                   <td className="p-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-12 h-2 bg-muted rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full ${
-                            (project.testCoverage || 0) >= 76 ? 'bg-success' : 
-                            (project.testCoverage || 0) >= 51 ? 'bg-warning' : 'bg-destructive'
-                          }`}
-                          style={{ width: `${project.testCoverage || 0}%` }}
-                        />
-                      </div>
-                      <span className="text-sm">{project.testCoverage || 0}%</span>
-                    </div>
+                    <span className="text-sm">{project.sonar_security_blocker || 0}</span>
+                  </td>
+                  <td className="p-3">
+                    <span className="text-sm">{project.sonar_reliability_high || 0}</span>
+                  </td>
+                  <td className="p-3">
+                    <span className="text-sm">{project.sonar_reliability_blocker || 0}</span>
+                  </td>
+                  <td className="p-3">
+                    <span className="text-sm">{project.sonar_maintainability_high || 0}</span>
+                  </td>
+                  <td className="p-3">
+                    <span className="text-sm">{project.sonar_maintainability_blocker || 0}</span>
                   </td>
                   <td className="p-3">
                     <Badge 

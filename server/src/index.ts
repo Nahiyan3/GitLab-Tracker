@@ -12,6 +12,7 @@ import apiRoutes from './routes';
 import { errorHandler } from './middleware/errorHandler';
 import { connectDB } from './db/connection';
 import { initializeTables } from './db/queries';
+import { autoMapSonarProjectKeys } from './services/sonarqube/autoMapSonarProjectKeys';
 
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
@@ -56,6 +57,15 @@ const startServer = async () => {
     
     // Initialize database tables
     await initializeTables();
+    
+    // Auto-map SonarCloud project keys (run after table init)
+    try {
+      console.log('🔍 Auto-mapping SonarCloud project keys...');
+      await autoMapSonarProjectKeys();
+      console.log('✅ SonarCloud project key mapping complete');
+    } catch (e) {
+      console.warn('⚠️ Failed to auto-map SonarCloud keys:', (e as any).message);
+    }
     
     // Start Express server
     app.listen(PORT, () => {

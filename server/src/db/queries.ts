@@ -139,6 +139,57 @@ export const initializeTables = async (): Promise<void> => {
       ) THEN
         ALTER TABLE tracked_projects ADD COLUMN open_milestones_count INTEGER DEFAULT 0;
       END IF;
+
+      -- Add SonarQube metric columns if they don't exist
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_security_high'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN sonar_security_high INTEGER DEFAULT 0;
+      END IF;
+      
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_security_blocker'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN sonar_security_blocker INTEGER DEFAULT 0;
+      END IF;
+      
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_reliability_high'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN sonar_reliability_high INTEGER DEFAULT 0;
+      END IF;
+      
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_reliability_blocker'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN sonar_reliability_blocker INTEGER DEFAULT 0;
+      END IF;
+      
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_maintainability_high'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN sonar_maintainability_high INTEGER DEFAULT 0;
+      END IF;
+      
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_maintainability_blocker'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN sonar_maintainability_blocker INTEGER DEFAULT 0;
+      END IF;
+      
+      -- Add sonar_project_key column for storing SonarCloud project key
+      IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_project_key'
+      ) THEN
+        ALTER TABLE tracked_projects ADD COLUMN sonar_project_key TEXT;
+      END IF;
     END $$;
   `;
   
@@ -170,6 +221,13 @@ export const syncProject = async (projectData: {
   total_issues?: number;
   total_mrs?: number;
   open_milestones_count?: number;
+  sonar_project_key?: string;
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
 }): Promise<any> => {
   const pool = getPool();
   
@@ -177,9 +235,11 @@ export const syncProject = async (projectData: {
     INSERT INTO tracked_projects (
       id, name, description, web_url, last_activity_at, 
       visibility, star_count, forks_count, parent_id, 
-      group_path, full_path, total_issues, total_mrs, open_milestones_count, synced_at, tracked
+      group_path, full_path, total_issues, total_mrs, open_milestones_count, 
+      sonar_project_key, sonar_security_high, sonar_security_blocker, sonar_reliability_high, sonar_reliability_blocker, sonar_maintainability_high, sonar_maintainability_blocker, 
+      synced_at, tracked
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, CURRENT_TIMESTAMP, FALSE)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, CURRENT_TIMESTAMP, FALSE)
     ON CONFLICT (id) 
     DO UPDATE SET 
       name = EXCLUDED.name,
@@ -195,6 +255,13 @@ export const syncProject = async (projectData: {
       total_issues = COALESCE(EXCLUDED.total_issues, tracked_projects.total_issues),
       total_mrs = COALESCE(EXCLUDED.total_mrs, tracked_projects.total_mrs),
       open_milestones_count = COALESCE(EXCLUDED.open_milestones_count, tracked_projects.open_milestones_count),
+      sonar_project_key = COALESCE(EXCLUDED.sonar_project_key, tracked_projects.sonar_project_key),
+      sonar_security_high = COALESCE(EXCLUDED.sonar_security_high, tracked_projects.sonar_security_high),
+      sonar_security_blocker = COALESCE(EXCLUDED.sonar_security_blocker, tracked_projects.sonar_security_blocker),
+      sonar_reliability_high = COALESCE(EXCLUDED.sonar_reliability_high, tracked_projects.sonar_reliability_high),
+      sonar_reliability_blocker = COALESCE(EXCLUDED.sonar_reliability_blocker, tracked_projects.sonar_reliability_blocker),
+      sonar_maintainability_high = COALESCE(EXCLUDED.sonar_maintainability_high, tracked_projects.sonar_maintainability_high),
+      sonar_maintainability_blocker = COALESCE(EXCLUDED.sonar_maintainability_blocker, tracked_projects.sonar_maintainability_blocker),
       synced_at = CURRENT_TIMESTAMP
     RETURNING *;
   `;
@@ -215,6 +282,13 @@ export const syncProject = async (projectData: {
       projectData.total_issues ?? null,
       projectData.total_mrs ?? null,
       projectData.open_milestones_count ?? null,
+      projectData.sonar_project_key || null,
+      projectData.sonar_security_high ?? 0,
+      projectData.sonar_security_blocker ?? 0,
+      projectData.sonar_reliability_high ?? 0,
+      projectData.sonar_reliability_blocker ?? 0,
+      projectData.sonar_maintainability_high ?? 0,
+      projectData.sonar_maintainability_blocker ?? 0,
     ]);
     return result.rows[0];
   } catch (error: any) {
@@ -241,6 +315,13 @@ export const syncProjects = async (projects: Array<{
   total_issues?: number;
   total_mrs?: number;
   open_milestones_count?: number;
+  sonar_project_key?: string;
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
 }>): Promise<void> => {
   const pool = getPool();
   
@@ -339,7 +420,10 @@ export const getAllProjectsFromDB = async (): Promise<any[]> => {
       id, name, description, web_url, last_activity_at,
       visibility, star_count, forks_count, parent_id,
       group_path, full_path, tracked, total_issues, total_mrs,
-      created_at, updated_at, synced_at , open_milestones_count
+      created_at, updated_at, synced_at, open_milestones_count,
+      sonar_project_key, sonar_security_high, sonar_security_blocker,
+      sonar_reliability_high, sonar_reliability_blocker,
+      sonar_maintainability_high, sonar_maintainability_blocker
     FROM tracked_projects
     ORDER BY synced_at DESC, name ASC;
   `;

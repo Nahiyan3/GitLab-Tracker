@@ -18,7 +18,14 @@ CREATE TABLE IF NOT EXISTS tracked_projects (
   total_mrs INTEGER DEFAULT 0,               -- Total count of merge requests
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- When first synced from GitLab
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- When tracking status was last changed
-  synced_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    -- When last synced from GitLab API
+  synced_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- When last synced from GitLab API
+  sonar_project_key TEXT,                          -- SonarCloud project key (for API queries)
+  sonar_security_high INTEGER DEFAULT 0,           -- SonarQube: Security issues (CRITICAL)
+  sonar_security_blocker INTEGER DEFAULT 0,        -- SonarQube: Security issues (BLOCKER)
+  sonar_reliability_high INTEGER DEFAULT 0,        -- SonarQube: Reliability issues (CRITICAL)
+  sonar_reliability_blocker INTEGER DEFAULT 0,     -- SonarQube: Reliability issues (BLOCKER)
+  sonar_maintainability_high INTEGER DEFAULT 0,    -- SonarQube: Maintainability issues (CRITICAL)
+  sonar_maintainability_blocker INTEGER DEFAULT 0  -- SonarQube: Maintainability issues (BLOCKER)
 );
 
 -- Create indexes for faster lookups

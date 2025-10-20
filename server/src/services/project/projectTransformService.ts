@@ -16,6 +16,14 @@ interface DbProject {
   total_mrs?: number;
   open_milestones_count?: number;
   synced_at?: string;
+  // SonarCloud metrics
+  sonar_project_key?: string;
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
 }
 
 class ProjectTransformService {
@@ -40,6 +48,14 @@ class ProjectTransformService {
       totalMrs: dbProject.total_mrs || 0,
       openMilestonesCount: dbProject.open_milestones_count || 0,
       synced_at: dbProject.synced_at,
+      // SonarCloud metrics
+      sonarProjectKey: dbProject.sonar_project_key,
+      sonarSecurityHigh: dbProject.sonar_security_high || 0,
+      sonarSecurityBlocker: dbProject.sonar_security_blocker || 0,
+      sonarReliabilityHigh: dbProject.sonar_reliability_high || 0,
+      sonarReliabilityBlocker: dbProject.sonar_reliability_blocker || 0,
+      sonarMaintainabilityHigh: dbProject.sonar_maintainability_high || 0,
+      sonarMaintainabilityBlocker: dbProject.sonar_maintainability_blocker || 0,
     };
   };
 
