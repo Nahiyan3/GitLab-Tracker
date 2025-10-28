@@ -6,23 +6,23 @@ const router = Router();
 
 /**
  * @route   GET /api/tracking
- * @desc    Get all tracked projects with their statistics (reuses project controller logic)
+ * @desc    Get all tracked projects with their latest snapshots
  * @access  Public
  */
-router.get('/', projectController.getProjectsFromDB);
+router.get('/', projectController.getTrackedProjectsFromDB);
 
 /**
- * @route   POST /api/tracking/sync
- * @desc    Sync statistics for all tracked projects from GitLab (reuses sync logic)
+ * @route   POST /api/tracking/refresh-all
+ * @desc    Refresh (create new snapshots) for all tracked projects
  * @access  Public
  */
-router.post('/sync', projectController.syncProjectsFromGitLab);
+router.post('/refresh-all', projectController.refreshAllTrackedProjects);
 
 /**
- * @route   POST /api/tracking/sync/:id
- * @desc    Sync statistics for a single tracked project (reuses single sync logic)
+ * @route   POST /api/tracking/refresh/:id
+ * @desc    Refresh (create new snapshot) for a single tracked project
  * @access  Public
  */
-router.post('/sync/:id', projectController.syncSingleProject);
+router.post('/refresh/:id', projectController.refreshSingleProject);
 
 export default router;

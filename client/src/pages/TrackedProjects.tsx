@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,32 +14,27 @@ interface TrackedProject {
   name: string;
   description?: string;
   web_url: string;
-  last_activity_at: string;
+  lastActivityAt: string;
   visibility: string;
-  star_count: number;
-  forks_count: number;
-  full_path: string;
-  group_path?: string;
-  total_issues: number;
-  total_mrs: number;
-  open_milestones_count: number;
+  membersCount: number;
+  fullPath: string;
+  groupPath?: string;
+  openIssues: number;
+  openMrs: number;
+  openMilestonesCount: number;
   tracked: boolean;
-  synced_at: string;
+  syncedAt: string;
+  snapshotDate?: string;
   // SonarCloud metrics
-  sonar_security_high?: number;
-  sonar_security_blocker?: number;
-  sonar_reliability_high?: number;
-  sonar_reliability_blocker?: number;
-  sonar_maintainability_high?: number;
-  sonar_maintainability_blocker?: number;
-  // Computed/dummy fields (commented out for future use)
-  // qualityScore?: number;
-  // codeQuality?: number;
-  // ciHealth?: number;
-  testCoverage?: number;
+  sonarSecurityHigh?: number;
+  sonarSecurityBlocker?: number;
+  sonarReliabilityHigh?: number;
+  sonarReliabilityBlocker?: number;
+  sonarMaintainabilityHigh?: number;
+  sonarMaintainabilityBlocker?: number;
 }
 
-const AUTO_REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
+const AUTO_REFRESH_INTERVAL = 10 * 60 * 1000; // 10 minutes
 
 // Calculate dummy quality metrics based on real data (COMMENTED OUT FOR FUTURE USE)
 // const calculateQualityMetrics = (project: TrackedProject) => {
@@ -68,45 +63,42 @@ const TrackedProjects = () => {
   const [syncingProjectId, setSyncingProjectId] = useState<number | null>(null);
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  
+  // Use ref to prevent duplicate auto-refresh calls
+  const isRefreshingRef = useRef(false);
 
   // Fetch tracked projects from database
   const fetchTrackedProjects = useCallback(async () => {
     try {
       setLoading(true);
-      const allProjects = await api.get('/tracking');
-      
-      // Filter only tracked projects
-      const trackedOnly = allProjects.filter((p: any) => p.isTracked === true);
+      const trackedProjects = await api.get('/tracking');
       
       // Map API response to TrackedProject interface
-        const enhancedProjects = trackedOnly.map((project: any) => {
-          const openMilestones = project.openMilestonesCount ?? project.open_milestones_count ?? 0;
-          return {
-            ...project,
-            id: project.id,
-            name: project.name,
-            description: project.description,
-            web_url: project.web_url,
-            last_activity_at: project.last_activity_at,
-            visibility: project.visibility,
-            star_count: project.star_count,
-            forks_count: project.forks_count,
-            full_path: project.fullPath || project.full_path,
-            group_path: project.groupPath || project.group_path,
-            total_issues: project.totalIssues || project.total_issues || 0,
-            total_mrs: project.totalMrs || project.total_mrs || 0,
-            open_milestones_count: openMilestones,
-            tracked: project.isTracked || project.tracked,
-            synced_at: project.synced_at,
-            // SonarCloud metrics
-            sonar_security_high: project.sonarSecurityHigh ?? project.sonar_security_high ?? 0,
-            sonar_security_blocker: project.sonarSecurityBlocker ?? project.sonar_security_blocker ?? 0,
-            sonar_reliability_high: project.sonarReliabilityHigh ?? project.sonar_reliability_high ?? 0,
-            sonar_reliability_blocker: project.sonarReliabilityBlocker ?? project.sonar_reliability_blocker ?? 0,
-            sonar_maintainability_high: project.sonarMaintainabilityHigh ?? project.sonar_maintainability_high ?? 0,
-            sonar_maintainability_blocker: project.sonarMaintainabilityBlocker ?? project.sonar_maintainability_blocker ?? 0,
-          };
-        });
+      const enhancedProjects = trackedProjects.map((project: any) => ({
+        id: project.id,
+        name: project.name,
+        description: project.description,
+        web_url: project.web_url,
+        lastActivityAt: project.lastActivityAt,
+        visibility: project.visibility,
+        membersCount: project.membersCount || 0,
+        fullPath: project.fullPath,
+        groupPath: project.groupPath,
+        openIssues: project.openIssues || 0,
+        openMrs: project.openMrs || 0,
+        openMilestonesCount: project.openMilestonesCount || 0,
+        tracked: project.tracked,
+        syncedAt: project.syncedAt,
+        snapshotDate: project.snapshotDate,
+        // SonarCloud metrics
+        sonarSecurityHigh: project.sonarSecurityHigh || 0,
+        sonarSecurityBlocker: project.sonarSecurityBlocker || 0,
+        sonarReliabilityHigh: project.sonarReliabilityHigh || 0,
+        sonarReliabilityBlocker: project.sonarReliabilityBlocker || 0,
+        sonarMaintainabilityHigh: project.sonarMaintainabilityHigh || 0,
+        sonarMaintainabilityBlocker: project.sonarMaintainabilityBlocker || 0,
+      }));
+      
       setProjects(enhancedProjects);
       toast({
         title: "Tracked projects loaded",
@@ -123,114 +115,66 @@ const TrackedProjects = () => {
     }
   }, []);
 
-  // Sync all tracked projects with GitLab
+  // Refresh all tracked projects (create new snapshots)
   const syncAllProjects = async () => {
+    // Prevent duplicate calls (especially from auto-refresh)
+    if (isRefreshingRef.current) {
+      console.log('⚠️ Refresh already in progress, skipping duplicate call');
+      return;
+    }
+    
     try {
+      isRefreshingRef.current = true;
       setSyncing(true);
       toast({
-        title: "Syncing...",
-        description: "Fetching latest statistics from GitLab",
+        title: "Refreshing...",
+        description: "Creating new snapshots for all tracked projects",
       });
 
-      const allProjects = await api.post('/tracking/sync', {});
+      await api.post('/tracking/refresh-all', {});
       
-      // Filter only tracked projects
-      const trackedOnly = allProjects.filter((p: any) => p.isTracked === true);
+      // Reload tracked projects to get new snapshots
+      await fetchTrackedProjects();
       
-      // Map API response to TrackedProject interface
-        const enhancedProjects = trackedOnly.map((project: any) => {
-          const openMilestones = project.openMilestonesCount ?? project.open_milestones_count ?? 0;
-          return {
-            ...project,
-            id: project.id,
-            name: project.name,
-            description: project.description,
-            web_url: project.web_url,
-            last_activity_at: project.last_activity_at,
-            visibility: project.visibility,
-            star_count: project.star_count,
-            forks_count: project.forks_count,
-            full_path: project.fullPath || project.full_path,
-            group_path: project.groupPath || project.group_path,
-            total_issues: project.totalIssues || project.total_issues || 0,
-            total_mrs: project.totalMrs || project.total_mrs || 0,
-            open_milestones_count: openMilestones,
-            tracked: project.isTracked || project.tracked,
-            synced_at: project.synced_at,
-            // SonarCloud metrics
-            sonar_security_high: project.sonarSecurityHigh ?? project.sonar_security_high ?? 0,
-            sonar_security_blocker: project.sonarSecurityBlocker ?? project.sonar_security_blocker ?? 0,
-            sonar_reliability_high: project.sonarReliabilityHigh ?? project.sonar_reliability_high ?? 0,
-            sonar_reliability_blocker: project.sonarReliabilityBlocker ?? project.sonar_reliability_blocker ?? 0,
-            sonar_maintainability_high: project.sonarMaintainabilityHigh ?? project.sonar_maintainability_high ?? 0,
-            sonar_maintainability_blocker: project.sonarMaintainabilityBlocker ?? project.sonar_maintainability_blocker ?? 0,
-          };
-        });
-      setProjects(enhancedProjects);
       setLastSyncTime(new Date());
       toast({
-        title: "Sync completed",
-        description: `Successfully synced ${enhancedProjects.length} projects`,
+        title: "Refresh completed",
+        description: `Successfully refreshed tracked projects`,
       });
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to sync projects with GitLab",
+        description: "Failed to refresh projects",
         variant: "destructive",
       });
     } finally {
       setSyncing(false);
+      isRefreshingRef.current = false;
     }
   };
 
-  // Sync single project
+  // Refresh single project (create new snapshot)
   const syncSingleProject = async (projectId: number) => {
     try {
       setSyncingProjectId(projectId);
       toast({
-        title: "Syncing project...",
-        description: "Fetching latest statistics from GitLab",
+        title: "Refreshing project...",
+        description: "Creating new snapshot from GitLab",
       });
 
-      const project = await api.post(`/tracking/sync/${projectId}`, {});
+      await api.post(`/tracking/refresh/${projectId}`, {});
       
-      // Map API response to TrackedProject interface
-      const enhancedProject = {
-        id: project.id,
-        name: project.name,
-        description: project.description,
-        web_url: project.web_url,
-        last_activity_at: project.last_activity_at,
-        visibility: project.visibility,
-        star_count: project.star_count,
-        forks_count: project.forks_count,
-        full_path: project.fullPath || project.full_path,
-        group_path: project.groupPath || project.group_path,
-        total_issues: project.totalIssues || project.total_issues || 0,
-        total_mrs: project.totalMrs || project.total_mrs || 0,
-        open_milestones_count: project.openMilestonesCount || project.open_milestones_count || 0,
-        tracked: project.isTracked || project.tracked,
-        synced_at: project.synced_at,
-        // SonarCloud metrics
-        sonar_security_high: project.sonarSecurityHigh ?? project.sonar_security_high ?? 0,
-        sonar_security_blocker: project.sonarSecurityBlocker ?? project.sonar_security_blocker ?? 0,
-        sonar_reliability_high: project.sonarReliabilityHigh ?? project.sonar_reliability_high ?? 0,
-        sonar_reliability_blocker: project.sonarReliabilityBlocker ?? project.sonar_reliability_blocker ?? 0,
-        sonar_maintainability_high: project.sonarMaintainabilityHigh ?? project.sonar_maintainability_high ?? 0,
-        sonar_maintainability_blocker: project.sonarMaintainabilityBlocker ?? project.sonar_maintainability_blocker ?? 0,
-      };
-      // Update the project in the list
-      setProjects(prev => 
-        prev.map(p => p.id === projectId ? enhancedProject : p)
-      );
+      // Reload to get the new snapshot
+      await fetchTrackedProjects();
+      
       toast({
-        title: "Project synced",
-        description: "Successfully updated project statistics",
+        title: "Refresh completed",
+        description: "Project snapshot updated successfully",
       });
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to sync project with GitLab",
+        description: "Failed to refresh project",
         variant: "destructive",
       });
     } finally {
@@ -253,7 +197,7 @@ const TrackedProjects = () => {
     }, AUTO_REFRESH_INTERVAL);
 
     return () => clearInterval(intervalId);
-  }, [syncing, syncingProjectId]);
+  }, []); // Empty deps - interval created only once on mount
 
   const formatDate = (dateString: string) => {
     if (!dateString) return "Never";
@@ -293,8 +237,8 @@ const TrackedProjects = () => {
 
   const sortedProjects = [...projects].sort((a, b) => 
     sortOrder === "asc" 
-      ? (a.total_issues || 0) - (b.total_issues || 0)
-      : (b.total_issues || 0) - (a.total_issues || 0)
+      ? (a.openIssues || 0) - (b.openIssues || 0)
+      : (b.openIssues || 0) - (a.openIssues || 0)
   );
 
   return (
@@ -303,7 +247,7 @@ const TrackedProjects = () => {
         <div>
           <h1 className="text-3xl font-bold mb-2">Tracked Projects</h1>
           <p className="text-muted-foreground">
-            {projects.length} projects sorted by total issues
+            {projects.length} projects sorted by open issues
             {lastSyncTime && ` • Last synced: ${formatDate(lastSyncTime.toISOString())}`}
           </p>
         </div>
@@ -361,7 +305,7 @@ const TrackedProjects = () => {
                     <div>
                       <div className="font-medium">{project.name}</div>
                       <div className="text-xs text-muted-foreground">
-                        {project.group_path || project.full_path || 'No group'}
+                        {project.groupPath || project.fullPath || 'No group'}
                       </div>
                     </div>
                   </td>
@@ -397,34 +341,34 @@ const TrackedProjects = () => {
                     </div>
                   </td> */}
                   <td className="p-3">
-                    <span className="text-sm">{project.sonar_security_high || 0}</span>
+                    <span className="text-sm">{project.sonarSecurityHigh || 0}</span>
                   </td>
                   <td className="p-3">
-                    <span className="text-sm">{project.sonar_security_blocker || 0}</span>
+                    <span className="text-sm">{project.sonarSecurityBlocker || 0}</span>
                   </td>
                   <td className="p-3">
-                    <span className="text-sm">{project.sonar_reliability_high || 0}</span>
+                    <span className="text-sm">{project.sonarReliabilityHigh || 0}</span>
                   </td>
                   <td className="p-3">
-                    <span className="text-sm">{project.sonar_reliability_blocker || 0}</span>
+                    <span className="text-sm">{project.sonarReliabilityBlocker || 0}</span>
                   </td>
                   <td className="p-3">
-                    <span className="text-sm">{project.sonar_maintainability_high || 0}</span>
+                    <span className="text-sm">{project.sonarMaintainabilityHigh || 0}</span>
                   </td>
                   <td className="p-3">
-                    <span className="text-sm">{project.sonar_maintainability_blocker || 0}</span>
+                    <span className="text-sm">{project.sonarMaintainabilityBlocker || 0}</span>
                   </td>
                   <td className="p-3">
                     <Badge 
-                      variant={project.total_issues > 20 ? "destructive" : "outline"}
+                      variant={project.openIssues > 20 ? "destructive" : "outline"}
                       className="text-xs"
                     >
-                      {project.total_issues}
+                      {project.openIssues}
                     </Badge>
                   </td>
                   <td className="p-3">
                     <Badge variant="outline" className="text-xs">
-                      {project.total_mrs}
+                      {project.openMrs}
                     </Badge>
                   </td>
                   <td className="p-3">
@@ -432,11 +376,11 @@ const TrackedProjects = () => {
                       variant="secondary"
                       className="text-xs"
                     >
-                      {project.open_milestones_count}
+                      {project.openMilestonesCount}
                     </Badge>
                   </td>
                   <td className="p-3 text-sm text-muted-foreground">
-                    {formatDate(project.last_activity_at)}
+                    {formatDate(project.lastActivityAt)}
                   </td>
                   <td className="p-3 text-right">
                     <div className="flex justify-end gap-1">

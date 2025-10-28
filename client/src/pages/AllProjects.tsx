@@ -19,14 +19,13 @@ interface Project {
   name: string;
   description?: string;
   web_url: string;
-  last_activity_at: string;
+  lastActivityAt: string;
   visibility: string;
-  star_count: number;
-  forks_count: number;
-  parent_id?: number;
+  membersCount?: number;
+  parentId?: number;
   groupPath?: string;
   fullPath?: string;
-  isTracked?: boolean;
+  tracked?: boolean;
 }
 
 interface Group {
@@ -137,40 +136,38 @@ const AllProjects = () => {
     }
   };
 
-  const toggleTracking = async (id: number) => {
+    const toggleTracking = async (id: number) => {
     const project = projects.find(p => p.id === id);
     if (!project) return;
 
     try {
-      if (project.isTracked) {
+      if (project.tracked) {
         // Untrack
         await api.patch(`/projects/untrack/${id}`);
         
         setProjects(projects.map(p => 
-          p.id === id ? { ...p, isTracked: false } : p
+          p.id === id ? { ...p, tracked: false } : p
         ));
         toast({
           title: "Project untracked",
-          description: `${project.name} is now untracked`,
+          description: `${project.name} is no longer being tracked`,
         });
       } else {
         // Track
-        await api.post('/projects/track', {
-          id: project.id,
-        });
+        await api.post('/projects/track', { id });
         
         setProjects(projects.map(p => 
-          p.id === id ? { ...p, isTracked: true } : p
+          p.id === id ? { ...p, tracked: true } : p
         ));
         toast({
           title: "Project tracked",
-          description: `${project.name} is now tracked`,
+          description: `${project.name} is now being tracked`,
         });
       }
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to update tracking status",
+        description: `Failed to ${project.tracked ? 'untrack' : 'track'} project`,
         variant: "destructive",
       });
     }
@@ -195,8 +192,8 @@ const AllProjects = () => {
                          (p.description?.toLowerCase().includes(search.toLowerCase()));
     const matchesGroup = groupFilter === "all"; // No group data yet, so show all
     const matchesTrack = trackFilter === "all" || 
-                        (trackFilter === "tracked" && p.isTracked) ||
-                        (trackFilter === "untracked" && !p.isTracked);
+                        (trackFilter === "tracked" && p.tracked) ||
+                        (trackFilter === "untracked" && !p.tracked);
     return matchesSearch && matchesGroup && matchesTrack;
   });
 
@@ -289,7 +286,7 @@ const AllProjects = () => {
                   <th className="text-left p-4 font-semibold text-sm">Group</th>
                   <th className="text-left p-4 font-semibold text-sm">Last Activity</th>
                   <th className="text-left p-4 font-semibold text-sm">Visibility</th>
-                  <th className="text-left p-4 font-semibold text-sm">Stats</th>
+                  <th className="text-left p-4 font-semibold text-sm">Members</th>
                   <th className="text-left p-4 font-semibold text-sm">Status</th>
                   <th className="text-right p-4 font-semibold text-sm">Actions</th>
                 </tr>
@@ -302,7 +299,7 @@ const AllProjects = () => {
                       {project.fullPath || project.groupPath || <span className="italic text-muted-foreground">No group</span>}
                     </td>
                     <td className="p-4 text-sm text-muted-foreground">
-                      {formatDate(project.last_activity_at)}
+                      {formatDate(project.lastActivityAt)}
                     </td>
                     <td className="p-4">
                       <Badge variant="outline" className="capitalize">
@@ -312,17 +309,13 @@ const AllProjects = () => {
                     <td className="p-4">
                       <div className="flex gap-3 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1">
-                          <Star className="h-3 w-3" />
-                          {project.star_count}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <GitBranch className="h-3 w-3" />
-                          {project.forks_count}
+                          <Eye className="h-3 w-3" />
+                          {project.membersCount || 0}
                         </span>
                       </div>
                     </td>
                     <td className="p-4">
-                      {project.isTracked ? (
+                      {project.tracked ? (
                         <Badge variant="default">Tracked</Badge>
                       ) : (
                         <Badge variant="secondary">Untracked</Badge>
@@ -332,10 +325,10 @@ const AllProjects = () => {
                       <div className="flex justify-end gap-2">
                         <Button
                           size="sm"
-                          variant={project.isTracked ? "destructive" : "default"}
+                          variant={project.tracked ? "destructive" : "default"}
                           onClick={() => toggleTracking(project.id)}
                         >
-                          {project.isTracked ? (
+                          {project.tracked ? (
                             <>
                               <StarOff className="h-3 w-3 mr-1" />
                               Untrack

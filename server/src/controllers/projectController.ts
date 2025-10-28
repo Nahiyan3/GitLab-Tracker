@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { trackProject, untrackProject } from '../db/queries';
 import projectSyncService from '../services/project/projectSyncService';
 import projectFetchService from '../services/project/projectFetchService';
+import projectRefreshService from '../services/project/projectRefreshService';
 import gitlabGroupService from '../services/gitlab/gitlabGroupService';
 
 class ProjectController {
@@ -21,7 +22,20 @@ class ProjectController {
   };
 
   /**
-   * Sync projects from GitLab to database
+   * Get tracked projects with latest snapshots
+   * FAST - no GitLab API calls
+   */
+  getTrackedProjectsFromDB = async (req: Request, res: Response) => {
+    try {
+      const projects = await projectFetchService.getTrackedProjectsFromDB();
+      res.json(projects);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
+   * Sync projects from GitLab to database (updates registry only)
    * SLOW - calls GitLab API, updates DB
    */
   syncProjectsFromGitLab = async (req: Request, res: Response) => {
@@ -34,7 +48,7 @@ class ProjectController {
   };
 
   /**
-   * Sync a single project from GitLab by ID
+   * Sync a single project from GitLab by ID (updates registry only)
    * SLOW - calls GitLab API, updates DB
    */
   syncSingleProject = async (req: Request, res: Response) => {
@@ -48,6 +62,39 @@ class ProjectController {
 
       const project = await projectSyncService.syncProject(projectId);
       res.json(project);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
+   * Refresh a single tracked project (create new snapshot)
+   * SLOW - calls GitLab API + SonarCloud, creates snapshot
+   */
+  refreshSingleProject = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+      await projectRefreshService.refreshProject(projectId);
+      res.json({ success: true, id: projectId });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
+   * Refresh all tracked projects (create new snapshots for all)
+   * SLOW - calls GitLab API + SonarCloud for all tracked projects
+   */
+  refreshAllTrackedProjects = async (req: Request, res: Response) => {
+    try {
+      await projectRefreshService.refreshAllTrackedProjects();
+      res.json({ success: true });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

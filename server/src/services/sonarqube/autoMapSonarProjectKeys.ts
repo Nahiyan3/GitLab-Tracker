@@ -44,8 +44,8 @@ export async function autoMapSonarProjectKeys() {
     throw error;
   }
 
-  // Fetch all local projects
-  const dbProjects = await pool.query('SELECT id, name FROM tracked_projects');
+  // Fetch all local projects from the registry
+  const dbProjects = await pool.query('SELECT id, name FROM projects');
 
   // Print all SonarCloud project keys for debug
   console.log('All SonarCloud project keys:');
@@ -73,7 +73,7 @@ export async function autoMapSonarProjectKeys() {
     
     if (match) {
       await pool.query(
-        'UPDATE tracked_projects SET sonar_project_key = $1 WHERE id = $2',
+        'UPDATE projects SET sonar_project_key = $1 WHERE id = $2',
         [match.key, dbProject.id]
       );
       console.log(`✅ Mapped DB project '${dbProject.name}' to SonarCloud key '${match.key}'`);
@@ -87,7 +87,7 @@ export async function autoMapSonarProjectKeys() {
 export async function getSonarProjectKey(projectId: number): Promise<string | null> {
   const pool = getPool();
   const result = await pool.query(
-    'SELECT sonar_project_key FROM tracked_projects WHERE id = $1',
+    'SELECT sonar_project_key FROM projects WHERE id = $1',
     [projectId]
   );
   if (result.rows.length > 0 && result.rows[0].sonar_project_key) {

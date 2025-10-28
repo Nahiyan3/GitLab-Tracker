@@ -2,24 +2,36 @@
 import gitlabProjectService from '../gitlab/gitlabProjectService';
 import projectEnrichmentService from './projectEnrichmentService';
 import projectTransformService from './projectTransformService';
-import { syncProjects as syncProjectsToDb, getAllProjectsFromDB } from '../../db/queries';
+import { syncProjectsToRegistry, getAllProjectsFromRegistry } from '../../db/queries';
 import { autoMapSonarProjectKeys } from '../sonarqube/autoMapSonarProjectKeys';
 
 class ProjectSyncService {
   /**
-   * Sync all projects from GitLab to database
+   * Sync all projects from GitLab to registry (basic info only)
+   * This updates the projects table (all projects)
+   * Does NOT update snapshots - use refresh for that
    */
   syncAllProjects = async () => {
     // Step 1: Fetch all projects from GitLab
     const gitlabProjects = await gitlabProjectService.getUserProjects();
     
-    // Step 2: Enrich projects with GitLab data (group paths, issues, MRs) - NO SonarCloud yet
-    const enrichedProjects = await projectEnrichmentService.enrichProjects(gitlabProjects);
+    // Step 2: Extract basic info for registry (no detailed metrics)
+    const registryData = gitlabProjects.map(project => ({
+      id: project.id,
+      name: project.name,
+      full_path: project.path_with_namespace,
+      group_path: project.namespace?.full_path,
+      members_count: 0, // This would need a separate API call if needed
+      last_activity_at: project.last_activity_at,
+      parent_id: project.namespace?.id,
+      visibility: project.visibility,
+      tracked: false, // Preserve existing tracked status via COALESCE in query
+    }));
     
-    // Step 3: Save to database (without SonarCloud data)
-    await syncProjectsToDb(enrichedProjects);
+    // Step 3: Save to registry
+    await syncProjectsToRegistry(registryData);
     
-    // Step 4: Auto-map SonarCloud project keys (now projects exist in DB)
+    // Step 4: Auto-map SonarCloud project keys
     try {
       await autoMapSonarProjectKeys();
       console.log('✅ Auto-mapped SonarCloud project keys');
@@ -27,69 +39,58 @@ class ProjectSyncService {
       console.warn('⚠️ Failed to auto-map SonarCloud keys:', (e as any).message);
     }
     
-    // Step 5: Re-enrich with SonarCloud data (now that keys are mapped in DB)
-    try {
-      const enrichedWithSonar = await projectEnrichmentService.enrichProjects(gitlabProjects);
-      await syncProjectsToDb(enrichedWithSonar);
-      console.log('✅ Updated projects with SonarCloud metrics');
-    } catch (e) {
-      console.warn('⚠️ Failed to fetch SonarCloud metrics:', (e as any).message);
-    }
+    // Step 5: Get final updated projects from registry
+    const dbProjects = await getAllProjectsFromRegistry();
     
-    // Step 6: Get final updated projects from database
-    const dbProjects = await getAllProjectsFromDB();
-    
-    // Step 7: Transform to API response format
+    // Step 6: Transform to API response format
     return projectTransformService.toApiResponseList(dbProjects);
   };
 
   /**
-   * Sync a single project from GitLab to database
+   * Sync a single project from GitLab to registry (basic info only)
    */
   syncProject = async (projectId: number) => {
     // Step 1: Fetch project from GitLab
     const gitlabProject = await gitlabProjectService.getProjectById(projectId);
     
-    // Step 2: Enrich project with GitLab data (NO SonarCloud yet)
-    const enrichedProject = await projectEnrichmentService.enrichProject(gitlabProject);
+    // Step 2: Extract basic info for registry
+    const registryData = {
+      id: gitlabProject.id,
+      name: gitlabProject.name,
+      full_path: gitlabProject.path_with_namespace,
+      group_path: gitlabProject.namespace?.full_path,
+      members_count: 0,
+      last_activity_at: gitlabProject.last_activity_at,
+      parent_id: gitlabProject.namespace?.id,
+      visibility: gitlabProject.visibility,
+      tracked: false, // Preserve existing tracked status
+    };
     
-    // Step 3: Save to database (without SonarCloud data)
-    await syncProjectsToDb([enrichedProject]);
+    // Step 3: Save to registry
+    await syncProjectsToRegistry([registryData]);
     
-    // Step 4: Auto-map SonarCloud project keys (now project exists in DB)
+    // Step 4: Auto-map SonarCloud project keys
     try {
       await autoMapSonarProjectKeys();
     } catch (e) {
       console.warn('⚠️ Failed to auto-map SonarCloud keys:', (e as any).message);
     }
     
-    // Step 5: Re-enrich with SonarCloud data (now that key is mapped in DB)
-    try {
-      const enrichedWithSonar = await projectEnrichmentService.enrichProject(gitlabProject);
-      await syncProjectsToDb([enrichedWithSonar]);
-    } catch (e) {
-      console.warn('⚠️ Failed to fetch SonarCloud metrics:', (e as any).message);
-    }
-    
-    // Step 6: Get updated project from database
-    const dbProjects = await getAllProjectsFromDB();
+    // Step 5: Get updated project from registry
+    const dbProjects = await getAllProjectsFromRegistry();
     const updatedProject = dbProjects.find(p => p.id === projectId);
     
     if (!updatedProject) {
       throw new Error('Project not found after sync');
     }
     
-    // Step 7: Transform to API response format
+    // Step 6: Transform to API response format
     return projectTransformService.toApiResponse(updatedProject);
   };
 
-  /**
-   * Get all projects from database (cached data)
-   */
-  getProjectsFromDatabase = async () => {
-    const dbProjects = await getAllProjectsFromDB();
-    return projectTransformService.toApiResponseList(dbProjects);
-  };
+  // Note: getProjectsFromDatabase was removed because it was unused.
+  // If you need to expose cached registry projects via this service in the future,
+  // re-add a method that calls `getAllProjectsFromRegistry()` and transforms the result.
 }
 
 export default new ProjectSyncService();

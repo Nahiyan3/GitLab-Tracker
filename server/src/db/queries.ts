@@ -1,267 +1,85 @@
-// Database queries
+// Database queries for two-table architecture (projects + tracked_project_snapshots)
 import { getPool } from './connection';
+import * as fs from 'fs';
+import * as path from 'path';
 
 /**
- * Initialize database tables
+ * Initialize database tables using schema.sql
  */
 export const initializeTables = async (): Promise<void> => {
   const pool = getPool();
   
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS tracked_projects (
-      id INTEGER PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      description TEXT,
-      web_url TEXT,
-      last_activity_at TIMESTAMP,
-      visibility VARCHAR(50),
-      star_count INTEGER DEFAULT 0,
-      forks_count INTEGER DEFAULT 0,
-      parent_id INTEGER,
-      group_path TEXT,
-      full_path TEXT,
-      tracked BOOLEAN DEFAULT FALSE,
-      total_issues INTEGER DEFAULT 0,
-      total_mrs INTEGER DEFAULT 0,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      synced_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-    
-    CREATE INDEX IF NOT EXISTS idx_tracked_projects_parent_id ON tracked_projects(parent_id);
-    CREATE INDEX IF NOT EXISTS idx_tracked_projects_tracked ON tracked_projects(tracked);
-  `;
-
-  // Migration: Add new columns if they don't exist
-  const addColumnsQuery = `
-    DO $$
-    BEGIN
-      -- Add tracked column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'tracked'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN tracked BOOLEAN DEFAULT FALSE;
-      END IF;
-      
-      -- Add synced_at column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'synced_at'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN synced_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-      END IF;
-      
-      -- Add description column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'description'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN description TEXT;
-      END IF;
-      
-      -- Add web_url column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'web_url'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN web_url TEXT;
-      END IF;
-      
-      -- Add last_activity_at column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'last_activity_at'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN last_activity_at TIMESTAMP;
-      END IF;
-      
-      -- Add visibility column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'visibility'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN visibility VARCHAR(50);
-      END IF;
-      
-      -- Add star_count column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'star_count'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN star_count INTEGER DEFAULT 0;
-      END IF;
-      
-      -- Add forks_count column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'forks_count'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN forks_count INTEGER DEFAULT 0;
-      END IF;
-      
-      -- Add group_path column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'group_path'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN group_path TEXT;
-      END IF;
-      
-      -- Add full_path column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'full_path'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN full_path TEXT;
-      END IF;
-      
-      -- Add total_issues column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'total_issues'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN total_issues INTEGER DEFAULT 0;
-      END IF;
-      
-      -- Add total_mrs column
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'total_mrs'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN total_mrs INTEGER DEFAULT 0;
-      END IF;
-
-      -- Add Open Milestone Number columns if they don't exist
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'open_milestones_count'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN open_milestones_count INTEGER DEFAULT 0;
-      END IF;
-
-      -- Add SonarQube metric columns if they don't exist
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_security_high'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN sonar_security_high INTEGER DEFAULT 0;
-      END IF;
-      
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_security_blocker'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN sonar_security_blocker INTEGER DEFAULT 0;
-      END IF;
-      
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_reliability_high'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN sonar_reliability_high INTEGER DEFAULT 0;
-      END IF;
-      
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_reliability_blocker'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN sonar_reliability_blocker INTEGER DEFAULT 0;
-      END IF;
-      
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_maintainability_high'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN sonar_maintainability_high INTEGER DEFAULT 0;
-      END IF;
-      
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_maintainability_blocker'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN sonar_maintainability_blocker INTEGER DEFAULT 0;
-      END IF;
-      
-      -- Add sonar_project_key column for storing SonarCloud project key
-      IF NOT EXISTS (
-        SELECT 1 FROM information_schema.columns 
-        WHERE table_name = 'tracked_projects' AND column_name = 'sonar_project_key'
-      ) THEN
-        ALTER TABLE tracked_projects ADD COLUMN sonar_project_key TEXT;
-      END IF;
-    END $$;
-  `;
-  
   try {
-    await pool.query(createTableQuery);
-    await pool.query(addColumnsQuery);
-    console.log('✅ Database tables initialized');
+    // Read and execute schema.sql
+    const schemaPath = path.join(__dirname, 'schema.sql');
+    const schema = fs.readFileSync(schemaPath, 'utf8');
+    await pool.query(schema);
+    console.log('✅ Database tables initialized from schema.sql');
+    
+    // Add sonar_project_key column if it doesn't exist (migration)
+    try {
+      await pool.query(`
+        DO $$
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM information_schema.columns 
+            WHERE table_name = 'projects' AND column_name = 'sonar_project_key'
+          ) THEN
+            ALTER TABLE projects ADD COLUMN sonar_project_key TEXT;
+            CREATE INDEX IF NOT EXISTS idx_projects_sonar_key ON projects(sonar_project_key);
+            RAISE NOTICE 'Added sonar_project_key column to projects table';
+          END IF;
+        END $$;
+      `);
+    } catch (migrationError: any) {
+      console.warn('⚠️ Migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;
   }
 };
 
+// ============================================================================
+// PROJECTS TABLE (Registry) - All Projects
+// ============================================================================
+
+
 /**
- * Sync a project from GitLab to database (insert or update)
+ * Sync a project to the projects registry (insert or update)
+ * Used by "Sync from GitLab" - updates basic project info only
  */
-export const syncProject = async (projectData: {
+export const syncProjectToRegistry = async (projectData: {
   id: number;
   name: string;
-  description?: string;
-  web_url?: string;
-  last_activity_at?: string;
-  visibility?: string;
-  star_count?: number;
-  forks_count?: number;
-  parent_id?: number;
-  group_path?: string;
   full_path?: string;
-  total_issues?: number;
-  total_mrs?: number;
-  open_milestones_count?: number;
-  sonar_project_key?: string;
-  sonar_security_high?: number;
-  sonar_security_blocker?: number;
-  sonar_reliability_high?: number;
-  sonar_reliability_blocker?: number;
-  sonar_maintainability_high?: number;
-  sonar_maintainability_blocker?: number;
+  group_path?: string;
+  members_count?: number;
+  last_activity_at?: string;
+  parent_id?: number;
+  visibility?: string;
+  tracked?: boolean;
 }): Promise<any> => {
   const pool = getPool();
   
   const query = `
-    INSERT INTO tracked_projects (
-      id, name, description, web_url, last_activity_at, 
-      visibility, star_count, forks_count, parent_id, 
-      group_path, full_path, total_issues, total_mrs, open_milestones_count, 
-      sonar_project_key, sonar_security_high, sonar_security_blocker, sonar_reliability_high, sonar_reliability_blocker, sonar_maintainability_high, sonar_maintainability_blocker, 
-      synced_at, tracked
+    INSERT INTO projects (
+      id, name, full_path, group_path, members_count,
+      last_activity_at, parent_id, visibility, tracked,
+      updated_at, synced_at
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, CURRENT_TIMESTAMP, FALSE)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     ON CONFLICT (id) 
     DO UPDATE SET 
       name = EXCLUDED.name,
-      description = EXCLUDED.description,
-      web_url = EXCLUDED.web_url,
-      last_activity_at = EXCLUDED.last_activity_at,
-      visibility = EXCLUDED.visibility,
-      star_count = EXCLUDED.star_count,
-      forks_count = EXCLUDED.forks_count,
-      parent_id = EXCLUDED.parent_id,
-      group_path = EXCLUDED.group_path,
       full_path = EXCLUDED.full_path,
-      total_issues = COALESCE(EXCLUDED.total_issues, tracked_projects.total_issues),
-      total_mrs = COALESCE(EXCLUDED.total_mrs, tracked_projects.total_mrs),
-      open_milestones_count = COALESCE(EXCLUDED.open_milestones_count, tracked_projects.open_milestones_count),
-      sonar_project_key = COALESCE(EXCLUDED.sonar_project_key, tracked_projects.sonar_project_key),
-      sonar_security_high = COALESCE(EXCLUDED.sonar_security_high, tracked_projects.sonar_security_high),
-      sonar_security_blocker = COALESCE(EXCLUDED.sonar_security_blocker, tracked_projects.sonar_security_blocker),
-      sonar_reliability_high = COALESCE(EXCLUDED.sonar_reliability_high, tracked_projects.sonar_reliability_high),
-      sonar_reliability_blocker = COALESCE(EXCLUDED.sonar_reliability_blocker, tracked_projects.sonar_reliability_blocker),
-      sonar_maintainability_high = COALESCE(EXCLUDED.sonar_maintainability_high, tracked_projects.sonar_maintainability_high),
-      sonar_maintainability_blocker = COALESCE(EXCLUDED.sonar_maintainability_blocker, tracked_projects.sonar_maintainability_blocker),
+      group_path = EXCLUDED.group_path,
+      members_count = EXCLUDED.members_count,
+      last_activity_at = EXCLUDED.last_activity_at,
+      parent_id = EXCLUDED.parent_id,
+      visibility = EXCLUDED.visibility,
+      tracked = COALESCE(EXCLUDED.tracked, projects.tracked),
+      updated_at = CURRENT_TIMESTAMP,
       synced_at = CURRENT_TIMESTAMP
     RETURNING *;
   `;
@@ -270,80 +88,96 @@ export const syncProject = async (projectData: {
     const result = await pool.query(query, [
       projectData.id,
       projectData.name,
-      projectData.description || null,
-      projectData.web_url || null,
-      projectData.last_activity_at || null,
-      projectData.visibility || null,
-      projectData.star_count || 0,
-      projectData.forks_count || 0,
-      projectData.parent_id || null,
-      projectData.group_path || null,
       projectData.full_path || null,
-      projectData.total_issues ?? null,
-      projectData.total_mrs ?? null,
-      projectData.open_milestones_count ?? null,
-      projectData.sonar_project_key || null,
-      projectData.sonar_security_high ?? 0,
-      projectData.sonar_security_blocker ?? 0,
-      projectData.sonar_reliability_high ?? 0,
-      projectData.sonar_reliability_blocker ?? 0,
-      projectData.sonar_maintainability_high ?? 0,
-      projectData.sonar_maintainability_blocker ?? 0,
+      projectData.group_path || null,
+      projectData.members_count || 0,
+      projectData.last_activity_at || null,
+      projectData.parent_id || null,
+      projectData.visibility || null,
+      projectData.tracked ?? false,
     ]);
     return result.rows[0];
   } catch (error: any) {
-    console.error('❌ Failed to sync project:', error.message);
+    console.error('❌ Failed to sync project to registry:', error.message);
     throw error;
   }
 };
 
 /**
- * Sync multiple projects from GitLab to database
+ * Sync multiple projects to registry
  */
-export const syncProjects = async (projects: Array<{
+export const syncProjectsToRegistry = async (projects: Array<{
   id: number;
   name: string;
-  description?: string;
-  web_url?: string;
-  last_activity_at?: string;
-  visibility?: string;
-  star_count?: number;
-  forks_count?: number;
-  parent_id?: number;
-  group_path?: string;
   full_path?: string;
-  total_issues?: number;
-  total_mrs?: number;
-  open_milestones_count?: number;
-  sonar_project_key?: string;
-  sonar_security_high?: number;
-  sonar_security_blocker?: number;
-  sonar_reliability_high?: number;
-  sonar_reliability_blocker?: number;
-  sonar_maintainability_high?: number;
-  sonar_maintainability_blocker?: number;
+  group_path?: string;
+  members_count?: number;
+  last_activity_at?: string;
+  parent_id?: number;
+  visibility?: string;
+  tracked?: boolean;
 }>): Promise<void> => {
-  const pool = getPool();
-  
   try {
     for (const project of projects) {
-      await syncProject(project);
+      await syncProjectToRegistry(project);
     }
-    console.log(`✅ Synced ${projects.length} projects to database`);
+    console.log(`✅ Synced ${projects.length} projects to registry`);
   } catch (error: any) {
-    console.error('❌ Failed to sync projects:', error.message);
+    console.error('❌ Failed to sync projects to registry:', error.message);
     throw error;
   }
 };
 
 /**
- * Set a project's tracked status to true
+ * Get all projects from registry
+ */
+export const getAllProjectsFromRegistry = async (): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      uuid, row_id, id, name, full_path, group_path,
+      members_count, last_activity_at, parent_id, visibility,
+      tracked, created_at, updated_at, synced_at
+    FROM projects
+    ORDER BY synced_at DESC, name ASC;
+  `;
+  
+  try {
+    const result = await pool.query(query);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get all projects from registry:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get project UUID by GitLab project ID
+ */
+export const getProjectUUID = async (projectId: number): Promise<string | null> => {
+  const pool = getPool();
+  
+  const query = `SELECT uuid FROM projects WHERE id = $1;`;
+  
+  try {
+    const result = await pool.query(query, [projectId]);
+    return result.rows[0]?.uuid || null;
+  } catch (error: any) {
+    console.error('❌ Failed to get project UUID:', error.message);
+    throw error;
+  }
+};
+
+
+/**
+ * Set a project's tracked status
  */
 export const setProjectTracked = async (id: number, tracked: boolean = true): Promise<any> => {
   const pool = getPool();
   
   const query = `
-    UPDATE tracked_projects
+    UPDATE projects
     SET tracked = $2, updated_at = CURRENT_TIMESTAMP
     WHERE id = $1
     RETURNING *;
@@ -372,7 +206,7 @@ export const untrackProject = async (id: number): Promise<boolean> => {
   const pool = getPool();
   
   const query = `
-    UPDATE tracked_projects
+    UPDATE projects
     SET tracked = FALSE, updated_at = CURRENT_TIMESTAMP
     WHERE id = $1
     RETURNING id;
@@ -388,64 +222,12 @@ export const untrackProject = async (id: number): Promise<boolean> => {
 };
 
 /**
- * Get all tracked projects
- */
-export const getTrackedProjects = async (): Promise<any[]> => {
-  const pool = getPool();
-  
-  const query = `
-    SELECT id, name, parent_id, created_at, updated_at
-    FROM tracked_projects
-    WHERE tracked = TRUE
-    ORDER BY updated_at DESC;
-  `;
-  
-  try {
-    const result = await pool.query(query);
-    return result.rows;
-  } catch (error: any) {
-    console.error('❌ Failed to get tracked projects:', error.message);
-    throw error;
-  }
-};
-
-/**
- * Get all projects from database (tracked and untracked)
- */
-export const getAllProjectsFromDB = async (): Promise<any[]> => {
-  const pool = getPool();
-  
-  const query = `
-    SELECT 
-      id, name, description, web_url, last_activity_at,
-      visibility, star_count, forks_count, parent_id,
-      group_path, full_path, tracked, total_issues, total_mrs,
-      created_at, updated_at, synced_at, open_milestones_count,
-      sonar_project_key, sonar_security_high, sonar_security_blocker,
-      sonar_reliability_high, sonar_reliability_blocker,
-      sonar_maintainability_high, sonar_maintainability_blocker
-    FROM tracked_projects
-    ORDER BY synced_at DESC, name ASC;
-  `;
-  
-  try {
-    const result = await pool.query(query);
-    return result.rows;
-  } catch (error: any) {
-    console.error('❌ Failed to get all projects from database:', error.message);
-    throw error;
-  }
-};
-
-/**
  * Check if a project is tracked
  */
 export const isProjectTracked = async (id: number): Promise<boolean> => {
   const pool = getPool();
   
-  const query = `
-    SELECT id FROM tracked_projects WHERE id = $1 AND tracked = TRUE;
-  `;
+  const query = `SELECT id FROM projects WHERE id = $1 AND tracked = TRUE;`;
   
   try {
     const result = await pool.query(query, [id]);
@@ -462,9 +244,7 @@ export const isProjectTracked = async (id: number): Promise<boolean> => {
 export const getTrackedProjectIds = async (): Promise<number[]> => {
   const pool = getPool();
   
-  const query = `
-    SELECT id FROM tracked_projects WHERE tracked = TRUE;
-  `;
+  const query = `SELECT id FROM projects WHERE tracked = TRUE;`;
   
   try {
     const result = await pool.query(query);
@@ -474,3 +254,182 @@ export const getTrackedProjectIds = async (): Promise<number[]> => {
     throw error;
   }
 };
+
+// ============================================================================
+// TRACKED_PROJECT_SNAPSHOTS TABLE - Historical Snapshots
+// ============================================================================
+
+/**
+ * Insert a new snapshot for a tracked project (append-only)
+ * Used by "Refresh" buttons - captures current state
+ */
+export const insertProjectSnapshot = async (snapshotData: {
+  project_id: number;  // GitLab project ID
+  description?: string;
+  web_url?: string;
+  open_issues?: number;
+  open_mrs?: number;
+  open_milestones_count?: number;
+  sonar_project_key?: string;
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
+}): Promise<any> => {
+  const pool = getPool();
+  
+  // First get the project UUID
+  const projectUUID = await getProjectUUID(snapshotData.project_id);
+  if (!projectUUID) {
+    throw new Error(`Project with ID ${snapshotData.project_id} not found in registry`);
+  }
+  
+  const query = `
+    INSERT INTO tracked_project_snapshots (
+      project_uuid, description, web_url,
+      open_issues, open_mrs, open_milestones_count,
+      sonar_project_key, sonar_security_high, sonar_security_blocker,
+      sonar_reliability_high, sonar_reliability_blocker,
+      sonar_maintainability_high, sonar_maintainability_blocker,
+      snapshot_date
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, CURRENT_TIMESTAMP)
+    RETURNING *;
+  `;
+  
+  try {
+    const result = await pool.query(query, [
+      projectUUID,
+      snapshotData.description || null,
+      snapshotData.web_url || null,
+      snapshotData.open_issues ?? 0,
+      snapshotData.open_mrs ?? 0,
+      snapshotData.open_milestones_count ?? 0,
+      snapshotData.sonar_project_key || null,
+      snapshotData.sonar_security_high ?? 0,
+      snapshotData.sonar_security_blocker ?? 0,
+      snapshotData.sonar_reliability_high ?? 0,
+      snapshotData.sonar_reliability_blocker ?? 0,
+      snapshotData.sonar_maintainability_high ?? 0,
+      snapshotData.sonar_maintainability_blocker ?? 0,
+    ]);
+    return result.rows[0];
+  } catch (error: any) {
+    console.error('❌ Failed to insert project snapshot:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get latest snapshot for each tracked project
+ * Returns combined data from projects + latest snapshot
+ */
+export const getLatestSnapshotsForTrackedProjects = async (): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT DISTINCT ON (p.uuid)
+      p.uuid,
+      p.row_id,
+      p.id,
+      p.name,
+      p.full_path,
+      p.group_path,
+      p.members_count,
+      p.last_activity_at,
+      p.parent_id,
+      p.visibility,
+      p.tracked,
+      p.synced_at,
+      s.description,
+      s.web_url,
+      s.open_issues,
+      s.open_mrs,
+      s.open_milestones_count,
+      s.sonar_project_key,
+      s.sonar_security_high,
+      s.sonar_security_blocker,
+      s.sonar_reliability_high,
+      s.sonar_reliability_blocker,
+      s.sonar_maintainability_high,
+      s.sonar_maintainability_blocker,
+      s.snapshot_date
+    FROM projects p
+    LEFT JOIN tracked_project_snapshots s ON p.uuid = s.project_uuid
+    WHERE p.tracked = TRUE
+    ORDER BY p.uuid, s.snapshot_date DESC NULLS LAST;
+  `;
+  
+  try {
+    const result = await pool.query(query);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get latest snapshots for tracked projects:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get all snapshots for a specific project (historical view)
+ */
+export const getProjectSnapshots = async (projectId: number): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      s.uuid,
+      s.row_id,
+      s.description,
+      s.web_url,
+      s.open_issues,
+      s.open_mrs,
+      s.open_milestones_count,
+      s.sonar_project_key,
+      s.sonar_security_high,
+      s.sonar_security_blocker,
+      s.sonar_reliability_high,
+      s.sonar_reliability_blocker,
+      s.sonar_maintainability_high,
+      s.sonar_maintainability_blocker,
+      s.snapshot_date
+    FROM tracked_project_snapshots s
+    JOIN projects p ON s.project_uuid = p.uuid
+    WHERE p.id = $1
+    ORDER BY s.snapshot_date DESC;
+  `;
+  
+  try {
+    const result = await pool.query(query, [projectId]);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get project snapshots:', error.message);
+    throw error;
+  }
+};
+
+// ============================================================================
+// LEGACY COMPATIBILITY (for migration period)
+// ============================================================================
+
+/**
+ * @deprecated Use syncProjectToRegistry instead
+ */
+export const syncProject = syncProjectToRegistry;
+
+/**
+ * @deprecated Use syncProjectsToRegistry instead
+ */
+export const syncProjects = syncProjectsToRegistry;
+
+/**
+ * @deprecated Use getAllProjectsFromRegistry instead
+ */
+export const getAllProjectsFromDB = getAllProjectsFromRegistry;
+
+/**
+ * @deprecated Use getLatestSnapshotsForTrackedProjects instead
+ */
+export const getTrackedProjects = getLatestSnapshotsForTrackedProjects;
+

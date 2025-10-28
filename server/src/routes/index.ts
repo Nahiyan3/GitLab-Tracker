@@ -24,6 +24,8 @@ router.get('/gitlab/verify', async (req, res) => {
 router.get('/projects/db', projectController.getProjectsFromDB);
 router.post('/projects/sync', projectController.syncProjectsFromGitLab);
 router.post('/projects/sync/:id', projectController.syncSingleProject);
+router.post('/projects/refresh/:id', projectController.refreshSingleProject);
+router.post('/projects/refresh-all', projectController.refreshAllTrackedProjects);
 router.post('/projects/track', projectController.trackProjectHandler);
 router.patch('/projects/untrack/:id', projectController.untrackProjectHandler);
 router.get('/projects/groups', projectController.getProjectGroupsHandler);

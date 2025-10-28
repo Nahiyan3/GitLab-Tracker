@@ -1,38 +1,28 @@
 ﻿// Service for fetching projects from DATABASE (not GitLab API)
 // Used for page loads - fast and no API rate limits
-import { getAllProjectsFromDB, getTrackedProjectIds } from '../../db/queries';
+import { getAllProjectsFromRegistry, getLatestSnapshotsForTrackedProjects } from '../../db/queries';
 import projectTransformService from './projectTransformService';
 
 class ProjectFetchService {
   /**
-   * Get all projects from database with tracked status
-   * NO GitLab API calls - purely database fetch
-   * Used for: Page loads, refreshes, navigation
+   * Get all projects from registry (for All Projects page)
+   * NO GitLab API calls - purely database fetch from projects table
+   * Used for: All Projects page load
    */
   getAllProjectsFromDB = async () => {
-    const [dbProjects, trackedIds] = await Promise.all([
-      getAllProjectsFromDB(),
-      getTrackedProjectIds(),
-    ]);
-
-    const trackedSet = new Set(trackedIds);
-    
-    // Transform and add tracked status
-    const projects = projectTransformService.toApiResponseList(dbProjects);
-    return projects.map((project) => ({
-      ...project,
-      tracked: trackedSet.has(project.id),
-    }));
+    const dbProjects = await getAllProjectsFromRegistry();
+    return projectTransformService.toApiResponseList(dbProjects);
   };
 
   /**
-   * Get only tracked projects from database
+   * Get latest snapshots for tracked projects (for Tracked Projects page)
    * NO GitLab API calls - purely database fetch
+   * Joins projects + latest snapshot per project
    * Used for: Tracked Projects page
    */
   getTrackedProjectsFromDB = async () => {
-    const allProjects = await this.getAllProjectsFromDB();
-    return allProjects.filter((project) => project.tracked);
+    const latestSnapshots = await getLatestSnapshotsForTrackedProjects();
+    return projectTransformService.toApiResponseList(latestSnapshots);
   };
 }
 

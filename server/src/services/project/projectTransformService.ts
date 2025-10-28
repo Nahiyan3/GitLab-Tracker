@@ -1,22 +1,26 @@
 // Project Transformation Service - handles data mapping and transformations
 interface DbProject {
+  // From projects table
   id: number;
   name: string;
-  description?: string;
-  web_url: string;
-  last_activity_at: string;
-  visibility: string;
-  star_count: number;
-  forks_count: number;
-  parent_id?: number;
-  group_path?: string;
   full_path?: string;
+  group_path?: string;
+  members_count?: number;
+  last_activity_at?: string;
+  parent_id?: number;
+  visibility?: string;
   tracked: boolean;
-  total_issues?: number;
-  total_mrs?: number;
-  open_milestones_count?: number;
   synced_at?: string;
-  // SonarCloud metrics
+  
+  // From snapshots table (when joined)
+  description?: string;
+  web_url?: string;
+  open_issues?: number;
+  open_mrs?: number;
+  open_milestones_count?: number;
+  snapshot_date?: string;
+  
+  // SonarCloud metrics (from snapshots)
   sonar_project_key?: string;
   sonar_security_high?: number;
   sonar_security_blocker?: number;
@@ -36,18 +40,21 @@ class ProjectTransformService {
       name: dbProject.name,
       description: dbProject.description,
       web_url: dbProject.web_url,
-      last_activity_at: dbProject.last_activity_at,
+      lastActivityAt: dbProject.last_activity_at,
       visibility: dbProject.visibility,
-      star_count: dbProject.star_count,
-      forks_count: dbProject.forks_count,
-      parent_id: dbProject.parent_id,
+      membersCount: dbProject.members_count || 0,
+      parentId: dbProject.parent_id,
       groupPath: dbProject.group_path,
       fullPath: dbProject.full_path,
-      isTracked: dbProject.tracked,
-      totalIssues: dbProject.total_issues || 0,
-      totalMrs: dbProject.total_mrs || 0,
+      tracked: dbProject.tracked,
+      syncedAt: dbProject.synced_at,
+      
+      // Snapshot data (for tracked projects)
+      openIssues: dbProject.open_issues || 0,
+      openMrs: dbProject.open_mrs || 0,
       openMilestonesCount: dbProject.open_milestones_count || 0,
-      synced_at: dbProject.synced_at,
+      snapshotDate: dbProject.snapshot_date,
+      
       // SonarCloud metrics
       sonarProjectKey: dbProject.sonar_project_key,
       sonarSecurityHigh: dbProject.sonar_security_high || 0,
