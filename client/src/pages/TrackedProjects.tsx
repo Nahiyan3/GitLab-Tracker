@@ -34,7 +34,7 @@ interface TrackedProject {
   sonarMaintainabilityBlocker?: number;
 }
 
-const AUTO_REFRESH_INTERVAL = 10 * 60 * 1000; // 10 minutes
+const AUTO_REFRESH_INTERVAL = 10 * 60 * 1000; // 30 seconds
 
 // Calculate dummy quality metrics based on real data (COMMENTED OUT FOR FUTURE USE)
 // const calculateQualityMetrics = (project: TrackedProject) => {

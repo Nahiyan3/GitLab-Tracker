@@ -5,6 +5,7 @@ import projectSyncService from '../services/project/projectSyncService';
 import projectFetchService from '../services/project/projectFetchService';
 import projectRefreshService from '../services/project/projectRefreshService';
 import gitlabGroupService from '../services/gitlab/gitlabGroupService';
+import gitLabMemberService from '../services/gitlab/gitLabMemberService';
 
 class ProjectController {
 
@@ -154,5 +155,24 @@ getProjectGroupsHandler = async (req: Request, res: Response) => {
             res.status(500).json({ error: error.message });
     }
 }
+
+  /**
+   * Get members for a project by calling GitLab API (no DB persistence)
+   */
+  getProjectMembersHandler = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+      const members = await gitLabMemberService.getProjectMembers(projectId);
+      res.json(members);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 }
 export default new ProjectController();

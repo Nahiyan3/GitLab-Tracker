@@ -29,6 +29,7 @@ router.post('/projects/refresh-all', projectController.refreshAllTrackedProjects
 router.post('/projects/track', projectController.trackProjectHandler);
 router.patch('/projects/untrack/:id', projectController.untrackProjectHandler);
 router.get('/projects/groups', projectController.getProjectGroupsHandler);
+router.get('/projects/:id/members', projectController.getProjectMembersHandler);
 
 // Tracking routes (for Tracked Projects page)
 router.use('/tracking', trackingRoutes);

@@ -13,6 +13,12 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 interface Project {
   id: number;
@@ -67,6 +73,10 @@ const AllProjects = () => {
   const [search, setSearch] = useState("");
   const [groupFilter, setGroupFilter] = useState("all");
   const [trackFilter, setTrackFilter] = useState("all");
+  const [membersOpen, setMembersOpen] = useState(false);
+  const [membersLoading, setMembersLoading] = useState(false);
+  const [membersList, setMembersList] = useState<Array<{id:number; name:string; username?:string}>>([]);
+  const [selectedProjectName, setSelectedProjectName] = useState<string | null>(null);
 
   useEffect(() => {
     fetchProjects();
@@ -133,6 +143,23 @@ const AllProjects = () => {
       });
     } finally {
       setSyncingProjectId(null);
+    }
+  };
+
+  const openMembersForProject = async (projectId: number, projectName: string) => {
+    try {
+      setSelectedProjectName(projectName);
+      setMembersOpen(true);
+      setMembersLoading(true);
+      setMembersList([]);
+
+      const members = await api.get(`/projects/${projectId}/members`);
+      setMembersList(members || []);
+    } catch (error) {
+      toast({ title: 'Error', description: 'Failed to load members', variant: 'destructive' });
+      setMembersList([]);
+    } finally {
+      setMembersLoading(false);
     }
   };
 
@@ -308,10 +335,14 @@ const AllProjects = () => {
                     </td>
                     <td className="p-4">
                       <div className="flex gap-3 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
+                        <button
+                          className="flex items-center gap-1 text-left hover:underline"
+                          onClick={() => openMembersForProject(project.id, project.name)}
+                          title="View members"
+                        >
                           <Eye className="h-3 w-3" />
                           {project.membersCount || 0}
-                        </span>
+                        </button>
                       </div>
                     </td>
                     <td className="p-4">
@@ -370,6 +401,31 @@ const AllProjects = () => {
       <div className="text-sm text-muted-foreground text-center">
         Showing {filteredProjects.length} of {projects.length} projects
       </div>
+
+      {/* Members dialog */}
+      <Dialog open={membersOpen} onOpenChange={setMembersOpen}>
+        <DialogContent>
+          <DialogTitle>Members {selectedProjectName ? `— ${selectedProjectName}` : ''}</DialogTitle>
+          <DialogDescription>
+            {membersLoading ? (
+              <div className="p-4">Loading members...</div>
+            ) : membersList.length === 0 ? (
+              <div className="p-4">No members found.</div>
+            ) : (
+              <div className="p-2">
+                <ul className="divide-y">
+                  {membersList.map(m => (
+                    <li key={m.id} className="py-2 flex items-center gap-3">
+                      <div className="font-medium">{m.name}</div>
+                      <div className="text-sm text-muted-foreground">{m.username ? `@${m.username}` : ''}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </DialogDescription>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
