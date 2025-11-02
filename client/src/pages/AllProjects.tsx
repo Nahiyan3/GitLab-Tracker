@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, Star, StarOff, ExternalLink, GitBranch, Eye, RefreshCw } from "lucide-react";
+import { Search, Star, StarOff, ExternalLink, GitBranch, Eye, RefreshCw, MessageSquare } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -28,6 +28,7 @@ interface Project {
   lastActivityAt: string;
   visibility: string;
   membersCount?: number;
+  members?: Array<{id:number; name:string; username?:string}>;
   parentId?: number;
   groupPath?: string;
   fullPath?: string;
@@ -146,21 +147,11 @@ const AllProjects = () => {
     }
   };
 
-  const openMembersForProject = async (projectId: number, projectName: string) => {
-    try {
-      setSelectedProjectName(projectName);
-      setMembersOpen(true);
-      setMembersLoading(true);
-      setMembersList([]);
-
-      const members = await api.get(`/projects/${projectId}/members`);
-      setMembersList(members || []);
-    } catch (error) {
-      toast({ title: 'Error', description: 'Failed to load members', variant: 'destructive' });
-      setMembersList([]);
-    } finally {
-      setMembersLoading(false);
-    }
+  const openMembersForProject = (project: Project) => {
+    setSelectedProjectName(project.name);
+    setMembersList(project.members || []);
+    setMembersLoading(false);
+    setMembersOpen(true);
   };
 
     const toggleTracking = async (id: number) => {
@@ -235,26 +226,36 @@ const AllProjects = () => {
             View and manage all GitLab projects across groups
           </p>
         </div>
-        <Button 
-          onClick={syncProjects} 
-          disabled={syncing || loading}
-          variant="outline"
-          className="gap-2"
-        >
-          {syncing ? (
-            <>
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-              Syncing...
-            </>
-          ) : (
-            <>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
-              </svg>
-              Sync from GitLab
-            </>
-          )}
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLScYARpF5BaAWB_trEkiUMCOEY2MDyP0DTpNhQKdrl7dxWAg1w/viewform?usp=dialog', '_blank')}
+            variant="default"
+            className="gap-2"
+          >
+            <MessageSquare className="h-4 w-4" />
+            User Survey
+          </Button>
+          <Button 
+            onClick={syncProjects} 
+            disabled={syncing || loading}
+            variant="outline"
+            className="gap-2"
+          >
+            {syncing ? (
+              <>
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                Syncing...
+              </>
+            ) : (
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                </svg>
+                Sync from GitLab
+              </>
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -337,7 +338,7 @@ const AllProjects = () => {
                       <div className="flex gap-3 text-sm text-muted-foreground">
                         <button
                           className="flex items-center gap-1 text-left hover:underline"
-                          onClick={() => openMembersForProject(project.id, project.name)}
+                          onClick={() => openMembersForProject(project)}
                           title="View members"
                         >
                           <Eye className="h-3 w-3" />

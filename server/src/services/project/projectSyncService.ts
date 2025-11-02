@@ -16,20 +16,21 @@ class ProjectSyncService {
     // Step 1: Fetch all projects from GitLab
     const gitlabProjects = await gitlabProjectService.getUserProjects();
     
-    // Step 2: Extract basic info for registry and fetch member counts
-    // We'll fetch member counts in parallel for better performance.
-    const countsPromises = gitlabProjects.map(p =>
-      gitLabMemberService.getProjectMemberCount(p.id).catch(() => 0)
+    // Step 2: Extract basic info for registry and fetch member info
+    // We'll fetch member lists in parallel for better performance.
+    const membersPromises = gitlabProjects.map(p =>
+      gitLabMemberService.getProjectMembers(p.id).catch(() => [])
     );
 
-    const counts = await Promise.all(countsPromises);
+    const membersLists = await Promise.all(membersPromises);
 
     const registryData = gitlabProjects.map((project, idx) => ({
       id: project.id,
       name: project.name,
       full_path: project.path_with_namespace,
       group_path: project.namespace?.full_path,
-      members_count: counts[idx] ?? 0,
+      members_count: membersLists[idx]?.length ?? 0,
+      members: membersLists[idx] || [],
       last_activity_at: project.last_activity_at,
       parent_id: project.namespace?.id,
       visibility: project.visibility,
@@ -61,15 +62,16 @@ class ProjectSyncService {
     // Step 1: Fetch project from GitLab
     const gitlabProject = await gitlabProjectService.getProjectById(projectId);
     
-    // Step 2: Extract basic info for registry and include member count
-    const memberCount = await gitLabMemberService.getProjectMemberCount(gitlabProject.id).catch(() => 0);
+    // Step 2: Extract basic info for registry and include member info
+    const members = await gitLabMemberService.getProjectMembers(gitlabProject.id).catch(() => []);
 
     const registryData = {
       id: gitlabProject.id,
       name: gitlabProject.name,
       full_path: gitlabProject.path_with_namespace,
       group_path: gitlabProject.namespace?.full_path,
-      members_count: memberCount,
+      members_count: members.length,
+      members: members,
       last_activity_at: gitlabProject.last_activity_at,
       parent_id: gitlabProject.namespace?.id,
       visibility: gitlabProject.visibility,

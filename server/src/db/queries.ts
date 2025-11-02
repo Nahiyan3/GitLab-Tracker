@@ -34,6 +34,24 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Migration warning:', migrationError.message);
     }
+
+    // Add members JSONB column if it doesn't exist (migration)
+    try {
+      await pool.query(`
+        DO $$
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM information_schema.columns 
+            WHERE table_name = 'projects' AND column_name = 'members'
+          ) THEN
+            ALTER TABLE projects ADD COLUMN members JSONB;
+            RAISE NOTICE 'Added members column to projects table';
+          END IF;
+        END $$;
+      `);
+    } catch (migrationError: any) {
+      console.warn('⚠️ Migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;
@@ -55,6 +73,7 @@ export const syncProjectToRegistry = async (projectData: {
   full_path?: string;
   group_path?: string;
   members_count?: number;
+  members?: any[];
   last_activity_at?: string;
   parent_id?: number;
   visibility?: string;
@@ -64,17 +83,18 @@ export const syncProjectToRegistry = async (projectData: {
   
   const query = `
     INSERT INTO projects (
-      id, name, full_path, group_path, members_count,
+      id, name, full_path, group_path, members_count, members,
       last_activity_at, parent_id, visibility, tracked,
       updated_at, synced_at
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     ON CONFLICT (id) 
     DO UPDATE SET 
       name = EXCLUDED.name,
       full_path = EXCLUDED.full_path,
       group_path = EXCLUDED.group_path,
       members_count = EXCLUDED.members_count,
+      members = EXCLUDED.members,
       last_activity_at = EXCLUDED.last_activity_at,
       parent_id = EXCLUDED.parent_id,
       visibility = EXCLUDED.visibility,
@@ -91,6 +111,7 @@ export const syncProjectToRegistry = async (projectData: {
       projectData.full_path || null,
       projectData.group_path || null,
       projectData.members_count || 0,
+      projectData.members ? JSON.stringify(projectData.members) : null,
       projectData.last_activity_at || null,
       projectData.parent_id || null,
       projectData.visibility || null,
@@ -112,6 +133,7 @@ export const syncProjectsToRegistry = async (projects: Array<{
   full_path?: string;
   group_path?: string;
   members_count?: number;
+  members?: any[];
   last_activity_at?: string;
   parent_id?: number;
   visibility?: string;
@@ -137,7 +159,7 @@ export const getAllProjectsFromRegistry = async (): Promise<any[]> => {
   const query = `
     SELECT 
       uuid, row_id, id, name, full_path, group_path,
-      members_count, last_activity_at, parent_id, visibility,
+      members_count, members, last_activity_at, parent_id, visibility,
       tracked, created_at, updated_at, synced_at
     FROM projects
     ORDER BY synced_at DESC, name ASC;
@@ -338,6 +360,7 @@ export const getLatestSnapshotsForTrackedProjects = async (): Promise<any[]> => 
       p.full_path,
       p.group_path,
       p.members_count,
+      p.members,
       p.last_activity_at,
       p.parent_id,
       p.visibility,

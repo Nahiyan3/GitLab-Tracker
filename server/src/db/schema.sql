@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS projects (
   
   -- Project Details
   members_count INTEGER DEFAULT 0,                     -- Number of project members
+  members JSONB,                                       -- Member list with details (id, name, username, accessLevel)
   last_activity_at TIMESTAMP,                          -- Last activity timestamp
   parent_id INTEGER,                                   -- Parent group/namespace ID
   visibility VARCHAR(50),                              -- Project visibility (private/public/internal)

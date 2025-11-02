@@ -6,6 +6,7 @@ interface DbProject {
   full_path?: string;
   group_path?: string;
   members_count?: number;
+  members?: any[];
   last_activity_at?: string;
   parent_id?: number;
   visibility?: string;
@@ -43,6 +44,7 @@ class ProjectTransformService {
       lastActivityAt: dbProject.last_activity_at,
       visibility: dbProject.visibility,
       membersCount: dbProject.members_count || 0,
+      members: dbProject.members || [],
       parentId: dbProject.parent_id,
       groupPath: dbProject.group_path,
       fullPath: dbProject.full_path,
