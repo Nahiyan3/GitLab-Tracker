@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import projectController from '../controllers/projectController';
+import aiController from '../controllers/aiController';
 import gitlabAuthService from '../services/gitlab/gitlabAuthService';
 import trackingRoutes from './trackingRoutes';
 
@@ -33,5 +34,10 @@ router.get('/projects/:id/members', projectController.getProjectMembersHandler);
 
 // Tracking routes (for Tracked Projects page)
 router.use('/tracking', trackingRoutes);
+
+// AI routes (for Gemini AI testing)
+router.get('/ai/test', aiController.testConnection);
+router.post('/ai/generate-text', aiController.generateText);
+router.post('/ai/generate-with-pdf', aiController.generateWithPDF);
 
 export default router;

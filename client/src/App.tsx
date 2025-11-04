@@ -11,6 +11,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import ProjectInsights from "./pages/ProjectInsights";
 import TrackingManagement from "./pages/TrackingManagement";
 import Alerts from "./pages/Alerts";
+import GeminiTest from "./pages/GeminiTest";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/insights" element={<ProjectInsights />} />
             <Route path="/tracking" element={<TrackingManagement />} />
             <Route path="/alerts" element={<Alerts />} />
+            <Route path="/gemini-test" element={<GeminiTest />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppLayout>

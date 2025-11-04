@@ -66,6 +66,7 @@ export const initializeTables = async (): Promise<void> => {
 /**
  * Sync a project to the projects registry (insert or update)
  * Used by "Sync from GitLab" - updates basic project info only
+ * Note: Does not modify 'tracked' status - use trackProject/untrackProject for that
  */
 export const syncProjectToRegistry = async (projectData: {
   id: number;
@@ -77,17 +78,16 @@ export const syncProjectToRegistry = async (projectData: {
   last_activity_at?: string;
   parent_id?: number;
   visibility?: string;
-  tracked?: boolean;
 }): Promise<any> => {
   const pool = getPool();
   
   const query = `
     INSERT INTO projects (
       id, name, full_path, group_path, members_count, members,
-      last_activity_at, parent_id, visibility, tracked,
+      last_activity_at, parent_id, visibility,
       updated_at, synced_at
     )
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     ON CONFLICT (id) 
     DO UPDATE SET 
       name = EXCLUDED.name,
@@ -98,7 +98,6 @@ export const syncProjectToRegistry = async (projectData: {
       last_activity_at = EXCLUDED.last_activity_at,
       parent_id = EXCLUDED.parent_id,
       visibility = EXCLUDED.visibility,
-      tracked = COALESCE(EXCLUDED.tracked, projects.tracked),
       updated_at = CURRENT_TIMESTAMP,
       synced_at = CURRENT_TIMESTAMP
     RETURNING *;
@@ -115,7 +114,6 @@ export const syncProjectToRegistry = async (projectData: {
       projectData.last_activity_at || null,
       projectData.parent_id || null,
       projectData.visibility || null,
-      projectData.tracked ?? false,
     ]);
     return result.rows[0];
   } catch (error: any) {
@@ -137,7 +135,6 @@ export const syncProjectsToRegistry = async (projects: Array<{
   last_activity_at?: string;
   parent_id?: number;
   visibility?: string;
-  tracked?: boolean;
 }>): Promise<void> => {
   try {
     for (const project of projects) {

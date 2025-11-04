@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderGit2, Star, Settings, Bell, BarChart3 } from "lucide-react";
+import { LayoutDashboard, FolderGit2, Star, Settings, Bell, BarChart3, Sparkles } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -18,6 +18,7 @@ const navItems = [
   { title: "Project Insights", url: "/insights", icon: BarChart3 },
   { title: "Tracking Management", url: "/tracking", icon: Settings },
   { title: "Alerts", url: "/alerts", icon: Bell },
+  { title: "Gemini AI Test", url: "/gemini-test", icon: Sparkles },
 ];
 
 export function AppSidebar() {

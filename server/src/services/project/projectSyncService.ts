@@ -34,7 +34,6 @@ class ProjectSyncService {
       last_activity_at: project.last_activity_at,
       parent_id: project.namespace?.id,
       visibility: project.visibility,
-      tracked: false, // Preserve existing tracked status via COALESCE in query
     }));
     
     // Step 3: Save to registry
@@ -75,7 +74,6 @@ class ProjectSyncService {
       last_activity_at: gitlabProject.last_activity_at,
       parent_id: gitlabProject.namespace?.id,
       visibility: gitlabProject.visibility,
-      tracked: false, // Preserve existing tracked status
     };
     
     // Step 3: Save to registry
