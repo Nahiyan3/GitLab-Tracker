@@ -42,11 +42,17 @@ const GeminiTest = () => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
       
-      // Validate file type
-      if (selectedFile.type !== 'application/pdf') {
+      // Validate file type - Excel and PDF files
+      const validTypes = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
+        'application/vnd.ms-excel', // .xls
+        'application/pdf', // .pdf
+      ];
+      
+      if (!validTypes.includes(selectedFile.type)) {
         toast({
           title: "Invalid file type",
-          description: "Please upload a PDF file",
+          description: "Please upload an Excel (.xlsx, .xls) or PDF file",
           variant: "destructive",
         });
         return;
@@ -143,7 +149,7 @@ const GeminiTest = () => {
     if (!file) {
       toast({
         title: "Error",
-        description: "Please upload a PDF file",
+        description: "Please upload an Excel or PDF file",
         variant: "destructive",
       });
       return;
@@ -156,13 +162,16 @@ const GeminiTest = () => {
       // Convert file to base64
       const base64Data = await convertToBase64(file);
       
+      console.log('File MIME type:', file.type); // Debug log
+      console.log('File name:', file.name); // Debug log
+      
       const result = await api.post('/ai/generate-with-pdf', {
         prompt,
         fileData: base64Data,
         mimeType: file.type,
       });
       
-      console.log('API Response with PDF:', result); // Debug log
+      console.log('API Response with file:', result); // Debug log
       
       // Check if response contains an error
       if (result.error) {
@@ -187,7 +196,7 @@ const GeminiTest = () => {
       console.error('Error:', error); // Debug log
       toast({
         title: "Error",
-        description: error.message || "Failed to generate response with PDF",
+        description: error.message || "Failed to generate response with file",
         variant: "destructive",
       });
     } finally {
@@ -210,7 +219,10 @@ const GeminiTest = () => {
         <div>
           <h1 className="text-3xl font-bold mb-2">Gemini AI Test</h1>
           <p className="text-muted-foreground">
-            Test Google Gemini 2.0 Flash with text prompts and PDF files
+            Test Google Gemini 2.0 Flash with text prompts and Excel/PDF files
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">
+            💡 <strong>Tip:</strong> Include a "Project Name" column in your Excel file to automatically fetch tracked project metrics
           </p>
         </div>
         <Button 
@@ -268,7 +280,7 @@ const GeminiTest = () => {
 
             {/* File Upload */}
             <div>
-              <label className="text-sm font-medium mb-2 block">PDF File (Optional)</label>
+              <label className="text-sm font-medium mb-2 block">Excel/PDF File (Optional)</label>
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="file-upload"
@@ -276,13 +288,13 @@ const GeminiTest = () => {
                 >
                   <Upload className="h-4 w-4" />
                   <span className="text-sm">
-                    {file ? file.name : "Click to upload PDF"}
+                    {file ? file.name : "Click to upload Excel or PDF file"}
                   </span>
                 </label>
                 <input
                   id="file-upload"
                   type="file"
-                  accept="application/pdf"
+                  accept=".xlsx,.xls,.pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,application/pdf"
                   onChange={handleFileChange}
                   className="hidden"
                 />
@@ -343,7 +355,7 @@ const GeminiTest = () => {
                 ) : (
                   <>
                     <Send className="h-4 w-4" />
-                    Send with PDF
+                    Send with File
                   </>
                 )}
               </Button>

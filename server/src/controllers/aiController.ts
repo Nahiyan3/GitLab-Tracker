@@ -42,7 +42,7 @@ class AIController {
   };
 
   /**
-   * Generate response from prompt + PDF file
+   * Generate response from prompt + file (PDF or Excel)
    */
   generateWithPDF = async (req: Request, res: Response) => {
     try {
@@ -56,12 +56,19 @@ class AIController {
         return res.status(400).json({ error: 'File data is required' });
       }
 
-      // fileData should be base64 encoded string
-      const response = await geminiService.generateResponseWithPDF(
-        prompt,
-        fileData,
-        mimeType || 'application/pdf'
-      );
+      // Check if it's an Excel file
+      const isExcel = mimeType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
+                      mimeType === 'application/vnd.ms-excel';
+
+      let response: string;
+      
+      if (isExcel) {
+        // Parse Excel and send as JSON
+        response = await geminiService.generateResponseWithExcel(prompt, fileData);
+      } else {
+        // Send other files (PDF) directly
+        response = await geminiService.generateResponseWithFile(prompt, fileData, mimeType);
+      }
 
       res.json({ response });
     } catch (error: any) {

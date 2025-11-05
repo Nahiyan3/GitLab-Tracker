@@ -429,6 +429,47 @@ export const getProjectSnapshots = async (projectId: number): Promise<any[]> => 
   }
 };
 
+/**
+ * Get the latest snapshot for a project by project name
+ * @param projectName - Name of the project
+ * @returns Latest snapshot data with project info or null if not found
+ */
+export const getLatestSnapshotByProjectName = async (projectName: string) => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      p.id as project_id,
+      p.name as project_name,
+      p.full_path,
+      p.last_activity_at,
+      s.open_issues,
+      s.open_mrs,
+      s.open_milestones_count,
+      s.sonar_security_high,
+      s.sonar_security_blocker,
+      s.sonar_reliability_high,
+      s.sonar_reliability_blocker,
+      s.sonar_maintainability_high,
+      s.sonar_maintainability_blocker,
+      s.snapshot_date
+    FROM projects p
+    LEFT JOIN tracked_project_snapshots s ON s.project_uuid = p.uuid
+    WHERE LOWER(p.name) = LOWER($1)
+      AND p.tracked = true
+    ORDER BY s.snapshot_date DESC
+    LIMIT 1;
+  `;
+  
+  try {
+    const result = await pool.query(query, [projectName]);
+    return result.rows.length > 0 ? result.rows[0] : null;
+  } catch (error: any) {
+    console.error('❌ Failed to get latest snapshot by project name:', error.message);
+    throw error;
+  }
+};
+
 // ============================================================================
 // LEGACY COMPATIBILITY (for migration period)
 // ============================================================================
