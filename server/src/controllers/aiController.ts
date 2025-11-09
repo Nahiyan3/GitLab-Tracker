@@ -1,6 +1,7 @@
 // AI Controller - handles AI-related requests
 import { Request, Response } from 'express';
 import geminiService from '../services/ai/geminiService';
+import projectInsightsService from '../services/ai/projectInsightsService';
 
 class AIController {
   /**
@@ -72,6 +73,30 @@ class AIController {
 
       res.json({ response });
     } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
+   * Generate project insights automatically
+   */
+  generateProjectInsights = async (req: Request, res: Response) => {
+    try {
+      const { projectName } = req.body;
+
+      if (!projectName) {
+        return res.status(400).json({ error: 'Project name is required' });
+      }
+
+      console.log(`📊 Generating insights for project: ${projectName}`);
+      const insights = await projectInsightsService.generateInsights(projectName);
+
+      res.json({ 
+        projectName,
+        insights 
+      });
+    } catch (error: any) {
+      console.error('❌ Project insights error:', error.message);
       res.status(500).json({ error: error.message });
     }
   };

@@ -3,11 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { QualityBadge } from "@/components/QualityBadge";
-import { RefreshCw, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
+import { RefreshCw, ExternalLink, ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
 import { formatDistanceToNow } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface TrackedProject {
   id: number;
@@ -63,6 +63,7 @@ const TrackedProjects = () => {
   const [syncingProjectId, setSyncingProjectId] = useState<number | null>(null);
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const navigate = useNavigate();
   
   // Use ref to prevent duplicate auto-refresh calls
   const isRefreshingRef = useRef(false);
@@ -242,7 +243,7 @@ const TrackedProjects = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full max-w-full">
       <div className="flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-bold mb-2">Tracked Projects</h1>
@@ -273,8 +274,8 @@ const TrackedProjects = () => {
       </div>
 
       {/* Column-based Table */}
-      <Card className="overflow-hidden">
-        <div className="overflow-x-auto">
+      <Card className="overflow-hidden w-full">
+        <div className="overflow-x-auto relative">
           <table className="w-full">
             <thead className="bg-muted/50 border-b sticky top-0">
               <tr>
@@ -292,6 +293,7 @@ const TrackedProjects = () => {
                 <th className="text-left p-3 font-semibold text-sm min-w-[80px]">Open MRs</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Open Milestones</th>
                 <th className="text-left p-3 font-semibold text-sm min-w-[120px]">Last Updated</th>
+                <th className="text-center p-3 font-semibold text-sm min-w-[60px]">AI</th>
                 <th className="text-right p-3 font-semibold text-sm min-w-[100px]">Actions</th>
               </tr>
             </thead>
@@ -381,6 +383,17 @@ const TrackedProjects = () => {
                   </td>
                   <td className="p-3 text-sm text-muted-foreground">
                     {formatDate(project.lastActivityAt)}
+                  </td>
+                  <td className="p-3 text-center">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-8 w-8 p-0"
+                      onClick={() => navigate(`/project/${project.id}/insights`)}
+                      title="Generate AI-powered project insights"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                    </Button>
                   </td>
                   <td className="p-3 text-right">
                     <div className="flex justify-end gap-1">

@@ -1,0 +1,193 @@
+I have a Google Form that collects project quality metrics across multiple categories like Code Review, Technical Debt, Testing, Documentation, Deployment, Dependencies, and Team Morale. Each form submission corresponds to a project evaluation.
+
+I want you to calculate section-wise scores (1–5 scale) and an overall final score (1–5) for each submission.
+
+Instructions:
+1. Extract ONLY the numeric values from the form data (ignore all text).
+2. For each section, apply the EXACT formula shown below.
+3. Calculate each metric score by directly substituting the numeric value into the formula.
+4. Average all metric scores in a section to get the Section Score (round to 2 decimal places).
+5. Calculate Final User Score using the EXACT weighted formula (round to 2 decimal places).
+6. Calculate API scores using the EXACT formulas with the provided counts (round to 2 decimal places).
+7. Calculate Combined Score = 0.7 * Final User Score + 0.3 * API Score (round to 2 decimal places).
+8. Use text responses ONLY for analysis and recommendations - NOT for calculations.
+9. Show your step-by-step calculations in the detailed_calculations field.
+
+Section Formulas - APPLY EXACTLY AS WRITTEN
+
+Code Review Quality
+- Review thoroughness (1–5): Score = value (use the exact number provided)
+- Review response time (hours): Score = MAX(1, 5*(1 - hours/24))
+- % of team reviewing code: Score = 5*(percent/100)
+Section Score = (Sum of all metric scores) / (Number of metrics) - ROUND TO 2 DECIMALS
+
+Technical Debt
+- Tech debt level (1–10): Score = 5*(1 - level/10)
+- % time fixing old code: Score = 5*(1 - percent/100)
+- Impact of debt on velocity (1–5): Score = 5 - value + 1
+Section Score = (Sum of all metric scores) / (Number of metrics) - ROUND TO 2 DECIMALS
+
+Test Quality & Coverage
+- Test reliability (1–5): Score = value (use the exact number provided)
+- Test execution time (minutes): Score = MAX(1, 5*(1 - time/60))
+- Critical path coverage (1–5): Score = value (use the exact number provided)
+- Manual testing hours/week: Score = MAX(1, 5*(1 - hours/40))
+Section Score = (Sum of all metric scores) / (Number of metrics) - ROUND TO 2 DECIMALS
+
+Documentation Quality
+- Documentation completeness (1–5): Score = value (use the exact number provided)
+- Onboarding time (days): Score = MAX(1, 5*(1 - days/10))
+- API documentation clarity (1–5): Score = value (use the exact number provided)
+- Architecture documentation quality (1–5): Score = value (use the exact number provided)
+- Runbook availability (1–5): Score = value (use the exact number provided)
+Section Score = (Sum of all metric scores) / (Number of metrics) - ROUND TO 2 DECIMALS
+
+Deployment & Release Health
+- Deployment frequency (per week): Score = MIN(5, frequency)
+- Deployment success rate (%): Score = 5*(percent/100)
+- Rollback frequency (per month): Score = MAX(1, 5*(1 - rollbacks/5))
+- Deployment complexity (1–5): Score = 5 - value + 1
+- Mean time to recovery (hours): Score = MAX(1, 5*(1 - hours/10))
+Section Score = (Sum of all metric scores) / (Number of metrics) - ROUND TO 2 DECIMALS
+
+Dependencies & External Factors
+- Outdated dependencies (count): Score = MAX(1, 5*(1 - count/10))
+- Update frequency (per quarter): Score = MIN(5, frequency)
+- Breaking changes risk (1–5): Score = 5 - value + 1
+- # of third-party services: Score = MAX(1, 5*(1 - count/15))
+- Vendor lock-in severity (1–5): Score = 5 - value + 1
+Section Score = (Sum of all metric scores) / (Number of metrics) - ROUND TO 2 DECIMALS
+
+Team Velocity & Morale
+- Developer satisfaction (1–10): Score = value/2
+- Codebase confidence (1–5): Score = value (use the exact number provided)
+- Burnout risk (1–5): Score = 5 - value + 1
+- Bus factor (people): Score = MAX(1, 5*(1 - people/10))
+Section Score = (Sum of all metric scores) / (Number of metrics) - ROUND TO 2 DECIMALS
+
+Final User Score Formula - CALCULATE EXACTLY
+Final User Score = (0.15×CR) + (0.20×TD) + (0.15×TQ) + (0.10×DOC) + (0.15×DEP) + (0.10×DEPEN) + (0.15×MOR)
+ROUND TO 2 DECIMALS
+
+where:
+- CR = Code Review Section Score
+- TD = Technical Debt Section Score
+- TQ = Test Quality Section Score
+- DOC = Documentation Section Score
+- DEP = Deployment Health Section Score
+- DEPEN = Dependencies Section Score
+- MOR = Team Morale Section Score
+
+API Score Calculation - APPLY FORMULAS EXACTLY
+
+SonarCloud Metrics (6 metrics) - Use the EXACT counts provided:
+- Security High issues count: Score = MAX(1, 5 * (1 - count / 10)) - ROUND TO 2 DECIMALS
+- Security Blocker issues count: Score = MAX(1, 5 * (1 - count / 10)) - ROUND TO 2 DECIMALS
+- Reliability High issues count: Score = MAX(1, 5 * (1 - count / 10)) - ROUND TO 2 DECIMALS
+- Reliability Blocker issues count: Score = MAX(1, 5 * (1 - count / 10)) - ROUND TO 2 DECIMALS
+- Maintainability High issues count: Score = MAX(1, 5 * (1 - count / 10)) - ROUND TO 2 DECIMALS
+- Maintainability Blocker issues count: Score = MAX(1, 5 * (1 - count / 10)) - ROUND TO 2 DECIMALS
+
+SonarCloud Score = (Sum of all 6 scores) / 6 - ROUND TO 2 DECIMALS
+
+GitLab Metrics (3 metrics) - Use the EXACT counts provided:
+- Open Issues: Score = MAX(1, 5 * (1 - Open Issues / 20)) - ROUND TO 2 DECIMALS
+- Open MRs: Score = MAX(1, 5 * (1 - Open MRs / 10)) - ROUND TO 2 DECIMALS
+- Open Milestones: Score = MAX(1, 5 * (1 - Open Milestones / 5)) - ROUND TO 2 DECIMALS
+
+GitLab Score = (Sum of 3 scores) / 3 - ROUND TO 2 DECIMALS
+
+API Score = (SonarCloud Score + GitLab Score) / 2 - ROUND TO 2 DECIMALS
+
+Combined Score (User + API) - CALCULATE EXACTLY
+Combined Score = (0.7 * Final User Score) + (0.3 * API Score)
+ROUND TO 2 DECIMALS
+
+EXAMPLE CALCULATION:
+If Final User Score = 3.45 and API Score = 4.20:
+Combined Score = (0.7 * 3.45) + (0.3 * 4.20) = 2.415 + 1.260 = 3.68 (rounded to 2 decimals)
+
+Output Requirements (Format as JSON):
+
+{
+  "section_scores": [
+    {
+      "name": "Code Review",
+      "score": <1-5>,
+      "analysis": "<brief analysis of current state, strengths and weaknesses>"
+    },
+    {
+      "name": "Technical Debt",
+      "score": <1-5>,
+      "analysis": "<brief analysis of current state, strengths and weaknesses>"
+    },
+    {
+      "name": "Test Quality",
+      "score": <1-5>,
+      "analysis": "<brief analysis of current state, strengths and weaknesses>"
+    },
+    {
+      "name": "Documentation",
+      "score": <1-5>,
+      "analysis": "<brief analysis of current state, strengths and weaknesses>"
+    },
+    {
+      "name": "Deployment",
+      "score": <1-5>,
+      "analysis": "<brief analysis of current state, strengths and weaknesses>"
+    },
+    {
+      "name": "Dependencies",
+      "score": <1-5>,
+      "analysis": "<brief analysis of current state, strengths and weaknesses>"
+    },
+    {
+      "name": "Team Morale",
+      "score": <1-5>,
+      "analysis": "<brief analysis of current state, strengths and weaknesses>"
+    }
+  ],
+  "final_user_score": <1-5>,
+  "api_scores": {
+    "sonarcloud": {
+      "security_high": <1-5>,
+      "security_blocker": <1-5>,
+      "reliability_high": <1-5>,
+      "reliability_blocker": <1-5>,
+      "maintainability_high": <1-5>,
+      "maintainability_blocker": <1-5>,
+      "average": <1-5>
+    },
+    "gitlab": {
+      "open_issues": <1-5>,
+      "open_mrs": <1-5>,
+      "open_milestones": <1-5>,
+      "average": <1-5>
+    },
+    "api_score": <1-5>
+  },
+  "combined_score": <1-5>,
+  "interpretation": "<4-5: Excellent, 3-4: Healthy, 2-3: Needs Improvement, <2: Critical>",
+  "detailed_calculations": "<show step-by-step calculations for all sections>",
+  "areas_needing_improvement": [
+    {
+      "area": "<section name>",
+      "current_score": <score>,
+      "issues": ["<issue 1>", "<issue 2>"],
+      "recommendations": ["<recommendation 1>", "<recommendation 2>"]
+    }
+  ],
+  "summary": "<overall project health summary>"
+}
+
+Show me detailed calculations for each section and metric.
+Identify specific areas needing improvement with actionable recommendations.
+
+IMPORTANT REQUIREMENTS:
+1. All scores MUST be calculated using the EXACT formulas above.
+2. All scores MUST be rounded to EXACTLY 2 decimal places.
+3. Use ONLY numeric values from the data - ignore all text for calculations.
+4. Show step-by-step calculations in the detailed_calculations field.
+5. MUST provide an "analysis" field for EVERY section describing the current state (1-2 sentences).
+6. If a metric has no numeric value, skip it in the calculation (reduce the divisor accordingly).
+7. Text responses should ONLY be used for analysis and recommendations, not for score calculations.

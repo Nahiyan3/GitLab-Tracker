@@ -69,6 +69,11 @@ const ProjectDetail = () => {
           <QualityBadge score={project.qualityScore} size="lg" />
         </div>
         <div className="flex gap-2">
+          <Button asChild size="sm">
+            <Link to={`/project/${id}/insights`}>
+              AI Project Insights
+            </Link>
+          </Button>
           <Button variant="outline" size="sm">
             <RefreshCw className="h-4 w-4 mr-2" />
             Refresh Data

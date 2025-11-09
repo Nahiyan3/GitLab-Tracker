@@ -24,24 +24,41 @@ class GeminiService {
   }
 
   /**
-   * Send a text prompt to Gemini and get response
+   * Send a text prompt to Gemini and get response with retry logic
    */
-  async generateTextResponse(prompt: string): Promise<string> {
+  async generateTextResponse(prompt: string, maxRetries: number = 3): Promise<string> {
     this.initialize(); // Ensure initialization
     
     if (!this.genAI) {
       throw new Error('Gemini API key not configured');
     }
 
-    try {
-      const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      return response.text();
-    } catch (error: any) {
-      console.error('❌ Gemini API error:', error.message);
-      throw new Error(`Failed to generate response: ${error.message}`);
+    let lastError: any;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`🔄 Attempt ${attempt}/${maxRetries} to call Gemini API...`);
+        const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+        const result = await model.generateContent(prompt);
+        const response = result.response;
+        console.log('✅ Gemini API call successful');
+        return response.text();
+      } catch (error: any) {
+        lastError = error;
+        console.error(`❌ Gemini API error (attempt ${attempt}/${maxRetries}):`, error.message);
+        
+        // If it's a fetch error and we have retries left, wait and retry
+        if (attempt < maxRetries && (error.message.includes('fetch failed') || error.message.includes('ECONNRESET'))) {
+          const waitTime = Math.pow(2, attempt) * 1000; // Exponential backoff: 2s, 4s, 8s
+          console.log(`⏳ Waiting ${waitTime/1000}s before retry...`);
+          await new Promise(resolve => setTimeout(resolve, waitTime));
+        } else if (attempt === maxRetries) {
+          // Last attempt failed
+          break;
+        }
+      }
     }
+    
+    throw new Error(`Failed to generate response after ${maxRetries} attempts: ${lastError.message}`);
   }
 
   /**

@@ -39,5 +39,6 @@ router.use('/tracking', trackingRoutes);
 router.get('/ai/test', aiController.testConnection);
 router.post('/ai/generate-text', aiController.generateText);
 router.post('/ai/generate-with-pdf', aiController.generateWithPDF);
+router.post('/ai/project-insights', aiController.generateProjectInsights);
 
 export default router;

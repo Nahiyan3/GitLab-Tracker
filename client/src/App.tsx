@@ -9,6 +9,7 @@ import AllProjects from "./pages/AllProjects";
 import TrackedProjects from "./pages/TrackedProjects";
 import ProjectDetail from "./pages/ProjectDetail";
 import ProjectInsights from "./pages/ProjectInsights";
+import ProjectInsight from "./pages/ProjectInsight";
 import TrackingManagement from "./pages/TrackingManagement";
 import Alerts from "./pages/Alerts";
 import GeminiTest from "./pages/GeminiTest";
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/projects" element={<AllProjects />} />
             <Route path="/tracked" element={<TrackedProjects />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
+            <Route path="/project/:id/insights" element={<ProjectInsight />} />
             <Route path="/insights" element={<ProjectInsights />} />
             <Route path="/tracking" element={<TrackingManagement />} />
             <Route path="/alerts" element={<Alerts />} />
