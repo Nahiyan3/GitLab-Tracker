@@ -2,6 +2,8 @@
 import { Request, Response } from 'express';
 import geminiService from '../services/ai/geminiService';
 import projectInsightsService from '../services/ai/projectInsightsService';
+import { parseAndCorrectInsights } from '../services/ai/insightsParser';
+import { saveProjectInsights, getLatestProjectInsights, getProjectInsightsHistoryById } from '../db/queries';
 
 class AIController {
   /**
@@ -89,14 +91,96 @@ class AIController {
       }
 
       console.log(`📊 Generating insights for project: ${projectName}`);
-      const insights = await projectInsightsService.generateInsights(projectName);
+      
+      // Step 1: Generate raw AI insights
+      const rawInsights = await projectInsightsService.generateInsights(projectName);
+      
+      // Step 2: Parse and correct scores from detailed_calculations
+      console.log('🔍 Parsing and correcting scores...');
+      const correctedInsights = parseAndCorrectInsights(rawInsights);
+      
+      // Step 3: Save corrected insights to database
+      console.log('💾 Saving corrected insights to database...');
+      await saveProjectInsights(projectName, correctedInsights);
+      
+      console.log('✅ Insights generated, corrected, and saved successfully');
 
       res.json({ 
         projectName,
-        insights 
+        insights: rawInsights,  // Return raw for backward compatibility
+        correctedInsights,      // Also return corrected version
+        saved: true
       });
     } catch (error: any) {
       console.error('❌ Project insights error:', error.message);
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
+   * Get latest saved insights for a project
+   */
+  getProjectInsights = async (req: Request, res: Response) => {
+    try {
+      const { projectName } = req.params;
+
+      if (!projectName) {
+        return res.status(400).json({ error: 'Project name is required' });
+      }
+
+      console.log(`📖 Fetching insights for project: ${projectName}`);
+      const savedInsights = await getLatestProjectInsights(projectName);
+
+      if (!savedInsights) {
+        return res.status(404).json({ 
+          error: 'No insights found for this project',
+          message: 'Generate insights first using POST /api/ai/project-insights'
+        });
+      }
+
+      res.json({ 
+        projectName: savedInsights.project_name,
+        insights: savedInsights.insights_data,
+        scores: {
+          final_user_score: savedInsights.final_user_score,
+          api_score: savedInsights.api_score,
+          combined_score: savedInsights.combined_score
+        },
+        created_at: savedInsights.created_at
+      });
+    } catch (error: any) {
+      console.error('❌ Failed to get project insights:', error.message);
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
+   * Get insights history for a project by project ID
+   */
+  getProjectInsightsHistoryById = async (req: Request, res: Response) => {
+    try {
+      const { projectId } = req.params;
+
+      if (!projectId) {
+        return res.status(400).json({ error: 'Project ID is required' });
+      }
+
+      console.log(`📊 Fetching insights history for project ID: ${projectId}`);
+      const insightsHistory = await getProjectInsightsHistoryById(parseInt(projectId));
+
+      if (!insightsHistory || insightsHistory.length === 0) {
+        return res.json({ 
+          history: [],
+          message: 'No insights history found for this project'
+        });
+      }
+
+      res.json({ 
+        projectId: parseInt(projectId),
+        history: insightsHistory
+      });
+    } catch (error: any) {
+      console.error('❌ Failed to get project insights history:', error.message);
       res.status(500).json({ error: error.message });
     }
   };

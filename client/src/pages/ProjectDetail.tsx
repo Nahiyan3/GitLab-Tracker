@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,6 +16,7 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { api } from "@/lib/api";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -36,6 +37,9 @@ const scoreBreakdown = [
 const ProjectDetail = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("overview");
+  const [insightsHistory, setInsightsHistory] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [chartData, setChartData] = useState<any[]>([]);
 
   // Mock project data
   const project = {
@@ -50,6 +54,61 @@ const ProjectDetail = () => {
     openMRs: 3,
     lastUpdated: "30 min ago",
   };
+
+  // Fetch insights history
+  useEffect(() => {
+    const fetchInsightsHistory = async () => {
+      if (!id) return;
+      
+      try {
+        setLoading(true);
+        const response = await api.get(`/ai/project-insights-history/${id}`);
+        
+        if (response.history && response.history.length > 0) {
+          setInsightsHistory(response.history);
+          
+          // Transform data for chart
+          const transformedData = response.history.map((insight: any) => {
+            const date = new Date(insight.created_at).toLocaleDateString('en-US', { 
+              month: 'short', 
+              day: 'numeric' 
+            });
+            
+            const sections = insight.insights_data?.section_scores || [];
+            const chartPoint: any = { date };
+            
+            console.log('Section names in data:', sections.map((s: any) => s.name));
+            
+            // Add each section score
+            sections.forEach((section: any) => {
+              // Normalize Team Velocity & Morale to just Team Morale for chart
+              if (section.name.toLowerCase().includes('morale') || section.name.toLowerCase().includes('velocity')) {
+                chartPoint['Team Morale'] = section.score;
+              } else {
+                chartPoint[section.name] = section.score;
+              }
+            });
+            
+            // Add API and Combined scores
+            chartPoint['API Score'] = insight.api_score;
+            chartPoint['Combined Score'] = insight.combined_score;
+            
+            console.log('Chart point:', chartPoint);
+            
+            return chartPoint;
+          });
+          
+          setChartData(transformedData);
+        }
+      } catch (error) {
+        console.error('Failed to fetch insights history:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInsightsHistory();
+  }, [id]);
 
   return (
     <div className="space-y-6">
@@ -154,18 +213,96 @@ const ProjectDetail = () => {
               <CardTitle>Quality Score Trends</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={metricTrends}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="score" stroke="hsl(var(--primary))" strokeWidth={2} name="Quality Score" />
-                  <Line type="monotone" dataKey="coverage" stroke="hsl(var(--success))" strokeWidth={2} name="Coverage" />
-                  <Line type="monotone" dataKey="ciHealth" stroke="hsl(var(--warning))" strokeWidth={2} name="CI Health" />
-                </LineChart>
-              </ResponsiveContainer>
+              {loading ? (
+                <div className="h-[400px] flex items-center justify-center">
+                  <RefreshCw className="h-6 w-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : chartData.length === 0 ? (
+                <div className="h-[400px] flex flex-col items-center justify-center text-muted-foreground">
+                  <Activity className="h-12 w-12 mb-4 opacity-50" />
+                  <p>No insights history available</p>
+                  <p className="text-sm">Generate insights to see trends</p>
+                </div>
+              ) : (
+                <ResponsiveContainer width="100%" height={400}>
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis domain={[0, 5]} />
+                    <Tooltip />
+                    <Legend />
+                    
+                    {/* 7 Section Scores */}
+                    <Line 
+                      type="monotone" 
+                      dataKey="Code Review" 
+                      stroke="#8884d8" 
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Technical Debt" 
+                      stroke="#82ca9d" 
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Test Quality" 
+                      stroke="#ffc658" 
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Documentation" 
+                      stroke="#ff7c7c" 
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Deployment" 
+                      stroke="#a28bd4" 
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Dependencies" 
+                      stroke="#ff9f43" 
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="Team Morale" 
+                      stroke="#54a0ff" 
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                    />
+                    
+                    {/* API Score */}
+                    <Line 
+                      type="monotone" 
+                      dataKey="API Score" 
+                      stroke="#10b981" 
+                      strokeWidth={3}
+                      dot={{ r: 5 }}
+                    />
+                    
+                    {/* Combined Score */}
+                    <Line 
+                      type="monotone" 
+                      dataKey="Combined Score" 
+                      stroke="#3b82f6" 
+                      strokeWidth={3}
+                      dot={{ r: 5 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </CardContent>
           </Card>
 

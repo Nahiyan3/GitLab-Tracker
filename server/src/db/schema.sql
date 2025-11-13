@@ -95,6 +95,42 @@ CREATE INDEX IF NOT EXISTS idx_snapshots_project_date ON tracked_project_snapsho
 -- ============================================================================
 
 
+-- ============================================================================
+-- TABLE 3: PROJECT_INSIGHTS (AI-Generated Insights)
+-- ============================================================================
+-- Purpose: Stores corrected AI-generated insights for projects
+-- Updated by: AI insights generation endpoint
+
+CREATE TABLE IF NOT EXISTS project_insights (
+  -- Primary Keys
+  uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),     -- Primary key (UUID)
+  row_id SERIAL NOT NULL,                              -- Auto-incrementing row number
+  
+  -- Foreign Key (links to projects table)
+  project_uuid UUID NOT NULL REFERENCES projects(uuid) ON DELETE CASCADE,
+  
+  -- Corrected Insights Data (JSONB with verified scores)
+  insights_data JSONB NOT NULL,                        -- Complete corrected insights
+  
+  -- Denormalized Scores (for fast filtering)
+  final_user_score DECIMAL(3,2),                       -- Final user score (1-5)
+  api_score DECIMAL(3,2),                              -- API score (1-5)
+  combined_score DECIMAL(3,2),                         -- Combined score (1-5)
+  
+  -- Metadata
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,      -- When insights were generated
+  
+  -- Constraints
+  CONSTRAINT fk_insights_project FOREIGN KEY (project_uuid) REFERENCES projects(uuid) ON DELETE CASCADE
+);
+
+-- Indexes for fast queries
+CREATE INDEX IF NOT EXISTS idx_insights_project_uuid ON project_insights(project_uuid);
+CREATE INDEX IF NOT EXISTS idx_insights_scores ON project_insights(combined_score DESC, final_user_score, api_score);
+CREATE INDEX IF NOT EXISTS idx_insights_created_at ON project_insights(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_insights_jsonb ON project_insights USING GIN (insights_data);
+
+
 
 
 

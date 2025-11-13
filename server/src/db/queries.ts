@@ -494,3 +494,178 @@ export const getAllProjectsFromDB = getAllProjectsFromRegistry;
  */
 export const getTrackedProjects = getLatestSnapshotsForTrackedProjects;
 
+
+// ============================================================================
+// PROJECT INSIGHTS QUERIES
+// ============================================================================
+
+/**
+ * Save corrected AI insights for a project
+ */
+export const saveProjectInsights = async (
+  projectName: string,
+  insightsData: any
+): Promise<void> => {
+  const pool = getPool();
+  
+  try {
+    // First, get the project UUID
+    const projectResult = await pool.query(
+      'SELECT uuid FROM projects WHERE LOWER(name) = LOWER($1)',
+      [projectName]
+    );
+    
+    if (projectResult.rows.length === 0) {
+      throw new Error(`Project "${projectName}" not found in database`);
+    }
+    
+    const projectUuid = projectResult.rows[0].uuid;
+    
+    // Insert insights (one per day per project)
+    await pool.query(
+      `INSERT INTO project_insights 
+       (project_uuid, insights_data, final_user_score, api_score, combined_score)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [
+        projectUuid,
+        JSON.stringify(insightsData),
+        insightsData.final_user_score,
+        insightsData.api_scores?.api_score,
+        insightsData.combined_score
+      ]
+    );
+    
+    console.log(`✅ Saved insights for project: ${projectName}`);
+  } catch (error: any) {
+    console.error('❌ Failed to save project insights:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get latest insights for a project
+ */
+export const getLatestProjectInsights = async (projectName: string): Promise<any | null> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      pi.uuid,
+      pi.row_id,
+      pi.insights_data,
+      pi.final_user_score,
+      pi.api_score,
+      pi.combined_score,
+      pi.created_at,
+      p.name as project_name
+    FROM project_insights pi
+    JOIN projects p ON pi.project_uuid = p.uuid
+    WHERE LOWER(p.name) = LOWER($1)
+    ORDER BY pi.created_at DESC
+    LIMIT 1;
+  `;
+  
+  try {
+    const result = await pool.query(query, [projectName]);
+    return result.rows.length > 0 ? result.rows[0] : null;
+  } catch (error: any) {
+    console.error('❌ Failed to get latest project insights:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get all insights for a project (historical)
+ */
+export const getProjectInsightsHistory = async (projectName: string): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      pi.uuid,
+      pi.row_id,
+      pi.insights_data,
+      pi.final_user_score,
+      pi.api_score,
+      pi.combined_score,
+      pi.created_at
+    FROM project_insights pi
+    JOIN projects p ON pi.project_uuid = p.uuid
+    WHERE LOWER(p.name) = LOWER($1)
+    ORDER BY pi.created_at DESC;
+  `;
+  
+  try {
+    const result = await pool.query(query, [projectName]);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get project insights history:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get all insights for a project by project ID (historical)
+ */
+export const getProjectInsightsHistoryById = async (projectId: number): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      pi.uuid,
+      pi.row_id,
+      pi.insights_data,
+      pi.final_user_score,
+      pi.api_score,
+      pi.combined_score,
+      pi.created_at
+    FROM project_insights pi
+    JOIN projects p ON pi.project_uuid = p.uuid
+    WHERE p.id = $1
+    ORDER BY pi.created_at ASC;
+  `;
+  
+  try {
+    const result = await pool.query(query, [projectId]);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get project insights history by ID:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get all projects with their latest insight scores
+ */
+export const getAllProjectsWithInsights = async (): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      p.uuid,
+      p.name,
+      p.full_path,
+      pi.final_user_score,
+      pi.api_score,
+      pi.combined_score,
+      pi.created_at as last_insight_date
+    FROM projects p
+    LEFT JOIN LATERAL (
+      SELECT * FROM project_insights
+      WHERE project_uuid = p.uuid
+      ORDER BY created_at DESC
+      LIMIT 1
+    ) pi ON true
+    ORDER BY p.name;
+  `;
+  
+  try {
+    const result = await pool.query(query);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get all projects with insights:', error.message);
+    throw error;
+  }
+};
+
+

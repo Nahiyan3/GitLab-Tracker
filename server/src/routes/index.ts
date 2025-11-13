@@ -40,5 +40,7 @@ router.get('/ai/test', aiController.testConnection);
 router.post('/ai/generate-text', aiController.generateText);
 router.post('/ai/generate-with-pdf', aiController.generateWithPDF);
 router.post('/ai/project-insights', aiController.generateProjectInsights);
+router.get('/ai/project-insights/:projectName', aiController.getProjectInsights);
+router.get('/ai/project-insights-history/:projectId', aiController.getProjectInsightsHistoryById);
 
 export default router;

@@ -37,7 +37,7 @@ class GeminiService {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         console.log(`🔄 Attempt ${attempt}/${maxRetries} to call Gemini API...`);
-        const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+        const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
         const result = await model.generateContent(prompt);
         const response = result.response;
         console.log('✅ Gemini API call successful');
@@ -79,7 +79,7 @@ class GeminiService {
     }
 
     try {
-      const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+      const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
       const filePart = {
         inlineData: {
@@ -233,7 +233,7 @@ class GeminiService {
       const enhancedPrompt = this.buildEnhancedPrompt(prompt, sheets, projectSnapshot);
 
       // Send to Gemini
-      const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+      const model = this.genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
       const result = await model.generateContent(enhancedPrompt);
       const response = result.response;
       return response.text();
