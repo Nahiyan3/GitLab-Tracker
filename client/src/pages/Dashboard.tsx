@@ -1,9 +1,10 @@
 import { MetricCard } from "@/components/MetricCard";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { FolderGit2, Star, TrendingUp, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from "recharts";
 
 const qualityDistribution = [
   { range: "0-50", count: 3, color: "hsl(var(--destructive))" },
@@ -21,31 +22,52 @@ const needsAttention = [
     id: "1",
     name: "legacy-api",
     group: "Backend",
-    qualityScore: 42,
-    lastActivity: "2 days ago",
-    openIssues: 23,
-    openMRs: 5,
-    ciHealth: 65,
+    combinedScore: 2.8,
+    metrics: [
+      { metric: "Code Review", score: 3.2 },
+      { metric: "Technical Debt", score: 2.1 },
+      { metric: "Test Quality", score: 2.5 },
+      { metric: "Documentation", score: 2.8 },
+      { metric: "Deployment", score: 3.5 },
+      { metric: "Dependencies", score: 2.3 },
+      { metric: "Team Morale", score: 3.1 },
+      { metric: "API Score", score: 3.0 },
+      { metric: "Combined Score", score: 2.8 },
+    ],
   },
   {
     id: "2",
     name: "old-frontend",
     group: "Frontend",
-    qualityScore: 38,
-    lastActivity: "5 hours ago",
-    openIssues: 31,
-    openMRs: 2,
-    ciHealth: 48,
+    combinedScore: 2.5,
+    metrics: [
+      { metric: "Code Review", score: 2.8 },
+      { metric: "Technical Debt", score: 1.9 },
+      { metric: "Test Quality", score: 2.2 },
+      { metric: "Documentation", score: 2.6 },
+      { metric: "Deployment", score: 3.0 },
+      { metric: "Dependencies", score: 2.0 },
+      { metric: "Team Morale", score: 2.8 },
+      { metric: "API Score", score: 2.4 },
+      { metric: "Combined Score", score: 2.5 },
+    ],
   },
   {
     id: "3",
     name: "data-pipeline",
     group: "Data",
-    qualityScore: 55,
-    lastActivity: "1 day ago",
-    openIssues: 15,
-    openMRs: 8,
-    ciHealth: 72,
+    combinedScore: 2.9,
+    metrics: [
+      { metric: "Code Review", score: 3.5 },
+      { metric: "Technical Debt", score: 2.6 },
+      { metric: "Test Quality", score: 2.8 },
+      { metric: "Documentation", score: 2.5 },
+      { metric: "Deployment", score: 3.2 },
+      { metric: "Dependencies", score: 2.7 },
+      { metric: "Team Morale", score: 3.3 },
+      { metric: "API Score", score: 3.1 },
+      { metric: "Combined Score", score: 2.9 },
+    ],
   },
 ];
 
@@ -144,7 +166,48 @@ const Dashboard = () => {
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {needsAttention.map((project) => (
-            <ProjectCard key={project.id} {...project} />
+            <Card key={project.id} className="hover:shadow-md transition-shadow">
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <CardTitle className="text-lg mb-1">{project.name}</CardTitle>
+                    <p className="text-sm text-muted-foreground">{project.group}</p>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {/* Combined Score */}
+                <div className="text-center mb-4">
+                  <div className="text-3xl font-bold text-primary">{project.combinedScore.toFixed(2)}</div>
+                  <div className="text-sm text-muted-foreground">Combined Quality Score</div>
+                </div>
+                
+                {/* Radar Chart */}
+                <ResponsiveContainer width="100%" height={200}>
+                  <RadarChart data={project.metrics}>
+                    <PolarGrid />
+                    <PolarAngleAxis 
+                      dataKey="metric" 
+                      tick={{ fontSize: 10 }}
+                    />
+                    <PolarRadiusAxis angle={90} domain={[0, 5]} />
+                    <Radar 
+                      name={project.name}
+                      dataKey="score" 
+                      stroke="hsl(var(--primary))" 
+                      fill="hsl(var(--primary))" 
+                      fillOpacity={0.5}
+                    />
+                    <Tooltip />
+                  </RadarChart>
+                </ResponsiveContainer>
+
+                {/* View Details Button */}
+                <Button asChild size="sm" variant="outline" className="w-full mt-4">
+                  <Link to={`/project/${project.id}`}>View Details</Link>
+                </Button>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
