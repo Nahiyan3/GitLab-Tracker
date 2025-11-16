@@ -668,4 +668,41 @@ export const getAllProjectsWithInsights = async (): Promise<any[]> => {
   }
 };
 
+/**
+ * Get latest insights for all projects with full metrics breakdown
+ */
+export const getAllLatestProjectInsights = async (): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      p.id,
+      p.uuid,
+      p.name,
+      p.full_path,
+      pi.insights_data,
+      pi.final_user_score,
+      pi.api_score,
+      pi.combined_score,
+      pi.created_at
+    FROM projects p
+    INNER JOIN LATERAL (
+      SELECT * FROM project_insights
+      WHERE project_uuid = p.uuid
+      ORDER BY created_at DESC
+      LIMIT 1
+    ) pi ON true
+    WHERE pi.insights_data IS NOT NULL
+    ORDER BY p.name;
+  `;
+  
+  try {
+    const result = await pool.query(query);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get all latest project insights:', error.message);
+    throw error;
+  }
+};
+
 

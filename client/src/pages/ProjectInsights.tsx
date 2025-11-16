@@ -1,94 +1,61 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } from "recharts";
+import { Loader2, AlertCircle } from "lucide-react";
 
-// Mock data for tracked projects with all 9 metrics
-const trackedProjects = [
-  {
-    id: "1",
-    name: "E-commerce Platform",
-    group: "Backend",
-    metrics: {
-      codeReview: 4.2,
-      technicalDebt: 3.8,
-      testQuality: 4.5,
-      documentation: 3.9,
-      deployment: 4.1,
-      dependencies: 3.7,
-      teamMorale: 4.3,
-      apiScore: 4.0,
-      combinedScore: 4.1,
-    },
-  },
-  {
-    id: "2",
-    name: "Mobile App Backend",
-    group: "Backend",
-    metrics: {
-      codeReview: 3.5,
-      technicalDebt: 3.2,
-      testQuality: 3.8,
-      documentation: 3.4,
-      deployment: 3.9,
-      dependencies: 3.3,
-      teamMorale: 3.6,
-      apiScore: 3.7,
-      combinedScore: 3.6,
-    },
-  },
-  {
-    id: "3",
-    name: "Analytics Dashboard",
-    group: "Frontend",
-    metrics: {
-      codeReview: 4.5,
-      technicalDebt: 4.2,
-      testQuality: 4.0,
-      documentation: 4.3,
-      deployment: 4.4,
-      dependencies: 4.1,
-      teamMorale: 4.5,
-      apiScore: 4.3,
-      combinedScore: 4.3,
-    },
-  },
-  {
-    id: "4",
-    name: "legacy-api",
-    group: "Backend",
-    metrics: {
-      codeReview: 3.2,
-      technicalDebt: 2.1,
-      testQuality: 2.5,
-      documentation: 2.8,
-      deployment: 3.5,
-      dependencies: 2.3,
-      teamMorale: 3.1,
-      apiScore: 3.0,
-      combinedScore: 2.8,
-    },
-  },
-  {
-    id: "5",
-    name: "Payment Gateway",
-    group: "Backend",
-    metrics: {
-      codeReview: 4.8,
-      technicalDebt: 4.5,
-      testQuality: 4.9,
-      documentation: 4.6,
-      deployment: 4.7,
-      dependencies: 4.4,
-      teamMorale: 4.5,
-      apiScore: 4.6,
-      combinedScore: 4.7,
-    },
-  },
-];
+interface ProjectMetrics {
+  codeReview: number;
+  technicalDebt: number;
+  testQuality: number;
+  documentation: number;
+  deployment: number;
+  dependencies: number;
+  teamMorale: number;
+  apiScore: number;
+  combinedScore: number;
+}
+
+interface ProjectInsight {
+  id: number;
+  uuid: string;
+  name: string;
+  group: string;
+  metrics: ProjectMetrics;
+  created_at: string;
+}
 
 const ProjectInsights = () => {
-  const getRadarData = (metrics: any) => [
+  const [projects, setProjects] = useState<ProjectInsight[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchAllProjectInsights();
+  }, []);
+
+  const fetchAllProjectInsights = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch('/api/ai/all-project-insights');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch project insights');
+      }
+
+      const data = await response.json();
+      setProjects(data.projects || []);
+    } catch (err: any) {
+      console.error('Error fetching project insights:', err);
+      setError(err.message || 'Failed to load project insights');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getRadarData = (metrics: ProjectMetrics) => [
     { metric: "Code Review", score: metrics.codeReview },
     { metric: "Technical Debt", score: metrics.technicalDebt },
     { metric: "Test Quality", score: metrics.testQuality },
@@ -106,18 +73,68 @@ const ProjectInsights = () => {
     return "text-red-600 dark:text-red-400";
   };
 
+  const formatScore = (score: number | undefined | null): string => {
+    if (score === undefined || score === null || isNaN(score)) {
+      return "0.00";
+    }
+    return Number(score).toFixed(2);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-muted-foreground">Loading project insights...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <AlertCircle className="h-8 w-8 mx-auto mb-4 text-destructive" />
+          <p className="text-destructive font-semibold mb-2">Error loading insights</p>
+          <p className="text-muted-foreground text-sm">{error}</p>
+          <Button onClick={fetchAllProjectInsights} variant="outline" className="mt-4">
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (projects.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <AlertCircle className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
+          <p className="text-muted-foreground font-semibold mb-2">No insights available</p>
+          <p className="text-sm text-muted-foreground">Generate insights for your projects to see them here.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Project Insights</h1>
-        <p className="text-muted-foreground">
-          Quality metrics and analysis for all tracked projects
-        </p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Project Insights</h1>
+          <p className="text-muted-foreground">
+            Quality metrics and analysis for {projects.length} tracked project{projects.length !== 1 ? 's' : ''}
+          </p>
+        </div>
+        <Button onClick={fetchAllProjectInsights} variant="outline">
+          Refresh
+        </Button>
       </div>
 
       {/* Projects List */}
       <div className="space-y-6">
-        {trackedProjects.map((project) => (
+        {projects.map((project) => (
           <Card key={project.id}>
             <CardHeader>
               <div className="flex justify-between items-start">
@@ -138,50 +155,50 @@ const ProjectInsights = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">Code Review</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.codeReview)}`}>
-                        {project.metrics.codeReview.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.codeReview || 0)}`}>
+                        {formatScore(project.metrics.codeReview)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">Technical Debt</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.technicalDebt)}`}>
-                        {project.metrics.technicalDebt.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.technicalDebt || 0)}`}>
+                        {formatScore(project.metrics.technicalDebt)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">Test Quality</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.testQuality)}`}>
-                        {project.metrics.testQuality.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.testQuality || 0)}`}>
+                        {formatScore(project.metrics.testQuality)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">Documentation</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.documentation)}`}>
-                        {project.metrics.documentation.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.documentation || 0)}`}>
+                        {formatScore(project.metrics.documentation)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">Deployment</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.deployment)}`}>
-                        {project.metrics.deployment.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.deployment || 0)}`}>
+                        {formatScore(project.metrics.deployment)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">Dependencies</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.dependencies)}`}>
-                        {project.metrics.dependencies.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.dependencies || 0)}`}>
+                        {formatScore(project.metrics.dependencies)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">Team Morale</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.teamMorale)}`}>
-                        {project.metrics.teamMorale.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.teamMorale || 0)}`}>
+                        {formatScore(project.metrics.teamMorale)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
                       <span className="text-sm font-medium">API Score</span>
-                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.apiScore)}`}>
-                        {project.metrics.apiScore.toFixed(2)}
+                      <span className={`text-lg font-bold ${getScoreColor(project.metrics.apiScore || 0)}`}>
+                        {formatScore(project.metrics.apiScore)}
                       </span>
                     </div>
                   </div>
@@ -189,7 +206,7 @@ const ProjectInsights = () => {
                   <div className="flex justify-between items-center p-4 bg-primary/10 rounded-lg border-2 border-primary/20">
                     <span className="text-base font-semibold">Combined Score</span>
                     <span className="text-2xl font-bold text-primary">
-                      {project.metrics.combinedScore.toFixed(2)}
+                      {formatScore(project.metrics.combinedScore)}
                     </span>
                   </div>
                 </div>
