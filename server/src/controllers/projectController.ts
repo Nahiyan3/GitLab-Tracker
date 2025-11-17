@@ -1,6 +1,6 @@
 // Controllers handle HTTP requests and responses
 import { Request, Response } from 'express';
-import { trackProject, untrackProject } from '../db/queries';
+import { trackProject, untrackProject, getTotalProjectsCount, getTrackedProjectsCount, getLatestCombinedScores, getProjectsNeedingAttention } from '../db/queries';
 import projectSyncService from '../services/project/projectSyncService';
 import projectFetchService from '../services/project/projectFetchService';
 import projectRefreshService from '../services/project/projectRefreshService';
@@ -173,6 +173,72 @@ getProjectGroupsHandler = async (req: Request, res: Response) => {
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
+  };
+
+  /**
+   * Get dashboard statistics
+   */
+  getDashboardStatsHandler = async (req: Request, res: Response) => {
+    try {
+      const stats = await this.calculateDashboardStats();
+      res.json(stats);
+    } catch (error: any) {
+      console.error('❌ Failed to get dashboard stats:', error.message);
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
+   * Calculate all dashboard statistics
+   */
+  private calculateDashboardStats = async () => {
+    const totalProjects = await getTotalProjectsCount();
+    const trackedProjects = await getTrackedProjectsCount();
+    const projectsWithScores = await getLatestCombinedScores();
+
+    const averageQuality = this.calculateAverageQuality(projectsWithScores);
+    const needsAttentionCount = this.countProjectsNeedingAttention(projectsWithScores);
+    const qualityDistribution = this.calculateQualityDistribution(projectsWithScores);
+    const projectsNeedingAttention = await getProjectsNeedingAttention(6);
+
+    return {
+      totalProjects,
+      trackedProjects,
+      averageQuality,
+      needsAttention: needsAttentionCount,
+      qualityDistribution,
+      projectsNeedingAttention,
+    };
+  };
+
+  /**
+   * Calculate average quality score from projects
+   */
+  private calculateAverageQuality = (projects: any[]): number => {
+    if (projects.length === 0) return 0;
+    
+    const sum = projects.reduce((acc, p) => acc + parseFloat(p.combined_score), 0);
+    const average = sum / projects.length;
+    return parseFloat(average.toFixed(2));
+  };
+
+  /**
+   * Count projects with combined score < 3
+   */
+  private countProjectsNeedingAttention = (projects: any[]): number => {
+    return projects.filter(p => parseFloat(p.combined_score) < 3).length;
+  };
+
+  /**
+   * Calculate quality distribution across score ranges
+   */
+  private calculateQualityDistribution = (projects: any[]) => {
+    return {
+      critical: projects.filter(p => parseFloat(p.combined_score) < 2).length,
+      warning: projects.filter(p => parseFloat(p.combined_score) >= 2 && parseFloat(p.combined_score) < 3).length,
+      good: projects.filter(p => parseFloat(p.combined_score) >= 3 && parseFloat(p.combined_score) < 4).length,
+      excellent: projects.filter(p => parseFloat(p.combined_score) >= 4).length,
+    };
   };
 }
 export default new ProjectController();

@@ -1,77 +1,103 @@
+import { useState, useEffect } from "react";
 import { MetricCard } from "@/components/MetricCard";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FolderGit2, Star, TrendingUp, AlertTriangle } from "lucide-react";
+import { FolderGit2, Star, TrendingUp, AlertTriangle, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from "recharts";
 
-const qualityDistribution = [
-  { range: "0-50", count: 3, color: "hsl(var(--destructive))" },
-  { range: "51-75", count: 8, color: "hsl(var(--warning))" },
-  { range: "76-100", count: 12, color: "hsl(var(--success))" },
-];
-
-const trackingData = [
-  { name: "Tracked", value: 23, color: "hsl(var(--primary))" },
-  { name: "Untracked", value: 42, color: "hsl(var(--muted))" },
-];
-
-const needsAttention = [
-  {
-    id: "1",
-    name: "legacy-api",
-    group: "Backend",
-    combinedScore: 2.8,
-    metrics: [
-      { metric: "Code Review", score: 3.2 },
-      { metric: "Technical Debt", score: 2.1 },
-      { metric: "Test Quality", score: 2.5 },
-      { metric: "Documentation", score: 2.8 },
-      { metric: "Deployment", score: 3.5 },
-      { metric: "Dependencies", score: 2.3 },
-      { metric: "Team Morale", score: 3.1 },
-      { metric: "API Score", score: 3.0 },
-      { metric: "Combined Score", score: 2.8 },
-    ],
-  },
-  {
-    id: "2",
-    name: "old-frontend",
-    group: "Frontend",
-    combinedScore: 2.5,
-    metrics: [
-      { metric: "Code Review", score: 2.8 },
-      { metric: "Technical Debt", score: 1.9 },
-      { metric: "Test Quality", score: 2.2 },
-      { metric: "Documentation", score: 2.6 },
-      { metric: "Deployment", score: 3.0 },
-      { metric: "Dependencies", score: 2.0 },
-      { metric: "Team Morale", score: 2.8 },
-      { metric: "API Score", score: 2.4 },
-      { metric: "Combined Score", score: 2.5 },
-    ],
-  },
-  {
-    id: "3",
-    name: "data-pipeline",
-    group: "Data",
-    combinedScore: 2.9,
-    metrics: [
-      { metric: "Code Review", score: 3.5 },
-      { metric: "Technical Debt", score: 2.6 },
-      { metric: "Test Quality", score: 2.8 },
-      { metric: "Documentation", score: 2.5 },
-      { metric: "Deployment", score: 3.2 },
-      { metric: "Dependencies", score: 2.7 },
-      { metric: "Team Morale", score: 3.3 },
-      { metric: "API Score", score: 3.1 },
-      { metric: "Combined Score", score: 2.9 },
-    ],
-  },
-];
+interface DashboardStats {
+  totalProjects: number;
+  trackedProjects: number;
+  averageQuality: number;
+  needsAttention: number;
+  qualityDistribution: {
+    critical: number;
+    warning: number;
+    good: number;
+    excellent: number;
+  };
+  projectsNeedingAttention: Array<{
+    id: number;
+    uuid: string;
+    name: string;
+    full_path: string;
+    combined_score: number;
+    insights_data: any;
+  }>;
+}
 
 const Dashboard = () => {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDashboardStats();
+  }, []);
+
+  const fetchDashboardStats = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/projects/dashboard-stats');
+      const data = await response.json();
+      setStats(data);
+    } catch (error) {
+      console.error('Failed to fetch dashboard stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getMetricsFromInsights = (insightsData: any) => {
+    const sectionScores: any = {};
+    if (insightsData?.section_scores && Array.isArray(insightsData.section_scores)) {
+      insightsData.section_scores.forEach((section: any) => {
+        const sectionName = section.name.toLowerCase().replace(/\s+/g, '');
+        sectionScores[sectionName] = section.score || 0;
+      });
+    }
+
+    return [
+      { metric: "Code Review", score: sectionScores.codereview || 0 },
+      { metric: "Technical Debt", score: sectionScores.technicaldebt || 0 },
+      { metric: "Test Quality", score: sectionScores.testquality || 0 },
+      { metric: "Documentation", score: sectionScores.documentation || 0 },
+      { metric: "Deployment", score: sectionScores.deployment || 0 },
+      { metric: "Dependencies", score: sectionScores.dependencies || 0 },
+      { metric: "Team Morale", score: sectionScores.teammorale || sectionScores.teamvelocity || sectionScores.teamvelocitymorale || 0 },
+      { metric: "API Score", score: insightsData?.api_scores?.api_score || 0 },
+      { metric: "Combined Score", score: parseFloat(insightsData?.combined_score || 0) },
+    ];
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!stats) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <p className="text-muted-foreground">Failed to load dashboard data</p>
+      </div>
+    );
+  }
+
+  const qualityDistribution = [
+    { range: "0-2 (Critical)", count: stats.qualityDistribution.critical, color: "hsl(var(--destructive))" },
+    { range: "2-3 (Warning)", count: stats.qualityDistribution.warning, color: "hsl(var(--warning))" },
+    { range: "3-4 (Good)", count: stats.qualityDistribution.good, color: "hsl(var(--chart-2))" },
+    { range: "4-5 (Excellent)", count: stats.qualityDistribution.excellent, color: "hsl(var(--success))" },
+  ];
+
+  const trackingData = [
+    { name: "Tracked", value: stats.trackedProjects, color: "hsl(var(--primary))" },
+    { name: "Untracked", value: stats.totalProjects - stats.trackedProjects, color: "hsl(var(--muted))" },
+  ];
   return (
     <div className="space-y-6">
       <div>
@@ -85,27 +111,25 @@ const Dashboard = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <MetricCard
           title="Total Projects"
-          value={65}
+          value={stats.totalProjects}
           icon={FolderGit2}
           subtitle="Across all groups"
         />
         <MetricCard
           title="Tracked Projects"
-          value={23}
+          value={stats.trackedProjects}
           icon={Star}
-          change={{ value: "+3 this week", positive: true }}
         />
         <MetricCard
           title="Average Quality"
-          value="72/100"
+          value={`${stats.averageQuality.toFixed(2)}/5`}
           icon={TrendingUp}
-          change={{ value: "+5 pts", positive: true }}
         />
         <MetricCard
           title="Needs Attention"
-          value={5}
+          value={stats.needsAttention}
           icon={AlertTriangle}
-          subtitle="Quality score < 50"
+          subtitle="Combined score < 3"
         />
       </div>
 
@@ -164,52 +188,60 @@ const Dashboard = () => {
             View all tracked →
           </Link>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {needsAttention.map((project) => (
-            <Card key={project.id} className="hover:shadow-md transition-shadow">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg mb-1">{project.name}</CardTitle>
-                    <p className="text-sm text-muted-foreground">{project.group}</p>
+        {stats.projectsNeedingAttention.length === 0 ? (
+          <Card>
+            <CardContent className="p-8 text-center">
+              <p className="text-muted-foreground">No projects need attention right now! 🎉</p>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {stats.projectsNeedingAttention.map((project) => (
+              <Card key={project.id} className="hover:shadow-md transition-shadow">
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg mb-1">{project.name}</CardTitle>
+                      <p className="text-sm text-muted-foreground">{project.full_path?.split('/')[0] || 'Unknown'}</p>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {/* Combined Score */}
-                <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-primary">{project.combinedScore.toFixed(2)}</div>
-                  <div className="text-sm text-muted-foreground">Combined Quality Score</div>
-                </div>
-                
-                {/* Radar Chart */}
-                <ResponsiveContainer width="100%" height={200}>
-                  <RadarChart data={project.metrics}>
-                    <PolarGrid />
-                    <PolarAngleAxis 
-                      dataKey="metric" 
-                      tick={{ fontSize: 10 }}
-                    />
-                    <PolarRadiusAxis angle={90} domain={[0, 5]} />
-                    <Radar 
-                      name={project.name}
-                      dataKey="score" 
-                      stroke="hsl(var(--primary))" 
-                      fill="hsl(var(--primary))" 
-                      fillOpacity={0.5}
-                    />
-                    <Tooltip />
-                  </RadarChart>
-                </ResponsiveContainer>
+                </CardHeader>
+                <CardContent>
+                  {/* Combined Score */}
+                  <div className="text-center mb-4">
+                    <div className="text-3xl font-bold text-destructive">{Number(project.combined_score).toFixed(2)}</div>
+                    <div className="text-sm text-muted-foreground">Combined Quality Score</div>
+                  </div>
+                  
+                  {/* Radar Chart */}
+                  <ResponsiveContainer width="100%" height={200}>
+                    <RadarChart data={getMetricsFromInsights(project.insights_data)}>
+                      <PolarGrid />
+                      <PolarAngleAxis 
+                        dataKey="metric" 
+                        tick={{ fontSize: 10 }}
+                      />
+                      <PolarRadiusAxis angle={90} domain={[0, 5]} />
+                      <Radar 
+                        name={project.name}
+                        dataKey="score" 
+                        stroke="hsl(var(--destructive))" 
+                        fill="hsl(var(--destructive))" 
+                        fillOpacity={0.5}
+                      />
+                      <Tooltip />
+                    </RadarChart>
+                  </ResponsiveContainer>
 
-                {/* View Details Button */}
-                <Button asChild size="sm" variant="outline" className="w-full mt-4">
-                  <Link to={`/project/${project.id}`}>View Details</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  {/* View Details Button */}
+                  <Button asChild size="sm" variant="outline" className="w-full mt-4">
+                    <Link to={`/project/${project.id}`}>View Details</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

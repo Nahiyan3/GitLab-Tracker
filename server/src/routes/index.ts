@@ -23,6 +23,7 @@ router.get('/gitlab/verify', async (req, res) => {
 
 // Project routes
 router.get('/projects/db', projectController.getProjectsFromDB);
+router.get('/projects/dashboard-stats', projectController.getDashboardStatsHandler);
 router.post('/projects/sync', projectController.syncProjectsFromGitLab);
 router.post('/projects/sync/:id', projectController.syncSingleProject);
 router.post('/projects/refresh/:id', projectController.refreshSingleProject);

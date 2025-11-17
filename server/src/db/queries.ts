@@ -705,4 +705,105 @@ export const getAllLatestProjectInsights = async (): Promise<any[]> => {
   }
 };
 
+/**
+ * Get total count of all projects
+ */
+export const getTotalProjectsCount = async (): Promise<number> => {
+  const pool = getPool();
+  
+  try {
+    const result = await pool.query('SELECT COUNT(*) as count FROM projects');
+    return parseInt(result.rows[0].count);
+  } catch (error: any) {
+    console.error('❌ Failed to get total projects count:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get count of tracked projects
+ */
+export const getTrackedProjectsCount = async (): Promise<number> => {
+  const pool = getPool();
+  
+  try {
+    const result = await pool.query('SELECT COUNT(*) as count FROM projects WHERE tracked = true');
+    return parseInt(result.rows[0].count);
+  } catch (error: any) {
+    console.error('❌ Failed to get tracked projects count:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get latest combined scores for all projects with insights
+ */
+export const getLatestCombinedScores = async (): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      p.id,
+      p.uuid,
+      p.name,
+      p.full_path,
+      p.tracked,
+      pi.combined_score,
+      pi.created_at
+    FROM projects p
+    INNER JOIN LATERAL (
+      SELECT combined_score, created_at
+      FROM project_insights
+      WHERE project_uuid = p.uuid
+      ORDER BY created_at DESC
+      LIMIT 1
+    ) pi ON true
+    WHERE pi.combined_score IS NOT NULL;
+  `;
+  
+  try {
+    const result = await pool.query(query);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get latest combined scores:', error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get projects needing attention (combined_score < 3) with full insights data
+ */
+export const getProjectsNeedingAttention = async (limit: number = 6): Promise<any[]> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      p.id,
+      p.uuid,
+      p.name,
+      p.full_path,
+      pi.insights_data,
+      pi.combined_score,
+      pi.created_at
+    FROM projects p
+    INNER JOIN LATERAL (
+      SELECT * FROM project_insights
+      WHERE project_uuid = p.uuid
+      ORDER BY created_at DESC
+      LIMIT 1
+    ) pi ON true
+    WHERE pi.combined_score < 3
+    ORDER BY pi.combined_score ASC
+    LIMIT $1;
+  `;
+  
+  try {
+    const result = await pool.query(query, [limit]);
+    return result.rows;
+  } catch (error: any) {
+    console.error('❌ Failed to get projects needing attention:', error.message);
+    throw error;
+  }
+};
+
 
