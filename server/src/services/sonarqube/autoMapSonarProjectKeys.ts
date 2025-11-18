@@ -3,13 +3,28 @@ import axios from 'axios';
 
 export async function autoMapSonarProjectKeys() {
   const pool = getPool();
-  // Fetch all SonarCloud projects
-  const sonarUrl = process.env.SONARQUBE_URL || '';
-  const sonarToken = process.env.SONARQUBE_TOKEN || '';
-  const sonarOrg = process.env.SONARQUBE_ORGANIZATION || '';
+  // Fetch all SonarQube projects (works for both SonarCloud and self-hosted)
+  // Trim values to remove any whitespace
+  const sonarUrl = (process.env.SONARQUBE_URL || '').trim().replace(/\/$/, ''); // Remove trailing slash
+  const sonarToken = (process.env.SONARQUBE_TOKEN || '').trim();
+  const sonarOrg = (process.env.SONARQUBE_ORGANIZATION || '').trim();
   
-  if (!sonarOrg) {
-    console.warn('⚠️ SONARQUBE_ORGANIZATION not set in .env. Skipping auto-mapping.');
+  console.log('🔧 SonarQube Configuration:');
+  console.log(`  URL: "${sonarUrl}"`);
+  console.log(`  Token: ${sonarToken ? sonarToken.substring(0, 10) + '...' : 'NOT SET'}`);
+  console.log(`  Token length: ${sonarToken.length} characters`);
+  console.log(`  Organization: ${sonarOrg || 'NOT SET (OK for self-hosted)'}`);
+  
+  if (!sonarUrl || !sonarToken) {
+    console.error('❌ SONARQUBE_URL or SONARQUBE_TOKEN not configured');
+    return;
+  }
+  
+  // Organization is only required for SonarCloud, not for self-hosted SonarQube
+  const isSonarCloud = sonarUrl.includes('sonarcloud.io');
+  
+  if (isSonarCloud && !sonarOrg) {
+    console.warn('⚠️ SONARQUBE_ORGANIZATION is required for SonarCloud. Skipping auto-mapping.');
     return;
   }
   
@@ -20,13 +35,28 @@ export async function autoMapSonarProjectKeys() {
   
   try {
     do {
-      const url = `${sonarUrl}/api/components/search?qualifiers=TRK&organization=${sonarOrg}&p=${page}&ps=${pageSize}`;
+      // Build URL - only add organization parameter for SonarCloud
+      let url = `${sonarUrl}/api/components/search?qualifiers=TRK&p=${page}&ps=${pageSize}`;
+      if (sonarOrg) {
+        url += `&organization=${sonarOrg}`;
+      }
+      
+      // Self-hosted SonarQube uses token as username with empty password for Basic auth
+      // Format: "token:" (token followed by colon, no password)
       const resp = await axios.get(url, {
         headers: {
           Authorization: 'Basic ' + Buffer.from(sonarToken + ':').toString('base64'),
         },
       });
       const data = resp.data;
+      
+      // Check if we got HTML instead of JSON (authentication failure)
+      if (typeof data === 'string' && data.includes('<!DOCTYPE html>')) {
+        throw new Error('Authentication failed: Received HTML login page instead of JSON. Check your SONARQUBE_TOKEN.');
+      }
+      
+      console.log('✅ Successfully fetched SonarQube data');
+      
       if (data.components && Array.isArray(data.components)) {
         for (const c of data.components) {
           projects.push({ key: c.key, name: c.name });
@@ -36,7 +66,7 @@ export async function autoMapSonarProjectKeys() {
       page++;
     } while (projects.length < total);
   } catch (error: any) {
-    console.error('Failed to fetch SonarCloud projects:', error.message);
+    console.error('Failed to fetch SonarQube projects:', error.message);
     if (error.response) {
       console.error('Response status:', error.response.status);
       console.error('Response data:', error.response.data);
@@ -47,13 +77,13 @@ export async function autoMapSonarProjectKeys() {
   // Fetch all local projects from the registry
   const dbProjects = await pool.query('SELECT id, name FROM projects');
 
-  // Print all SonarCloud project keys for debug
-  console.log('All SonarCloud project keys:');
-  projects.forEach(p => console.log(`  ${p.key} (name: ${p.name})`));
+  console.log(`\n📋 Found ${projects.length} SonarQube projects and ${dbProjects.rows.length} database projects`);
 
   function normalize(str: string) {
     return str.replace(/[-_]/g, '').trim().toLowerCase();
   }
+  
+  console.log('\n🔍 Matching results:\n');
   
   for (const dbProject of dbProjects.rows) {
     const dbNorm = normalize(dbProject.name);
@@ -63,7 +93,7 @@ export async function autoMapSonarProjectKeys() {
       p => normalize(p.name) === dbNorm || normalize(p.key) === dbNorm
     );
     
-    // If no match, try to find if the SonarCloud key ends with the DB project name
+    // If no match, try to find if the SonarQube key ends with the DB project name
     if (!match) {
       match = projects.find(p => {
         const keyNorm = normalize(p.key);
@@ -76,9 +106,9 @@ export async function autoMapSonarProjectKeys() {
         'UPDATE projects SET sonar_project_key = $1 WHERE id = $2',
         [match.key, dbProject.id]
       );
-      console.log(`✅ Mapped DB project '${dbProject.name}' to SonarCloud key '${match.key}'`);
+      console.log(`✅ "${dbProject.name}" → "${match.key}"`);
     } else {
-      console.warn(`⚠️ No SonarCloud match for DB project '${dbProject.name}'.`);
+      console.log(`❌ "${dbProject.name}" → No match`);
     }
   }
 }
