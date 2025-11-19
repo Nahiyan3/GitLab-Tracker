@@ -215,8 +215,17 @@ const Dashboard = () => {
                   
                   {/* Radar Chart */}
                   <ResponsiveContainer width="100%" height={200}>
-                    <RadarChart data={getMetricsFromInsights(project.insights_data)}>
-                      <PolarGrid />
+                    <RadarChart data={getMetricsFromInsights(project.insights_data)} cx={150} cy={100}>
+                      <defs>
+                        <radialGradient id={`radarGradient-dashboard-${project.id}`} cx="150" cy="100" r="80" fx="150" fy="100" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stopColor="#ff1a1a" stopOpacity={0.95} />
+                          <stop offset="25%" stopColor="#ff6b6b" stopOpacity={0.85} />
+                          <stop offset="50%" stopColor="#ffd700" stopOpacity={0.8} />
+                          <stop offset="75%" stopColor="#7cfc00" stopOpacity={0.8} />
+                          <stop offset="100%" stopColor="#22c55e" stopOpacity={0.9} />
+                        </radialGradient>
+                      </defs>
+                      <PolarGrid stroke="#e5e7eb" />
                       <PolarAngleAxis 
                         dataKey="metric" 
                         tick={{ fontSize: 10 }}
@@ -225,9 +234,10 @@ const Dashboard = () => {
                       <Radar 
                         name={project.name}
                         dataKey="score" 
-                        stroke="hsl(var(--destructive))" 
-                        fill="hsl(var(--destructive))" 
-                        fillOpacity={0.5}
+                        stroke="#3b82f6" 
+                        strokeWidth={2}
+                        fill={`url(#radarGradient-dashboard-${project.id})`}
+                        fillOpacity={0.7}
                       />
                       <Tooltip />
                     </RadarChart>

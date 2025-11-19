@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } from "recharts";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, AlertCircle } from 'lucide-react';
 
 interface ProjectMetrics {
   codeReview: number;
@@ -215,19 +215,29 @@ const ProjectInsights = () => {
                 <div className="flex flex-col items-center justify-center">
                   <h3 className="font-semibold text-sm text-muted-foreground mb-2">Metrics Visualization</h3>
                   <ResponsiveContainer width="100%" height={300}>
-                    <RadarChart data={getRadarData(project.metrics)}>
-                      <PolarGrid />
+                    <RadarChart data={getRadarData(project.metrics)} cx={150} cy={150}>
+                      <defs>
+                        <radialGradient id={`radarGradient-${project.id}`} cx="150" cy="150" r="100" fx="150" fy="150" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stopColor="#ff1a1a" stopOpacity={0.95} />
+                          <stop offset="25%" stopColor="#ff6b6b" stopOpacity={0.85} />
+                          <stop offset="50%" stopColor="#ffd700" stopOpacity={0.8} />
+                          <stop offset="75%" stopColor="#7cfc00" stopOpacity={0.8} />
+                          <stop offset="100%" stopColor="#22c55e" stopOpacity={0.9} />
+                        </radialGradient>
+                      </defs>
+                      <PolarGrid stroke="#e5e7eb" />
                       <PolarAngleAxis 
                         dataKey="metric" 
                         tick={{ fontSize: 11 }}
                       />
-                      <PolarRadiusAxis angle={90} domain={[0, 5]} />
+                      <PolarRadiusAxis angle={90} domain={[0, 5]} tick={{ fontSize: 10 }} />
                       <Radar 
                         name={project.name}
                         dataKey="score" 
-                        stroke="hsl(var(--primary))" 
-                        fill="hsl(var(--primary))" 
-                        fillOpacity={0.6}
+                        stroke="#3b82f6" 
+                        strokeWidth={2}
+                        fill={`url(#radarGradient-${project.id})`}
+                        fillOpacity={0.7}
                       />
                       <Tooltip />
                     </RadarChart>
