@@ -37,13 +37,57 @@ const extractSectionScore = (detailedCalc: string, sectionName: string): number 
 };
 
 /**
+ * Clean JSON string by removing control characters and fixing common issues
+ */
+const cleanJsonString = (jsonStr: string): string => {
+  // Remove actual control characters (but keep normal whitespace)
+  let cleaned = jsonStr.replace(/[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F]/g, '');
+  
+  // The JSON might have literal \n in it - just remove them since they're in the structure
+  // Real newlines in strings should already be properly escaped by Gemini
+  
+  return cleaned;
+};
+
+/**
  * Parse and correct insights data by extracting verified scores from detailed_calculations
  */
 export const parseAndCorrectInsights = (rawResponse: string): any => {
   try {
     // Extract JSON from markdown code block
     const jsonMatch = rawResponse.match(/```json\n([\s\S]*?)\n```/);
-    const parsed = JSON.parse(jsonMatch ? jsonMatch[1] : rawResponse);
+    let jsonString = jsonMatch ? jsonMatch[1] : rawResponse;
+    
+    console.log('[Parser] Raw JSON first 200 chars:', jsonString.substring(0, 200));
+    
+    // Clean the JSON string
+    jsonString = cleanJsonString(jsonString);
+    
+    console.log('[Parser] Cleaned JSON first 200 chars:', jsonString.substring(0, 200));
+    console.log('[Parser] Attempting to parse JSON (length:', jsonString.length, ')');
+    
+    let parsed;
+    try {
+      parsed = JSON.parse(jsonString);
+    } catch (parseError: any) {
+      // If parsing fails, try to fix common issues
+      console.warn('[Parser] Initial parse failed:', parseError.message);
+      console.warn('[Parser] Attempting repairs...');
+      
+      // Log a sample of what we're trying to parse
+      console.log('[Parser] Sample:', jsonString.substring(0, 500));
+      
+      // Try to fix trailing commas
+      jsonString = jsonString.replace(/,(\s*[}\]])/g, '$1');
+      
+      // Try to fix missing commas between properties
+      jsonString = jsonString.replace(/"\s*\n\s*"/g, '",\n"');
+      
+      console.log('[Parser] After repairs, first 200 chars:', jsonString.substring(0, 200));
+      
+      // Try again
+      parsed = JSON.parse(jsonString);
+    }
     
     if (!parsed.detailed_calculations) {
       console.warn('[Parser] No detailed_calculations found - returning raw parsed data');
@@ -133,6 +177,20 @@ export const parseAndCorrectInsights = (rawResponse: string): any => {
     
   } catch (error: any) {
     console.error('[Parser] Failed to parse and correct insights:', error.message);
+    
+    // Log the problematic part of the JSON
+    if (error.message.includes('position')) {
+      const position = parseInt(error.message.match(/position (\d+)/)?.[1] || '0');
+      const jsonMatch = rawResponse.match(/```json\n([\s\S]*?)\n```/);
+      const jsonString = jsonMatch ? jsonMatch[1] : rawResponse;
+      
+      const start = Math.max(0, position - 100);
+      const end = Math.min(jsonString.length, position + 100);
+      console.error('[Parser] Context around error position:');
+      console.error('...', jsonString.substring(start, end), '...');
+      console.error('     ', ' '.repeat(Math.min(100, position - start)) + '^');
+    }
+    
     throw new Error(`Failed to parse insights: ${error.message}`);
   }
 };

@@ -191,3 +191,11 @@ IMPORTANT REQUIREMENTS:
 5. MUST provide an "analysis" field for EVERY section describing the current state (1-2 sentences).
 6. If a metric has no numeric value, skip it in the calculation (reduce the divisor accordingly).
 7. Text responses should ONLY be used for analysis and recommendations, not for score calculations.
+
+JSON FORMATTING REQUIREMENTS:
+- Output MUST be valid JSON with proper escaping
+- Replace all newlines in text with spaces or use \\n for explicit line breaks
+- Escape all double quotes inside strings with \"
+- Do NOT include any control characters (tabs, form feeds, etc.) in strings
+- Ensure all strings are properly closed with quotes
+- Each property must be separated by commas
