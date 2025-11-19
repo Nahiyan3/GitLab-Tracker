@@ -215,9 +215,9 @@ const Dashboard = () => {
                   
                   {/* Radar Chart */}
                   <ResponsiveContainer width="100%" height={200}>
-                    <RadarChart data={getMetricsFromInsights(project.insights_data)} cx={150} cy={100}>
+                    <RadarChart data={getMetricsFromInsights(project.insights_data)} cx={235} cy={100}>
                       <defs>
-                        <radialGradient id={`radarGradient-dashboard-${project.id}`} cx="150" cy="100" r="80" fx="150" fy="100" gradientUnits="userSpaceOnUse">
+                        <radialGradient id={`radarGradient-dashboard-${project.id}`} cx="235" cy="100" r="80" fx="235" fy="100" gradientUnits="userSpaceOnUse">
                           <stop offset="0%" stopColor="#ff1a1a" stopOpacity={0.95} />
                           <stop offset="25%" stopColor="#ff6b6b" stopOpacity={0.85} />
                           <stop offset="50%" stopColor="#ffd700" stopOpacity={0.8} />

@@ -215,9 +215,9 @@ const ProjectInsights = () => {
                 <div className="flex flex-col items-center justify-center">
                   <h3 className="font-semibold text-sm text-muted-foreground mb-2">Metrics Visualization</h3>
                   <ResponsiveContainer width="100%" height={300}>
-                    <RadarChart data={getRadarData(project.metrics)} cx={150} cy={150}>
+                    <RadarChart data={getRadarData(project.metrics)} cx={380} cy={150}>
                       <defs>
-                        <radialGradient id={`radarGradient-${project.id}`} cx="150" cy="150" r="100" fx="150" fy="150" gradientUnits="userSpaceOnUse">
+                        <radialGradient id={`radarGradient-${project.id}`} cx="380" cy="150" r="100" fx="380" fy="150" gradientUnits="userSpaceOnUse">
                           <stop offset="0%" stopColor="#ff1a1a" stopOpacity={0.95} />
                           <stop offset="25%" stopColor="#ff6b6b" stopOpacity={0.85} />
                           <stop offset="50%" stopColor="#ffd700" stopOpacity={0.8} />
