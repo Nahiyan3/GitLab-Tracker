@@ -52,6 +52,18 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Migration warning:', migrationError.message);
     }
+
+    // Run issue metrics migration
+    try {
+      const migrationPath = path.join(__dirname, 'migrations', '004_create_issue_metrics.sql');
+      if (fs.existsSync(migrationPath)) {
+        const migrationSql = fs.readFileSync(migrationPath, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Issue metrics tables created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Issue metrics migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

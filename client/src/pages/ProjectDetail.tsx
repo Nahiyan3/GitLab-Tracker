@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { api } from "@/lib/api";
+import { IssueMetricsCard } from "@/components/IssueMetricsCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -40,6 +41,9 @@ const ProjectDetail = () => {
   const [insightsHistory, setInsightsHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [chartData, setChartData] = useState<any[]>([]);
+  const [issueMetrics, setIssueMetrics] = useState<any>(null);
+  const [metricsLoading, setMetricsLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   // Mock project data
   const project = {
@@ -110,6 +114,49 @@ const ProjectDetail = () => {
     fetchInsightsHistory();
   }, [id]);
 
+  // Fetch issue metrics
+  useEffect(() => {
+    const fetchIssueMetrics = async () => {
+      if (!id) return;
+      
+      try {
+        setMetricsLoading(true);
+        const response = await api.get(`/projects/${id}/issue-metrics`);
+        
+        if (response.success) {
+          setIssueMetrics(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch issue metrics:', error);
+      } finally {
+        setMetricsLoading(false);
+      }
+    };
+
+    fetchIssueMetrics();
+  }, [id]);
+
+  // Handle refresh button click
+  const handleRefreshData = async () => {
+    if (!id) return;
+    
+    try {
+      setRefreshing(true);
+      const response = await api.post(`/projects/${id}/issue-metrics/refresh`, {});
+      
+      if (response.success) {
+        setIssueMetrics(response.data);
+        // Show success message (you can add a toast here)
+        console.log('Issue metrics refreshed successfully');
+      }
+    } catch (error) {
+      console.error('Failed to refresh issue metrics:', error);
+      // Show error message (you can add a toast here)
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -133,9 +180,14 @@ const ProjectDetail = () => {
               AI Project Insights
             </Link>
           </Button>
-          <Button variant="outline" size="sm">
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh Data
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={handleRefreshData}
+            disabled={refreshing}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+            {refreshing ? 'Refreshing...' : 'Refresh Data'}
           </Button>
           <Button size="sm" variant="outline">
             <ExternalLink className="h-4 w-4 mr-2" />
@@ -196,6 +248,9 @@ const ProjectDetail = () => {
               </CardContent>
             </Card>
           </div>
+
+          {/* Issue Health Metrics Card */}
+          <IssueMetricsCard metrics={issueMetrics} loading={metricsLoading} />
 
           <Card>
             <CardHeader>
