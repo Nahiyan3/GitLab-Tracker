@@ -68,6 +68,12 @@ class IssueMetricsCalculationService {
       mrLinkData.checked
     );
 
+    // Metric 9: Closure Rate
+    const closureRate = this.calculateClosureRate(
+      issues_closed_last_30d,
+      issues_opened_last_30d
+    );
+
       // Calculate alert levels (using 30-day velocity)
       const velocity_alert_level = this.getVelocityAlertLevel(issues_closed_last_30d);
     const cycle_time_alert_level = this.getCycleTimeAlertLevel(
@@ -111,6 +117,9 @@ class IssueMetricsCalculationService {
       issues_with_mr_links: mrLinkResult.issues_with_mr_links,
       total_closed_issues_checked: mrLinkResult.total_closed_issues_checked,
       issue_mr_link_rate_percent: mrLinkResult.issue_mr_link_rate_percent,
+
+      // Closure Rate
+      closure_rate_percent: closureRate,
 
       // Alert levels
       velocity_alert_level,
@@ -306,6 +315,17 @@ class IssueMetricsCalculationService {
     if (bugRatio > 50) return 'RED_ALERT';
     if (bugRatio > 30) return 'WARNING';
     return 'NORMAL';
+  }
+
+  /**
+   * Calculate closure rate as simple ratio (closed/opened)
+   */
+  private calculateClosureRate(closedLast30d: number, openedLast30d: number): number {
+    if (openedLast30d === 0) {
+      return 0;
+    }
+    const rate = closedLast30d / openedLast30d;
+    return parseFloat(rate.toFixed(2));
   }
 
   /**

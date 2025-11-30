@@ -18,6 +18,7 @@ import {
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { api } from "@/lib/api";
 import { IssueMetricsCard } from "@/components/IssueMetricsCard";
+import { MRMetricsCard } from "@/components/MRMetricsCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -43,6 +44,8 @@ const ProjectDetail = () => {
   const [chartData, setChartData] = useState<any[]>([]);
   const [issueMetrics, setIssueMetrics] = useState<any>(null);
   const [metricsLoading, setMetricsLoading] = useState(false);
+  const [mrMetrics, setMrMetrics] = useState<any>(null);
+  const [mrMetricsLoading, setMrMetricsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   // Mock project data
@@ -136,21 +139,52 @@ const ProjectDetail = () => {
     fetchIssueMetrics();
   }, [id]);
 
+  // Fetch MR metrics
+  useEffect(() => {
+    const fetchMRMetrics = async () => {
+      if (!id) return;
+      
+      try {
+        setMrMetricsLoading(true);
+        const response = await api.get(`/projects/${id}/mr-metrics`);
+        
+        if (response.success) {
+          setMrMetrics(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch MR metrics:', error);
+      } finally {
+        setMrMetricsLoading(false);
+      }
+    };
+
+    fetchMRMetrics();
+  }, [id]);
+
   // Handle refresh button click
   const handleRefreshData = async () => {
     if (!id) return;
     
     try {
       setRefreshing(true);
-      const response = await api.post(`/projects/${id}/issue-metrics/refresh`, {});
       
-      if (response.success) {
-        setIssueMetrics(response.data);
-        // Show success message (you can add a toast here)
+      // Refresh both issue and MR metrics in parallel
+      const [issueResponse, mrResponse] = await Promise.all([
+        api.post(`/projects/${id}/issue-metrics/refresh`, {}),
+        api.post(`/projects/${id}/mr-metrics/refresh`, {})
+      ]);
+      
+      if (issueResponse.success) {
+        setIssueMetrics(issueResponse.data);
         console.log('Issue metrics refreshed successfully');
       }
+      
+      if (mrResponse.success) {
+        setMrMetrics(mrResponse.data);
+        console.log('MR metrics refreshed successfully');
+      }
     } catch (error) {
-      console.error('Failed to refresh issue metrics:', error);
+      console.error('Failed to refresh metrics:', error);
       // Show error message (you can add a toast here)
     } finally {
       setRefreshing(false);
@@ -251,6 +285,9 @@ const ProjectDetail = () => {
 
           {/* Issue Health Metrics Card */}
           <IssueMetricsCard metrics={issueMetrics} loading={metricsLoading} />
+
+          {/* MR Health Metrics Card */}
+          <MRMetricsCard metrics={mrMetrics} loading={mrMetricsLoading} />
 
           <Card>
             <CardHeader>

@@ -4,35 +4,35 @@ import {
   AlertTriangle, 
   CheckCircle2, 
   Clock, 
-  RefreshCcw, 
-  Bug, 
-  TrendingUp,
+  GitMerge,
+  MessageSquare,
+  Users,
   AlertCircle,
-  Link2
+  TrendingUp
 } from "lucide-react";
 
-interface IssueMetrics {
-  total_open_issues: number;
-  total_closed_issues: number;
-  issues_closed_last_7d: number;
-  issues_closed_last_30d: number;
-  issues_opened_last_30d: number;
-  avg_cycle_time_days: number;
-  reopen_rate_percent: number;
-  bug_ratio_percent: number;
-  stale_issues_count: number;
-  critical_issues_open: number;
-  issue_mr_link_rate_percent: number;
+interface MRMetrics {
+  total_open_mrs: number;
+  total_merged_mrs: number;
+  mrs_merged_last_7d: number;
+  mrs_merged_last_30d: number;
+  mrs_opened_last_30d: number;
+  avg_merge_time_hours: number;
+  avg_merge_time_days: number;
+  avg_review_comments_per_mr: number;
+  revert_rate_percent: number;
+  stale_mrs_count: number;
+  avg_reviewers_per_mr: number;
   closure_rate_percent: number;
-  velocity_alert_level: string | null;
-  cycle_time_alert_level: string | null;
-  reopen_rate_alert_level: string | null;
-  bug_ratio_alert_level: string | null;
+  merge_velocity_alert_level: string | null;
+  merge_time_alert_level: string | null;
+  revert_rate_alert_level: string | null;
+  stale_mrs_alert_level: string | null;
   calculated_at: string;
 }
 
-interface IssueMetricsCardProps {
-  metrics: IssueMetrics | null;
+interface MRMetricsCardProps {
+  metrics: MRMetrics | null;
   loading: boolean;
 }
 
@@ -49,12 +49,12 @@ const getAlertBadge = (level: string | null) => {
   return null;
 };
 
-export const IssueMetricsCard = ({ metrics, loading }: IssueMetricsCardProps) => {
+export const MRMetricsCard = ({ metrics, loading }: MRMetricsCardProps) => {
   if (loading) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Issue Health Metrics</CardTitle>
+          <CardTitle className="text-lg">MR Health Metrics</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center py-8">
@@ -69,7 +69,7 @@ export const IssueMetricsCard = ({ metrics, loading }: IssueMetricsCardProps) =>
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Issue Health Metrics</CardTitle>
+          <CardTitle className="text-lg">MR Health Metrics</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center py-8 text-muted-foreground">
@@ -92,7 +92,7 @@ export const IssueMetricsCard = ({ metrics, loading }: IssueMetricsCardProps) =>
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">Issue Health Metrics</CardTitle>
+          <CardTitle className="text-lg">MR Health Metrics</CardTitle>
           <span className="text-xs text-muted-foreground">Updated {lastUpdated}</span>
         </div>
       </CardHeader>
@@ -102,17 +102,17 @@ export const IssueMetricsCard = ({ metrics, loading }: IssueMetricsCardProps) =>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 text-orange-500" />
-                <span className="text-sm text-muted-foreground">Open Issues</span>
+                <GitMerge className="h-4 w-4 text-blue-500" />
+                <span className="text-sm text-muted-foreground">Open MRs</span>
               </div>
-              <p className="text-2xl font-bold">{metrics.total_open_issues}</p>
+              <p className="text-2xl font-bold">{metrics.total_open_mrs}</p>
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-green-500" />
-                <span className="text-sm text-muted-foreground">Closed (Total)</span>
+                <span className="text-sm text-muted-foreground">Merged (Total)</span>
               </div>
-              <p className="text-2xl font-bold">{metrics.total_closed_issues}</p>
+              <p className="text-2xl font-bold">{metrics.total_merged_mrs}</p>
             </div>
           </div>
 
@@ -121,52 +121,51 @@ export const IssueMetricsCard = ({ metrics, loading }: IssueMetricsCardProps) =>
             <div className="space-y-3">
               <h4 className="text-sm font-semibold text-muted-foreground uppercase">Critical Metrics</h4>
               
-              {/* Velocity */}
+              {/* Merge Velocity */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-blue-500" />
                   <div>
-                    <p className="text-sm font-medium">Velocity (30d)</p>
-                    <p className="text-xs text-muted-foreground">{metrics.issues_closed_last_30d} issues closed</p>
+                    <p className="text-sm font-medium">Merge Velocity (30d)</p>
+                    <p className="text-xs text-muted-foreground">{metrics.mrs_merged_last_30d} MRs merged</p>
                   </div>
                 </div>
-                {getAlertBadge(metrics.velocity_alert_level)}
+                {getAlertBadge(metrics.merge_velocity_alert_level)}
               </div>
 
-              {/* Cycle Time */}
+              {/* Merge Time */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-purple-500" />
                   <div>
-                    <p className="text-sm font-medium">Avg Cycle Time</p>
-                    <p className="text-xs text-muted-foreground">{metrics.avg_cycle_time_days.toFixed(1)} days</p>
+                    <p className="text-sm font-medium">Avg Merge Time</p>
+                    <p className="text-xs text-muted-foreground">{metrics.avg_merge_time_hours.toFixed(1)} hours</p>
                   </div>
                 </div>
-                {getAlertBadge(metrics.cycle_time_alert_level)}
+                {getAlertBadge(metrics.merge_time_alert_level)}
               </div>
 
-              {/* Reopen Rate */}
+              {/* Review Comments */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <RefreshCcw className="h-4 w-4 text-orange-500" />
+                  <MessageSquare className="h-4 w-4 text-orange-500" />
                   <div>
-                    <p className="text-sm font-medium">Reopen Rate</p>
-                    <p className="text-xs text-muted-foreground">{metrics.reopen_rate_percent.toFixed(1)}%</p>
+                    <p className="text-sm font-medium">Avg Review Comments</p>
+                    <p className="text-xs text-muted-foreground">{metrics.avg_review_comments_per_mr.toFixed(1)} per MR</p>
                   </div>
                 </div>
-                {getAlertBadge(metrics.reopen_rate_alert_level)}
               </div>
 
-              {/* Bug Ratio */}
+              {/* Revert Rate */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Bug className="h-4 w-4 text-red-500" />
+                  <AlertTriangle className="h-4 w-4 text-red-500" />
                   <div>
-                    <p className="text-sm font-medium">Bug Ratio</p>
-                    <p className="text-xs text-muted-foreground">{metrics.bug_ratio_percent.toFixed(1)}%</p>
+                    <p className="text-sm font-medium">Revert Rate</p>
+                    <p className="text-xs text-muted-foreground">{metrics.revert_rate_percent.toFixed(1)}%</p>
                   </div>
                 </div>
-                {getAlertBadge(metrics.bug_ratio_alert_level)}
+                {getAlertBadge(metrics.revert_rate_alert_level)}
               </div>
             </div>
 
@@ -176,20 +175,19 @@ export const IssueMetricsCard = ({ metrics, loading }: IssueMetricsCardProps) =>
               
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground">Stale Issues</p>
-                  <p className="text-lg font-semibold">{metrics.stale_issues_count}</p>
+                  <p className="text-xs text-muted-foreground">Stale MRs</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-lg font-semibold">{metrics.stale_mrs_count}</p>
+                    {getAlertBadge(metrics.stale_mrs_alert_level)}
+                  </div>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground">Critical Open</p>
-                  <p className="text-lg font-semibold">{metrics.critical_issues_open}</p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground">MR Link Rate</p>
-                  <p className="text-lg font-semibold">{metrics.issue_mr_link_rate_percent.toFixed(1)}%</p>
+                  <p className="text-xs text-muted-foreground">Avg Reviewers</p>
+                  <p className="text-lg font-semibold">{metrics.avg_reviewers_per_mr.toFixed(1)}</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs text-muted-foreground">Closure Rate (30d)</p>
-                  <p className="text-lg font-semibold">{metrics.issues_closed_last_30d}/{metrics.issues_opened_last_30d}</p>
+                  <p className="text-lg font-semibold">{metrics.mrs_merged_last_30d}/{metrics.mrs_opened_last_30d}</p>
                 </div>
               </div>
             </div>

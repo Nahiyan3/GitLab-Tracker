@@ -36,6 +36,9 @@ export interface IssueHealthMetrics {
   total_closed_issues_checked: number;
   issue_mr_link_rate_percent: number;
   
+  // Closure Rate
+  closure_rate_percent: number;
+  
   // Alert Levels
   velocity_alert_level: string | null;
   cycle_time_alert_level: string | null;
@@ -58,6 +61,9 @@ export interface IssueMetricsHistory {
   bug_ratio_percent: number;
   stale_issues_count: number;
   critical_issues_open: number;
+  closure_rate_percent: number;
+  issues_closed_last_30d: number;
+  issues_opened_last_30d: number;
   snapshot_date: Date;
 }
 
@@ -143,7 +149,10 @@ export interface IssueMetricsCalculationResult {
   issues_with_mr_links: number;
   total_closed_issues_checked: number;
   issue_mr_link_rate_percent: number;
-  
+
+  // Closure Rate
+  closure_rate_percent: number;
+
   // Alert levels
   velocity_alert_level: string;
   cycle_time_alert_level: string;

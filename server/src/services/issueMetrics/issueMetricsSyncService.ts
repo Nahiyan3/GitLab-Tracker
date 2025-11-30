@@ -199,6 +199,9 @@ class IssueMetricsSyncService {
         if (issueMetricsCalculationService.isIssueReopened(stateEvents)) {
           reopenedCount++;
         }
+        
+        // Add 100ms delay between calls to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100));
       } catch (error) {
         console.error(`[IssueMetricsSync] Error checking reopen for issue ${issue.iid}:`, error);
         // Continue with other issues
@@ -233,6 +236,9 @@ class IssueMetricsSyncService {
         if (closedByMRs.length > 0 || issueLinks.length > 0) {
           withLinksCount++;
         }
+        
+        // Add 100ms delay between calls to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100));
       } catch (error) {
         console.error(`[IssueMetricsSync] Error checking MR links for issue ${issue.iid}:`, error);
         // Continue with other issues

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import projectController from '../controllers/projectController';
 import aiController from '../controllers/aiController';
 import * as issueMetricsController from '../controllers/issueMetricsController';
+import * as mrMetricsController from '../controllers/mrMetricsController';
 import gitlabAuthService from '../services/gitlab/gitlabAuthService';
 import trackingRoutes from './trackingRoutes';
 
@@ -42,6 +43,12 @@ router.post('/projects/:id/issue-metrics/refresh', issueMetricsController.refres
 router.get('/projects/:id/issue-metrics', issueMetricsController.getIssueMetrics);
 router.get('/projects/:id/issue-metrics/trends', issueMetricsController.getIssueMetricsTrends);
 router.get('/projects/:id/issue-metrics/history', issueMetricsController.getIssueMetricsHistory);
+
+// MR Metrics routes (for MR Health Metrics)
+router.post('/projects/:id/mr-metrics/refresh', mrMetricsController.refreshMRMetrics);
+router.get('/projects/:id/mr-metrics', mrMetricsController.getMRMetrics);
+router.get('/projects/:id/mr-metrics/trends', mrMetricsController.getMRMetricsTrends);
+router.get('/projects/:id/mr-metrics/history', mrMetricsController.getMRMetricsHistory);
 
 // AI routes (for Gemini AI testing)
 router.get('/ai/test', aiController.testConnection);

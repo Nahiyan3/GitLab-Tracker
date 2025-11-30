@@ -76,6 +76,42 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Issue metrics history migration warning:', migrationError.message);
     }
+
+    // Run MR metrics migration
+    try {
+      const migrationPath = path.join(__dirname, 'migrations', '006_create_mr_metrics.sql');
+      if (fs.existsSync(migrationPath)) {
+        const migrationSql = fs.readFileSync(migrationPath, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ MR metrics tables created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ MR metrics migration warning:', migrationError.message);
+    }
+
+    // Run migration 007: Add closure rates
+    try {
+      const migration007Path = path.join(__dirname, 'migrations', '007_add_closure_rates.sql');
+      if (fs.existsSync(migration007Path)) {
+        const migrationSql = fs.readFileSync(migration007Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Closure rate fields added');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Closure rate migration warning:', migrationError.message);
+    }
+
+    // Run migration 008: Add raw closure rate values
+    try {
+      const migration008Path = path.join(__dirname, 'migrations', '008_add_closure_rate_raw_values.sql');
+      if (fs.existsSync(migration008Path)) {
+        const migrationSql = fs.readFileSync(migration008Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Raw closure rate values fields added');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Raw closure rate values migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

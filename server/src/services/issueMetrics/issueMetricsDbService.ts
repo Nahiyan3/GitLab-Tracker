@@ -47,6 +47,7 @@ class IssueMetricsDbService {
           issues_with_mr_links,
           total_closed_issues_checked,
           issue_mr_link_rate_percent,
+          closure_rate_percent,
           velocity_alert_level,
           cycle_time_alert_level,
           reopen_rate_alert_level,
@@ -55,7 +56,7 @@ class IssueMetricsDbService {
         ) VALUES (
           gen_random_uuid(),
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15,
-          $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30,
+          $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31,
           CURRENT_TIMESTAMP
         )
         RETURNING *;
@@ -88,6 +89,7 @@ class IssueMetricsDbService {
         metrics.issues_with_mr_links,
         metrics.total_closed_issues_checked,
         metrics.issue_mr_link_rate_percent,
+        metrics.closure_rate_percent,
         metrics.velocity_alert_level,
         metrics.cycle_time_alert_level,
         metrics.reopen_rate_alert_level,
@@ -126,10 +128,13 @@ class IssueMetricsDbService {
           reopen_rate_percent,
           bug_ratio_percent,
           stale_issues_count,
-          critical_issues_open
+          critical_issues_open,
+          closure_rate_percent,
+          issues_closed_last_30d,
+          issues_opened_last_30d
         ) VALUES (
           gen_random_uuid(),
-          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9
+          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
         )
         ON CONFLICT (project_id, snapshot_date)
         DO UPDATE SET
@@ -140,7 +145,10 @@ class IssueMetricsDbService {
           reopen_rate_percent = EXCLUDED.reopen_rate_percent,
           bug_ratio_percent = EXCLUDED.bug_ratio_percent,
           stale_issues_count = EXCLUDED.stale_issues_count,
-          critical_issues_open = EXCLUDED.critical_issues_open
+          critical_issues_open = EXCLUDED.critical_issues_open,
+          closure_rate_percent = EXCLUDED.closure_rate_percent,
+          issues_closed_last_30d = EXCLUDED.issues_closed_last_30d,
+          issues_opened_last_30d = EXCLUDED.issues_opened_last_30d
         RETURNING *;
       `;
 
@@ -154,6 +162,9 @@ class IssueMetricsDbService {
         currentMetrics.bug_ratio_percent,
         currentMetrics.stale_issues_count,
         currentMetrics.critical_issues_open,
+        currentMetrics.closure_rate_percent,
+        currentMetrics.issues_closed_last_30d,
+        currentMetrics.issues_opened_last_30d,
       ];
 
       const result = await getPool().query(query, values);
