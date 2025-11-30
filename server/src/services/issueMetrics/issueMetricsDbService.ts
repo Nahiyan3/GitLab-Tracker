@@ -11,7 +11,7 @@ import {
 class IssueMetricsDbService {
 
   /**
-   * Save or update issue metrics for a project
+   * Save new issue metrics snapshot for a project (always insert, never update)
    */
   async saveMetrics(
     projectId: number,
@@ -58,38 +58,6 @@ class IssueMetricsDbService {
           $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30,
           CURRENT_TIMESTAMP
         )
-        ON CONFLICT (project_id)
-        DO UPDATE SET
-          total_open_issues = EXCLUDED.total_open_issues,
-          total_closed_issues = EXCLUDED.total_closed_issues,
-          issues_closed_last_7d = EXCLUDED.issues_closed_last_7d,
-          issues_closed_last_30d = EXCLUDED.issues_closed_last_30d,
-          total_resolution_hours = EXCLUDED.total_resolution_hours,
-          issues_with_resolution_time = EXCLUDED.issues_with_resolution_time,
-          avg_cycle_time_hours = EXCLUDED.avg_cycle_time_hours,
-          avg_cycle_time_days = EXCLUDED.avg_cycle_time_days,
-          issues_reopened_count = EXCLUDED.issues_reopened_count,
-          issues_checked_for_reopens = EXCLUDED.issues_checked_for_reopens,
-          reopen_rate_percent = EXCLUDED.reopen_rate_percent,
-          bug_issues_count = EXCLUDED.bug_issues_count,
-          feature_issues_count = EXCLUDED.feature_issues_count,
-          bug_ratio_percent = EXCLUDED.bug_ratio_percent,
-          issues_opened_last_7d = EXCLUDED.issues_opened_last_7d,
-          issues_opened_last_30d = EXCLUDED.issues_opened_last_30d,
-          net_issue_change_7d = EXCLUDED.net_issue_change_7d,
-          stale_issues_count = EXCLUDED.stale_issues_count,
-          stale_issues_percent = EXCLUDED.stale_issues_percent,
-          critical_issues_open = EXCLUDED.critical_issues_open,
-          blocker_issues_open = EXCLUDED.blocker_issues_open,
-          critical_avg_resolution_hours = EXCLUDED.critical_avg_resolution_hours,
-          issues_with_mr_links = EXCLUDED.issues_with_mr_links,
-          total_closed_issues_checked = EXCLUDED.total_closed_issues_checked,
-          issue_mr_link_rate_percent = EXCLUDED.issue_mr_link_rate_percent,
-          velocity_alert_level = EXCLUDED.velocity_alert_level,
-          cycle_time_alert_level = EXCLUDED.cycle_time_alert_level,
-          reopen_rate_alert_level = EXCLUDED.reopen_rate_alert_level,
-          bug_ratio_alert_level = EXCLUDED.bug_ratio_alert_level,
-          calculated_at = EXCLUDED.calculated_at
         RETURNING *;
       `;
 
@@ -198,13 +166,15 @@ class IssueMetricsDbService {
   }
 
   /**
-   * Get current metrics for a project
+   * Get latest metrics for a project (most recent calculation)
    */
   async getMetrics(projectId: number): Promise<IssueHealthMetrics | null> {
     try {
       const query = `
         SELECT * FROM issue_health_metrics
-        WHERE project_id = $1;
+        WHERE project_id = $1
+        ORDER BY calculated_at DESC
+        LIMIT 1;
       `;
 
       const result = await getPool().query(query, [projectId]);
@@ -312,6 +282,25 @@ class IssueMetricsDbService {
   private calculateChange(current: number, previous: number): number {
     if (previous === 0) return current > 0 ? 100 : 0;
     return parseFloat((((current - previous) / previous) * 100).toFixed(2));
+  }
+
+  /**
+   * Get ALL metrics snapshots for a project (complete history)
+   */
+  async getAllMetrics(projectId: number): Promise<IssueHealthMetrics[]> {
+    try {
+      const query = `
+        SELECT * FROM issue_health_metrics
+        WHERE project_id = $1
+        ORDER BY calculated_at DESC;
+      `;
+
+      const result = await getPool().query(query, [projectId]);
+      return result.rows;
+    } catch (error) {
+      console.error('[IssueMetricsDb] Error getting all metrics:', error);
+      throw error;
+    }
   }
 
   /**

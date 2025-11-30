@@ -64,6 +64,18 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Issue metrics migration warning:', migrationError.message);
     }
+
+    // Run issue metrics history update migration
+    try {
+      const migrationPath = path.join(__dirname, 'migrations', '005_update_issue_metrics_history.sql');
+      if (fs.existsSync(migrationPath)) {
+        const migrationSql = fs.readFileSync(migrationPath, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Issue metrics UNIQUE constraint removed - history enabled');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Issue metrics history migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

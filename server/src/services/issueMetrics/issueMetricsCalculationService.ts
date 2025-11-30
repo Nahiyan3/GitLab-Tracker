@@ -199,18 +199,18 @@ class IssueMetricsCalculationService {
   }
 
   /**
-   * Calculate stale issues (open >30 days with no activity)
+   * Calculate stale issues (open >60 days with no activity)
    */
   private calculateStaleIssues(openIssues: GitLabIssues[]) {
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const sixtyDaysAgo = new Date();
+    sixtyDaysAgo.setDate(sixtyDaysAgo.getDate() - 60);
 
     let stale_issues_count = 0;
 
     openIssues.forEach((issue) => {
       if (issue.updated_at) {
         const lastActivity = new Date(issue.updated_at);
-        if (lastActivity < thirtyDaysAgo) {
+        if (lastActivity < sixtyDaysAgo) {
           stale_issues_count++;
         }
       }

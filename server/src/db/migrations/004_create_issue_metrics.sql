@@ -1,9 +1,10 @@
 -- ============================================================================
 -- TABLE: ISSUE_HEALTH_METRICS
 -- ============================================================================
--- Purpose: Stores calculated issue metrics for projects
+-- Purpose: Stores ALL calculated issue metrics for projects (complete history)
 -- Updated by: "Refresh Data" button on project overview page
--- This is separate from tracked_project_snapshots - focuses on issue lifecycle metrics
+-- Each refresh creates a NEW row - no updates, only inserts
+-- Frontend fetches latest by calculated_at timestamp
 
 CREATE TABLE IF NOT EXISTS issue_health_metrics (
   -- Primary Keys
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS issue_health_metrics (
   net_issue_change_7d INTEGER DEFAULT 0,  -- opened - closed
   
   -- Metric 6: Stale Issues
-  stale_issues_count INTEGER DEFAULT 0,  -- Open >30 days no activity
+  stale_issues_count INTEGER DEFAULT 0,  -- Open >60 days no activity
   stale_issues_percent FLOAT DEFAULT 0,
   
   -- Metric 7: Critical/Blocker Issues
@@ -67,15 +68,13 @@ CREATE TABLE IF NOT EXISTS issue_health_metrics (
   bug_ratio_alert_level VARCHAR(20),
   
   -- Metadata
-  calculated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  
-  -- Ensure one active record per project
-  CONSTRAINT unique_project_metrics UNIQUE(project_id)
+  calculated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Indexes
+-- Indexes for efficient queries
 CREATE INDEX IF NOT EXISTS idx_issue_metrics_project_id ON issue_health_metrics(project_id);
 CREATE INDEX IF NOT EXISTS idx_issue_metrics_calculated_at ON issue_health_metrics(calculated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_issue_metrics_project_time ON issue_health_metrics(project_id, calculated_at DESC);
 
 -- ============================================================================
 -- TABLE: ISSUE_METRICS_HISTORY

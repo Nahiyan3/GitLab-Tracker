@@ -28,31 +28,27 @@ class ProjectRefreshService {
   private isRefreshing: boolean = false;
   
   /**
-   * Get OPEN issues count for a project
+   * Get OPEN issues count for a project (using API header for accurate count)
    */
   private getOpenIssuesCount = async (projectId: number): Promise<number> => {
     try {
-      const issues = await gitLabIssueService.getProjectIssues(projectId);
-      // Filter only open issues
-      const openIssues = issues.filter(issue => issue.state === 'opened');
-      return openIssues.length;
+      // Use header-based count instead of fetching all issues
+      return await gitLabIssueService.getIssueCount(projectId, 'opened');
     } catch (error: any) {
-      console.warn(`⚠️ Failed to fetch issues for project ${projectId}:`, error.message);
+      console.warn(`⚠️ Failed to fetch issues count for project ${projectId}:`, error.message);
       return 0;
     }
   };
 
   /**
-   * Get OPEN merge requests count for a project
+   * Get OPEN merge requests count for a project (using API header for accurate count)
    */
   private getOpenMRsCount = async (projectId: number): Promise<number> => {
     try {
-      const mrs = await gitLabMRService.getProjectMergeRequests(projectId);
-      // Filter only open MRs
-      const openMRs = mrs.filter(mr => mr.state === 'opened');
-      return openMRs.length;
+      // Use header-based count instead of fetching all MRs
+      return await gitLabMRService.getMRCount(projectId, 'opened');
     } catch (error: any) {
-      console.warn(`⚠️ Failed to fetch MRs for project ${projectId}:`, error.message);
+      console.warn(`⚠️ Failed to fetch MRs count for project ${projectId}:`, error.message);
       return 0;
     }
   };
