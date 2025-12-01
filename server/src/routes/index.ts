@@ -3,6 +3,7 @@ import projectController from '../controllers/projectController';
 import aiController from '../controllers/aiController';
 import * as issueMetricsController from '../controllers/issueMetricsController';
 import * as mrMetricsController from '../controllers/mrMetricsController';
+import * as commitMetricsController from '../controllers/commitMetricsController';
 import gitlabAuthService from '../services/gitlab/gitlabAuthService';
 import trackingRoutes from './trackingRoutes';
 
@@ -49,6 +50,11 @@ router.post('/projects/:id/mr-metrics/refresh', mrMetricsController.refreshMRMet
 router.get('/projects/:id/mr-metrics', mrMetricsController.getMRMetrics);
 router.get('/projects/:id/mr-metrics/trends', mrMetricsController.getMRMetricsTrends);
 router.get('/projects/:id/mr-metrics/history', mrMetricsController.getMRMetricsHistory);
+
+// Commit Metrics routes (for Commit Health Metrics)
+router.post('/projects/:id/commit-metrics/refresh', commitMetricsController.refreshCommitMetrics);
+router.get('/projects/:id/commit-metrics', commitMetricsController.getCommitMetrics);
+router.get('/projects/:id/commit-metrics/history', commitMetricsController.getCommitMetricsHistory);
 
 // AI routes (for Gemini AI testing)
 router.get('/ai/test', aiController.testConnection);

@@ -112,6 +112,30 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Raw closure rate values migration warning:', migrationError.message);
     }
+
+    // Run migration 009: Create commit metrics tables
+    try {
+      const migration009Path = path.join(__dirname, 'migrations', '009_create_commit_metrics.sql');
+      if (fs.existsSync(migration009Path)) {
+        const migrationSql = fs.readFileSync(migration009Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Commit metrics tables created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Commit metrics migration warning:', migrationError.message);
+    }
+
+    // Run migration 010: Add commit_details column
+    try {
+      const migration010Path = path.join(__dirname, 'migrations', '010_add_commit_details.sql');
+      if (fs.existsSync(migration010Path)) {
+        const migrationSql = fs.readFileSync(migration010Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Commit details column added');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Commit details migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

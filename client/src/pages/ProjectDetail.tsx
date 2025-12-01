@@ -19,6 +19,7 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, R
 import { api } from "@/lib/api";
 import { IssueMetricsCard } from "@/components/IssueMetricsCard";
 import { MRMetricsCard } from "@/components/MRMetricsCard";
+import { CommitMetricsCard } from "@/components/CommitMetricsCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -46,6 +47,8 @@ const ProjectDetail = () => {
   const [metricsLoading, setMetricsLoading] = useState(false);
   const [mrMetrics, setMrMetrics] = useState<any>(null);
   const [mrMetricsLoading, setMrMetricsLoading] = useState(false);
+  const [commitMetrics, setCommitMetrics] = useState<any>(null);
+  const [commitMetricsLoading, setCommitMetricsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   // Mock project data
@@ -161,6 +164,28 @@ const ProjectDetail = () => {
     fetchMRMetrics();
   }, [id]);
 
+  // Fetch commit metrics
+  useEffect(() => {
+    const fetchCommitMetrics = async () => {
+      if (!id) return;
+      
+      try {
+        setCommitMetricsLoading(true);
+        const response = await api.get(`/projects/${id}/commit-metrics`);
+        
+        if (response.success) {
+          setCommitMetrics(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch commit metrics:', error);
+      } finally {
+        setCommitMetricsLoading(false);
+      }
+    };
+
+    fetchCommitMetrics();
+  }, [id]);
+
   // Handle refresh button click
   const handleRefreshData = async () => {
     if (!id) return;
@@ -168,10 +193,11 @@ const ProjectDetail = () => {
     try {
       setRefreshing(true);
       
-      // Refresh both issue and MR metrics in parallel
-      const [issueResponse, mrResponse] = await Promise.all([
+      // Refresh all metrics in parallel
+      const [issueResponse, mrResponse, commitResponse] = await Promise.all([
         api.post(`/projects/${id}/issue-metrics/refresh`, {}),
-        api.post(`/projects/${id}/mr-metrics/refresh`, {})
+        api.post(`/projects/${id}/mr-metrics/refresh`, {}),
+        api.post(`/projects/${id}/commit-metrics/refresh`, {})
       ]);
       
       if (issueResponse.success) {
@@ -182,6 +208,11 @@ const ProjectDetail = () => {
       if (mrResponse.success) {
         setMrMetrics(mrResponse.data);
         console.log('MR metrics refreshed successfully');
+      }
+      
+      if (commitResponse.success) {
+        setCommitMetrics(commitResponse.data);
+        console.log('Commit metrics refreshed successfully');
       }
     } catch (error) {
       console.error('Failed to refresh metrics:', error);
@@ -288,6 +319,9 @@ const ProjectDetail = () => {
 
           {/* MR Health Metrics Card */}
           <MRMetricsCard metrics={mrMetrics} loading={mrMetricsLoading} />
+
+          {/* Commit Health Metrics Card */}
+          <CommitMetricsCard metrics={commitMetrics} loading={commitMetricsLoading} />
 
           <Card>
             <CardHeader>
