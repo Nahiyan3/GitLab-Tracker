@@ -178,12 +178,12 @@ class MRMetricsSyncService {
    * Check for reverted MRs from a sample (using already fetched data)
    */
   private calculateRevertRateFromData(mergedMRsSample: any[]) {
-    let revertedCount = 0;
+    let revertedCount = 0; 
     const checkedCount = mergedMRsSample.length;
 
     // Check each MR if it was reverted (using data we already have)
     for (const mr of mergedMRsSample) {
-      // Check if title contains "Revert" pattern
+      // Check if title contai 
       const hasRevertInTitle = mr.title?.toLowerCase().includes('revert') || false;
       const hasRevertInDescription = mr.description?.toLowerCase().includes('revert') || false;
       
