@@ -4,6 +4,7 @@ import aiController from '../controllers/aiController';
 import * as issueMetricsController from '../controllers/issueMetricsController';
 import * as mrMetricsController from '../controllers/mrMetricsController';
 import * as commitMetricsController from '../controllers/commitMetricsController';
+import * as sonarQubeMaintainabilityController from '../controllers/sonarQubeMaintainabilityController';
 import gitlabAuthService from '../services/gitlab/gitlabAuthService';
 import trackingRoutes from './trackingRoutes';
 
@@ -55,6 +56,11 @@ router.get('/projects/:id/mr-metrics/history', mrMetricsController.getMRMetricsH
 router.post('/projects/:id/commit-metrics/refresh', commitMetricsController.refreshCommitMetrics);
 router.get('/projects/:id/commit-metrics', commitMetricsController.getCommitMetrics);
 router.get('/projects/:id/commit-metrics/history', commitMetricsController.getCommitMetricsHistory);
+
+// SonarQube Maintainability Metrics routes
+router.post('/projects/:id/sonarqube/maintainability/refresh', sonarQubeMaintainabilityController.refreshMaintainabilityMetrics);
+router.get('/projects/:id/sonarqube/maintainability', sonarQubeMaintainabilityController.getMaintainabilityMetrics);
+router.get('/projects/:id/sonarqube/maintainability/history', sonarQubeMaintainabilityController.getMaintainabilityMetricsHistory);
 
 // AI routes (for Gemini AI testing)
 router.get('/ai/test', aiController.testConnection);

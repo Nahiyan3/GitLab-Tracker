@@ -136,6 +136,30 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Commit details migration warning:', migrationError.message);
     }
+
+    // Run migration 011: Create SonarQube maintainability metrics tables
+    try {
+      const migration011Path = path.join(__dirname, 'migrations', '011_create_sonarqube_maintainability_metrics.sql');
+      if (fs.existsSync(migration011Path)) {
+        const migrationSql = fs.readFileSync(migration011Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ SonarQube maintainability metrics tables created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ SonarQube maintainability metrics migration warning:', migrationError.message);
+    }
+
+    // Run migration 012: Fix duplicated_lines_new column type
+    try {
+      const migration012Path = path.join(__dirname, 'migrations', '012_fix_duplicated_lines_new_type.sql');
+      if (fs.existsSync(migration012Path)) {
+        const migrationSql = fs.readFileSync(migration012Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Fixed duplicated_lines_new column type');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ duplicated_lines_new type fix warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;
