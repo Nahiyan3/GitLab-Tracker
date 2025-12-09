@@ -57,3 +57,31 @@ export interface SonarQubeComponentMeasures {
     measures: SonarQubeMeasure[];
   };
 }
+
+// Reliability Metrics Types
+export interface SonarQubeReliabilityMetrics {
+  project_id: number;
+  bugs_total: number;
+  bugs_critical: number;
+  bugs_blocker: number;
+  bugs_new: number;
+  reliability_rating: string; // A, B, C, D, E
+  reliability_remediation_effort: number; // in minutes
+  calculated_at: Date;
+}
+
+export interface SonarQubeReliabilityHistory {
+  project_id: number;
+  bugs_total: number;
+  reliability_rating: string;
+  snapshot_date: Date;
+}
+
+export interface SonarQubeReliabilityCalculationResult {
+  bugs_total: number;
+  bugs_critical: number;
+  bugs_blocker: number;
+  bugs_new: number;
+  reliability_rating: string;
+  reliability_remediation_effort: number;
+}

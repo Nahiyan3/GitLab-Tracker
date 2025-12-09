@@ -160,6 +160,18 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ duplicated_lines_new type fix warning:', migrationError.message);
     }
+
+    // Run migration 013: Create SonarQube reliability metrics tables
+    try {
+      const migration013Path = path.join(__dirname, 'migrations', '013_create_sonarqube_reliability_metrics.sql');
+      if (fs.existsSync(migration013Path)) {
+        const migrationSql = fs.readFileSync(migration013Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ SonarQube reliability metrics tables created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ SonarQube reliability metrics migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

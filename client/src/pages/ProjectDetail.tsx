@@ -21,6 +21,7 @@ import { IssueMetricsCard } from "@/components/IssueMetricsCard";
 import { MRMetricsCard } from "@/components/MRMetricsCard";
 import { CommitMetricsCard } from "@/components/CommitMetricsCard";
 import { SonarMaintainabilityCard } from "@/components/SonarMaintainabilityCard";
+import { SonarReliabilityCard } from "@/components/SonarReliabilityCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -52,6 +53,8 @@ const ProjectDetail = () => {
   const [commitMetricsLoading, setCommitMetricsLoading] = useState(false);
   const [sonarMaintainabilityMetrics, setSonarMaintainabilityMetrics] = useState<any>(null);
   const [sonarMaintainabilityLoading, setSonarMaintainabilityLoading] = useState(false);
+  const [sonarReliabilityMetrics, setSonarReliabilityMetrics] = useState<any>(null);
+  const [sonarReliabilityLoading, setSonarReliabilityLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   // Mock project data
@@ -211,6 +214,28 @@ const ProjectDetail = () => {
     fetchSonarMaintainabilityMetrics();
   }, [id]);
 
+  // Fetch SonarQube reliability metrics
+  useEffect(() => {
+    const fetchSonarReliabilityMetrics = async () => {
+      if (!id) return;
+      
+      try {
+        setSonarReliabilityLoading(true);
+        const response = await api.get(`/projects/${id}/sonarqube/reliability`);
+        
+        if (response.success) {
+          setSonarReliabilityMetrics(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch SonarQube reliability metrics:', error);
+      } finally {
+        setSonarReliabilityLoading(false);
+      }
+    };
+
+    fetchSonarReliabilityMetrics();
+  }, [id]);
+
   // Handle refresh button click
   const handleRefreshData = async () => {
     if (!id) return;
@@ -219,11 +244,12 @@ const ProjectDetail = () => {
       setRefreshing(true);
       
       // Refresh all metrics in parallel
-      const [issueResponse, mrResponse, commitResponse, sonarResponse] = await Promise.all([
+      const [issueResponse, mrResponse, commitResponse, sonarMaintResponse, sonarReliabResponse] = await Promise.all([
         api.post(`/projects/${id}/issue-metrics/refresh`, {}),
         api.post(`/projects/${id}/mr-metrics/refresh`, {}),
         api.post(`/projects/${id}/commit-metrics/refresh`, {}),
-        api.post(`/projects/${id}/sonarqube/maintainability/refresh`, {})
+        api.post(`/projects/${id}/sonarqube/maintainability/refresh`, {}),
+        api.post(`/projects/${id}/sonarqube/reliability/refresh`, {})
       ]);
       
       if (issueResponse.success) {
@@ -241,9 +267,14 @@ const ProjectDetail = () => {
         console.log('Commit metrics refreshed successfully');
       }
 
-      if (sonarResponse.success) {
-        setSonarMaintainabilityMetrics(sonarResponse.data);
+      if (sonarMaintResponse.success) {
+        setSonarMaintainabilityMetrics(sonarMaintResponse.data);
         console.log('SonarQube maintainability metrics refreshed successfully');
+      }
+
+      if (sonarReliabResponse.success) {
+        setSonarReliabilityMetrics(sonarReliabResponse.data);
+        console.log('SonarQube reliability metrics refreshed successfully');
       }
     } catch (error) {
       console.error('Failed to refresh metrics:', error);
@@ -356,6 +387,9 @@ const ProjectDetail = () => {
 
           {/* SonarQube Maintainability Metrics Card */}
           <SonarMaintainabilityCard metrics={sonarMaintainabilityMetrics} loading={sonarMaintainabilityLoading} />
+
+          {/* SonarQube Reliability Metrics Card */}
+          <SonarReliabilityCard metrics={sonarReliabilityMetrics} loading={sonarReliabilityLoading} />
 
           <Card>
             <CardHeader>
