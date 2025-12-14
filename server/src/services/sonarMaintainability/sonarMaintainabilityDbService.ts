@@ -4,6 +4,7 @@ import {
   SonarQubeMaintainabilityHistory,
   SonarQubeMaintainabilityCalculationResult
 } from '../../types/sonarQubeMetrics.types';
+import { calculateMaintainabilityHealthScore } from '../../utils/healthScoreCalculator';
 
 export class SonarMaintainabilityDbService {
   
@@ -70,6 +71,14 @@ export class SonarMaintainabilityDbService {
   ): Promise<void> {
     const pool = getPool();
     
+    // Calculate health score
+    const healthScore = calculateMaintainabilityHealthScore({
+      maintainability_rating: metrics.maintainability_rating,
+      technical_debt_ratio: metrics.technical_debt_ratio,
+      code_smells_total: metrics.code_smells_total,
+      duplicated_code_percentage: metrics.duplicated_code_percentage,
+    });
+    
     const query = `
       INSERT INTO sonarqube_maintainability_history (
         project_id,
@@ -79,8 +88,9 @@ export class SonarMaintainabilityDbService {
         maintainability_rating,
         code_smells_total,
         duplicated_code_percentage,
+        health_score,
         snapshot_date
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_DATE)
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, CURRENT_DATE)
       ON CONFLICT (project_id, snapshot_date)
       DO UPDATE SET
         maintainability_high = EXCLUDED.maintainability_high,
@@ -88,7 +98,8 @@ export class SonarMaintainabilityDbService {
         technical_debt_ratio = EXCLUDED.technical_debt_ratio,
         maintainability_rating = EXCLUDED.maintainability_rating,
         code_smells_total = EXCLUDED.code_smells_total,
-        duplicated_code_percentage = EXCLUDED.duplicated_code_percentage
+        duplicated_code_percentage = EXCLUDED.duplicated_code_percentage,
+        health_score = EXCLUDED.health_score
     `;
 
     const values = [
@@ -98,12 +109,13 @@ export class SonarMaintainabilityDbService {
       metrics.technical_debt_ratio,
       metrics.maintainability_rating,
       metrics.code_smells_total,
-      metrics.duplicated_code_percentage
+      metrics.duplicated_code_percentage,
+      healthScore
     ];
 
     try {
       await pool.query(query, values);
-      console.log(`✅ Saved maintainability historical snapshot for project ${projectId}`);
+      console.log(`✅ Saved maintainability historical snapshot for project ${projectId} with health score: ${healthScore}`);
     } catch (error: any) {
       console.error(`❌ Failed to save maintainability historical snapshot for project ${projectId}:`, error.message);
       throw error;

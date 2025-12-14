@@ -4,6 +4,7 @@ import {
   SonarQubeSecurityHistory,
   SonarQubeSecurityCalculationResult
 } from '../../types/sonarQubeMetrics.types';
+import { calculateSecurityHealthScore } from '../../utils/healthScoreCalculator';
 
 export class SonarSecurityDbService {
   
@@ -67,31 +68,41 @@ export class SonarSecurityDbService {
   ): Promise<void> {
     const pool = getPool();
     
+    // Calculate health score
+    const healthScore = calculateSecurityHealthScore({
+      security_rating: metrics.security_rating,
+      vulnerabilities_total: metrics.vulnerabilities_total,
+      security_hotspots_total: metrics.security_hotspots_total,
+    });
+    
     const query = `
       INSERT INTO sonarqube_security_history (
         project_id,
         vulnerabilities_total,
         security_rating,
         security_hotspots_total,
+        health_score,
         snapshot_date
-      ) VALUES ($1, $2, $3, $4, CURRENT_DATE)
+      ) VALUES ($1, $2, $3, $4, $5, CURRENT_DATE)
       ON CONFLICT (project_id, snapshot_date)
       DO UPDATE SET
         vulnerabilities_total = EXCLUDED.vulnerabilities_total,
         security_rating = EXCLUDED.security_rating,
-        security_hotspots_total = EXCLUDED.security_hotspots_total
+        security_hotspots_total = EXCLUDED.security_hotspots_total,
+        health_score = EXCLUDED.health_score
     `;
 
     const values = [
       projectId,
       metrics.vulnerabilities_total,
       metrics.security_rating,
-      metrics.security_hotspots_total
+      metrics.security_hotspots_total,
+      healthScore
     ];
 
     try {
       await pool.query(query, values);
-      console.log(`✅ Saved security historical snapshot for project ${projectId}`);
+      console.log(`✅ Saved security historical snapshot for project ${projectId} with health score: ${healthScore}`);
     } catch (error: any) {
       console.error(`❌ Failed to save security historical snapshot for project ${projectId}:`, error.message);
       throw error;

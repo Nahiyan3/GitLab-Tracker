@@ -172,6 +172,30 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ SonarQube reliability metrics migration warning:', migrationError.message);
     }
+
+    // Run migration 014: Create SonarQube security metrics tables
+    try {
+      const migration014Path = path.join(__dirname, 'migrations', '014_create_sonarqube_security_metrics.sql');
+      if (fs.existsSync(migration014Path)) {
+        const migrationSql = fs.readFileSync(migration014Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ SonarQube security metrics tables created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ SonarQube security metrics migration warning:', migrationError.message);
+    }
+
+    // Run migration 015: Add health_score columns to all history tables
+    try {
+      const migration015Path = path.join(__dirname, 'migrations', '015_add_health_scores_to_history_tables.sql');
+      if (fs.existsSync(migration015Path)) {
+        const migrationSql = fs.readFileSync(migration015Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Health score columns added to all history tables');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Health scores migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

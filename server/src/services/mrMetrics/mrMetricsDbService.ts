@@ -8,6 +8,7 @@ import {
   MRMetricsHistory, 
   MRWeekOverWeekComparison 
 } from '../../types/mrMetrics.types';
+import { calculateMRHealthScore } from '../../utils/healthScoreCalculator';
 
 class MRMetricsDbService {
 
@@ -111,6 +112,14 @@ class MRMetricsDbService {
         throw new Error('No current metrics found to create snapshot');
       }
 
+      // Calculate health score
+      const healthScore = calculateMRHealthScore({
+        avg_merge_time_days: currentMetrics.avg_merge_time_days,
+        revert_rate_percent: currentMetrics.revert_rate_percent,
+        mrs_merged_last_7d: currentMetrics.mrs_merged_last_7d,
+        avg_review_comments_per_mr: currentMetrics.avg_review_comments_per_mr,
+      });
+
       const query = `
         INSERT INTO mr_metrics_history (
           uuid,
@@ -126,10 +135,11 @@ class MRMetricsDbService {
           avg_reviewers_per_mr,
           closure_rate_percent,
           mrs_merged_last_30d,
-          mrs_opened_last_30d
+          mrs_opened_last_30d,
+          health_score
         ) VALUES (
           gen_random_uuid(),
-          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
+          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
         )
         ON CONFLICT (project_id, snapshot_date)
         DO UPDATE SET
@@ -143,7 +153,8 @@ class MRMetricsDbService {
           avg_reviewers_per_mr = EXCLUDED.avg_reviewers_per_mr,
           closure_rate_percent = EXCLUDED.closure_rate_percent,
           mrs_merged_last_30d = EXCLUDED.mrs_merged_last_30d,
-          mrs_opened_last_30d = EXCLUDED.mrs_opened_last_30d
+          mrs_opened_last_30d = EXCLUDED.mrs_opened_last_30d,
+          health_score = EXCLUDED.health_score
         RETURNING *;
       `;
 
@@ -160,10 +171,11 @@ class MRMetricsDbService {
         currentMetrics.closure_rate_percent,
         currentMetrics.mrs_merged_last_30d,
         currentMetrics.mrs_opened_last_30d,
+        healthScore,
       ];
 
       const result = await getPool().query(query, values);
-      console.log(`[MRMetricsDb] Saved historical snapshot for project ${projectId}`);
+      console.log(`[MRMetricsDb] Saved historical snapshot for project ${projectId} with health score: ${healthScore}`);
       return result.rows[0];
     } catch (error) {
       console.error('[MRMetricsDb] Error saving historical snapshot:', error);

@@ -4,6 +4,7 @@ import {
   SonarQubeReliabilityHistory,
   SonarQubeReliabilityCalculationResult
 } from '../../types/sonarQubeMetrics.types';
+import { calculateReliabilityHealthScore } from '../../utils/healthScoreCalculator';
 
 export class SonarReliabilityDbService {
   
@@ -62,28 +63,37 @@ export class SonarReliabilityDbService {
   ): Promise<void> {
     const pool = getPool();
     
+    // Calculate health score
+    const healthScore = calculateReliabilityHealthScore({
+      reliability_rating: metrics.reliability_rating,
+      bugs_total: metrics.bugs_total,
+    });
+    
     const query = `
       INSERT INTO sonarqube_reliability_history (
         project_id,
         bugs_total,
         reliability_rating,
+        health_score,
         snapshot_date
-      ) VALUES ($1, $2, $3, CURRENT_DATE)
+      ) VALUES ($1, $2, $3, $4, CURRENT_DATE)
       ON CONFLICT (project_id, snapshot_date)
       DO UPDATE SET
         bugs_total = EXCLUDED.bugs_total,
-        reliability_rating = EXCLUDED.reliability_rating
+        reliability_rating = EXCLUDED.reliability_rating,
+        health_score = EXCLUDED.health_score
     `;
 
     const values = [
       projectId,
       metrics.bugs_total,
-      metrics.reliability_rating
+      metrics.reliability_rating,
+      healthScore
     ];
 
     try {
       await pool.query(query, values);
-      console.log(`✅ Saved reliability historical snapshot for project ${projectId}`);
+      console.log(`✅ Saved reliability historical snapshot for project ${projectId} with health score: ${healthScore}`);
     } catch (error: any) {
       console.error(`❌ Failed to save reliability historical snapshot for project ${projectId}:`, error.message);
       throw error;

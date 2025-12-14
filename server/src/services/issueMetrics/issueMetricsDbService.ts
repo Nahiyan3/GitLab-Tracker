@@ -7,6 +7,7 @@ import {
   IssueMetricsHistory, 
   WeekOverWeekComparison 
 } from '../../types/issueMetrics.types';
+import { calculateIssueHealthScore } from '../../utils/healthScoreCalculator';
 
 class IssueMetricsDbService {
 
@@ -116,6 +117,14 @@ class IssueMetricsDbService {
         throw new Error(`No metrics found for project ${projectId}`);
       }
 
+      // Calculate health score
+      const healthScore = calculateIssueHealthScore({
+        avg_cycle_time_days: currentMetrics.avg_cycle_time_days,
+        reopen_rate_percent: currentMetrics.reopen_rate_percent,
+        issues_closed_last_7d: currentMetrics.issues_closed_last_7d,
+        critical_issues_open: currentMetrics.critical_issues_open,
+      });
+
       const query = `
         INSERT INTO issue_metrics_history (
           uuid,
@@ -131,10 +140,11 @@ class IssueMetricsDbService {
           critical_issues_open,
           closure_rate_percent,
           issues_closed_last_30d,
-          issues_opened_last_30d
+          issues_opened_last_30d,
+          health_score
         ) VALUES (
           gen_random_uuid(),
-          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
+          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
         )
         ON CONFLICT (project_id, snapshot_date)
         DO UPDATE SET
@@ -148,7 +158,8 @@ class IssueMetricsDbService {
           critical_issues_open = EXCLUDED.critical_issues_open,
           closure_rate_percent = EXCLUDED.closure_rate_percent,
           issues_closed_last_30d = EXCLUDED.issues_closed_last_30d,
-          issues_opened_last_30d = EXCLUDED.issues_opened_last_30d
+          issues_opened_last_30d = EXCLUDED.issues_opened_last_30d,
+          health_score = EXCLUDED.health_score
         RETURNING *;
       `;
 
@@ -165,10 +176,11 @@ class IssueMetricsDbService {
         currentMetrics.closure_rate_percent,
         currentMetrics.issues_closed_last_30d,
         currentMetrics.issues_opened_last_30d,
+        healthScore,
       ];
 
       const result = await getPool().query(query, values);
-      console.log(`[IssueMetricsDb] Saved historical snapshot for project ${projectId}`);
+      console.log(`[IssueMetricsDb] Saved historical snapshot for project ${projectId} with health score: ${healthScore}`);
       return result.rows[0];
     } catch (error) {
       console.error('[IssueMetricsDb] Error saving historical snapshot:', error);

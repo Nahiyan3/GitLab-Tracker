@@ -4,6 +4,7 @@
 
 import { getPool } from '../../db/connection';
 import { CommitHealthMetrics, CommitMetricsHistory, CommitMetricsCalculationResult } from '../../types/commitMetrics.types';
+import { calculateCommitHealthScore } from '../../utils/healthScoreCalculator';
 
 class CommitMetricsDbService {
 
@@ -76,6 +77,13 @@ class CommitMetricsDbService {
         throw new Error('No current metrics found to create snapshot');
       }
 
+      // Calculate health score
+      const healthScore = calculateCommitHealthScore({
+        total_commits_last_7d: currentMetrics.total_commits_last_7d,
+        avg_commit_size: currentMetrics.avg_commit_size,
+        bus_factor: currentMetrics.bus_factor,
+      });
+
       const query = `
         INSERT INTO commit_metrics_history (
           uuid,
@@ -85,10 +93,11 @@ class CommitMetricsDbService {
           avg_commit_size,
           total_lines_added,
           total_lines_deleted,
-          bus_factor
+          bus_factor,
+          health_score
         ) VALUES (
           gen_random_uuid(),
-          $1, CURRENT_DATE, $2, $3, $4, $5, $6
+          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7
         )
         ON CONFLICT (project_id, snapshot_date)
         DO UPDATE SET
@@ -96,7 +105,8 @@ class CommitMetricsDbService {
           avg_commit_size = EXCLUDED.avg_commit_size,
           total_lines_added = EXCLUDED.total_lines_added,
           total_lines_deleted = EXCLUDED.total_lines_deleted,
-          bus_factor = EXCLUDED.bus_factor
+          bus_factor = EXCLUDED.bus_factor,
+          health_score = EXCLUDED.health_score
         RETURNING *;
       `;
 
@@ -107,10 +117,11 @@ class CommitMetricsDbService {
         currentMetrics.total_lines_added,
         currentMetrics.total_lines_deleted,
         currentMetrics.bus_factor,
+        healthScore,
       ];
 
       const result = await getPool().query(query, values);
-      console.log(`[CommitMetricsDb] Saved historical snapshot for project ${projectId}`);
+      console.log(`[CommitMetricsDb] Saved historical snapshot for project ${projectId} with health score: ${healthScore}`);
       return result.rows[0];
     } catch (error) {
       console.error('[CommitMetricsDb] Error saving historical snapshot:', error);
