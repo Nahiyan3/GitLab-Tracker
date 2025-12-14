@@ -136,25 +136,12 @@ class MRMetricsDbService {
           closure_rate_percent,
           mrs_merged_last_30d,
           mrs_opened_last_30d,
-          health_score
+          health_score,
+          created_at
         ) VALUES (
           gen_random_uuid(),
-          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
+          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, CURRENT_TIMESTAMP
         )
-        ON CONFLICT (project_id, snapshot_date)
-        DO UPDATE SET
-          total_open_mrs = EXCLUDED.total_open_mrs,
-          total_merged_mrs = EXCLUDED.total_merged_mrs,
-          mrs_merged_last_7d = EXCLUDED.mrs_merged_last_7d,
-          avg_merge_time_days = EXCLUDED.avg_merge_time_days,
-          avg_review_comments_per_mr = EXCLUDED.avg_review_comments_per_mr,
-          revert_rate_percent = EXCLUDED.revert_rate_percent,
-          stale_mrs_count = EXCLUDED.stale_mrs_count,
-          avg_reviewers_per_mr = EXCLUDED.avg_reviewers_per_mr,
-          closure_rate_percent = EXCLUDED.closure_rate_percent,
-          mrs_merged_last_30d = EXCLUDED.mrs_merged_last_30d,
-          mrs_opened_last_30d = EXCLUDED.mrs_opened_last_30d,
-          health_score = EXCLUDED.health_score
         RETURNING *;
       `;
 

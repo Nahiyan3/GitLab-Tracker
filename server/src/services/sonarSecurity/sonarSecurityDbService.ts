@@ -82,14 +82,9 @@ export class SonarSecurityDbService {
         security_rating,
         security_hotspots_total,
         health_score,
-        snapshot_date
-      ) VALUES ($1, $2, $3, $4, $5, CURRENT_DATE)
-      ON CONFLICT (project_id, snapshot_date)
-      DO UPDATE SET
-        vulnerabilities_total = EXCLUDED.vulnerabilities_total,
-        security_rating = EXCLUDED.security_rating,
-        security_hotspots_total = EXCLUDED.security_hotspots_total,
-        health_score = EXCLUDED.health_score
+        snapshot_date,
+        created_at
+      ) VALUES ($1, $2, $3, $4, $5, CURRENT_DATE, CURRENT_TIMESTAMP)
     `;
 
     const values = [

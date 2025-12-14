@@ -75,13 +75,9 @@ export class SonarReliabilityDbService {
         bugs_total,
         reliability_rating,
         health_score,
-        snapshot_date
-      ) VALUES ($1, $2, $3, $4, CURRENT_DATE)
-      ON CONFLICT (project_id, snapshot_date)
-      DO UPDATE SET
-        bugs_total = EXCLUDED.bugs_total,
-        reliability_rating = EXCLUDED.reliability_rating,
-        health_score = EXCLUDED.health_score
+        snapshot_date,
+        created_at
+      ) VALUES ($1, $2, $3, $4, CURRENT_DATE, CURRENT_TIMESTAMP)
     `;
 
     const values = [

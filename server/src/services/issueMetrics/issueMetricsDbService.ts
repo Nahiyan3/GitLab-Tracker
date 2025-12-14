@@ -141,25 +141,12 @@ class IssueMetricsDbService {
           closure_rate_percent,
           issues_closed_last_30d,
           issues_opened_last_30d,
-          health_score
+          health_score,
+          created_at
         ) VALUES (
           gen_random_uuid(),
-          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
+          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, CURRENT_TIMESTAMP
         )
-        ON CONFLICT (project_id, snapshot_date)
-        DO UPDATE SET
-          total_open_issues = EXCLUDED.total_open_issues,
-          total_closed_issues = EXCLUDED.total_closed_issues,
-          issues_closed_last_7d = EXCLUDED.issues_closed_last_7d,
-          avg_cycle_time_days = EXCLUDED.avg_cycle_time_days,
-          reopen_rate_percent = EXCLUDED.reopen_rate_percent,
-          bug_ratio_percent = EXCLUDED.bug_ratio_percent,
-          stale_issues_count = EXCLUDED.stale_issues_count,
-          critical_issues_open = EXCLUDED.critical_issues_open,
-          closure_rate_percent = EXCLUDED.closure_rate_percent,
-          issues_closed_last_30d = EXCLUDED.issues_closed_last_30d,
-          issues_opened_last_30d = EXCLUDED.issues_opened_last_30d,
-          health_score = EXCLUDED.health_score
         RETURNING *;
       `;
 

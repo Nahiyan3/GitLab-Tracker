@@ -196,6 +196,18 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Health scores migration warning:', migrationError.message);
     }
+
+    // Run migration 016: Allow multiple snapshots per day
+    try {
+      const migration016Path = path.join(__dirname, 'migrations', '016_allow_multiple_snapshots_per_day.sql');
+      if (fs.existsSync(migration016Path)) {
+        const migrationSql = fs.readFileSync(migration016Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Removed UNIQUE constraints to allow multiple snapshots per day');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Multiple snapshots migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

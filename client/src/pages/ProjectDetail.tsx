@@ -24,6 +24,7 @@ import { CommitMetricsCard } from "@/components/CommitMetricsCard";
 import { SonarMaintainabilityCard } from "@/components/SonarMaintainabilityCard";
 import { SonarReliabilityCard } from "@/components/SonarReliabilityCard";
 import { SonarSecurityCard } from "@/components/SonarSecurityCard";
+import { HealthScoreTrendsCard } from "@/components/HealthScoreTrendsCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -59,6 +60,8 @@ const ProjectDetail = () => {
   const [sonarReliabilityLoading, setSonarReliabilityLoading] = useState(false);
   const [sonarSecurityMetrics, setSonarSecurityMetrics] = useState<any>(null);
   const [sonarSecurityLoading, setSonarSecurityLoading] = useState(false);
+  const [healthScoreHistory, setHealthScoreHistory] = useState<any[]>([]);
+  const [healthScoreLoading, setHealthScoreLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [project, setProject] = useState<any>(null);
   const [projectLoading, setProjectLoading] = useState(true);
@@ -274,6 +277,31 @@ const ProjectDetail = () => {
     fetchSonarSecurityMetrics();
   }, [id]);
 
+  // Fetch health score history (for metrics tab)
+  const fetchHealthScoreHistory = async () => {
+    if (!id) return;
+    
+    try {
+      setHealthScoreLoading(true);
+      const response = await api.get(`/projects/${id}/health-scores/history?days=30`);
+      
+      if (response.success) {
+        setHealthScoreHistory(response.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch health score history:', error);
+    } finally {
+      setHealthScoreLoading(false);
+    }
+  };
+
+  // Fetch health scores when metrics tab is opened
+  useEffect(() => {
+    if (activeTab === 'metrics') {
+      fetchHealthScoreHistory();
+    }
+  }, [activeTab, id]);
+
   // Handle refresh button click
   const handleRefreshData = async () => {
     if (!id) return;
@@ -320,9 +348,23 @@ const ProjectDetail = () => {
         setSonarSecurityMetrics(sonarSecurityResponse.data);
         console.log('SonarQube security metrics refreshed successfully');
       }
+
+      // Refresh health score history if on metrics tab
+      if (activeTab === 'metrics') {
+        fetchHealthScoreHistory();
+      }
+
+      toast({
+        title: "Success",
+        description: "All metrics refreshed successfully",
+      });
     } catch (error) {
       console.error('Failed to refresh metrics:', error);
-      // Show error message (you can add a toast here)
+      toast({
+        title: "Error",
+        description: "Failed to refresh some metrics",
+        variant: "destructive",
+      });
     } finally {
       setRefreshing(false);
     }
@@ -525,6 +567,12 @@ const ProjectDetail = () => {
               )}
             </CardContent>
           </Card>
+
+          {/* Health Score Trends Card */}
+          <HealthScoreTrendsCard 
+            data={healthScoreHistory} 
+            loading={healthScoreLoading} 
+          />
 
           <Card>
             <CardHeader>

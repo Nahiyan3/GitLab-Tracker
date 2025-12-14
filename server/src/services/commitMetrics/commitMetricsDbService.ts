@@ -94,19 +94,12 @@ class CommitMetricsDbService {
           total_lines_added,
           total_lines_deleted,
           bus_factor,
-          health_score
+          health_score,
+          created_at
         ) VALUES (
           gen_random_uuid(),
-          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7
+          $1, CURRENT_DATE, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP
         )
-        ON CONFLICT (project_id, snapshot_date)
-        DO UPDATE SET
-          total_commits_last_7d = EXCLUDED.total_commits_last_7d,
-          avg_commit_size = EXCLUDED.avg_commit_size,
-          total_lines_added = EXCLUDED.total_lines_added,
-          total_lines_deleted = EXCLUDED.total_lines_deleted,
-          bus_factor = EXCLUDED.bus_factor,
-          health_score = EXCLUDED.health_score
         RETURNING *;
       `;
 

@@ -89,17 +89,9 @@ export class SonarMaintainabilityDbService {
         code_smells_total,
         duplicated_code_percentage,
         health_score,
-        snapshot_date
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, CURRENT_DATE)
-      ON CONFLICT (project_id, snapshot_date)
-      DO UPDATE SET
-        maintainability_high = EXCLUDED.maintainability_high,
-        maintainability_blocker = EXCLUDED.maintainability_blocker,
-        technical_debt_ratio = EXCLUDED.technical_debt_ratio,
-        maintainability_rating = EXCLUDED.maintainability_rating,
-        code_smells_total = EXCLUDED.code_smells_total,
-        duplicated_code_percentage = EXCLUDED.duplicated_code_percentage,
-        health_score = EXCLUDED.health_score
+        snapshot_date,
+        created_at
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, CURRENT_DATE, CURRENT_TIMESTAMP)
     `;
 
     const values = [
