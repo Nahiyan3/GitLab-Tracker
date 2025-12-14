@@ -44,27 +44,62 @@ const ProjectInsight = () => {
   const [error, setError] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
 
-  // Fetch project name and automatically generate insights
+  // Fetch project name and load saved insights from database
   useEffect(() => {
-    const fetchProjectNameAndGenerateInsights = async () => {
+    const fetchProjectAndLoadSavedInsights = async () => {
       try {
+        setLoading(true);
         const projects = await api.get('/projects/db');
         const project = projects.find((p: any) => p.id === parseInt(id || ''));
         if (project) {
           setProjectName(project.name);
-          // Automatically generate insights after setting project name
-          await generateInsightsForProject(project.name);
+          // Load saved insights from database instead of auto-generating
+          await loadSavedInsights(project.name);
         }
       } catch (error: any) {
         console.error('Failed to fetch project:', error);
         setError('Failed to load project');
+        setLoading(false);
       }
     };
 
     if (id) {
-      fetchProjectNameAndGenerateInsights();
+      fetchProjectAndLoadSavedInsights();
     }
   }, [id]);
+
+  // Load saved insights from database
+  const loadSavedInsights = async (name: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await api.get(`/ai/project-insights/${name}`);
+      
+      if (response.insights) {
+        // Parse the saved insights data
+        const insightsData = response.insights;
+        
+        // Set parsed insights directly from database
+        setParsedInsights(insightsData);
+        setRawInsights(JSON.stringify(insightsData, null, 2));
+        
+        toast({
+          title: "Insights Loaded",
+          description: "Loaded saved insights from database",
+        });
+      }
+    } catch (error: any) {
+      console.error('Failed to load saved insights:', error);
+      if (error.response?.status === 404) {
+        setError('No saved insights found. Click "Generate Insights" to create new insights.');
+      } else {
+        setError('Failed to load saved insights');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const generateInsightsForProject = async (name: string) => {
     if (!name) {
@@ -99,7 +134,24 @@ const ProjectInsight = () => {
           parsed = JSON.parse(response.insights);
         }
 
-        // Parse scores from detailed_calculations (the source of truth)
+        // Use JSON fields directly (source of truth) instead of parsing text
+        console.log('Parsed insights:', parsed);
+        
+        // Set final scores from JSON fields
+        if (parsed) {
+          // These are the actual calculated scores from Gemini
+          if (parsed.final_user_score !== undefined) {
+            parsed.final_user_score = parseFloat(parsed.final_user_score);
+          }
+          if (parsed.api_scores?.api_score !== undefined) {
+            parsed.api_scores.api_score = parseFloat(parsed.api_scores.api_score);
+          }
+          if (parsed.combined_score !== undefined) {
+            parsed.combined_score = parseFloat(parsed.combined_score);
+          }
+        }
+        
+        // Parse scores from detailed_calculations ONLY for section scores if not in main JSON
         if (parsed && parsed.detailed_calculations) {
           const detailedCalc = parsed.detailed_calculations;
           console.log('Detailed Calculations:', detailedCalc);
@@ -137,83 +189,8 @@ const ProjectInsight = () => {
             return 0;
           };
 
-          // Extract Final User Score - get the last number after all = signs
-          // Handle emojis and different formats
-          const finalUserRegex = /Final User Score[^=]*=([^\\n]+)/i;
-          const finalUserMatch = detailedCalc.match(finalUserRegex);
-          if (finalUserMatch) {
-            const calculationLine = finalUserMatch[1];
-            console.log('Final User Score calculation line:', calculationLine);
-            const numbers = calculationLine.match(/=\s*([\d.]+)/g);
-            if (numbers && numbers.length > 0) {
-              const lastNumber = numbers[numbers.length - 1].match(/([\d.]+)/);
-              if (lastNumber) {
-                parsed.final_user_score = parseFloat(lastNumber[1]);
-                console.log('Extracted Final User Score:', lastNumber[1]);
-              }
-            } else {
-              // Try direct number
-              const directNumber = calculationLine.match(/([\d.]+)/);
-              if (directNumber) {
-                parsed.final_user_score = parseFloat(directNumber[1]);
-                console.log('Extracted Final User Score (direct):', directNumber[1]);
-              }
-            }
-          } else {
-            console.log('Could not match Final User Score pattern');
-          }
-
-          // Extract API Score - get the last number after all = signs
-          const apiScoreRegex = /API Score[^=]*=([^\\n]+)/i;
-          const apiScoreMatch = detailedCalc.match(apiScoreRegex);
-          if (apiScoreMatch) {
-            const calculationLine = apiScoreMatch[1];
-            console.log('API Score calculation line:', calculationLine);
-            const numbers = calculationLine.match(/=\s*([\d.]+)/g);
-            if (numbers && numbers.length > 0) {
-              const lastNumber = numbers[numbers.length - 1].match(/([\d.]+)/);
-              if (lastNumber) {
-                if (!parsed.api_scores) parsed.api_scores = {};
-                parsed.api_scores.api_score = parseFloat(lastNumber[1]);
-                console.log('Extracted API Score:', lastNumber[1]);
-              }
-            } else {
-              // Try direct number
-              const directNumber = calculationLine.match(/([\d.]+)/);
-              if (directNumber) {
-                if (!parsed.api_scores) parsed.api_scores = {};
-                parsed.api_scores.api_score = parseFloat(directNumber[1]);
-                console.log('Extracted API Score (direct):', directNumber[1]);
-              }
-            }
-          } else {
-            console.log('Could not match API Score pattern');
-          }
-
-          // Extract Combined Score - get the last number after all = signs
-          const combinedRegex = /Combined Score[^=]*=([^\\n]+)/i;
-          const combinedMatch = detailedCalc.match(combinedRegex);
-          if (combinedMatch) {
-            const calculationLine = combinedMatch[1];
-            console.log('Combined Score calculation line:', calculationLine);
-            const numbers = calculationLine.match(/=\s*([\d.]+)/g);
-            if (numbers && numbers.length > 0) {
-              const lastNumber = numbers[numbers.length - 1].match(/([\d.]+)/);
-              if (lastNumber) {
-                parsed.combined_score = parseFloat(lastNumber[1]);
-                console.log('Extracted Combined Score:', lastNumber[1]);
-              }
-            } else {
-              // Try direct number
-              const directNumber = calculationLine.match(/([\d.]+)/);
-              if (directNumber) {
-                parsed.combined_score = parseFloat(directNumber[1]);
-                console.log('Extracted Combined Score (direct):', directNumber[1]);
-              }
-            }
-          } else {
-            console.log('Could not match Combined Score pattern');
-          }
+          // Note: Final User Score, API Score, and Combined Score are already set from JSON fields above
+          // Do NOT parse them from detailed_calculations to avoid inconsistencies
 
           // Override section_scores with values from detailed_calculations
           if (parsed.section_scores) {
@@ -268,7 +245,7 @@ const ProjectInsight = () => {
 
       toast({
         title: "Success",
-        description: "Project insights generated successfully",
+        description: "Project insights generated and saved successfully",
       });
     } catch (error: any) {
       setError(error.message || "Failed to generate insights");

@@ -5,29 +5,37 @@
  */
 const extractSectionScore = (detailedCalc: string, sectionName: string): number | null => {
   // Look for the section and then find "Section Score" followed by the calculation
-  const sectionRegex = new RegExp(`${sectionName}[\\s\\S]*?Section Score\\s*[=:]([^\\n]+)`, 'i');
+  const sectionRegex = new RegExp(`${sectionName}[\\s\\S]*?Section Score[\\s\\S]*?([^\\n]+)`, 'i');
   const sectionMatch = detailedCalc.match(sectionRegex);
   
   if (sectionMatch) {
     const calculationLine = sectionMatch[1];
     console.log(`[Parser] ${sectionName} calculation line:`, calculationLine);
     
-    // Extract all numbers after = signs, take the last one (final result)
+    // Try format 1: "... -> **2.99** (rounded to 2 decimals)"
+    const boldMatch = calculationLine.match(/\*\*([\d.]+)\*\*/);
+    if (boldMatch) {
+      const score = parseFloat(boldMatch[1]);
+      console.log(`[Parser] Extracted ${sectionName} score (from bold):`, score);
+      return score;
+    }
+    
+    // Try format 2: Extract all numbers after = signs, take the last one (final result)
     const numbers = calculationLine.match(/=\s*([\d.]+)/g);
     if (numbers && numbers.length > 0) {
       const lastNumber = numbers[numbers.length - 1].match(/([\d.]+)/);
       if (lastNumber) {
         const score = parseFloat(lastNumber[1]);
-        console.log(`[Parser] Extracted ${sectionName} score:`, score);
+        console.log(`[Parser] Extracted ${sectionName} score (from = sign):`, score);
         return score;
       }
     }
     
-    // If no = signs, try to get the first number directly
+    // Try format 3: Get the first number directly (fallback)
     const directNumber = calculationLine.match(/([\d.]+)/);
     if (directNumber) {
       const score = parseFloat(directNumber[1]);
-      console.log(`[Parser] Extracted ${sectionName} score (direct):`, score);
+      console.log(`[Parser] Extracted ${sectionName} score (direct fallback):`, score);
       return score;
     }
   }
@@ -130,24 +138,50 @@ export const parseAndCorrectInsights = (rawResponse: string): any => {
     }
     
     // Extract correct Final User Score
-    const finalUserRegex = /Final User Score[^=]*=([^\n]+)/i;
-    const finalUserMatch = detailedCalc.match(finalUserRegex);
+    // Try format 1: "Final User Score = ... = result"
+    let finalUserRegex = /Final User Score[:\s]*=([^\n]+)/i;
+    let finalUserMatch = detailedCalc.match(finalUserRegex);
     if (finalUserMatch) {
-      const numbers = finalUserMatch[1].match(/=\s*([\d.]+)/g);
+      const calculationLine = finalUserMatch[1];
+      console.log('[Parser] Final User Score calculation line:', calculationLine);
+      
+      // Extract all numbers after = signs, take the last one (final result)
+      const numbers = calculationLine.match(/=\s*([\d.]+)/g);
       if (numbers && numbers.length > 0) {
         const lastNumber = numbers[numbers.length - 1].match(/([\d.]+)/);
         if (lastNumber) {
           parsed.final_user_score = parseFloat(lastNumber[1]);
           console.log('[Parser] Corrected Final User Score:', parsed.final_user_score);
         }
+      } else {
+        // Try to find number in parentheses at the end (rounded to X decimals)
+        const roundedMatch = calculationLine.match(/([\d.]+)\s*\(rounded/i);
+        if (roundedMatch) {
+          parsed.final_user_score = parseFloat(roundedMatch[1]);
+          console.log('[Parser] Corrected Final User Score (from rounded notation):', parsed.final_user_score);
+        }
+      }
+    }
+    
+    // Try format 2: "**Final User Score:** 2.27" (on separate line after calculation)
+    if (!parsed.final_user_score || parsed.final_user_score < 1 || parsed.final_user_score > 5) {
+      const finalUserBoldRegex = /\*\*Final User Score:\*\*\s*([\d.]+)/i;
+      const finalUserBoldMatch = detailedCalc.match(finalUserBoldRegex);
+      if (finalUserBoldMatch) {
+        parsed.final_user_score = parseFloat(finalUserBoldMatch[1]);
+        console.log('[Parser] Corrected Final User Score (from bold format):', parsed.final_user_score);
       }
     }
     
     // Extract correct API Score
-    const apiScoreRegex = /^API\s+Score\s*=\s*\([^)]+\)[^=]*=([^\n]+)/im;
+    const apiScoreRegex = /API\s+Score[:\s]*=([^\n]+)/i;
     const apiScoreMatch = detailedCalc.match(apiScoreRegex);
     if (apiScoreMatch) {
-      const numbers = apiScoreMatch[1].match(/=\s*([\d.]+)/g);
+      const calculationLine = apiScoreMatch[1];
+      console.log('[Parser] API Score calculation line:', calculationLine);
+      
+      // Extract all numbers after = signs, take the last one (final result)
+      const numbers = calculationLine.match(/=\s*([\d.]+)/g);
       if (numbers && numbers.length > 0) {
         const lastNumber = numbers[numbers.length - 1].match(/([\d.]+)/);
         if (lastNumber) {
@@ -155,24 +189,61 @@ export const parseAndCorrectInsights = (rawResponse: string): any => {
           parsed.api_scores.api_score = parseFloat(lastNumber[1]);
           console.log('[Parser] Corrected API Score:', parsed.api_scores.api_score);
         }
+      } else {
+        // Try to find number in parentheses at the end (rounded to X decimals)
+        const roundedMatch = calculationLine.match(/([\d.]+)\s*\(rounded/i);
+        if (roundedMatch) {
+          if (!parsed.api_scores) parsed.api_scores = {};
+          parsed.api_scores.api_score = parseFloat(roundedMatch[1]);
+          console.log('[Parser] Corrected API Score (from rounded notation):', parsed.api_scores.api_score);
+        }
       }
     }
     
     // Extract correct Combined Score
-    const combinedRegex = /Combined Score[^=]*=([^\n]+)/i;
-    const combinedMatch = detailedCalc.match(combinedRegex);
+    // Try format 1: "Combined Score = ... = result"
+    let combinedRegex = /Combined Score[:\s]*=([^\n]+)/i;
+    let combinedMatch = detailedCalc.match(combinedRegex);
     if (combinedMatch) {
-      const numbers = combinedMatch[1].match(/=\s*([\d.]+)/g);
+      const calculationLine = combinedMatch[1];
+      console.log('[Parser] Combined Score calculation line:', calculationLine);
+      
+      // Extract all numbers after = signs, take the last one (final result)
+      const numbers = calculationLine.match(/=\s*([\d.]+)/g);
       if (numbers && numbers.length > 0) {
         const lastNumber = numbers[numbers.length - 1].match(/([\d.]+)/);
         if (lastNumber) {
           parsed.combined_score = parseFloat(lastNumber[1]);
           console.log('[Parser] Corrected Combined Score:', parsed.combined_score);
         }
+      } else {
+        // Try to find number in parentheses at the end (rounded to X decimals)
+        const roundedMatch = calculationLine.match(/([\d.]+)\s*\(rounded/i);
+        if (roundedMatch) {
+          parsed.combined_score = parseFloat(roundedMatch[1]);
+          console.log('[Parser] Corrected Combined Score (from rounded notation):', parsed.combined_score);
+        }
+      }
+    }
+    
+    // Try format 2: "**Combined Score:** 2.60" (on separate line after calculation)
+    if (!parsed.combined_score || parsed.combined_score < 1 || parsed.combined_score > 5) {
+      const combinedBoldRegex = /\*\*Combined Score:\*\*\s*([\d.]+)/i;
+      const combinedBoldMatch = detailedCalc.match(combinedBoldRegex);
+      if (combinedBoldMatch) {
+        parsed.combined_score = parseFloat(combinedBoldMatch[1]);
+        console.log('[Parser] Corrected Combined Score (from bold format):', parsed.combined_score);
       }
     }
     
     console.log('[Parser] Score correction complete');
+    console.log('='.repeat(60));
+    console.log('[Parser] FINAL EXTRACTED SCORES:');
+    console.log('[Parser] Final User Score:', parsed.final_user_score);
+    console.log('[Parser] API Score:', parsed.api_scores?.api_score);
+    console.log('[Parser] Combined Score:', parsed.combined_score);
+    console.log('='.repeat(60));
+    
     return parsed;
     
   } catch (error: any) {

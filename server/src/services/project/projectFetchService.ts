@@ -1,6 +1,6 @@
 ﻿// Service for fetching projects from DATABASE (not GitLab API)
 // Used for page loads - fast and no API rate limits
-import { getAllProjectsFromRegistry, getLatestSnapshotsForTrackedProjects } from '../../db/queries';
+import { getAllProjectsFromRegistry, getLatestSnapshotsForTrackedProjects, getProjectById } from '../../db/queries';
 import projectTransformService from './projectTransformService';
 
 class ProjectFetchService {
@@ -23,6 +23,20 @@ class ProjectFetchService {
   getTrackedProjectsFromDB = async () => {
     const latestSnapshots = await getLatestSnapshotsForTrackedProjects();
     return projectTransformService.toApiResponseList(latestSnapshots);
+  };
+
+  /**
+   * Get a single project by ID from registry
+   * NO GitLab API calls - purely database fetch
+   * Used for: Project Detail page
+   */
+  getProjectByIdFromDB = async (projectId: number) => {
+    const dbProject = await getProjectById(projectId);
+    if (!dbProject) {
+      return null;
+    }
+    const transformed = projectTransformService.toApiResponseList([dbProject]);
+    return transformed[0] || null;
   };
 }
 

@@ -6,6 +6,7 @@ import * as mrMetricsController from '../controllers/mrMetricsController';
 import * as commitMetricsController from '../controllers/commitMetricsController';
 import * as sonarQubeMaintainabilityController from '../controllers/sonarQubeMaintainabilityController';
 import * as sonarQubeReliabilityController from '../controllers/sonarQubeReliabilityController';
+import * as sonarQubeSecurityController from '../controllers/sonarQubeSecurityController';
 import gitlabAuthService from '../services/gitlab/gitlabAuthService';
 import trackingRoutes from './trackingRoutes';
 
@@ -36,6 +37,7 @@ router.post('/projects/refresh-all', projectController.refreshAllTrackedProjects
 router.post('/projects/track', projectController.trackProjectHandler);
 router.patch('/projects/untrack/:id', projectController.untrackProjectHandler);
 router.get('/projects/groups', projectController.getProjectGroupsHandler);
+router.get('/projects/:id', projectController.getProjectByIdFromDB);
 router.get('/projects/:id/members', projectController.getProjectMembersHandler);
 
 // Tracking routes (for Tracked Projects page)
@@ -67,6 +69,11 @@ router.get('/projects/:id/sonarqube/maintainability/history', sonarQubeMaintaina
 router.post('/projects/:id/sonarqube/reliability/refresh', sonarQubeReliabilityController.refreshReliabilityMetrics);
 router.get('/projects/:id/sonarqube/reliability', sonarQubeReliabilityController.getReliabilityMetrics);
 router.get('/projects/:id/sonarqube/reliability/history', sonarQubeReliabilityController.getReliabilityMetricsHistory);
+
+// SonarQube Security Metrics routes
+router.post('/projects/:id/sonarqube/security/refresh', sonarQubeSecurityController.refreshSecurityMetrics);
+router.get('/projects/:id/sonarqube/security', sonarQubeSecurityController.getSecurityMetrics);
+router.get('/projects/:id/sonarqube/security/history', sonarQubeSecurityController.getSecurityMetricsHistory);
 
 // AI routes (for Gemini AI testing)
 router.get('/ai/test', aiController.testConnection);

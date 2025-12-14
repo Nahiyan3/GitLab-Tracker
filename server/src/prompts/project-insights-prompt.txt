@@ -109,64 +109,66 @@ Combined Score = (0.7 * 3.45) + (0.3 * 4.20) = 2.415 + 1.260 = 3.68 (rounded to 
 
 Output Requirements (Format as JSON):
 
+REMINDER: ALL NUMERIC SCORES MUST BE BETWEEN 1.00 AND 5.00 - VERIFY BEFORE OUTPUTTING
+
 {
   "section_scores": [
     {
       "name": "Code Review",
-      "score": <1-5>,
+      "score": <number between 1.00 and 5.00, rounded to 2 decimals>,
       "analysis": "<brief analysis of current state, strengths and weaknesses>"
     },
     {
       "name": "Technical Debt",
-      "score": <1-5>,
+      "score": <number between 1.00 and 5.00, rounded to 2 decimals>,
       "analysis": "<brief analysis of current state, strengths and weaknesses>"
     },
     {
       "name": "Test Quality",
-      "score": <1-5>,
+      "score": <number between 1.00 and 5.00, rounded to 2 decimals>,
       "analysis": "<brief analysis of current state, strengths and weaknesses>"
     },
     {
       "name": "Documentation",
-      "score": <1-5>,
+      "score": <number between 1.00 and 5.00, rounded to 2 decimals>,
       "analysis": "<brief analysis of current state, strengths and weaknesses>"
     },
     {
       "name": "Deployment",
-      "score": <1-5>,
+      "score": <number between 1.00 and 5.00, rounded to 2 decimals>,
       "analysis": "<brief analysis of current state, strengths and weaknesses>"
     },
     {
       "name": "Dependencies",
-      "score": <1-5>,
+      "score": <number between 1.00 and 5.00, rounded to 2 decimals>,
       "analysis": "<brief analysis of current state, strengths and weaknesses>"
     },
     {
       "name": "Team Morale",
-      "score": <1-5>,
+      "score": <number between 1.00 and 5.00, rounded to 2 decimals>,
       "analysis": "<brief analysis of current state, strengths and weaknesses>"
     }
   ],
-  "final_user_score": <1-5>,
+  "final_user_score": <number between 1.00 and 5.00, rounded to 2 decimals>,
   "api_scores": {
     "sonarcloud": {
-      "security_high": <1-5>,
-      "security_blocker": <1-5>,
-      "reliability_high": <1-5>,
-      "reliability_blocker": <1-5>,
-      "maintainability_high": <1-5>,
-      "maintainability_blocker": <1-5>,
-      "average": <1-5>
+      "security_high": <number between 1.00 and 5.00>,
+      "security_blocker": <number between 1.00 and 5.00>,
+      "reliability_high": <number between 1.00 and 5.00>,
+      "reliability_blocker": <number between 1.00 and 5.00>,
+      "maintainability_high": <number between 1.00 and 5.00>,
+      "maintainability_blocker": <number between 1.00 and 5.00>,
+      "average": <number between 1.00 and 5.00>
     },
     "gitlab": {
-      "open_issues": <1-5>,
-      "open_mrs": <1-5>,
-      "open_milestones": <1-5>,
-      "average": <1-5>
+      "open_issues": <number between 1.00 and 5.00>,
+      "open_mrs": <number between 1.00 and 5.00>,
+      "open_milestones": <number between 1.00 and 5.00>,
+      "average": <number between 1.00 and 5.00>
     },
-    "api_score": <1-5>
+    "api_score": <number between 1.00 and 5.00>
   },
-  "combined_score": <1-5>,
+  "combined_score": <number between 1.00 and 5.00, rounded to 2 decimals>,
   "interpretation": "<4-5: Excellent, 3-4: Healthy, 2-3: Needs Improvement, <2: Critical>",
   "detailed_calculations": "<show step-by-step calculations for all sections>",
   "areas_needing_improvement": [
@@ -191,6 +193,18 @@ IMPORTANT REQUIREMENTS:
 5. MUST provide an "analysis" field for EVERY section describing the current state (1-2 sentences).
 6. If a metric has no numeric value, skip it in the calculation (reduce the divisor accordingly).
 7. Text responses should ONLY be used for analysis and recommendations, not for score calculations.
+
+CRITICAL SCORE VALIDATION:
+- ALL SCORES MUST BE BETWEEN 1.00 AND 5.00 (NO EXCEPTIONS)
+- If any formula produces a score > 5, cap it at 5.00
+- If any formula produces a score < 1, set it to 1.00
+- Section scores = average of metric scores (must be 1.00-5.00)
+- Final User Score = weighted average (must be 1.00-5.00)
+- API Score = average of SonarCloud and GitLab scores (must be 1.00-5.00)
+- Combined Score = 0.7 * Final User Score + 0.3 * API Score (must be 1.00-5.00)
+- DO NOT multiply scores by factors that would exceed 5.00
+- DO NOT add scores together without averaging
+- VERIFY each score is within 1.00-5.00 before outputting
 
 JSON FORMATTING REQUIREMENTS:
 - Output MUST be valid JSON with proper escaping

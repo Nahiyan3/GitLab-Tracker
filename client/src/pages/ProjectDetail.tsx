@@ -17,11 +17,13 @@ import {
 } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { api } from "@/lib/api";
+import { toast } from "@/hooks/use-toast";
 import { IssueMetricsCard } from "@/components/IssueMetricsCard";
 import { MRMetricsCard } from "@/components/MRMetricsCard";
 import { CommitMetricsCard } from "@/components/CommitMetricsCard";
 import { SonarMaintainabilityCard } from "@/components/SonarMaintainabilityCard";
 import { SonarReliabilityCard } from "@/components/SonarReliabilityCard";
+import { SonarSecurityCard } from "@/components/SonarSecurityCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -55,21 +57,35 @@ const ProjectDetail = () => {
   const [sonarMaintainabilityLoading, setSonarMaintainabilityLoading] = useState(false);
   const [sonarReliabilityMetrics, setSonarReliabilityMetrics] = useState<any>(null);
   const [sonarReliabilityLoading, setSonarReliabilityLoading] = useState(false);
+  const [sonarSecurityMetrics, setSonarSecurityMetrics] = useState<any>(null);
+  const [sonarSecurityLoading, setSonarSecurityLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [project, setProject] = useState<any>(null);
+  const [projectLoading, setProjectLoading] = useState(true);
 
-  // Mock project data
-  const project = {
-    id,
-    name: "auth-service",
-    group: "Backend",
-    qualityScore: 78,
-    codeQuality: 82,
-    ciHealth: 85,
-    testCoverage: 68,
-    openIssues: 5,
-    openMRs: 3,
-    lastUpdated: "30 min ago",
-  };
+  // Fetch project data
+  useEffect(() => {
+    const fetchProject = async () => {
+      if (!id) return;
+      
+      try {
+        setProjectLoading(true);
+        const projectData = await api.get(`/projects/${id}`);
+        setProject(projectData);
+      } catch (error) {
+        console.error('Failed to fetch project:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load project details",
+          variant: "destructive",
+        });
+      } finally {
+        setProjectLoading(false);
+      }
+    };
+
+    fetchProject();
+  }, [id]);
 
   // Fetch insights history
   useEffect(() => {
@@ -236,6 +252,28 @@ const ProjectDetail = () => {
     fetchSonarReliabilityMetrics();
   }, [id]);
 
+  // Fetch SonarQube security metrics
+  useEffect(() => {
+    const fetchSonarSecurityMetrics = async () => {
+      if (!id) return;
+      
+      try {
+        setSonarSecurityLoading(true);
+        const response = await api.get(`/projects/${id}/sonarqube/security`);
+        
+        if (response.success) {
+          setSonarSecurityMetrics(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch SonarQube security metrics:', error);
+      } finally {
+        setSonarSecurityLoading(false);
+      }
+    };
+
+    fetchSonarSecurityMetrics();
+  }, [id]);
+
   // Handle refresh button click
   const handleRefreshData = async () => {
     if (!id) return;
@@ -244,12 +282,13 @@ const ProjectDetail = () => {
       setRefreshing(true);
       
       // Refresh all metrics in parallel
-      const [issueResponse, mrResponse, commitResponse, sonarMaintResponse, sonarReliabResponse] = await Promise.all([
+      const [issueResponse, mrResponse, commitResponse, sonarMaintResponse, sonarReliabResponse, sonarSecurityResponse] = await Promise.all([
         api.post(`/projects/${id}/issue-metrics/refresh`, {}),
         api.post(`/projects/${id}/mr-metrics/refresh`, {}),
         api.post(`/projects/${id}/commit-metrics/refresh`, {}),
         api.post(`/projects/${id}/sonarqube/maintainability/refresh`, {}),
-        api.post(`/projects/${id}/sonarqube/reliability/refresh`, {})
+        api.post(`/projects/${id}/sonarqube/reliability/refresh`, {}),
+        api.post(`/projects/${id}/sonarqube/security/refresh`, {})
       ]);
       
       if (issueResponse.success) {
@@ -276,6 +315,11 @@ const ProjectDetail = () => {
         setSonarReliabilityMetrics(sonarReliabResponse.data);
         console.log('SonarQube reliability metrics refreshed successfully');
       }
+
+      if (sonarSecurityResponse.success) {
+        setSonarSecurityMetrics(sonarSecurityResponse.data);
+        console.log('SonarQube security metrics refreshed successfully');
+      }
     } catch (error) {
       console.error('Failed to refresh metrics:', error);
       // Show error message (you can add a toast here)
@@ -283,6 +327,29 @@ const ProjectDetail = () => {
       setRefreshing(false);
     }
   };
+
+  // Show loading state while project data is being fetched
+  if (loading || projectLoading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading project details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if project not found
+  if (!project) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <p className="text-muted-foreground">Project not found</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -297,9 +364,8 @@ const ProjectDetail = () => {
           </Button>
           <div>
             <h1 className="text-3xl font-bold mb-1">{project.name}</h1>
-            <p className="text-muted-foreground">{project.group}</p>
+            <p className="text-muted-foreground">{project.groupPath || project.fullPath}</p>
           </div>
-          <QualityBadge score={project.qualityScore} size="lg" />
         </div>
         <div className="flex gap-2">
           <Button asChild size="sm">
@@ -333,49 +399,6 @@ const ProjectDetail = () => {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Code Quality</CardTitle>
-                <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{project.codeQuality}%</div>
-                <p className="text-xs text-success">+5% from last month</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">CI Health</CardTitle>
-                <Activity className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{project.ciHealth}%</div>
-                <p className="text-xs text-success">+3% from last month</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Open Issues</CardTitle>
-                <AlertCircle className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{project.openIssues}</div>
-                <p className="text-xs text-destructive">+2 this week</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Open MRs</CardTitle>
-                <GitMerge className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{project.openMRs}</div>
-                <p className="text-xs text-muted-foreground">Unchanged</p>
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Issue Health Metrics Card */}
           <IssueMetricsCard metrics={issueMetrics} loading={metricsLoading} />
 
@@ -390,6 +413,9 @@ const ProjectDetail = () => {
 
           {/* SonarQube Reliability Metrics Card */}
           <SonarReliabilityCard metrics={sonarReliabilityMetrics} loading={sonarReliabilityLoading} />
+
+          {/* SonarQube Security Metrics Card */}
+          <SonarSecurityCard metrics={sonarSecurityMetrics} loading={sonarSecurityLoading} />
 
           <Card>
             <CardHeader>

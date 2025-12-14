@@ -23,6 +23,31 @@ class ProjectController {
   };
 
   /**
+   * Get a single project by ID from database
+   * FAST - no GitLab API calls
+   */
+  getProjectByIdFromDB = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+      const project = await projectFetchService.getProjectByIdFromDB(projectId);
+      
+      if (!project) {
+        return res.status(404).json({ error: 'Project not found' });
+      }
+
+      res.json(project);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  /**
    * Get tracked projects with latest snapshots
    * FAST - no GitLab API calls
    */

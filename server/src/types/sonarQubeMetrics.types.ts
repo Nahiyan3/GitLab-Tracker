@@ -85,3 +85,34 @@ export interface SonarQubeReliabilityCalculationResult {
   reliability_rating: string;
   reliability_remediation_effort: number;
 }
+
+// Security Metrics Types
+export interface SonarQubeSecurityMetrics {
+  project_id: number;
+  vulnerabilities_total: number;
+  vulnerabilities_new: number;
+  security_rating: string; // A, B, C, D, E
+  security_hotspots_total: number;
+  security_hotspots_reviewed: number; // percentage
+  security_review_rating: string; // A, B, C, D, E (1-5)
+  security_remediation_effort: number; // in minutes
+  calculated_at: Date;
+}
+
+export interface SonarQubeSecurityHistory {
+  project_id: number;
+  vulnerabilities_total: number;
+  security_rating: string;
+  security_hotspots_total: number;
+  snapshot_date: Date;
+}
+
+export interface SonarQubeSecurityCalculationResult {
+  vulnerabilities_total: number;
+  vulnerabilities_new: number;
+  security_rating: string;
+  security_hotspots_total: number;
+  security_hotspots_reviewed: number;
+  security_review_rating: string;
+  security_remediation_effort: number;
+}

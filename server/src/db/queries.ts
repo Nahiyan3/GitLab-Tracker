@@ -292,6 +292,30 @@ export const getAllProjectsFromRegistry = async (): Promise<any[]> => {
 };
 
 /**
+ * Get a single project by ID from registry
+ */
+export const getProjectById = async (projectId: number): Promise<any> => {
+  const pool = getPool();
+  
+  const query = `
+    SELECT 
+      uuid, row_id, id, name, full_path, group_path,
+      members_count, members, last_activity_at, parent_id, visibility,
+      tracked, created_at, updated_at, synced_at
+    FROM projects
+    WHERE id = $1;
+  `;
+  
+  try {
+    const result = await pool.query(query, [projectId]);
+    return result.rows[0] || null;
+  } catch (error: any) {
+    console.error('❌ Failed to get project by ID:', error.message);
+    throw error;
+  }
+};
+
+/**
  * Get project UUID by GitLab project ID
  */
 export const getProjectUUID = async (projectId: number): Promise<string | null> => {

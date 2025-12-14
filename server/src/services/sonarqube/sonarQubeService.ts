@@ -39,7 +39,7 @@ export class SonarQubeService {
     
     // Helper to fetch count for a type/severity
     const fetchCount = async (type: string, severity: string) => {
-      const url = `${this.baseUrl}/api/issues/search?componentKeys=${encodeURIComponent(projectKey)}&types=${type}&severities=${severity}`;
+      const url = `${this.baseUrl}/api/issues/search?componentKeys=${encodeURIComponent(projectKey)}&types=${type}&severities=${severity}&resolved=false`;
       try {
         const resp = await axios.get(url, { headers: this.getAuthHeader() });
         const count = resp.data.total || 0;
