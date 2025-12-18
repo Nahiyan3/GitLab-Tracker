@@ -22,7 +22,7 @@ export const getHealthScoreHistory = async (req: Request, res: Response) => {
 
     const pool = getPool();
 
-    // Fetch health scores from all 6 history tables
+    // Fetch health scores from all 6 history tables, grouped by day
     const [
       issueHistory,
       mrHistory,
@@ -33,95 +33,121 @@ export const getHealthScoreHistory = async (req: Request, res: Response) => {
     ] = await Promise.all([
       // Issue Metrics History
       pool.query(`
-        SELECT DATE_TRUNC('minute', created_at) as created_at, health_score
+        SELECT 
+          TO_CHAR(DATE_TRUNC('day', created_at), 'YYYY-MM-DD') as date,
+          AVG(health_score) as health_score
         FROM issue_metrics_history
         WHERE project_id = $1
           AND created_at >= CURRENT_TIMESTAMP - INTERVAL '${days} days'
-        ORDER BY created_at ASC
+        GROUP BY DATE_TRUNC('day', created_at)
+        ORDER BY DATE_TRUNC('day', created_at) ASC
       `, [projectId]),
 
       // MR Metrics History
       pool.query(`
-        SELECT DATE_TRUNC('minute', created_at) as created_at, health_score
+        SELECT 
+          TO_CHAR(DATE_TRUNC('day', created_at), 'YYYY-MM-DD') as date,
+          AVG(health_score) as health_score
         FROM mr_metrics_history
         WHERE project_id = $1
           AND created_at >= CURRENT_TIMESTAMP - INTERVAL '${days} days'
-        ORDER BY created_at ASC
+        GROUP BY DATE_TRUNC('day', created_at)
+        ORDER BY DATE_TRUNC('day', created_at) ASC
       `, [projectId]),
 
       // Commit Metrics History
       pool.query(`
-        SELECT DATE_TRUNC('minute', created_at) as created_at, health_score
+        SELECT 
+          TO_CHAR(DATE_TRUNC('day', created_at), 'YYYY-MM-DD') as date,
+          AVG(health_score) as health_score
         FROM commit_metrics_history
         WHERE project_id = $1
           AND created_at >= CURRENT_TIMESTAMP - INTERVAL '${days} days'
-        ORDER BY created_at ASC
+        GROUP BY DATE_TRUNC('day', created_at)
+        ORDER BY DATE_TRUNC('day', created_at) ASC
       `, [projectId]),
 
       // SonarQube Reliability History
       pool.query(`
-        SELECT DATE_TRUNC('minute', created_at) as created_at, health_score
+        SELECT 
+          TO_CHAR(DATE_TRUNC('day', created_at), 'YYYY-MM-DD') as date,
+          AVG(health_score) as health_score
         FROM sonarqube_reliability_history
         WHERE project_id = $1
           AND created_at >= CURRENT_TIMESTAMP - INTERVAL '${days} days'
-        ORDER BY created_at ASC
+        GROUP BY DATE_TRUNC('day', created_at)
+        ORDER BY DATE_TRUNC('day', created_at) ASC
       `, [projectId]),
 
       // SonarQube Maintainability History
       pool.query(`
-        SELECT DATE_TRUNC('minute', created_at) as created_at, health_score
+        SELECT 
+          TO_CHAR(DATE_TRUNC('day', created_at), 'YYYY-MM-DD') as date,
+          AVG(health_score) as health_score
         FROM sonarqube_maintainability_history
         WHERE project_id = $1
           AND created_at >= CURRENT_TIMESTAMP - INTERVAL '${days} days'
-        ORDER BY created_at ASC
+        GROUP BY DATE_TRUNC('day', created_at)
+        ORDER BY DATE_TRUNC('day', created_at) ASC
       `, [projectId]),
 
       // SonarQube Security History
       pool.query(`
-        SELECT DATE_TRUNC('minute', created_at) as created_at, health_score
+        SELECT 
+          TO_CHAR(DATE_TRUNC('day', created_at), 'YYYY-MM-DD') as date,
+          AVG(health_score) as health_score
         FROM sonarqube_security_history
         WHERE project_id = $1
           AND created_at >= CURRENT_TIMESTAMP - INTERVAL '${days} days'
-        ORDER BY created_at ASC
+        GROUP BY DATE_TRUNC('day', created_at)
+        ORDER BY DATE_TRUNC('day', created_at) ASC
       `, [projectId]),
     ]);
 
-    // Combine all histories into a unified timeline
-    // Create separate entries for each timestamp to get vertical stacking
-    const allEntries: any[] = [];
-    const timestampMap = new Map<string, Set<string>>();
-
-    const processHistory = (history: { rows: any[] }, metricName: string) => {
+    // Collect all unique dates from all metrics
+    const allDates = new Set<string>();
+    const addDates = (history: { rows: any[] }) => {
       history.rows.forEach((row: any) => {
-        const timestamp = new Date(row.created_at).toISOString();
-        
-        // Track which timestamps we've seen
-        if (!timestampMap.has(timestamp)) {
-          timestampMap.set(timestamp, new Set());
-        }
-        timestampMap.get(timestamp)!.add(metricName);
-        
-        // Find existing entry for this timestamp or create new one
-        let entry = allEntries.find(e => e.timestamp === timestamp);
-        if (!entry) {
-          entry = { timestamp, date: timestamp };
-          allEntries.push(entry);
-        }
-        entry[metricName] = row.health_score ? parseFloat(row.health_score) : null;
+        allDates.add(row.date);
       });
     };
 
-    processHistory(issueHistory, 'issue_health');
-    processHistory(mrHistory, 'mr_health');
-    processHistory(commitHistory, 'commit_health');
-    processHistory(reliabilityHistory, 'reliability_health');
-    processHistory(maintainabilityHistory, 'maintainability_health');
-    processHistory(securityHistory, 'security_health');
+    addDates(issueHistory);
+    addDates(mrHistory);
+    addDates(commitHistory);
+    addDates(reliabilityHistory);
+    addDates(maintainabilityHistory);
+    addDates(securityHistory);
 
-    // Sort by timestamp
-    const combinedHistory = allEntries.sort((a, b) => 
-      a.timestamp.localeCompare(b.timestamp)
-    );
+    // Create a map for quick lookup
+    const createDateMap = (history: { rows: any[] }) => {
+      const map = new Map<string, number>();
+      history.rows.forEach((row: any) => {
+        map.set(row.date, row.health_score ? parseFloat(row.health_score) : null);
+      });
+      return map;
+    };
+
+    const issueMap = createDateMap(issueHistory);
+    const mrMap = createDateMap(mrHistory);
+    const commitMap = createDateMap(commitHistory);
+    const reliabilityMap = createDateMap(reliabilityHistory);
+    const maintainabilityMap = createDateMap(maintainabilityHistory);
+    const securityMap = createDateMap(securityHistory);
+
+    // Build aligned data points - each date has all 6 metrics
+    const combinedHistory = Array.from(allDates)
+      .sort()
+      .map(date => ({
+        timestamp: date,
+        date: date,
+        issue_health: issueMap.get(date) ?? null,
+        mr_health: mrMap.get(date) ?? null,
+        commit_health: commitMap.get(date) ?? null,
+        reliability_health: reliabilityMap.get(date) ?? null,
+        maintainability_health: maintainabilityMap.get(date) ?? null,
+        security_health: securityMap.get(date) ?? null,
+      }));
 
     res.json({
       success: true,

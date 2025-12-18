@@ -25,6 +25,7 @@ import { SonarMaintainabilityCard } from "@/components/SonarMaintainabilityCard"
 import { SonarReliabilityCard } from "@/components/SonarReliabilityCard";
 import { SonarSecurityCard } from "@/components/SonarSecurityCard";
 import { HealthScoreTrendsCard } from "@/components/HealthScoreTrendsCard";
+import { MilestoneMetricsCard } from "@/components/MilestoneMetricsCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -60,6 +61,8 @@ const ProjectDetail = () => {
   const [sonarReliabilityLoading, setSonarReliabilityLoading] = useState(false);
   const [sonarSecurityMetrics, setSonarSecurityMetrics] = useState<any>(null);
   const [sonarSecurityLoading, setSonarSecurityLoading] = useState(false);
+  const [milestoneMetrics, setMilestoneMetrics] = useState<any>(null);
+  const [milestoneMetricsLoading, setMilestoneMetricsLoading] = useState(false);
   const [healthScoreHistory, setHealthScoreHistory] = useState<any[]>([]);
   const [healthScoreLoading, setHealthScoreLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -277,6 +280,28 @@ const ProjectDetail = () => {
     fetchSonarSecurityMetrics();
   }, [id]);
 
+  // Fetch milestone metrics
+  useEffect(() => {
+    const fetchMilestoneMetrics = async () => {
+      if (!id) return;
+      
+      try {
+        setMilestoneMetricsLoading(true);
+        const response = await api.get(`/projects/${id}/milestone-metrics`);
+        
+        if (response.success) {
+          setMilestoneMetrics(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch milestone metrics:', error);
+      } finally {
+        setMilestoneMetricsLoading(false);
+      }
+    };
+
+    fetchMilestoneMetrics();
+  }, [id]);
+
   // Fetch health score history (for metrics tab)
   const fetchHealthScoreHistory = async () => {
     if (!id) return;
@@ -310,13 +335,14 @@ const ProjectDetail = () => {
       setRefreshing(true);
       
       // Refresh all metrics in parallel
-      const [issueResponse, mrResponse, commitResponse, sonarMaintResponse, sonarReliabResponse, sonarSecurityResponse] = await Promise.all([
+      const [issueResponse, mrResponse, commitResponse, sonarMaintResponse, sonarReliabResponse, sonarSecurityResponse, milestoneResponse] = await Promise.all([
         api.post(`/projects/${id}/issue-metrics/refresh`, {}),
         api.post(`/projects/${id}/mr-metrics/refresh`, {}),
         api.post(`/projects/${id}/commit-metrics/refresh`, {}),
         api.post(`/projects/${id}/sonarqube/maintainability/refresh`, {}),
         api.post(`/projects/${id}/sonarqube/reliability/refresh`, {}),
-        api.post(`/projects/${id}/sonarqube/security/refresh`, {})
+        api.post(`/projects/${id}/sonarqube/security/refresh`, {}),
+        api.post(`/projects/${id}/milestone-metrics/refresh`, {})
       ]);
       
       if (issueResponse.success) {
@@ -347,6 +373,11 @@ const ProjectDetail = () => {
       if (sonarSecurityResponse.success) {
         setSonarSecurityMetrics(sonarSecurityResponse.data);
         console.log('SonarQube security metrics refreshed successfully');
+      }
+
+      if (milestoneResponse.success) {
+        setMilestoneMetrics(milestoneResponse.data);
+        console.log('Milestone metrics refreshed successfully');
       }
 
       // Refresh health score history if on metrics tab
@@ -458,6 +489,9 @@ const ProjectDetail = () => {
 
           {/* SonarQube Security Metrics Card */}
           <SonarSecurityCard metrics={sonarSecurityMetrics} loading={sonarSecurityLoading} />
+
+          {/* Milestone Metrics Card */}
+          <MilestoneMetricsCard metrics={milestoneMetrics} loading={milestoneMetricsLoading} />
 
           <Card>
             <CardHeader>

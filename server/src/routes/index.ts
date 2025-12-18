@@ -8,6 +8,7 @@ import * as sonarQubeMaintainabilityController from '../controllers/sonarQubeMai
 import * as sonarQubeReliabilityController from '../controllers/sonarQubeReliabilityController';
 import * as sonarQubeSecurityController from '../controllers/sonarQubeSecurityController';
 import * as healthScoreController from '../controllers/healthScoreController';
+import * as milestoneMetricsController from '../controllers/milestoneMetricsController';
 import gitlabAuthService from '../services/gitlab/gitlabAuthService';
 import trackingRoutes from './trackingRoutes';
 
@@ -79,6 +80,10 @@ router.get('/projects/:id/sonarqube/security/history', sonarQubeSecurityControll
 // Health Score routes (Combined health scores for all 6 metrics)
 router.get('/projects/:id/health-scores/history', healthScoreController.getHealthScoreHistory);
 router.get('/projects/:id/health-scores/latest', healthScoreController.getLatestHealthScores);
+
+// Milestone Metrics routes (for Active Milestone Issue Metrics)
+router.post('/projects/:id/milestone-metrics/refresh', milestoneMetricsController.refreshMilestoneMetrics);
+router.get('/projects/:id/milestone-metrics', milestoneMetricsController.getMilestoneMetrics);
 
 // AI routes (for Gemini AI testing)
 router.get('/ai/test', aiController.testConnection);

@@ -208,6 +208,30 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Multiple snapshots migration warning:', migrationError.message);
     }
+
+    // Run migration 017: Create milestone metrics table
+    try {
+      const migration017Path = path.join(__dirname, 'migrations', '017_create_milestone_metrics.sql');
+      if (fs.existsSync(migration017Path)) {
+        const migrationSql = fs.readFileSync(migration017Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Milestone metrics table created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Milestone metrics migration warning:', migrationError.message);
+    }
+
+    // Run migration 018: Remove UNIQUE constraint from milestone_metrics
+    try {
+      const migration018Path = path.join(__dirname, 'migrations', '018_remove_milestone_metrics_unique_constraint.sql');
+      if (fs.existsSync(migration018Path)) {
+        const migrationSql = fs.readFileSync(migration018Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Milestone metrics UNIQUE constraint removed - history enabled');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Milestone metrics constraint removal warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;
