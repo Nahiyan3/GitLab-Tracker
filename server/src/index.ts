@@ -13,13 +13,19 @@ import { errorHandler } from './middleware/errorHandler';
 import { connectDB } from './db/connection';
 import { initializeTables } from './db/queries';
 import { autoMapSonarProjectKeys } from './services/sonarqube/autoMapSonarProjectKeys';
+import { initWeeklyDoraSnapshotScheduler } from './schedulers/weeklyDoraSnapshotScheduler';
 
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173', 
+    'http://localhost:8080', 
+    'http://192.168.0.177:8080',
+    process.env.CLIENT_URL
+  ].filter(Boolean) as string[],
   credentials: true
 }));
 // Increase body size limit for PDF uploads (50MB limit)
@@ -67,6 +73,9 @@ const startServer = async () => {
     } catch (e) {
       console.warn('⚠️ Failed to auto-map SonarCloud keys:', (e as any).message);
     }
+    
+    // Initialize weekly DORA snapshot scheduler
+    initWeeklyDoraSnapshotScheduler();
     
     // Start Express server
     app.listen(PORT, () => {

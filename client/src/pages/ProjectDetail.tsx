@@ -26,6 +26,7 @@ import { SonarReliabilityCard } from "@/components/SonarReliabilityCard";
 import { SonarSecurityCard } from "@/components/SonarSecurityCard";
 import { HealthScoreTrendsCard } from "@/components/HealthScoreTrendsCard";
 import { MilestoneMetricsCard } from "@/components/MilestoneMetricsCard";
+import { DoraMetricsOverviewCard } from "@/components/DoraMetricsOverviewCard";
 
 const metricTrends = [
   { date: "Jan", score: 65, coverage: 55, ciHealth: 70 },
@@ -68,6 +69,8 @@ const ProjectDetail = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [project, setProject] = useState<any>(null);
   const [projectLoading, setProjectLoading] = useState(true);
+  const [doraMetrics, setDoraMetrics] = useState<any>(null);
+  const [doraMetricsLoading, setDoraMetricsLoading] = useState(false);
 
   // Fetch project data
   useEffect(() => {
@@ -302,6 +305,28 @@ const ProjectDetail = () => {
     fetchMilestoneMetrics();
   }, [id]);
 
+  // Fetch DORA metrics
+  useEffect(() => {
+    const fetchDoraMetrics = async () => {
+      if (!id) return;
+      
+      try {
+        setDoraMetricsLoading(true);
+        const response = await api.get(`/projects/${id}/dora/summary?days=7`);
+        
+        if (response.success) {
+          setDoraMetrics(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch DORA metrics:', error);
+      } finally {
+        setDoraMetricsLoading(false);
+      }
+    };
+
+    fetchDoraMetrics();
+  }, [id]);
+
   // Fetch health score history (for metrics tab)
   const fetchHealthScoreHistory = async () => {
     if (!id) return;
@@ -492,6 +517,9 @@ const ProjectDetail = () => {
 
           {/* Milestone Metrics Card */}
           <MilestoneMetricsCard metrics={milestoneMetrics} loading={milestoneMetricsLoading} />
+
+          {/* DORA Metrics Overview Card */}
+          <DoraMetricsOverviewCard metrics={doraMetrics} loading={doraMetricsLoading} />
 
           <Card>
             <CardHeader>

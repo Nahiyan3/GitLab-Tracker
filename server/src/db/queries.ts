@@ -232,6 +232,30 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Milestone metrics constraint removal warning:', migrationError.message);
     }
+
+    // Run migration 019: Create DORA metrics tables
+    try {
+      const migration019Path = path.join(__dirname, 'migrations', '019_create_dora_metrics_tables.sql');
+      if (fs.existsSync(migration019Path)) {
+        const migrationSql = fs.readFileSync(migration019Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ DORA metrics tables created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ DORA metrics migration warning:', migrationError.message);
+    }
+
+    // Run migration 020: Create weekly DORA snapshots table
+    try {
+      const migration020Path = path.join(__dirname, 'migrations', '020_create_weekly_dora_snapshots_table.sql');
+      if (fs.existsSync(migration020Path)) {
+        const migrationSql = fs.readFileSync(migration020Path, 'utf8');
+        await pool.query(migrationSql);
+        console.log('✅ Weekly DORA snapshots table created/verified');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Weekly DORA snapshots migration warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

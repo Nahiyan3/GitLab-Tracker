@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { QualityBadge } from "@/components/QualityBadge";
-import { RefreshCw, ExternalLink, ChevronDown, ChevronUp, Sparkles } from "lucide-react";
+import { RefreshCw, ExternalLink, ChevronDown, ChevronUp, Sparkles, BarChart3 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { api } from "@/lib/api";
 import { formatDistanceToNow } from "date-fns";
@@ -403,6 +403,16 @@ const TrackedProjects = () => {
                         variant="outline"
                       >
                         <Link to={`/project/${project.id}`}>View</Link>
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        asChild
+                        title="DORA Metrics Input"
+                      >
+                        <Link to={`/project/${project.id}/dora-input`}>
+                          <BarChart3 className="h-3 w-3" />
+                        </Link>
                       </Button>
                       <Button 
                         size="sm" 

@@ -11,6 +11,7 @@ import * as healthScoreController from '../controllers/healthScoreController';
 import * as milestoneMetricsController from '../controllers/milestoneMetricsController';
 import gitlabAuthService from '../services/gitlab/gitlabAuthService';
 import trackingRoutes from './trackingRoutes';
+import doraMetricsRoutes from './doraMetricsRoutes';
 
 const router = Router();
 
@@ -44,6 +45,9 @@ router.get('/projects/:id/members', projectController.getProjectMembersHandler);
 
 // Tracking routes (for Tracked Projects page)
 router.use('/tracking', trackingRoutes);
+
+// DORA Metrics routes (for manual DORA metrics input)
+router.use('/', doraMetricsRoutes);
 
 // Issue Metrics routes (for Issue Health Metrics)
 router.post('/projects/:id/issue-metrics/refresh', issueMetricsController.refreshIssueMetrics);

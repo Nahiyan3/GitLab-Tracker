@@ -13,6 +13,7 @@ import ProjectInsight from "./pages/ProjectInsight";
 import TrackingManagement from "./pages/TrackingManagement";
 import Alerts from "./pages/Alerts";
 import GeminiTest from "./pages/GeminiTest";
+import DoraMetricsInput from "./pages/DoraMetricsInput";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/tracked" element={<TrackedProjects />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
             <Route path="/project/:id/insights" element={<ProjectInsight />} />
+            <Route path="/project/:id/dora-input" element={<DoraMetricsInput />} />
             <Route path="/insights" element={<ProjectInsights />} />
             <Route path="/tracking" element={<TrackingManagement />} />
             <Route path="/alerts" element={<Alerts />} />
