@@ -312,7 +312,7 @@ const ProjectDetail = () => {
       
       try {
         setDoraMetricsLoading(true);
-        const response = await api.get(`/projects/${id}/dora/summary?days=7`);
+        const response = await api.get(`/projects/${id}/dora/summary?days=0`);
         
         if (response.success) {
           setDoraMetrics(response.data);
@@ -467,6 +467,11 @@ const ProjectDetail = () => {
         </div>
         <div className="flex gap-2">
           <Button asChild size="sm">
+            <Link to={`/project/${id}/dora-dashboard`}>
+              DORA Dashboard
+            </Link>
+          </Button>
+          <Button asChild size="sm" variant="outline">
             <Link to={`/project/${id}/insights`}>
               AI Project Insights
             </Link>

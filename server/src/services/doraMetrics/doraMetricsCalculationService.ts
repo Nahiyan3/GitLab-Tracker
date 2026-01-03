@@ -6,7 +6,8 @@ import { DoraMetricsSummary } from '../../types/doraMetrics.types';
 
 /**
  * Calculate DORA metrics summary for a project
- * Now uses current calendar week (Sunday to Saturday)
+ * @param projectId - The project ID
+ * @param days - Number of days to look back (0 or null = all time)
  */
 export const calculateDoraMetricsSummary = async (
   projectId: number,
@@ -14,27 +15,75 @@ export const calculateDoraMetricsSummary = async (
 ): Promise<DoraMetricsSummary> => {
   const pool = getPool();
 
-  // Calculate start of current week (Sunday)
-  // EXTRACT(DOW FROM NOW()) returns 0 for Sunday, 1 for Monday, etc.
-  const weekStartQuery = `
-    (NOW()::date - INTERVAL '1 day' * EXTRACT(DOW FROM NOW())::integer)::timestamp
-  `;
+  // Build time filter based on days parameter
+  // 0 or null = all time, otherwise filter by days
+  const timeFilter = days > 0 
+    ? `AND deployment_timestamp >= NOW() - INTERVAL '${days} days'`
+    : '';
+
+  const timeFilterMerged = days > 0
+    ? `AND merged_timestamp >= NOW() - INTERVAL '${days} days'`
+    : '';
+
+  const timeFilterIncident = days > 0
+    ? `AND start_time >= NOW() - INTERVAL '${days} days'`
+    : '';
 
   // 1. Deployment Frequency
   const deploymentFrequencyQuery = `
     SELECT 
       COUNT(*) as total_deployments,
-      COUNT(*) FILTER (WHERE environment = 'production') as production_deployments,
-      COUNT(*) FILTER (WHERE environment = 'production' AND deployment_timestamp >= NOW() - INTERVAL '1 day') as daily,
-      COUNT(*) FILTER (WHERE environment = 'production' AND deployment_timestamp >= NOW() - INTERVAL '7 days') as weekly,
-      COUNT(*) FILTER (WHERE environment = 'production' AND deployment_timestamp >= NOW() - INTERVAL '30 days') as monthly
+      COUNT(*) FILTER (WHERE environment = 'production') as production_deployments
     FROM deployment_frequency
     WHERE project_id = $1
-      AND deployment_timestamp >= ${weekStartQuery}
+      ${timeFilter}
   `;
 
   const deploymentResult = await pool.query(deploymentFrequencyQuery, [projectId]);
   const deploymentData = deploymentResult.rows[0];
+  
+  // For all-time metrics, calculate frequency metrics based on the full dataset
+  let deployments_per_day = 0;
+  let deployments_per_week = 0;
+  let deployments_per_month = 0;
+  
+  if (days === 0 || days === null) {
+    // Calculate based on entire dataset time range
+    const timeRangeQuery = `
+      SELECT 
+        MIN(deployment_timestamp) as earliest,
+        MAX(deployment_timestamp) as latest
+      FROM deployment_frequency
+      WHERE project_id = $1 AND environment = 'production'
+    `;
+    const rangeResult = await pool.query(timeRangeQuery, [projectId]);
+    const { earliest, latest } = rangeResult.rows[0];
+    
+    if (earliest && latest) {
+      const totalDays = Math.max(1, Math.ceil((new Date(latest).getTime() - new Date(earliest).getTime()) / (1000 * 60 * 60 * 24)));
+      const totalDeployments = parseInt(deploymentData.production_deployments) || 0;
+      
+      deployments_per_day = parseFloat((totalDeployments / totalDays).toFixed(2));
+      deployments_per_week = parseFloat((totalDeployments / (totalDays / 7)).toFixed(2));
+      deployments_per_month = parseFloat((totalDeployments / (totalDays / 30)).toFixed(2));
+    }
+  } else {
+    // For time-filtered queries, count recent deployments
+    const recentQuery = `
+      SELECT 
+        COUNT(*) FILTER (WHERE environment = 'production' AND deployment_timestamp >= NOW() - INTERVAL '1 day') as daily,
+        COUNT(*) FILTER (WHERE environment = 'production' AND deployment_timestamp >= NOW() - INTERVAL '7 days') as weekly,
+        COUNT(*) FILTER (WHERE environment = 'production' AND deployment_timestamp >= NOW() - INTERVAL '30 days') as monthly
+      FROM deployment_frequency
+      WHERE project_id = $1
+    `;
+    const recentResult = await pool.query(recentQuery, [projectId]);
+    const recentData = recentResult.rows[0];
+    
+    deployments_per_day = parseInt(recentData.daily) || 0;
+    deployments_per_week = parseInt(recentData.weekly) || 0;
+    deployments_per_month = parseInt(recentData.monthly) || 0;
+  }
 
   // 2. Lead Time for Changes
   const leadTimeQuery = `
@@ -46,7 +95,7 @@ export const calculateDoraMetricsSummary = async (
       MAX(lead_time_hours) as max_lead_time
     FROM lead_time_changes
     WHERE project_id = $1
-      AND merged_timestamp >= ${weekStartQuery}
+      ${timeFilterMerged}
   `;
 
   const leadTimeResult = await pool.query(leadTimeQuery, [projectId]);
@@ -63,7 +112,7 @@ export const calculateDoraMetricsSummary = async (
       END as failure_rate
     FROM change_failure_rate
     WHERE project_id = $1
-      AND deployment_timestamp >= ${weekStartQuery}
+      ${timeFilter}
   `;
 
   const changeFailureResult = await pool.query(changeFailureQuery, [projectId]);
@@ -79,7 +128,7 @@ export const calculateDoraMetricsSummary = async (
       MAX(restore_time_hours) as max_restore_time
     FROM time_to_restore_service
     WHERE project_id = $1
-      AND start_time >= ${weekStartQuery}
+      ${timeFilterIncident}
   `;
 
   const timeToRestoreResult = await pool.query(timeToRestoreQuery, [projectId]);
@@ -90,9 +139,9 @@ export const calculateDoraMetricsSummary = async (
     deployment_frequency: {
       total_deployments: parseInt(deploymentData.total_deployments) || 0,
       production_deployments: parseInt(deploymentData.production_deployments) || 0,
-      deployments_per_day: parseInt(deploymentData.daily) || 0,
-      deployments_per_week: parseInt(deploymentData.weekly) || 0,
-      deployments_per_month: parseInt(deploymentData.monthly) || 0,
+      deployments_per_day: deployments_per_day,
+      deployments_per_week: deployments_per_week,
+      deployments_per_month: deployments_per_month,
     },
     lead_time: {
       total_changes: parseInt(leadTimeData.total_changes) || 0,

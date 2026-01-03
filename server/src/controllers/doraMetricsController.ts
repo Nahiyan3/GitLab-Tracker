@@ -22,6 +22,7 @@ import {
   getWeeklySnapshotsForProject,
   captureLastWeekSnapshots 
 } from '../services/doraMetrics/weeklyDoraSnapshotService';
+import { getDoraTrends } from '../services/doraMetrics/doraTrendsService';
 
 /**
  * POST /projects/:id/dora/deployment
@@ -311,7 +312,9 @@ export const getTimeToRestoreServices = async (req: Request, res: Response) => {
 export const getDoraMetricsSummary = async (req: Request, res: Response) => {
   try {
     const projectId = parseInt(req.params.id);
-    const days = parseInt(req.query.days as string) || 30;
+    // days=0 means all-time, otherwise use the provided value or default to 30
+    const daysParam = req.query.days as string;
+    const days = daysParam !== undefined ? parseInt(daysParam) : 30;
 
     const summary = await calculateDoraMetricsSummary(projectId, days);
 
@@ -517,6 +520,44 @@ export const manualCaptureLastWeek = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Failed to capture last week snapshots',
+    });
+  }
+};
+
+/**
+ * GET /projects/:id/dora/trends
+ * Get DORA metrics trends (weekly, monthly, or yearly)
+ */
+export const getDoraTrendsController = async (req: Request, res: Response) => {
+  try {
+    const projectId = parseInt(req.params.id);
+    const granularity = (req.query.granularity as 'weekly' | 'monthly' | 'yearly') || 'monthly';
+    const periods = parseInt(req.query.periods as string) || 12;
+
+    // Validate granularity
+    if (!['weekly', 'monthly', 'yearly'].includes(granularity)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid granularity. Must be weekly, monthly, or yearly',
+      });
+    }
+
+    console.log(`[DoraMetricsController] Fetching trends for project ${projectId}, granularity: ${granularity}, periods: ${periods}`);
+
+    const trends = await getDoraTrends(projectId, granularity, periods);
+
+    console.log(`[DoraMetricsController] Successfully fetched ${trends.data.length} data points`);
+
+    res.json({
+      success: true,
+      data: trends,
+    });
+  } catch (error) {
+    console.error('[DoraMetricsController] Error fetching trends:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch DORA trends',
+      details: error instanceof Error ? error.stack : undefined,
     });
   }
 };

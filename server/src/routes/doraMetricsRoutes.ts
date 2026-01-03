@@ -19,6 +19,7 @@ import {
   searchDeployments,
   getWeeklySnapshots,
   manualCaptureLastWeek,
+  getDoraTrendsController,
 } from '../controllers/doraMetricsController';
 
 const router = Router();
@@ -38,6 +39,9 @@ router.get('/projects/:id/dora/restore', getTimeToRestoreServices);
 
 // Summary endpoint
 router.get('/projects/:id/dora/summary', getDoraMetricsSummary);
+
+// Trends endpoint
+router.get('/projects/:id/dora/trends', getDoraTrendsController);
 
 // Weekly snapshots endpoint
 router.get('/projects/:id/dora/weekly-snapshots', getWeeklySnapshots);

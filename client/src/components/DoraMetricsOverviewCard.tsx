@@ -14,7 +14,7 @@ export const DoraMetricsOverviewCard = ({ metrics, loading }: DoraMetricsOvervie
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Activity className="h-5 w-5" />
-            DORA Metrics (This Week: Sun-Sat)
+            DORA Metrics (All Time)
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -32,7 +32,7 @@ export const DoraMetricsOverviewCard = ({ metrics, loading }: DoraMetricsOvervie
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Activity className="h-5 w-5" />
-            DORA Metrics (This Week: Sun-Sat)
+            DORA Metrics (All Time)
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -110,7 +110,7 @@ export const DoraMetricsOverviewCard = ({ metrics, loading }: DoraMetricsOvervie
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Activity className="h-5 w-5" />
-          DORA Metrics (This Week: Sun-Sat)
+          DORA Metrics (All Time)
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -209,7 +209,7 @@ export const DoraMetricsOverviewCard = ({ metrics, loading }: DoraMetricsOvervie
         </div>
 
         <div className="mt-4 text-xs text-muted-foreground">
-          <p>DORA metrics based on current calendar week (Sunday to Saturday). Performance levels: Elite, High, Medium, Low.</p>
+          <p>DORA metrics based on all historical data. Performance levels: Elite, High, Medium, Low.</p>
         </div>
       </CardContent>
     </Card>
