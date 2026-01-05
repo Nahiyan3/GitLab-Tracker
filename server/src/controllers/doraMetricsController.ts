@@ -533,6 +533,7 @@ export const getDoraTrendsController = async (req: Request, res: Response) => {
     const projectId = parseInt(req.params.id);
     const granularity = (req.query.granularity as 'weekly' | 'monthly' | 'yearly') || 'monthly';
     const periods = parseInt(req.query.periods as string) || 12;
+    const offset = parseInt(req.query.offset as string) || 0;
 
     // Validate granularity
     if (!['weekly', 'monthly', 'yearly'].includes(granularity)) {
@@ -542,9 +543,9 @@ export const getDoraTrendsController = async (req: Request, res: Response) => {
       });
     }
 
-    console.log(`[DoraMetricsController] Fetching trends for project ${projectId}, granularity: ${granularity}, periods: ${periods}`);
+    console.log(`[DoraMetricsController] Fetching trends for project ${projectId}, granularity: ${granularity}, periods: ${periods}, offset: ${offset}`);
 
-    const trends = await getDoraTrends(projectId, granularity, periods);
+    const trends = await getDoraTrends(projectId, granularity, periods, offset);
 
     console.log(`[DoraMetricsController] Successfully fetched ${trends.data.length} data points`);
 

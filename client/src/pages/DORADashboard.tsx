@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import {
   LineChart,
   Line,
@@ -64,19 +63,20 @@ const COLORS = {
 const DORADashboard = () => {
   const { id } = useParams<{ id: string }>();
   const [granularity, setGranularity] = useState<'weekly' | 'monthly' | 'yearly'>('monthly');
+  const [offset, setOffset] = useState(0); // 0 = current, 1 = previous 12 periods, etc.
   const [trendData, setTrendData] = useState<DoraTrendResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchTrendData();
-  }, [id, granularity]);
+  }, [id, granularity, offset]);
 
   const fetchTrendData = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get(`/projects/${id}/dora/trends?granularity=${granularity}&periods=12`);
+      const response = await api.get(`/projects/${id}/dora/trends?granularity=${granularity}&periods=12&offset=${offset}`);
       if (response.success) {
         setTrendData(response.data);
       }
@@ -88,20 +88,51 @@ const DORADashboard = () => {
     }
   };
 
+  const handlePreviousPeriod = () => {
+    setOffset(offset + 1);
+  };
+
+  const handleNextPeriod = () => {
+    if (offset > 0) {
+      setOffset(offset - 1);
+    }
+  };
+
+  const handleGranularityChange = (value: 'weekly' | 'monthly' | 'yearly') => {
+    setGranularity(value);
+    setOffset(0); // Reset offset when changing granularity
+  };
+
   const getTrendIcon = (trend: 'up' | 'down' | 'stable', isPositive: boolean = true) => {
     if (trend === 'stable') return <Minus className="w-4 h-4 text-gray-500" />;
-    if ((trend === 'up' && isPositive) || (trend === 'down' && !isPositive)) {
-      return <TrendingUp className="w-4 h-4 text-green-600" />;
+    
+    // trend 'up' means value increased
+    if (trend === 'up') {
+      // If higher is better (deployment frequency), green up arrow
+      // If lower is better (lead time, failure rate, restore time), red up arrow
+      return isPositive 
+        ? <TrendingUp className="w-4 h-4 text-green-600" />
+        : <TrendingUp className="w-4 h-4 text-red-600" />;
     }
-    return <TrendingDown className="w-4 h-4 text-red-600" />;
+    
+    // trend 'down' means value decreased
+    // If higher is better (deployment frequency), red down arrow
+    // If lower is better (lead time, failure rate, restore time), green down arrow
+    return isPositive
+      ? <TrendingDown className="w-4 h-4 text-red-600" />
+      : <TrendingDown className="w-4 h-4 text-green-600" />;
   };
 
   const getTrendColor = (trend: 'up' | 'down' | 'stable', isPositive: boolean = true) => {
     if (trend === 'stable') return 'text-gray-600';
-    if ((trend === 'up' && isPositive) || (trend === 'down' && !isPositive)) {
-      return 'text-green-600';
+    
+    // trend 'up' means value increased
+    if (trend === 'up') {
+      return isPositive ? 'text-green-600' : 'text-red-600';
     }
-    return 'text-red-600';
+    
+    // trend 'down' means value decreased
+    return isPositive ? 'text-red-600' : 'text-green-600';
   };
 
   const getPerformanceRating = (metric: string, value: number): { rating: string; color: string } => {
@@ -197,7 +228,7 @@ const DORADashboard = () => {
 
         <div className="flex items-center gap-3">
           <Calendar className="w-5 h-5 text-gray-500" />
-          <Select value={granularity} onValueChange={(value: any) => setGranularity(value)}>
+          <Select value={granularity} onValueChange={handleGranularityChange}>
             <SelectTrigger className="w-40">
               <SelectValue />
             </SelectTrigger>
@@ -208,6 +239,35 @@ const DORADashboard = () => {
             </SelectContent>
           </Select>
         </div>
+      </div>
+
+      {/* Period Navigation */}
+      <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg border">
+        <Button
+          variant="outline"
+          onClick={handlePreviousPeriod}
+          disabled={loading}
+        >
+          ← Previous 12 {granularity === 'weekly' ? 'Weeks' : granularity === 'monthly' ? 'Months' : 'Years'}
+        </Button>
+        
+        <div className="text-sm font-medium text-gray-700">
+          {offset === 0 ? (
+            <span>Current Period (Last 12 {granularity === 'weekly' ? 'weeks' : granularity === 'monthly' ? 'months' : 'years'})</span>
+          ) : (
+            <span>
+              {offset * 12} - {(offset + 1) * 12} {granularity === 'weekly' ? 'weeks' : granularity === 'monthly' ? 'months' : 'years'} ago
+            </span>
+          )}
+        </div>
+        
+        <Button
+          variant="outline"
+          onClick={handleNextPeriod}
+          disabled={offset === 0 || loading}
+        >
+          Next 12 {granularity === 'weekly' ? 'Weeks' : granularity === 'monthly' ? 'Months' : 'Years'} →
+        </Button>
       </div>
 
       {/* Summary Cards */}
@@ -228,7 +288,8 @@ const DORADashboard = () => {
               <div className="text-sm text-gray-600">
                 per {granularity === 'weekly' ? 'week' : granularity === 'monthly' ? 'month' : 'year'}
               </div>
-              <div className={`text-sm font-medium ${getTrendColor(summary.deployment_frequency.trend, true)}`}>
+              <div className={`text-sm font-medium flex items-center gap-1 ${getTrendColor(summary.deployment_frequency.trend, true)}`}>
+                {getTrendIcon(summary.deployment_frequency.trend, true)}
                 {Math.abs(summary.deployment_frequency.change_percent).toFixed(1)}% from previous period
               </div>
               <div className={`inline-flex items-center px-2 py-1 rounded text-xs font-semibold ${deploymentPerf.color} bg-opacity-10`}>
@@ -252,7 +313,8 @@ const DORADashboard = () => {
             <div className="space-y-2">
               <div className="text-3xl font-bold">{summary.lead_time.current.toFixed(1)}</div>
               <div className="text-sm text-gray-600">hours avg</div>
-              <div className={`text-sm font-medium ${getTrendColor(summary.lead_time.trend, false)}`}>
+              <div className={`text-sm font-medium flex items-center gap-1 ${getTrendColor(summary.lead_time.trend, false)}`}>
+                {getTrendIcon(summary.lead_time.trend, false)}
                 {Math.abs(summary.lead_time.change_percent).toFixed(1)}% from previous period
               </div>
               <div className={`inline-flex items-center px-2 py-1 rounded text-xs font-semibold ${leadTimePerf.color} bg-opacity-10`}>
@@ -276,7 +338,8 @@ const DORADashboard = () => {
             <div className="space-y-2">
               <div className="text-3xl font-bold">{summary.failure_rate.current.toFixed(1)}%</div>
               <div className="text-sm text-gray-600">failure rate</div>
-              <div className={`text-sm font-medium ${getTrendColor(summary.failure_rate.trend, false)}`}>
+              <div className={`text-sm font-medium flex items-center gap-1 ${getTrendColor(summary.failure_rate.trend, false)}`}>
+                {getTrendIcon(summary.failure_rate.trend, false)}
                 {Math.abs(summary.failure_rate.change_percent).toFixed(1)}% from previous period
               </div>
               <div className={`inline-flex items-center px-2 py-1 rounded text-xs font-semibold ${failureRatePerf.color} bg-opacity-10`}>
@@ -300,7 +363,8 @@ const DORADashboard = () => {
             <div className="space-y-2">
               <div className="text-3xl font-bold">{summary.restore_time.current.toFixed(1)}</div>
               <div className="text-sm text-gray-600">hours avg</div>
-              <div className={`text-sm font-medium ${getTrendColor(summary.restore_time.trend, false)}`}>
+              <div className={`text-sm font-medium flex items-center gap-1 ${getTrendColor(summary.restore_time.trend, false)}`}>
+                {getTrendIcon(summary.restore_time.trend, false)}
                 {Math.abs(summary.restore_time.change_percent).toFixed(1)}% from previous period
               </div>
               <div className={`inline-flex items-center px-2 py-1 rounded text-xs font-semibold ${restoreTimePerf.color} bg-opacity-10`}>
@@ -311,224 +375,130 @@ const DORADashboard = () => {
         </Card>
       </div>
 
-      {/* Charts Section */}
-      <Tabs defaultValue="deployment" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="deployment">Deployment Frequency</TabsTrigger>
-          <TabsTrigger value="leadtime">Lead Time</TabsTrigger>
-          <TabsTrigger value="failure">Failure Rate</TabsTrigger>
-          <TabsTrigger value="restore">Time to Restore</TabsTrigger>
-        </TabsList>
-
+      {/* Charts Section - All Visible */}
+      <div className="space-y-6">
         {/* Deployment Frequency Chart */}
-        <TabsContent value="deployment">
-          <Card>
-            <CardHeader>
-              <CardTitle>Deployment Frequency Trend</CardTitle>
-              <CardDescription>
-                Number of deployments per {granularity === 'weekly' ? 'week' : granularity === 'monthly' ? 'month' : 'year'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={data}>
-                    <defs>
-                      <linearGradient id="colorDeployment" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor={COLORS.primary} stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor={COLORS.primary} stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="period" 
-                      tickFormatter={formatPeriodLabel}
-                      angle={-45}
-                      textAnchor="end"
-                      height={80}
-                    />
-                    <YAxis />
-                    <Tooltip 
-                      labelFormatter={formatPeriodLabel}
-                      formatter={(value: number) => [value, 'Deployments']}
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="deployment_frequency" 
-                      stroke={COLORS.primary} 
-                      fillOpacity={1} 
-                      fill="url(#colorDeployment)" 
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
+        <Card>
+          <CardHeader>
+            <CardTitle>Deployment Frequency Trend</CardTitle>
+            <CardDescription>
+              Number of deployments per {granularity === 'weekly' ? 'week' : granularity === 'monthly' ? 'month' : 'year'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={data}>
+                  <defs>
+                    <linearGradient id="colorDeployment" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={COLORS.primary} stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor={COLORS.primary} stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="period" 
+                    tickFormatter={formatPeriodLabel}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  />
+                  <YAxis />
+                  <Tooltip 
+                    labelFormatter={formatPeriodLabel}
+                    formatter={(value: number) => [value, 'Deployments']}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="deployment_frequency" 
+                    stroke={COLORS.primary} 
+                    fillOpacity={1} 
+                    fill="url(#colorDeployment)" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-sm text-gray-600">Current</div>
+                <div className="text-2xl font-bold">{summary.deployment_frequency.current}</div>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-sm text-gray-600">Current</div>
-                  <div className="text-2xl font-bold">{summary.deployment_frequency.current}</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600">Average</div>
-                  <div className="text-2xl font-bold">{summary.deployment_frequency.avg.toFixed(1)}</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600">Total ({data.length} periods)</div>
-                  <div className="text-2xl font-bold">
-                    {data.reduce((sum, d) => sum + d.total_deployments, 0)}
-                  </div>
+              <div>
+                <div className="text-sm text-gray-600">Average</div>
+                <div className="text-2xl font-bold">{summary.deployment_frequency.avg.toFixed(1)}</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600">Total ({data.length} periods)</div>
+                <div className="text-2xl font-bold">
+                  {data.reduce((sum, d) => sum + d.total_deployments, 0)}
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Lead Time Chart */}
-        <TabsContent value="leadtime">
-          <Card>
-            <CardHeader>
-              <CardTitle>Lead Time for Changes Trend</CardTitle>
-              <CardDescription>
-                Average time from commit to production (in hours)
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis 
-                      dataKey="period" 
-                      tickFormatter={formatPeriodLabel}
-                      angle={-45}
-                      textAnchor="end"
-                      height={80}
-                    />
-                    <YAxis />
-                    <Tooltip 
-                      labelFormatter={formatPeriodLabel}
-                      formatter={(value: number) => [value.toFixed(2) + ' hrs', 'Lead Time']}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="avg_lead_time_hours" 
-                      stroke={COLORS.purple} 
-                      strokeWidth={3}
-                      dot={{ r: 4 }}
-                      activeDot={{ r: 6 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
+        <Card>
+          <CardHeader>
+            <CardTitle>Lead Time for Changes Trend</CardTitle>
+            <CardDescription>
+              Average time from commit to production (in hours)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="period" 
+                    tickFormatter={formatPeriodLabel}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  />
+                  <YAxis />
+                  <Tooltip 
+                    labelFormatter={formatPeriodLabel}
+                    formatter={(value: number) => [value.toFixed(2) + ' hrs', 'Lead Time']}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="avg_lead_time_hours" 
+                    stroke={COLORS.purple} 
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-sm text-gray-600">Current</div>
+                <div className="text-2xl font-bold">{summary.lead_time.current.toFixed(1)} hrs</div>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-sm text-gray-600">Current</div>
-                  <div className="text-2xl font-bold">{summary.lead_time.current.toFixed(1)} hrs</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600">Average</div>
-                  <div className="text-2xl font-bold">{summary.lead_time.avg.toFixed(1)} hrs</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600">Total Changes</div>
-                  <div className="text-2xl font-bold">
-                    {data.reduce((sum, d) => sum + d.total_changes, 0)}
-                  </div>
+              <div>
+                <div className="text-sm text-gray-600">Average</div>
+                <div className="text-2xl font-bold">{summary.lead_time.avg.toFixed(1)} hrs</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600">Total Changes</div>
+                <div className="text-2xl font-bold">
+                  {data.reduce((sum, d) => sum + d.total_changes, 0)}
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Change Failure Rate Chart */}
-        <TabsContent value="failure">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Change Failure Rate Trend</CardTitle>
-                <CardDescription>
-                  Percentage of deployments causing failures
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={data}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="period" 
-                        tickFormatter={formatPeriodLabel}
-                        angle={-45}
-                        textAnchor="end"
-                        height={80}
-                      />
-                      <YAxis unit="%" />
-                      <Tooltip 
-                        labelFormatter={formatPeriodLabel}
-                        formatter={(value: number) => [value.toFixed(2) + '%', 'Failure Rate']}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="failure_rate_percent" 
-                        stroke={COLORS.warning} 
-                        strokeWidth={3}
-                        dot={{ r: 4 }}
-                        activeDot={{ r: 6 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Current Period Breakdown</CardTitle>
-                <CardDescription>
-                  Success vs. failure distribution
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-80">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={failureChartData}
-                        cx="50%"
-                        cy="50%"
-                        labelLine={false}
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                        outerRadius={100}
-                        fill="#8884d8"
-                        dataKey="value"
-                      >
-                        {failureChartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={index === 0 ? COLORS.success : COLORS.danger} />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-                <div className="mt-4 text-center">
-                  <div className="text-sm text-gray-600">Total Deployments</div>
-                  <div className="text-2xl font-bold">{latestData.total_deployments}</div>
-                  <div className="text-sm text-gray-600 mt-2">
-                    {latestData.failed_deployments} failures ({latestData.failure_rate_percent.toFixed(1)}%)
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        {/* Time to Restore Chart */}
-        <TabsContent value="restore">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Card>
             <CardHeader>
-              <CardTitle>Time to Restore Service Trend</CardTitle>
+              <CardTitle>Change Failure Rate Trend</CardTitle>
               <CardDescription>
-                Average time to recover from incidents (in hours)
+                Percentage of deployments causing failures
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -543,15 +513,15 @@ const DORADashboard = () => {
                       textAnchor="end"
                       height={80}
                     />
-                    <YAxis unit=" hrs" />
+                    <YAxis unit="%" />
                     <Tooltip 
                       labelFormatter={formatPeriodLabel}
-                      formatter={(value: number) => [value.toFixed(2) + ' hrs', 'Restore Time']}
+                      formatter={(value: number) => [value.toFixed(2) + '%', 'Failure Rate']}
                     />
                     <Line 
                       type="monotone" 
-                      dataKey="avg_restore_time_hours" 
-                      stroke={COLORS.cyan} 
+                      dataKey="failure_rate_percent" 
+                      stroke={COLORS.warning} 
                       strokeWidth={3}
                       dot={{ r: 4 }}
                       activeDot={{ r: 6 }}
@@ -559,26 +529,105 @@ const DORADashboard = () => {
                   </LineChart>
                 </ResponsiveContainer>
               </div>
-              <div className="mt-4 grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-sm text-gray-600">Current</div>
-                  <div className="text-2xl font-bold">{summary.restore_time.current.toFixed(1)} hrs</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600">Average</div>
-                  <div className="text-2xl font-bold">{summary.restore_time.avg.toFixed(1)} hrs</div>
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600">Total Incidents</div>
-                  <div className="text-2xl font-bold">
-                    {data.reduce((sum, d) => sum + d.total_incidents, 0)}
-                  </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Current Period Breakdown</CardTitle>
+              <CardDescription>
+                Success vs. failure distribution
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={failureChartData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {failureChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={index === 0 ? COLORS.success : COLORS.danger} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="mt-4 text-center">
+                <div className="text-sm text-gray-600">Total Deployments</div>
+                <div className="text-2xl font-bold">{latestData.total_deployments}</div>
+                <div className="text-sm text-gray-600 mt-2">
+                  {latestData.failed_deployments} failures ({latestData.failure_rate_percent.toFixed(1)}%)
                 </div>
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
+        </div>
+
+        {/* Time to Restore Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Time to Restore Service Trend</CardTitle>
+            <CardDescription>
+              Average time to recover from incidents (in hours)
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-80">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="period" 
+                    tickFormatter={formatPeriodLabel}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  />
+                  <YAxis unit=" hrs" />
+                  <Tooltip 
+                    labelFormatter={formatPeriodLabel}
+                    formatter={(value: number) => [value.toFixed(2) + ' hrs', 'Restore Time']}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="avg_restore_time_hours" 
+                    stroke={COLORS.cyan} 
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-sm text-gray-600">Current</div>
+                <div className="text-2xl font-bold">{summary.restore_time.current.toFixed(1)} hrs</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600">Average</div>
+                <div className="text-2xl font-bold">{summary.restore_time.avg.toFixed(1)} hrs</div>
+              </div>
+              <div>
+                <div className="text-sm text-gray-600">Total Incidents</div>
+                <div className="text-2xl font-bold">
+                  {data.reduce((sum, d) => sum + d.total_incidents, 0)}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Performance Summary */}
       <Card>

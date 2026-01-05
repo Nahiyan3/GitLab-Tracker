@@ -59,23 +59,17 @@ function calculateTrend(current: number, previous: number, lowerIsBetter: boolea
   
   const change_percent = ((current - previous) / previous) * 100;
   
-  if (Math.abs(change_percent) < 5) {
+  // Only treat as stable if change is less than 1%
+  if (Math.abs(change_percent) < 1) {
     return { trend: 'stable', change_percent };
   }
   
-  if (lowerIsBetter) {
-    // For metrics where lower is better (lead time, failure rate, restore time)
-    return {
-      trend: change_percent < 0 ? 'up' : 'down',
-      change_percent,
-    };
-  } else {
-    // For metrics where higher is better (deployment frequency)
-    return {
-      trend: change_percent > 0 ? 'up' : 'down',
-      change_percent,
-    };
-  }
+  // For all metrics: 'up' means value increased, 'down' means value decreased
+  // The frontend will handle coloring based on whether that's good or bad
+  return {
+    trend: change_percent > 0 ? 'up' : 'down',
+    change_percent,
+  };
 }
 
 /**
@@ -83,37 +77,47 @@ function calculateTrend(current: number, previous: number, lowerIsBetter: boolea
  * @param projectId - The project ID
  * @param granularity - 'weekly', 'monthly', or 'yearly'
  * @param periods - Number of periods to retrieve (max 12)
+ * @param offset - Number of period sets to skip (0 = current, 1 = previous 12 periods, etc.)
  */
 export const getDoraTrends = async (
   projectId: number,
   granularity: 'weekly' | 'monthly' | 'yearly' = 'monthly',
-  periods: number = 12
+  periods: number = 12,
+  offset: number = 0
 ): Promise<DoraTrendResponse> => {
   const pool = getPool();
   periods = Math.min(periods, 12); // Cap at 12 periods
+  offset = Math.max(0, offset); // Ensure offset is non-negative
 
   let dateFormat: string;
   let dateGrouping: string;
   let intervalString: string;
+  let totalOffsetString: string;
 
   switch (granularity) {
     case 'weekly':
       dateFormat = 'IYYY-"W"IW'; // ISO week format: 2024-W01
       dateGrouping = 'EXTRACT(YEAR FROM deployment_timestamp), EXTRACT(WEEK FROM deployment_timestamp)';
       intervalString = `${periods} weeks`;
+      totalOffsetString = `${periods * (offset + 1)} weeks`;
       break;
     case 'yearly':
       dateFormat = 'YYYY';
       dateGrouping = 'EXTRACT(YEAR FROM deployment_timestamp)';
       intervalString = `${periods} years`;
+      totalOffsetString = `${periods * (offset + 1)} years`;
       break;
     case 'monthly':
     default:
       dateFormat = 'YYYY-MM';
       dateGrouping = 'EXTRACT(YEAR FROM deployment_timestamp), EXTRACT(MONTH FROM deployment_timestamp)';
       intervalString = `${periods} months`;
+      totalOffsetString = `${periods * (offset + 1)} months`;
       break;
   }
+
+  // Calculate the date range: from (offset+1)*periods to offset*periods ago
+  const offsetIntervalString = offset > 0 ? `${periods * offset} ${granularity === 'weekly' ? 'weeks' : granularity === 'yearly' ? 'years' : 'months'}` : '0 days';
 
   // 1. Get deployment frequency trends  
   const deploymentQuery = `
@@ -124,7 +128,12 @@ export const getDoraTrends = async (
     WHERE project_id = $1
       AND environment = 'production'
       AND deployment_timestamp >= (
-        SELECT MAX(deployment_timestamp) - INTERVAL '${intervalString}'
+        SELECT MAX(deployment_timestamp) - INTERVAL '${totalOffsetString}'
+        FROM deployment_frequency
+        WHERE project_id = $1 AND environment = 'production'
+      )
+      AND deployment_timestamp < (
+        SELECT MAX(deployment_timestamp) - INTERVAL '${offsetIntervalString}'
         FROM deployment_frequency
         WHERE project_id = $1 AND environment = 'production'
       )
@@ -148,7 +157,12 @@ export const getDoraTrends = async (
     FROM lead_time_changes
     WHERE project_id = $1
       AND merged_timestamp >= (
-        SELECT MAX(merged_timestamp) - INTERVAL '${intervalString}'
+        SELECT MAX(merged_timestamp) - INTERVAL '${totalOffsetString}'
+        FROM lead_time_changes
+        WHERE project_id = $1
+      )
+      AND merged_timestamp < (
+        SELECT MAX(merged_timestamp) - INTERVAL '${offsetIntervalString}'
         FROM lead_time_changes
         WHERE project_id = $1
       )
@@ -172,7 +186,12 @@ export const getDoraTrends = async (
     FROM change_failure_rate
     WHERE project_id = $1
       AND deployment_timestamp >= (
-        SELECT MAX(deployment_timestamp) - INTERVAL '${intervalString}'
+        SELECT MAX(deployment_timestamp) - INTERVAL '${totalOffsetString}'
+        FROM change_failure_rate
+        WHERE project_id = $1
+      )
+      AND deployment_timestamp < (
+        SELECT MAX(deployment_timestamp) - INTERVAL '${offsetIntervalString}'
         FROM change_failure_rate
         WHERE project_id = $1
       )
@@ -192,7 +211,12 @@ export const getDoraTrends = async (
     FROM time_to_restore_service
     WHERE project_id = $1
       AND start_time >= (
-        SELECT MAX(start_time) - INTERVAL '${intervalString}'
+        SELECT MAX(start_time) - INTERVAL '${totalOffsetString}'
+        FROM time_to_restore_service
+        WHERE project_id = $1
+      )
+      AND start_time < (
+        SELECT MAX(start_time) - INTERVAL '${offsetIntervalString}'
         FROM time_to_restore_service
         WHERE project_id = $1
       )
