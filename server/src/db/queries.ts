@@ -256,6 +256,18 @@ export const initializeTables = async (): Promise<void> => {
     } catch (migrationError: any) {
       console.warn('⚠️ Weekly DORA snapshots migration warning:', migrationError.message);
     }
+
+    // Run database fix: Ensure all constraints and missing tables
+    try {
+      const fixDbPath = path.join(__dirname, 'migrations', 'fix-database-issues.sql');
+      if (fs.existsSync(fixDbPath)) {
+        const fixSql = fs.readFileSync(fixDbPath, 'utf8');
+        await pool.query(fixSql);
+        console.log('✅ Database integrity fixes applied');
+      }
+    } catch (migrationError: any) {
+      console.warn('⚠️ Database fix warning:', migrationError.message);
+    }
   } catch (error: any) {
     console.error('❌ Failed to initialize tables:', error.message);
     throw error;

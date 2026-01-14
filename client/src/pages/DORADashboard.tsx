@@ -200,11 +200,24 @@ const DORADashboard = () => {
 
   const { summary, data } = trendData;
 
+  // Check if we have any data
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <AlertTriangle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+          <p className="text-gray-600">No DORA metrics data available for this project</p>
+          <p className="text-sm text-gray-500 mt-2">Add deployment, lead time, failure rate, and restore time data to see metrics</p>
+        </div>
+      </div>
+    );
+  }
+
   // Prepare data for failure rate pie chart
   const latestData = data[data.length - 1];
   const failureChartData = [
-    { name: 'Successful', value: latestData.total_deployments - latestData.failed_deployments },
-    { name: 'Failed', value: latestData.failed_deployments },
+    { name: 'Successful', value: (latestData.total_deployments || 0) - (latestData.failed_deployments || 0) },
+    { name: 'Failed', value: latestData.failed_deployments || 0 },
   ];
 
   const deploymentPerf = getPerformanceRating('deployment_frequency', summary.deployment_frequency.current);

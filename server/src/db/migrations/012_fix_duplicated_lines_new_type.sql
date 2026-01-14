@@ -4,4 +4,8 @@
 ALTER TABLE sonarqube_maintainability_metrics 
   ALTER COLUMN duplicated_lines_new TYPE DOUBLE PRECISION;
 
-RAISE NOTICE 'Migration 012: Fixed duplicated_lines_new column type to DOUBLE PRECISION';
+-- Success notification
+DO $$ 
+BEGIN 
+  RAISE NOTICE 'Migration 012: Fixed duplicated_lines_new column type to DOUBLE PRECISION';
+END $$;

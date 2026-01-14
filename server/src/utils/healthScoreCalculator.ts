@@ -127,22 +127,24 @@ export function calculateCommitHealthScore(metrics: {
   else commitFreqScore = 0;
 
   // Commit Size Score (30%)
+  // Adjusted thresholds to be more realistic for real-world projects
   let commitSizeScore = 0;
-  if (metrics.avg_commit_size < 100) commitSizeScore = 5;
-  else if (metrics.avg_commit_size < 300) commitSizeScore = 4;
-  else if (metrics.avg_commit_size < 500) commitSizeScore = 3;
-  else if (metrics.avg_commit_size < 1000) commitSizeScore = 2;
-  else if (metrics.avg_commit_size < 2000) commitSizeScore = 1;
-  else commitSizeScore = 0;
+  if (metrics.avg_commit_size < 200) commitSizeScore = 5;
+  else if (metrics.avg_commit_size < 500) commitSizeScore = 4;
+  else if (metrics.avg_commit_size < 1000) commitSizeScore = 3;
+  else if (metrics.avg_commit_size < 2000) commitSizeScore = 2;
+  else if (metrics.avg_commit_size < 5000) commitSizeScore = 1;
+  else commitSizeScore = 0.5; // Give some credit even for very large commits
 
   // Bus Factor Score (30%)
+  // Adjusted to be more lenient - having 1-2 key contributors is still better than 0
   let busFactorScore = 0;
   if (metrics.bus_factor >= 5) busFactorScore = 5;
   else if (metrics.bus_factor >= 4) busFactorScore = 4;
-  else if (metrics.bus_factor >= 3) busFactorScore = 3;
-  else if (metrics.bus_factor === 2) busFactorScore = 2;
-  else if (metrics.bus_factor === 1) busFactorScore = 1;
-  else busFactorScore = 0;
+  else if (metrics.bus_factor >= 3) busFactorScore = 3.5;
+  else if (metrics.bus_factor === 2) busFactorScore = 2.5;
+  else if (metrics.bus_factor === 1) busFactorScore = 1.5;
+  else busFactorScore = 0.5; // Give some credit even if bus factor is 0
 
   const healthScore = 
     commitFreqScore * 0.40 +

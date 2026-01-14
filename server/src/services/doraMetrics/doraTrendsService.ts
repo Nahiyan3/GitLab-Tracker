@@ -127,24 +127,17 @@ export const getDoraTrends = async (
     FROM deployment_frequency
     WHERE project_id = $1
       AND environment = 'production'
-      AND deployment_timestamp >= (
-        SELECT MAX(deployment_timestamp) - INTERVAL '${totalOffsetString}'
-        FROM deployment_frequency
-        WHERE project_id = $1 AND environment = 'production'
-      )
-      AND deployment_timestamp < (
-        SELECT MAX(deployment_timestamp) - INTERVAL '${offsetIntervalString}'
-        FROM deployment_frequency
-        WHERE project_id = $1 AND environment = 'production'
-      )
+      AND deployment_timestamp >= CURRENT_DATE - INTERVAL '${totalOffsetString}'
+      AND deployment_timestamp < CURRENT_DATE - INTERVAL '${offsetIntervalString}'
     GROUP BY TO_CHAR(deployment_timestamp, '${dateFormat}')
-    ORDER BY period ASC
+    ORDER BY period DESC
     LIMIT ${periods}
   `;
 
   console.log('[doraTrendsService] Executing deployment query for project:', projectId);
   console.log('[doraTrendsService] Date format:', dateFormat);
   console.log('[doraTrendsService] Interval:', intervalString);
+  console.log('[doraTrendsService] Date range: CURRENT_DATE - ${totalOffsetString} to CURRENT_DATE - ${offsetIntervalString}');
    
   const deploymentResult = await pool.query(deploymentQuery, [projectId]);
 
@@ -156,18 +149,10 @@ export const getDoraTrends = async (
       AVG(lead_time_hours) as avg_lead_time
     FROM lead_time_changes
     WHERE project_id = $1
-      AND merged_timestamp >= (
-        SELECT MAX(merged_timestamp) - INTERVAL '${totalOffsetString}'
-        FROM lead_time_changes
-        WHERE project_id = $1
-      )
-      AND merged_timestamp < (
-        SELECT MAX(merged_timestamp) - INTERVAL '${offsetIntervalString}'
-        FROM lead_time_changes
-        WHERE project_id = $1
-      )
+      AND merged_timestamp >= CURRENT_DATE - INTERVAL '${totalOffsetString}'
+      AND merged_timestamp < CURRENT_DATE - INTERVAL '${offsetIntervalString}'
     GROUP BY TO_CHAR(merged_timestamp, '${dateFormat}')
-    ORDER BY period ASC
+    ORDER BY period DESC
     LIMIT ${periods}
   `;
 
@@ -185,18 +170,10 @@ export const getDoraTrends = async (
       END as failure_rate
     FROM change_failure_rate
     WHERE project_id = $1
-      AND deployment_timestamp >= (
-        SELECT MAX(deployment_timestamp) - INTERVAL '${totalOffsetString}'
-        FROM change_failure_rate
-        WHERE project_id = $1
-      )
-      AND deployment_timestamp < (
-        SELECT MAX(deployment_timestamp) - INTERVAL '${offsetIntervalString}'
-        FROM change_failure_rate
-        WHERE project_id = $1
-      )
+      AND deployment_timestamp >= CURRENT_DATE - INTERVAL '${totalOffsetString}'
+      AND deployment_timestamp < CURRENT_DATE - INTERVAL '${offsetIntervalString}'
     GROUP BY TO_CHAR(deployment_timestamp, '${dateFormat}')
-    ORDER BY period ASC
+    ORDER BY period DESC
     LIMIT ${periods}
   `;
 
@@ -210,18 +187,10 @@ export const getDoraTrends = async (
       AVG(restore_time_hours) as avg_restore_time
     FROM time_to_restore_service
     WHERE project_id = $1
-      AND start_time >= (
-        SELECT MAX(start_time) - INTERVAL '${totalOffsetString}'
-        FROM time_to_restore_service
-        WHERE project_id = $1
-      )
-      AND start_time < (
-        SELECT MAX(start_time) - INTERVAL '${offsetIntervalString}'
-        FROM time_to_restore_service
-        WHERE project_id = $1
-      )
+      AND start_time >= CURRENT_DATE - INTERVAL '${totalOffsetString}'
+      AND start_time < CURRENT_DATE - INTERVAL '${offsetIntervalString}'
     GROUP BY TO_CHAR(start_time, '${dateFormat}')
-    ORDER BY period ASC
+    ORDER BY period DESC
     LIMIT ${periods}
   `;
 

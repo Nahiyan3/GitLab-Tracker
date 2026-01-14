@@ -45,4 +45,8 @@ CREATE TABLE IF NOT EXISTS sonarqube_maintainability_history (
 CREATE INDEX IF NOT EXISTS idx_sonar_maintainability_history_project_date 
   ON sonarqube_maintainability_history(project_id, snapshot_date);
 
-RAISE NOTICE 'Migration 011: SonarQube Maintainability Metrics tables created successfully';
+-- Success notification
+DO $$ 
+BEGIN 
+  RAISE NOTICE 'Migration 011: SonarQube Maintainability Metrics tables created successfully';
+END $$;

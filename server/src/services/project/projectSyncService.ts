@@ -17,24 +17,48 @@ class ProjectSyncService {
     const gitlabProjects = await gitlabProjectService.getUserProjects();
     
     // Step 2: Extract basic info for registry and fetch member info
-    // We'll fetch member lists in parallel for better performance.
-    const membersPromises = gitlabProjects.map(p =>
-      gitLabMemberService.getProjectMembers(p.id).catch(() => [])
-    );
-
-    const membersLists = await Promise.all(membersPromises);
-
-    const registryData = gitlabProjects.map((project, idx) => ({
-      id: project.id,
-      name: project.name,
-      full_path: project.path_with_namespace,
-      group_path: project.namespace?.full_path,
-      members_count: membersLists[idx]?.length ?? 0,
-      members: membersLists[idx] || [],
-      last_activity_at: project.last_activity_at,
-      parent_id: project.namespace?.id,
-      visibility: project.visibility,
-    }));
+    // Fetch members sequentially with delays to avoid rate limiting (503 errors)
+    console.log(`🔄 Fetching members for ${gitlabProjects.length} projects (sequential)...`);
+    
+    const registryData = [];
+    
+    for (let i = 0; i < gitlabProjects.length; i++) {
+      const project = gitlabProjects[i];
+      
+      // Fetch members for this project
+      let members = [];
+      try {
+        members = await gitLabMemberService.getProjectMembers(project.id);
+      } catch (error) {
+        // Silently handle errors - members will be empty array
+        members = [];
+      }
+      
+      // Add to registry data
+      registryData.push({
+        id: project.id,
+        name: project.name,
+        full_path: project.path_with_namespace,
+        group_path: project.namespace?.full_path,
+        members_count: members.length,
+        members: members,
+        last_activity_at: project.last_activity_at,
+        parent_id: project.namespace?.id,
+        visibility: project.visibility,
+      });
+      
+      // Progress indicator every 10 projects
+      if ((i + 1) % 10 === 0) {
+        console.log(`   Progress: ${i + 1}/${gitlabProjects.length} projects processed`);
+      }
+      
+      // Add delay between requests to avoid rate limiting (200ms)
+      if (i < gitlabProjects.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+    }
+    
+    console.log(`✅ Processed all ${gitlabProjects.length} projects with member data`);
     
     // Step 3: Save to registry
     await syncProjectsToRegistry(registryData);
