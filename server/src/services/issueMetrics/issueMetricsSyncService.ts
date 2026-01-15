@@ -26,7 +26,7 @@ class IssueMetricsSyncService {
         projectId,
         data.openIssues,
         data.closedIssuesLast7d,
-        data.allRecentClosedIssues, // Use all recent closed for cycle time
+        data.closedIssuesLast30d, // Correct: closed issues in last 30 days
         data.openedIssuesLast7d,
         data.openedIssuesLast30d,
         data.bugIssues,
@@ -82,6 +82,8 @@ class IssueMetricsSyncService {
     // Store the actual counts for use in metrics
     const actualTotalOpenCount = totalOpenCount;
     const actualTotalClosedCount = totalClosedCount;
+    
+    console.log(`[IssueMetricsSync] DEBUG - Header says ${totalClosedCount} total closed`);
 
     // Fetch data in parallel batches for performance
     console.log('[IssueMetricsSync] Fetching issue data...');
@@ -99,22 +101,22 @@ class IssueMetricsSyncService {
       blockerIssues,
     ] = await Promise.all([
       // Open issues sorted by last updated (for stale detection)
-      gitLabIssueService.getOpenIssues(projectId, 100),
+      gitLabIssueService.getOpenIssues(projectId, 10000),
 
       // Closed issues in last 7 days (velocity)
-      gitLabIssueService.getClosedIssues(projectId, sevenDaysAgoISO, 200),
+      gitLabIssueService.getClosedIssues(projectId, sevenDaysAgoISO, 10000),
 
       // Closed issues in last 30 days (for recent velocity)
-      gitLabIssueService.getClosedIssues(projectId, thirtyDaysAgoISO, 200),
+      gitLabIssueService.getClosedIssues(projectId, thirtyDaysAgoISO, 10000),
 
       // All recent closed issues (no date filter) for cycle time calculation
-      gitLabIssueService.getClosedIssues(projectId, undefined, 200),
+      gitLabIssueService.getClosedIssues(projectId, undefined, 10000),
 
       // Opened in last 7 days
-      gitLabIssueService.getOpenedIssues(projectId, sevenDaysAgoISO, 100),
+      gitLabIssueService.getOpenedIssues(projectId, sevenDaysAgoISO, 10000),
 
       // Opened in last 30 days
-      gitLabIssueService.getOpenedIssues(projectId, thirtyDaysAgoISO, 100),
+      gitLabIssueService.getOpenedIssues(projectId, thirtyDaysAgoISO, 10000),
 
       // Bug issues (last 90 days for ratio calculation)
       gitLabIssueService.getIssuesByLabel(projectId, ['bug'], undefined, 'all'),
@@ -130,6 +132,7 @@ class IssueMetricsSyncService {
     ]);
 
     console.log(`[IssueMetricsSync] Fetched: ${openIssues.length} open, ${closedIssuesLast7d.length} closed(7d), ${closedIssuesLast30d.length} closed(30d), ${allRecentClosedIssues.length} total recent closed`);
+    console.log(`[IssueMetricsSync] DEBUG - closedIssuesLast30d.length = ${closedIssuesLast30d.length}`);
     console.log(`[IssueMetricsSync] Bugs: ${bugIssues.length}, Features: ${featureIssues.length}, Critical: ${criticalIssues.length}`);
     
     // Debug: Log sample closed issues

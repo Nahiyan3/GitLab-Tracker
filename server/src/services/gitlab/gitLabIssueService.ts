@@ -58,7 +58,7 @@ class GitLabIssueService {
   getClosedIssues = async (
     projectId: number, 
     closedAfter?: string,
-    maxResults: number = 200
+    maxResults: number = 10000
   ): Promise<GitLabIssues[]> => {
     try {
       const client = gitlabClient.getClient();
@@ -126,24 +126,47 @@ class GitLabIssueService {
 
   /**
    * Get issues opened in a specific time period
+   * Fetches multiple pages if needed to reach maxResults
    */
   getOpenedIssues = async (
     projectId: number, 
     createdAfter: string,
-    perPage: number = 100
+    maxResults: number = 10000
   ): Promise<GitLabIssues[]> => {
     try {
       const client = gitlabClient.getClient();
-      const response = await client.get(`/projects/${projectId}/issues`, {
-        params: {
-          created_after: createdAfter,
-          order_by: 'created_at',
-          sort: 'desc',
-          per_page: perPage,
-        },
-      });
+      const allIssues: GitLabIssues[] = [];
+      let page = 1;
+      const perPage = 100; // GitLab max per page
       
-      return response.data || [];
+      while (allIssues.length < maxResults) {
+        const response = await client.get(`/projects/${projectId}/issues`, {
+          params: {
+            created_after: createdAfter,
+            order_by: 'created_at',
+            sort: 'desc',
+            per_page: perPage,
+            page,
+          },
+        });
+        
+        const issues = response.data || [];
+        
+        if (issues.length === 0) {
+          break; // No more issues
+        }
+        
+        allIssues.push(...issues);
+        
+        // If we got less than perPage, we've reached the end
+        if (issues.length < perPage) {
+          break;
+        }
+        
+        page++;
+      }
+      
+      return allIssues.slice(0, maxResults);
     } catch (error: any) {
       console.error(`Error fetching opened issues for project ${projectId}:`, error.message);
       return [];
@@ -181,21 +204,43 @@ class GitLabIssueService {
 
   /**
    * Get open issues (for stale issue detection)
+   * Fetches multiple pages if needed to reach maxResults
    */
-  getOpenIssues = async (projectId: number, perPage: number = 100): Promise<GitLabIssues[]> => {
+  getOpenIssues = async (projectId: number, maxResults: number = 10000): Promise<GitLabIssues[]> => {
     try {
       const client = gitlabClient.getClient();
-      // Fetch all pages up to perPage
-      const response = await client.get(`/projects/${projectId}/issues`, {
-        params: {
-          state: 'opened',
-          order_by: 'updated_at',
-          sort: 'asc',  // Oldest first (for stale detection)
-          per_page: Math.min(perPage, 100),  // GitLab max is 100 per page
-        },
-      });
+      const allIssues: GitLabIssues[] = [];
+      let page = 1;
+      const perPage = 100; // GitLab max per page
       
-      return response.data || [];
+      while (allIssues.length < maxResults) {
+        const response = await client.get(`/projects/${projectId}/issues`, {
+          params: {
+            state: 'opened',
+            order_by: 'updated_at',
+            sort: 'asc',  // Oldest first (for stale detection)
+            per_page: perPage,
+            page,
+          },
+        });
+        
+        const issues = response.data || [];
+        
+        if (issues.length === 0) {
+          break; // No more issues
+        }
+        
+        allIssues.push(...issues);
+        
+        // If we got less than perPage, we've reached the end
+        if (issues.length < perPage) {
+          break;
+        }
+        
+        page++;
+      }
+      
+      return allIssues.slice(0, maxResults);
     } catch (error: any) {
       console.error(`Error fetching open issues for project ${projectId}:`, error.message);
       return [];

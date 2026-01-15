@@ -356,7 +356,7 @@ Status Code: 404
 
 #### 3. `getProjectInsightsHistoryById(req, res)`
 **Route:** `GET /api/ai/project-insights-history/:projectId`  
-**Purpose:** Fetch historical insights for trend analysis.
+**Purpose:** Fetch historical insights for trend analysis and quality score charts.
 
 **Request Parameters:**
 - `:projectId` - Project UUID
@@ -372,17 +372,40 @@ Status Code: 404
   "history": [
     {
       "uuid": "abc-123",
-      "insights_data": { /* insights */ },
+      "insights_data": {
+        "section_scores": [
+          { "name": "Code Review", "score": 4.2 },
+          { "name": "Technical Debt", "score": 3.5 }
+        ]
+      },
       "final_user_score": 3.85,
+      "api_score": 4.2,
       "combined_score": 3.96,
       "created_at": "2024-01-15T10:30:00Z"
     },
+    {
+      "uuid": "abc-124",
+      "insights_data": {
+        "section_scores": [
+          { "name": "Code Review", "score": 4.0 },
+          { "name": "Technical Debt", "score": 3.3 }
+        ]
+      },
+      "final_user_score": 3.72,
+      "api_score": 4.1,
+      "combined_score": 3.88,
+      "created_at": "2024-01-08T10:30:00Z"
+    }
     // ... more historical entries
   ]
 }
 ```
 
-**Use Case:** Display score trends over time (e.g., improvement graphs).
+**Use Case:** 
+- Display "Quality Score Trends" line chart on ProjectDetail.tsx (Metrics tab)
+- Show improvement/decline over time for all section scores
+- Track API Score and Combined Score trends
+- Enable data-driven decisions about where to focus improvement efforts
 
 ---
 
@@ -591,6 +614,134 @@ import { Sparkles } from "lucide-react";
 3. `ProjectInsight.tsx` component loads
 4. Automatically calls `loadSavedInsights()` on mount
 5. Shows existing insights OR "Generate Insights" button
+
+---
+
+### 4. **ProjectDetail.tsx** (Quality Score Trends Chart)
+**Purpose:** Displays historical AI insights scores as a line chart showing improvement over time.
+
+**Key Features:**
+- Shows trends for all section scores (Code Review, Technical Debt, Test Quality, Documentation, Deployment, Dependencies, Team Morale)
+- Displays API Score trend (green line, thicker)
+- Displays Combined Score trend (blue line, thicker)
+- X-axis: Date of insight generation (e.g., "Jan 15", "Jan 22")
+- Y-axis: Score (0-5 scale)
+- Multiple colored lines for different metrics
+
+**Data Fetching:**
+```typescript
+useEffect(() => {
+  const fetchInsightsHistory = async () => {
+    const response = await api.get(`/ai/project-insights-history/${projectId}`);
+    
+    if (response.history && response.history.length > 0) {
+      setInsightsHistory(response.history);
+      
+      // Transform data for chart
+      const transformedData = response.history.map((insight: any) => {
+        const date = new Date(insight.created_at).toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric' 
+        });
+        
+        const sections = insight.insights_data?.section_scores || [];
+        const chartPoint: any = { date };
+        
+        // Add each section score to chart point
+        sections.forEach((section: any) => {
+          chartPoint[section.name] = section.score;
+        });
+        
+        // Add aggregate scores
+        chartPoint['API Score'] = insight.api_score;
+        chartPoint['Combined Score'] = insight.combined_score;
+        
+        return chartPoint;
+      });
+      
+      setChartData(transformedData);
+    }
+  };
+  
+  fetchInsightsHistory();
+}, [projectId]);
+```
+
+**Chart Implementation:**
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Quality Score Trends</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <ResponsiveContainer width="100%" height={400}>
+      <LineChart data={chartData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="date" />
+        <YAxis domain={[0, 5]} />
+        <Tooltip />
+        <Legend />
+        
+        {/* 7 Section Score Lines */}
+        <Line type="monotone" dataKey="Code Review" stroke="#8884d8" strokeWidth={2} />
+        <Line type="monotone" dataKey="Technical Debt" stroke="#82ca9d" strokeWidth={2} />
+        <Line type="monotone" dataKey="Test Quality" stroke="#ffc658" strokeWidth={2} />
+        <Line type="monotone" dataKey="Documentation" stroke="#ff7c7c" strokeWidth={2} />
+        <Line type="monotone" dataKey="Deployment" stroke="#a28bd4" strokeWidth={2} />
+        <Line type="monotone" dataKey="Dependencies" stroke="#ff9f43" strokeWidth={2} />
+        <Line type="monotone" dataKey="Team Morale" stroke="#54a0ff" strokeWidth={2} />
+        
+        {/* Aggregate Scores (thicker lines) */}
+        <Line type="monotone" dataKey="API Score" stroke="#10b981" strokeWidth={3} />
+        <Line type="monotone" dataKey="Combined Score" stroke="#3b82f6" strokeWidth={3} />
+      </LineChart>
+    </ResponsiveContainer>
+  </CardContent>
+</Card>
+```
+
+**Use Case:**
+- Track project improvement over time (weekly/monthly insights)
+- Identify which metrics are improving vs. declining
+- Visualize impact of technical debt initiatives
+- Compare section scores to see which areas need focus
+- Monitor Combined Score trend to assess overall project health
+
+**Example Chart Data:**
+```typescript
+[
+  {
+    date: "Jan 8",
+    "Code Review": 4.2,
+    "Technical Debt": 3.5,
+    "Test Quality": 4.0,
+    "Documentation": 3.8,
+    "Deployment": 4.5,
+    "Dependencies": 3.9,
+    "Team Morale": 4.1,
+    "API Score": 4.2,
+    "Combined Score": 3.96
+  },
+  {
+    date: "Jan 15",
+    "Code Review": 4.3,
+    "Technical Debt": 3.7, // Improved!
+    "Test Quality": 4.1,
+    "Documentation": 4.0, // Improved!
+    "Deployment": 4.6,
+    "Dependencies": 4.0,
+    "Team Morale": 4.2,
+    "API Score": 4.3,
+    "Combined Score": 4.05 // Overall improvement
+  }
+]
+```
+
+**Access:**
+- Navigate to tracked project detail page
+- Click "Metrics" tab
+- First card shows "Quality Score Trends" with line chart
+- Requires at least 1 AI insight generated for the project
 
 ---
 

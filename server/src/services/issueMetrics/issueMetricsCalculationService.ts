@@ -36,6 +36,8 @@ class IssueMetricsCalculationService {
     // Metric 1: Velocity (Issues Closed Per Week)
     const issues_closed_last_7d = closedIssuesLast7d.length;
     const issues_closed_last_30d = closedIssuesLast30d.length;
+    
+    console.log(`[IssueMetrics] DEBUG - Calculated issues_closed_last_30d = ${issues_closed_last_30d}`);
 
     // Metric 2: Issue Cycle Time
     const cycleTimeResult = this.calculateCycleTime(closedIssuesLast30d);
