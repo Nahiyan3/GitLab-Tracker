@@ -94,40 +94,40 @@ class MRMetricsSyncService {
       openedMRsLast30d,
     ] = await Promise.all([
       // Open MRs sorted by last updated (for stale detection)
-      gitLabMRService.getOpenMRs(projectId, 100),
+      gitLabMRService.getOpenMRs(projectId, 500),
 
       // Merged MRs in last 7 days
-      gitLabMRService.getMergedMRs(projectId, sevenDaysAgoISO, 200),
+      gitLabMRService.getMergedMRs(projectId, sevenDaysAgoISO, 500),
 
       // Merged MRs in last 30 days
-      gitLabMRService.getMergedMRs(projectId, thirtyDaysAgoISO, 200),
+      gitLabMRService.getMergedMRs(projectId, thirtyDaysAgoISO, 500),
 
       // All recent merged MRs (no date filter) for merge time calculation
-      gitLabMRService.getMergedMRs(projectId, undefined, 200),
+      gitLabMRService.getMergedMRs(projectId, undefined, 500),
 
       // Opened in last 7 days
-      gitLabMRService.getOpenedMRs(projectId, sevenDaysAgoISO, 100),
+      gitLabMRService.getOpenedMRs(projectId, sevenDaysAgoISO, 500),
 
       // Opened in last 30 days
-      gitLabMRService.getOpenedMRs(projectId, thirtyDaysAgoISO, 100),
+      gitLabMRService.getOpenedMRs(projectId, thirtyDaysAgoISO, 500),
     ]);
 
     console.log(`[MRMetricsSync] Fetched: ${openMRs.length} open, ${mergedMRsLast7d.length} merged(7d), ${mergedMRsLast30d.length} merged(30d)`);
     
     console.log('[MRMetricsSync] Calculating review comments (sampling)...');
 
-    // Calculate average review comments (sample 30 merged MRs)
-    const commentsData = await this.calculateReviewComments(projectId, allRecentMergedMRs.slice(0, 30));
+    // Calculate average review comments (sample 50 merged MRs from last 30 days)
+    const commentsData = await this.calculateReviewComments(projectId, mergedMRsLast30d.slice(0, 50));
 
     console.log('[MRMetricsSync] Checking for reverted MRs (sampling)...');
 
-    // Check for reverted MRs (sample 50 merged MRs) - use data already fetched
-    const revertData = this.calculateRevertRateFromData(allRecentMergedMRs.slice(0, 50));
+    // Check for reverted MRs (sample 50 merged MRs from last 30 days) - use data already fetched
+    const revertData = this.calculateRevertRateFromData(mergedMRsLast30d.slice(0, 50));
 
     console.log('[MRMetricsSync] Calculating average reviewers (sampling)...');
 
-    // Calculate average reviewers per MR (sample 30 recent MRs) - use data already fetched
-    const reviewersData = this.calculateAvgReviewersFromData(allRecentMergedMRs.slice(0, 30));
+    // Calculate average reviewers per MR (sample 50 MRs from last 30 days) - use data already fetched
+    const reviewersData = this.calculateAvgReviewersFromData(mergedMRsLast30d.slice(0, 50));
 
     return {
       openMRs,

@@ -53,7 +53,7 @@ class GitLabMRService {
   /**
    * Get open MRs sorted by last updated (for stale detection)
    */
-  getOpenMRs = async (projectId: number, perPage: number = 100): Promise<GitLabMergeRequest[]> => {
+  getOpenMRs = async (projectId: number, perPage: number = 500): Promise<GitLabMergeRequest[]> => {
     try {
       const client = gitlabClient.getClient();
       const response = await client.get(`/projects/${projectId}/merge_requests`, {
@@ -78,7 +78,7 @@ class GitLabMRService {
   getMergedMRs = async (
     projectId: number,
     mergedAfter?: string,
-    perPage: number = 200
+    perPage: number = 500
   ): Promise<GitLabMergeRequest[]> => {
     try {
       const client = gitlabClient.getClient();
@@ -110,7 +110,7 @@ class GitLabMRService {
   getOpenedMRs = async (
     projectId: number,
     createdAfter: string,
-    perPage: number = 100
+    perPage: number = 500
   ): Promise<GitLabMergeRequest[]> => {
     try {
       const client = gitlabClient.getClient();
