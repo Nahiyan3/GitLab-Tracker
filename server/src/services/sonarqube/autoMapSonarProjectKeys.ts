@@ -41,12 +41,13 @@ export async function autoMapSonarProjectKeys() {
         url += `&organization=${sonarOrg}`;
       }
       
-      // Self-hosted SonarQube uses token as username with empty password for Basic auth
-      // Format: "token:" (token followed by colon, no password)
+      // SonarCloud uses Bearer token auth; self-hosted SonarQube uses Basic auth
+      const authHeader = isSonarCloud
+        ? { Authorization: `Bearer ${sonarToken}` }
+        : { Authorization: 'Basic ' + Buffer.from(sonarToken + ':').toString('base64') };
+      
       const resp = await axios.get(url, {
-        headers: {
-          Authorization: 'Basic ' + Buffer.from(sonarToken + ':').toString('base64'),
-        },
+        headers: authHeader,
       });
       const data = resp.data;
       

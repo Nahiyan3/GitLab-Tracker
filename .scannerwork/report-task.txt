@@ -1,7 +1,0 @@
-organization=nahiyan68
-projectKey=Nahiyan68_gitlab-playground
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.68867
-dashboardUrl=https://sonarcloud.io/dashboard?id=Nahiyan68_gitlab-playground
-ceTaskId=AZn64TWMqj6yR5H3w7Dd
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZn64TWMqj6yR5H3w7Dd

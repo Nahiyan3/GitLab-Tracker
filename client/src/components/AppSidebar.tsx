@@ -26,7 +26,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarContent>
         <div className="p-4 border-b">
-          <h2 className="font-bold text-lg">GitLab Tracker</h2>
+          <h2 className="font-bold text-lg">DevInsight</h2>
         </div>
         
         <SidebarGroup>

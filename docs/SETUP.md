@@ -35,19 +35,21 @@ npm install
 
 **Create `server/.env`:**
 ```env
-DATABASE_URL=postgresql://user:password@host/database?sslmode=require
-GITLAB_API_TOKEN=your_gitlab_token
-GITLAB_API_URL=https://gitlab.com/api/v4
-SONARCLOUD_TOKEN=your_token_optional
-SONARCLOUD_ORG=your_org_optional
-GEMINI_API_KEY=your_key_optional
 PORT=5000
 CLIENT_URL=http://localhost:8080
+DATABASE_URL=postgresql://user:password@host/database?sslmode=require
+GITLAB_URL=https://gitlab.com
+GITLAB_TOKEN=your_gitlab_token
+SONARQUBE_URL=https://sonarcloud.io
+SONARQUBE_TOKEN=your_token_optional
+SONARQUBE_ORGANIZATION=your_org_optional
+GEMINI_API_KEY=your_key_optional
 ```
 
 > **Important:** Replace placeholder values with actual tokens. Features will not be accessible without valid credentials:
-> - `GITLAB_API_TOKEN` - Required for all GitLab features
-> - `SONARCLOUD_TOKEN` - Required for code quality metrics
+> - `DATABASE_URL` - Required for database connection
+> - `GITLAB_TOKEN` - Required for all GitLab features
+> - `SONARQUBE_TOKEN` - Required for code quality metrics
 > - `GEMINI_API_KEY` - Required for AI insights
 
 **Create `client/.env`:**
@@ -103,16 +105,5 @@ PORT=5001
 
 **Frontend can't reach backend:**
 - Verify backend is running on port 5000
-- Check VITE_API_URL in client/.env
-
----
-
-## Database Commands
-
-```bash
-cd server
-npm run db:check     # Check database status
-npm run db:verify    # Verify integrity
-npm run db:fix       # Fix issues
-```
+- The Vite dev server proxies `/api` requests to the backend automatically
 

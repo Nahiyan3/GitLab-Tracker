@@ -216,15 +216,6 @@ const ProjectInsights = () => {
                   <h3 className="font-semibold text-sm text-muted-foreground mb-2">Metrics Visualization</h3>
                   <ResponsiveContainer width="100%" height={300}>
                     <RadarChart data={getRadarData(project.metrics)} cx={380} cy={150}>
-                      <defs>
-                        <radialGradient id={`radarGradient-${project.id}`} cx="380" cy="150" r="100" fx="380" fy="150" gradientUnits="userSpaceOnUse">
-                          <stop offset="0%" stopColor="#ff1a1a" stopOpacity={0.95} />
-                          <stop offset="25%" stopColor="#ff6b6b" stopOpacity={0.85} />
-                          <stop offset="50%" stopColor="#ffd700" stopOpacity={0.8} />
-                          <stop offset="75%" stopColor="#7cfc00" stopOpacity={0.8} />
-                          <stop offset="100%" stopColor="#22c55e" stopOpacity={0.9} />
-                        </radialGradient>
-                      </defs>
                       <PolarGrid stroke="#e5e7eb" />
                       <PolarAngleAxis 
                         dataKey="metric" 
@@ -236,8 +227,7 @@ const ProjectInsights = () => {
                         dataKey="score" 
                         stroke="#3b82f6" 
                         strokeWidth={2}
-                        fill={`url(#radarGradient-${project.id})`}
-                        fillOpacity={0.7}
+                        fill="none"
                       />
                       <Tooltip />
                     </RadarChart>

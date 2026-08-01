@@ -1062,21 +1062,9 @@ is_failure BOOLEAN GENERATED ALWAYS AS (
 
 ---
 
-## Migration Strategy
+## Schema Management
 
-Migrations are stored in `/server/src/db/migrations/` and numbered sequentially:
-- `001_*.sql` - Initial tables
-- `004_*.sql` - Issue metrics
-- `006_*.sql` - MR metrics
-- `009_*.sql` - Commit metrics
-- `011_*.sql` - SonarQube maintainability
-- `013_*.sql` - SonarQube reliability
-- `014_*.sql` - SonarQube security
-- `017_*.sql` - Milestone metrics
-- `019_*.sql` - DORA metrics
-- `020_*.sql` - Weekly DORA snapshots
-
-Each migration is idempotent using `IF NOT EXISTS` clauses.
+The entire schema is consolidated in a single file: `/server/src/db/schema.sql`. Tables are created automatically on server startup via the `initializeTables()` function in `/server/src/db/queries.ts`. All `CREATE TABLE` statements use `IF NOT EXISTS` clauses to ensure idempotency.
 
 ---
 

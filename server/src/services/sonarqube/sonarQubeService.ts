@@ -12,11 +12,13 @@ export interface SonarIssueCounts {
 export class SonarQubeService {
   private baseUrl: string;
   private token: string;
+  private isSonarCloud: boolean;
 
   constructor(baseUrl?: string, token?: string) {
     // Trim and remove trailing slash
     this.baseUrl = (baseUrl || process.env.SONARQUBE_URL || '').trim().replace(/\/$/, '');
     this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+    this.isSonarCloud = this.baseUrl.includes('sonarcloud.io');
     
     if (!this.baseUrl || !/^https?:\/\//.test(this.baseUrl)) {
       throw new Error('Invalid or missing SONARQUBE_URL. Please set it in your .env file.');
@@ -29,6 +31,11 @@ export class SonarQubeService {
   }
 
   private getAuthHeader() {
+    if (this.isSonarCloud) {
+      return {
+        Authorization: `Bearer ${this.token}`,
+      };
+    }
     return {
       Authorization: 'Basic ' + Buffer.from(this.token + ':').toString('base64'),
     };

@@ -11,7 +11,7 @@ async function populateDoraMetrics() {
     console.log('Starting DORA metrics population...');
     
     // Read the SQL file
-    const sqlPath = path.join(__dirname, 'migrations', 'populate_dora_metrics_2_years_fixed.sql');
+    const sqlPath = path.join(__dirname, 'seeds', 'populate_dora_metrics_2_years_fixed.sql');
     const sql = fs.readFileSync(sqlPath, 'utf8');
     
     // Execute the SQL

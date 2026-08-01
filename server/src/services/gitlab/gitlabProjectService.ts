@@ -39,8 +39,8 @@ class GitLabProjectService {
         page++;
         
         // Safety limit to prevent infinite loops
-        if (page > 50) {
-          console.warn('⚠️  Reached page limit of 50, stopping pagination');
+        if (page > 20) {
+          console.warn('⚠️  Reached page limit of 20, stopping pagination');
           break;
         }
       }

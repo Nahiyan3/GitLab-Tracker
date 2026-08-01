@@ -29,7 +29,7 @@ Before you begin, ensure that:
 2. Your GitLab credentials are configured
 3. Database is properly set up
 
-Once the application is running, open your browser and navigate to the application URL (typically `http://localhost:5173`).
+Once the application is running, open your browser and navigate to the application URL (typically `http://localhost:8080`).
 
 ---
 
@@ -612,30 +612,106 @@ After clicking the **"View"** button on any project from the Tracked Projects pa
 
 ## Part 4: DORA Metrics
 
-DORA (DevOps Research and Assessment) metrics help measure software delivery performance.
+DORA (DevOps Research and Assessment) metrics help measure software delivery performance and team effectiveness.
 
 ---
 
-## Step 10: Viewing DORA Metrics
+## Step 10: Input and View DORA Metrics
 
-1. **Navigate to DORA Dashboard:**
-   - From the sidebar, click on **"DORA Metrics"**
+### Accessing DORA Metrics Input
 
-2. **What You'll See:**
-   - **Deployment Frequency** - How often you deploy to production
-   - **Lead Time for Changes** - Time from commit to deployment
-   - **Mean Time to Recovery (MTTR)** - Average time to recover from failures
-   - **Change Failure Rate** - Percentage of deployments causing failures
+1. **From Tracked Projects page:**
+   - Each project row has a **bar chart icon button** (📊)
+   - Click this button to open the **DORA Metrics Input** page for that project
 
-3. **View Metrics:**
-   - Metrics are displayed as **charts and graphs**
-   - Filter by **time period** (week, month, quarter, year)
-   - Filter by **specific project** or view all tracked projects
+2. **Input Four Types of DORA Metrics:**
 
-4. **Input DORA Data (if not automated):**
-   - Click **"Input DORA Metrics"** button
-   - Fill in the form with deployment data
-   - Submit to update the dashboard
+   **A. Deployment Frequency**
+   - Tracks how often you deploy to production
+   - Fields to fill:
+     - **Deployment ID** - Unique identifier for this deployment
+     - **Version** - Version number deployed (e.g., v1.2.3)
+     - **Environment** - Deployment target (e.g., production, staging)
+     - **Deployment Timestamp** - When the deployment occurred
+   - Click **Add Deployment** to save
+
+   **B. Lead Time for Changes**
+   - Measures time from code commit to production deployment
+   - Fields to fill:
+     - **Change ID** - Identifier for the change (e.g., merge request ID)
+     - **Merged At** - When the code was merged
+     - **Deployed At** - When it reached production
+   - The system automatically calculates the lead time duration
+   - Click **Add Lead Time** to save
+
+   **C. Change Failure Rate**
+   - Tracks percentage of deployments that cause failures
+   - Fields to fill:
+     - **Deployment ID** - Reference to the deployment
+     - **Deployment Timestamp** - When it was deployed
+     - **Has Incident?** - Check if this deployment caused an incident
+     - **Remediation Type** - How it was fixed (rollback, hotfix, patch)
+   - Click **Add Failure Data** to save
+
+   **D. Time to Restore Service**
+   - Measures how quickly you recover from incidents
+   - Fields to fill:
+     - **Incident ID** - Unique identifier for the incident
+     - **Started At** - When the incident began
+     - **Resolved At** - When service was restored
+     - **Description** - Brief description of the incident
+   - The system automatically calculates restoration time
+   - Click **Add Restore Time** to save
+
+### Viewing DORA Dashboard
+
+1. **Access the Dashboard:**
+   - Click **View** button for any project in Tracked Projects
+   - On the project detail page, click the **DORA Dashboard** button
+
+2. **Dashboard Controls:**
+   - **Granularity Selector** - Choose time period:
+     - Weekly - View metrics per week
+     - Monthly - View metrics per month
+     - Yearly - View metrics per year
+   - **Period Navigation** - Use ← → arrows to navigate between time periods
+
+3. **Summary Cards (Top Section):**
+   Each metric shows:
+   - **Current Value** - Latest period's measurement
+   - **Trend Indicator** - Arrow showing if metric is improving/declining
+   - **Percentage Change** - Compared to previous period
+   - **Performance Rating** - Elite/High/Medium/Low based on DORA benchmarks
+
+   Four cards display:
+   - **Deployment Frequency** - Deployments per period (higher is better)
+   - **Lead Time for Changes** - Average hours from commit to production (lower is better)
+   - **Change Failure Rate** - Percentage of failed deployments (lower is better)
+   - **Time to Restore Service** - Average hours to recover (lower is better)
+
+4. **Detailed Trend Charts:**
+
+   **Deployment Frequency Chart (Area Chart)**
+   - Shows deployment count trend over time
+   - Displays: Current count, Average, Total deployments across all periods
+
+   **Lead Time Chart (Line Chart)**
+   - Shows average lead time trend in hours
+   - Displays: Current avg, Overall avg, Total number of changes tracked
+
+   **Change Failure Rate Charts**
+   - Line chart showing failure rate percentage trend over time
+   - Pie chart showing current period's success vs. failure breakdown
+   - Displays: Total deployments and number of failures
+
+   **Time to Restore Service Chart (Line Chart)**
+   - Shows average restoration time trend in hours
+   - Displays: Current avg, Overall avg, Total incidents resolved
+
+5. **Performance Summary Section:**
+   - Overview of all four DORA metrics
+   - Color-coded performance ratings for each metric
+   - Quick assessment of overall software delivery performance
 
 ---
 
@@ -665,62 +741,3 @@ DORA (DevOps Research and Assessment) metrics help measure software delivery per
 
 ---
 
-## Common Workflows
-
-### Daily Workflow
-1. Check **Dashboard** for overview
-2. Review **Alerts** for any critical issues
-3. Visit **Tracked Projects** to monitor specific projects
-4. Check **DORA Metrics** for delivery performance trends
-
-### Weekly Workflow
-1. **Sync from GitLab** to get new projects
-2. Review **Project Insights** for tracked projects
-3. Analyze **DORA Metrics** trends
-4. Update tracking list as needed
-
-### Monthly Workflow
-1. Comprehensive review of all **Project Details**
-2. Analyze **AI Insights** for all tracked projects
-3. Generate reports from **DORA Dashboard**
-4. Adjust tracking and monitoring strategies
-
----
-
-## Tips for Best Results
-
-1. **Regular Syncing:**
-   - Sync from GitLab regularly to keep data fresh
-   - Recommended: At least once per week
-
-2. **Track Strategically:**
-   - Don't track too many projects at once
-   - Focus on critical and active projects
-   - Untrack completed or archived projects
-
-3. **Use Insights:**
-   - Review AI insights regularly
-   - Act on critical recommendations
-   - Track improvement over time
-
-4. **Monitor DORA Metrics:**
-   - Set team goals based on DORA metrics
-   - Review trends monthly
-   - Compare performance across projects
-
-5. **Customize Views:**
-   - Use filters to focus on relevant data
-   - Bookmark frequently accessed projects
-   - Set up alerts for critical metrics
-
----
-
-## Need Help?
-
-- Check the technical documentation in the `/docs` folder
-- Review API documentation for integration details
-- Contact your system administrator for configuration issues
-
----
-
-**Happy Tracking! 🚀**

@@ -12,7 +12,7 @@ async function clearAndRepopulateDoraMetrics() {
     console.log('📊 Repopulating with correct date ranges (52 weeks each year)...\n');
     
     // Read the SQL file
-    const sqlPath = path.join(__dirname, 'migrations', 'clear_and_repopulate_dora_metrics.sql');
+    const sqlPath = path.join(__dirname, 'seeds', 'clear_and_repopulate_dora_metrics.sql');
     const sql = fs.readFileSync(sqlPath, 'utf8');
     
     // Execute the SQL

@@ -456,22 +456,25 @@ Status Code: 404
 Stores AI-generated project health insights with scores and analysis.
 
 ```sql
-CREATE TABLE project_insights (
-  uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),  -- Unique identifier for each insight entry
-  row_id SERIAL,                                    -- Auto-incrementing ID for ordering
-  project_uuid UUID REFERENCES projects(uuid),      -- Foreign key linking to projects table
-  project_name TEXT,                                -- Denormalized project name for quick lookup
-  insights_data JSONB NOT NULL,                     -- Full AI response (scores, analysis, recommendations)
-  final_user_score DECIMAL(5,2),                    -- User evaluation score (1-5) from Google Form data
-  api_score DECIMAL(5,2),                           -- API metrics score (1-5) from GitLab + SonarQube
-  combined_score DECIMAL(5,2),                      -- Weighted score: 0.7*user + 0.3*api (1-5)
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    -- Timestamp when insights were generated
+CREATE TABLE IF NOT EXISTS project_insights (
+  uuid              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  row_id            SERIAL NOT NULL,
+  project_uuid      UUID NOT NULL REFERENCES projects(uuid) ON DELETE CASCADE,
+  insights_data     JSONB NOT NULL,
+  final_user_score  NUMERIC(3,2),
+  api_score         NUMERIC(3,2),
+  combined_score    NUMERIC(3,2),
+  created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Index for fast project lookups
-CREATE INDEX idx_project_insights_project_uuid ON project_insights(project_uuid);
-CREATE INDEX idx_project_insights_created_at ON project_insights(created_at DESC);
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_insights_project_uuid ON project_insights(project_uuid);
+CREATE INDEX IF NOT EXISTS idx_insights_scores       ON project_insights(combined_score DESC, final_user_score, api_score);
+CREATE INDEX IF NOT EXISTS idx_insights_created_at   ON project_insights(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_insights_jsonb        ON project_insights USING GIN (insights_data);
 ```
+
+> **Note:** There is no `project_name` column in this table. The project name is derived via JOIN with the `projects` table through `project_uuid`.
 
 #### Column Explanations:
 
@@ -479,12 +482,11 @@ CREATE INDEX idx_project_insights_created_at ON project_insights(created_at DESC
 |--------|------|---------|---------------|
 | `uuid` | UUID | Primary key, unique identifier for each insight | `550e8400-e29b-41d4-a716-446655440000` |
 | `row_id` | SERIAL | Auto-incrementing ID for ordering/pagination | `1, 2, 3...` |
-| `project_uuid` | UUID | Foreign key to `projects` table | References `projects.uuid` |
-| `project_name` | TEXT | Denormalized project name (avoids JOIN) | `"gitlab-dashboard"` |
+| `project_uuid` | UUID | Foreign key to `projects` table (ON DELETE CASCADE) | References `projects.uuid` |
 | `insights_data` | JSONB | Full AI response with section scores, analysis, recommendations | `{"section_scores": [...], "recommendations": [...]}` |
-| `final_user_score` | DECIMAL(5,2) | Weighted average of user-submitted form data (1-5 scale) | `3.85` |
-| `api_score` | DECIMAL(5,2) | Score calculated from GitLab + SonarQube metrics (1-5 scale) | `4.20` |
-| `combined_score` | DECIMAL(5,2) | Final score: `0.7 * final_user_score + 0.3 * api_score` | `3.96` |
+| `final_user_score` | NUMERIC(3,2) | Weighted average of user-submitted form data (1-5 scale) | `3.85` |
+| `api_score` | NUMERIC(3,2) | Score calculated from GitLab + SonarQube metrics (1-5 scale) | `4.20` |
+| `combined_score` | NUMERIC(3,2) | Final score: `0.7 * final_user_score + 0.3 * api_score` | `3.96` |
 | `created_at` | TIMESTAMP | When the insights were generated | `2024-01-15 10:30:00` |
 
 #### Example Row:
@@ -493,7 +495,6 @@ CREATE INDEX idx_project_insights_created_at ON project_insights(created_at DESC
   "uuid": "550e8400-e29b-41d4-a716-446655440000",
   "row_id": 42,
   "project_uuid": "abc-def-123",
-  "project_name": "my-awesome-project",
   "insights_data": {
     "section_scores": [
       { "name": "Code Review Quality", "score": 4.2, "analysis": "..." },

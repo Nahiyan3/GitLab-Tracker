@@ -19,7 +19,7 @@ The Project Management System handles syncing projects from GitLab, tracking sel
 - **Purpose**: Sync projects from GitLab to database
 - **Key Methods**:
   - `syncAllProjects()` - Fetches all GitLab projects with pagination
-  - `syncSingleProject(projectId)` - Syncs one specific project
+  - `syncProject(projectId)` - Syncs one specific project
 - **Features**:
   - Pagination support (x-next-page header)
   - Sequential member fetching with 200ms delays

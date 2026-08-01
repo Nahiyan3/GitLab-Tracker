@@ -322,7 +322,7 @@ DORA metrics use **4 separate tables** (one per metric type) plus **1 aggregatio
 
 1. **Raw Data Storage** - Each table stores the raw input data
 2. **Automatic Calculations** - Lead time and restore time calculated on insert
-3. **Generated Columns** - Change failure uses PostgreSQL generated column for `is_failure`
+3. **Application-Layer Logic** - Change failure's `is_failure` flag is determined in the API layer
 4. **UUID Primary Keys** - Each record has a UUID for unique identification
 5. **Cascade Deletion** - All records deleted if project is deleted
 6. **Indexed Queries** - Optimized for time-based queries
@@ -408,21 +408,13 @@ lead_time_hours = (deployed_timestamp - merged_timestamp) / (1000 * 60 * 60)
 | `deployment_timestamp` | TIMESTAMP | NOT NULL | When deployment occurred |
 | `has_incident` | BOOLEAN | NOT NULL, DEFAULT false | Did this deployment cause an incident? |
 | `remediation_type` | VARCHAR(50) | NOT NULL, DEFAULT 'none' | How incident was fixed |
-| **`is_failure`** | **BOOLEAN** | **GENERATED ALWAYS AS** | **Computed column** |
+| `is_failure` | BOOLEAN | NULL | Whether this deployment is considered a failure |
 | `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | When record was created |
 | `updated_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | When record was last updated |
 
-**Generated Column Logic:**
-```sql
-is_failure BOOLEAN GENERATED ALWAYS AS (
-  has_incident AND remediation_type IN ('rollback', 'hotfix', 'emergency')
-) STORED
-```
+**Failure Logic:**
 
-This means:
-- `is_failure` is automatically calculated by PostgreSQL
-- Cannot be manually set
-- Updated automatically if has_incident or remediation_type changes
+`is_failure` is a plain `BOOLEAN` column (not a generated column). The failure determination logic is handled in the **application layer** (API/service code), not by PostgreSQL. A deployment is marked as a failure when `has_incident = true` AND `remediation_type` is one of `'rollback'`, `'hotfix'`, or `'emergency'`.
 
 **Remediation Types:**
 - `none` - No incident
@@ -461,9 +453,6 @@ This means:
 | `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | When record was created |
 | `updated_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | When record was last updated |
 
-**Constraints:**
-- `check_end_after_start` - CHECK (end_time > start_time)
-
 **Indexes:**
 - `idx_time_to_restore_project_id` - Fast lookups by project
 - `idx_time_to_restore_start` - Fast queries by start time
@@ -481,11 +470,11 @@ restore_time_hours = (end_time - start_time) / (1000 * 60 * 60)
 
 ---
 
-### Table 5: `weekly_dora_snapshots` (Optional - Not Currently Used)
+### Table 5: `weekly_dora_snapshots`
 
 **Purpose:** Pre-aggregated weekly snapshots for faster trend queries
 
-**Status:** Created but not actively used in current implementation. Trend data is calculated on-demand from the 4 base tables.
+**Status:** Actively used. A scheduled job (`weeklyDoraSnapshotScheduler.ts`) runs every Sunday at 00:01 to automatically capture weekly snapshots for all tracked projects.
 
 **Columns:**
 
@@ -1236,7 +1225,7 @@ Note: Only returns deployments from last 90 days
 
 #### 9. Delete Deployment
 ```http
-DELETE /projects/:id/dora/deployment/:deployment_uuid
+DELETE /projects/:id/dora/deployment/:uuid
 
 Response: 200 OK
 {

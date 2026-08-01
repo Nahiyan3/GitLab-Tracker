@@ -129,8 +129,6 @@ Issue Health Metrics analyze how well your team manages issues throughout their 
 
 **Purpose:** Stores key metrics and health score for trend analysis.
 
-**Unique Constraint:** One row per project per day (`project_id, snapshot_date` unique)
-
 **Columns:**
 
 | Column | Type | Constraints | Description |
@@ -141,19 +139,19 @@ Issue Health Metrics analyze how well your team manages issues throughout their 
 | `total_open_issues` | INTEGER | DEFAULT 0 | Snapshot of total open issues |
 | `total_closed_issues` | INTEGER | DEFAULT 0 | Snapshot of total closed issues |
 | `issues_closed_last_7d` | INTEGER | DEFAULT 0 | Snapshot of 7-day velocity |
-| `issues_opened_last_30d` | INTEGER | DEFAULT 0 | Snapshot of issues opened in 30 days  |
-| `issues_closed_last_30d` | INTEGER | DEFAULT 0 | Snapshot of issues closed in 30 days  |
-| `avg_cycle_time_days` | FLOAT | DEFAULT 0 | Snapshot of cycle time |
-| `reopen_rate_percent` | FLOAT | DEFAULT 0 | Snapshot of reopen rate |
-| `bug_ratio_percent` | FLOAT | DEFAULT 0 | Snapshot of bug ratio |
+| `avg_cycle_time_days` | DOUBLE PRECISION | DEFAULT 0 | Snapshot of cycle time |
+| `reopen_rate_percent` | DOUBLE PRECISION | DEFAULT 0 | Snapshot of reopen rate |
+| `bug_ratio_percent` | DOUBLE PRECISION | DEFAULT 0 | Snapshot of bug ratio |
 | `stale_issues_count` | INTEGER | DEFAULT 0 | Snapshot of stale issues |
 | `critical_issues_open` | INTEGER | DEFAULT 0 | Snapshot of critical issues |
-| `closure_rate_percent` | FLOAT | DEFAULT 0 | (Closed / Opened) × 100  |
-| `health_score` | DECIMAL(3,2) | DEFAULT NULL | Calculated health score (0-5) |
 | `snapshot_date` | DATE | DEFAULT CURRENT_DATE | Date of this snapshot |
+| `closure_rate_percent` | DOUBLE PRECISION | DEFAULT 0 | (Closed / Opened) × 100  |
+| `issues_opened_last_30d` | INTEGER | DEFAULT 0 | Snapshot of issues opened in 30 days  |
+| `issues_closed_last_30d` | INTEGER | DEFAULT 0 | Snapshot of issues closed in 30 days  |
+| `health_score` | NUMERIC(3,2) | DEFAULT NULL | Calculated health score (0-5) |
+| `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | When snapshot was created |
 
-**Constraints:**
-- `idx_history_project_date` - UNIQUE (project_id, snapshot_date)
+> **Note:** There is no UNIQUE constraint on `(project_id, snapshot_date)`. Multiple snapshots per project per day are allowed. The table uses non-unique indexes for querying.
 
 **Indexes:**
 - `idx_metrics_history_project` - BTREE on (project_id)
@@ -389,13 +387,13 @@ if (avg_cycle_time_days > 7) return 'WARNING'
 return 'NORMAL'
 
 // Reopen Rate Alert
-if (reopen_rate_percent > 30) return 'RED_ALERT'
-if (reopen_rate_percent > 15) return 'WARNING'
+if (reopen_rate_percent > 15) return 'RED_ALERT'
+if (reopen_rate_percent > 10) return 'WARNING'
 return 'NORMAL'
 
 // Bug Ratio Alert
-if (bug_ratio_percent > 70) return 'RED_ALERT'
-if (bug_ratio_percent > 50) return 'WARNING'
+if (bug_ratio_percent > 50) return 'RED_ALERT'
+if (bug_ratio_percent > 30) return 'WARNING'
 return 'NORMAL'
 ```
 

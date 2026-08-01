@@ -19,7 +19,7 @@ GitLab Analytics is a full-stack application that provides project insights, DOR
 │  └─────────────────────────────────────────────────────┘   │
 └───────────────────────────┬─────────────────────────────────┘
                             │ HTTP/REST API
-                            │ (axios)
+                            │ (fetch)
 ┌───────────────────────────┴─────────────────────────────────┐
 │                        Server Layer                          │
 │                                                               │
@@ -62,7 +62,7 @@ GitLab Analytics is a full-stack application that provides project insights, DOR
 - React 18 with TypeScript
 - Vite for fast development and building
 - TailwindCSS for styling
-- Axios for API communication
+- Fetch API (native browser) for API communication
 
 **Key Components:**
 - **Pages:** Dashboard, Project List, Project Details, DORA Metrics, Insights
@@ -121,7 +121,7 @@ Example controllers:
 **Database** (`/src/db`)
 - Connection management
 - SQL queries and prepared statements
-- Database schema and migrations
+- Database schema (consolidated in `schema.sql`, loaded via `initializeTables()`)
 
 **Communication:**
 - Listens for HTTP requests on port `5000` (default)
@@ -134,16 +134,17 @@ Example controllers:
 **Technology:** PostgreSQL
 
 **Key Tables:**
-- `projects` - Tracked GitLab projects
-- `dora_metrics` - Deployment frequency, lead time, etc.
-- `health_scores` - Overall project health metrics
-- `commit_metrics` - Commit statistics
-- `mr_metrics` - Merge request metrics
-- `issue_metrics` - Issue tracking data
-- `milestone_metrics` - Milestone progress
-- `sonarqube_*` - Code quality metrics from SonarQube
-- `alerts` - System alerts and notifications
-- `insights` - AI-generated insights
+- `projects` - All GitLab projects
+- `tracked_project_snapshots` - Historical snapshots for tracked projects
+- `project_insights` - AI-generated insights
+- `members` - Project members
+- `issue_health_metrics` / `issue_metrics_history` - Issue tracking data
+- `mr_health_metrics` / `mr_metrics_history` - Merge request metrics
+- `commit_health_metrics` / `commit_metrics_history` - Commit statistics
+- `milestone_health_metrics` / `milestone_metrics` - Milestone progress
+- `sonarqube_maintainability_metrics` / `sonarqube_reliability_metrics` / `sonarqube_security_metrics` - Code quality from SonarQube (+ history tables)
+- `deployment_frequency` / `lead_time_changes` / `change_failure_rate` / `time_to_restore_service` - DORA metrics
+- `weekly_dora_snapshots` - Pre-computed weekly DORA data
 
 **Communication:**
 - Backend connects via PostgreSQL connection pool
