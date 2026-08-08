@@ -1,0 +1,930 @@
+73014444032,IMPORT,"import { Request, Response } from 'express'",2,,Request,express:Request,,,,2,,,-1
+73014444033,IMPORT,"import { Request, Response } from 'express'",2,,Response,express:Response,,,,2,,,-1
+73014444034,IMPORT,import geminiService from '../services/ai/geminiService',3,,geminiService,../services/ai/geminiService:geminiService,,,,3,,,-1
+73014444035,IMPORT,import projectInsightsService from '../services/ai/projectInsightsService',4,,projectInsightsService,../services/ai/projectInsightsService:projectInsightsService,,,,4,,,-1
+73014444036,IMPORT,import { parseAndCorrectInsights } from '../services/ai/insightsParser',5,,parseAndCorrectInsights,../services/ai/insightsParser:parseAndCorrectInsights,,,,5,,,-1
+73014444037,IMPORT,"import { saveProjectInsights, getLatestProjectInsights, getProjectInsightsHistoryById, getAllLatestProjectInsights } from '../db/queries'",6,,saveProjectInsights,../db/queries:saveProjectInsights,,,,6,,,-1
+73014444038,IMPORT,"import { saveProjectInsights, getLatestProjectInsights, getProjectInsightsHistoryById, getAllLatestProjectInsights } from '../db/queries'",6,,getLatestProjectInsights,../db/queries:getLatestProjectInsights,,,,6,,,-1
+73014444039,IMPORT,"import { saveProjectInsights, getLatestProjectInsights, getProjectInsightsHistoryById, getAllLatestProjectInsights } from '../db/queries'",6,,getProjectInsightsHistoryById,../db/queries:getProjectInsightsHistoryById,,,,6,,,-1
+73014444040,IMPORT,"import { saveProjectInsights, getLatestProjectInsights, getProjectInsightsHistoryById, getAllLatestProjectInsights } from '../db/queries'",6,,getAllLatestProjectInsights,../db/queries:getAllLatestProjectInsights,,,,6,,,-1
+73014444041,IMPORT,"import { Request, Response } from 'express'",5,,Request,express:Request,,,,5,,,-1
+73014444042,IMPORT,"import { Request, Response } from 'express'",5,,Response,express:Response,,,,5,,,-1
+73014444043,IMPORT,import commitMetricsSyncService from '../services/commitMetrics/commitMetricsSyncService',6,,commitMetricsSyncService,../services/commitMetrics/commitMetricsSyncService:commitMetricsSyncService,,,,6,,,-1
+73014444044,IMPORT,import commitMetricsDbService from '../services/commitMetrics/commitMetricsDbService',7,,commitMetricsDbService,../services/commitMetrics/commitMetricsDbService:commitMetricsDbService,,,,7,,,-1
+73014444045,IMPORT,"import { Request, Response } from 'express'",4,,Request,express:Request,,,,4,,,-1
+73014444046,IMPORT,"import { Request, Response } from 'express'",4,,Response,express:Response,,,,4,,,-1
+73014444047,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,saveDeploymentFrequency,../services/doraMetrics/doraMetricsDbService:saveDeploymentFrequency,,,,5,,,-1
+73014444048,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,saveLeadTimeChange,../services/doraMetrics/doraMetricsDbService:saveLeadTimeChange,,,,5,,,-1
+73014444049,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,saveChangeFailureRate,../services/doraMetrics/doraMetricsDbService:saveChangeFailureRate,,,,5,,,-1
+73014444050,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,saveTimeToRestoreService,../services/doraMetrics/doraMetricsDbService:saveTimeToRestoreService,,,,5,,,-1
+73014444051,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,getDeploymentFrequencyByProject,../services/doraMetrics/doraMetricsDbService:getDeploymentFrequencyByProject,,,,5,,,-1
+73014444052,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,getLeadTimeChangesByProject,../services/doraMetrics/doraMetricsDbService:getLeadTimeChangesByProject,,,,5,,,-1
+73014444053,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,getChangeFailureRateByProject,../services/doraMetrics/doraMetricsDbService:getChangeFailureRateByProject,,,,5,,,-1
+73014444054,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,getTimeToRestoreServiceByProject,../services/doraMetrics/doraMetricsDbService:getTimeToRestoreServiceByProject,,,,5,,,-1
+73014444055,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,deleteDeploymentFrequency,../services/doraMetrics/doraMetricsDbService:deleteDeploymentFrequency,,,,5,,,-1
+73014444056,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,deleteLeadTimeChange,../services/doraMetrics/doraMetricsDbService:deleteLeadTimeChange,,,,5,,,-1
+73014444057,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,deleteChangeFailureRate,../services/doraMetrics/doraMetricsDbService:deleteChangeFailureRate,,,,5,,,-1
+73014444058,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,deleteTimeToRestoreService,../services/doraMetrics/doraMetricsDbService:deleteTimeToRestoreService,,,,5,,,-1
+73014444059,IMPORT,"import {
+  saveDeploymentFrequency,
+  saveLeadTimeChange,
+  saveChangeFailureRate,
+  saveTimeToRestoreService,
+  getDeploymentFrequencyByProject,
+  getLeadTimeChangesByProject,
+  getChangeFailureRateByProject,
+  getTimeToRestoreServiceByProject,
+  deleteDeploymentFrequency,
+  deleteLeadTimeChange,
+  deleteChangeFailureRate,
+  deleteTimeToRestoreService,
+  searchDeploymentsByIdPrefix,
+} from '../services/doraMetrics/doraMetricsDbService'",5,,searchDeploymentsByIdPrefix,../services/doraMetrics/doraMetricsDbService:searchDeploymentsByIdPrefix,,,,5,,,-1
+73014444060,IMPORT,import { calculateDoraMetricsSummary } from '../services/doraMetrics/doraMetricsCalculationService',20,,calculateDoraMetricsSummary,../services/doraMetrics/doraMetricsCalculationService:calculateDoraMetricsSummary,,,,20,,,-1
+73014444061,IMPORT,"import { 
+  getWeeklySnapshotsForProject,
+  captureLastWeekSnapshots 
+} from '../services/doraMetrics/weeklyDoraSnapshotService'",21,,getWeeklySnapshotsForProject,../services/doraMetrics/weeklyDoraSnapshotService:getWeeklySnapshotsForProject,,,,21,,,-1
+73014444062,IMPORT,"import { 
+  getWeeklySnapshotsForProject,
+  captureLastWeekSnapshots 
+} from '../services/doraMetrics/weeklyDoraSnapshotService'",21,,captureLastWeekSnapshots,../services/doraMetrics/weeklyDoraSnapshotService:captureLastWeekSnapshots,,,,21,,,-1
+73014444063,IMPORT,import { getDoraTrends } from '../services/doraMetrics/doraTrendsService',25,,getDoraTrends,../services/doraMetrics/doraTrendsService:getDoraTrends,,,,25,,,-1
+73014444064,IMPORT,"import { Request, Response } from 'express'",4,,Request,express:Request,,,,4,,,-1
+73014444065,IMPORT,"import { Request, Response } from 'express'",4,,Response,express:Response,,,,4,,,-1
+73014444066,IMPORT,import { getPool } from '../db/connection',5,,getPool,../db/connection:getPool,,,,5,,,-1
+73014444067,IMPORT,"import { Request, Response } from 'express'",4,,Request,express:Request,,,,4,,,-1
+73014444068,IMPORT,"import { Request, Response } from 'express'",4,,Response,express:Response,,,,4,,,-1
+73014444069,IMPORT,import issueMetricsSyncService from '../services/issueMetrics/issueMetricsSyncService',5,,issueMetricsSyncService,../services/issueMetrics/issueMetricsSyncService:issueMetricsSyncService,,,,5,,,-1
+73014444070,IMPORT,import issueMetricsDbService from '../services/issueMetrics/issueMetricsDbService',6,,issueMetricsDbService,../services/issueMetrics/issueMetricsDbService:issueMetricsDbService,,,,6,,,-1
+73014444071,IMPORT,"import { Request, Response } from 'express'",4,,Request,express:Request,,,,4,,,-1
+73014444072,IMPORT,"import { Request, Response } from 'express'",4,,Response,express:Response,,,,4,,,-1
+73014444073,IMPORT,import milestoneMetricsSyncService from '../services/milestoneMetrics/milestoneMetricsSyncService',5,,milestoneMetricsSyncService,../services/milestoneMetrics/milestoneMetricsSyncService:milestoneMetricsSyncService,,,,5,,,-1
+73014444074,IMPORT,import milestoneMetricsDbService from '../services/milestoneMetrics/milestoneMetricsDbService',6,,milestoneMetricsDbService,../services/milestoneMetrics/milestoneMetricsDbService:milestoneMetricsDbService,,,,6,,,-1
+73014444075,IMPORT,"import { Request, Response } from 'express'",5,,Request,express:Request,,,,5,,,-1
+73014444076,IMPORT,"import { Request, Response } from 'express'",5,,Response,express:Response,,,,5,,,-1
+73014444077,IMPORT,import mrMetricsSyncService from '../services/mrMetrics/mrMetricsSyncService',6,,mrMetricsSyncService,../services/mrMetrics/mrMetricsSyncService:mrMetricsSyncService,,,,6,,,-1
+73014444078,IMPORT,import mrMetricsDbService from '../services/mrMetrics/mrMetricsDbService',7,,mrMetricsDbService,../services/mrMetrics/mrMetricsDbService:mrMetricsDbService,,,,7,,,-1
+73014444079,IMPORT,"import { Request, Response } from 'express'",2,,Request,express:Request,,,,2,,,-1
+73014444080,IMPORT,"import { Request, Response } from 'express'",2,,Response,express:Response,,,,2,,,-1
+73014444081,IMPORT,"import { trackProject, untrackProject, getTotalProjectsCount, getTrackedProjectsCount, getLatestCombinedScores, getProjectsNeedingAttention } from '../db/queries'",3,,trackProject,../db/queries:trackProject,,,,3,,,-1
+73014444082,IMPORT,"import { trackProject, untrackProject, getTotalProjectsCount, getTrackedProjectsCount, getLatestCombinedScores, getProjectsNeedingAttention } from '../db/queries'",3,,untrackProject,../db/queries:untrackProject,,,,3,,,-1
+73014444083,IMPORT,"import { trackProject, untrackProject, getTotalProjectsCount, getTrackedProjectsCount, getLatestCombinedScores, getProjectsNeedingAttention } from '../db/queries'",3,,getTotalProjectsCount,../db/queries:getTotalProjectsCount,,,,3,,,-1
+73014444084,IMPORT,"import { trackProject, untrackProject, getTotalProjectsCount, getTrackedProjectsCount, getLatestCombinedScores, getProjectsNeedingAttention } from '../db/queries'",3,,getTrackedProjectsCount,../db/queries:getTrackedProjectsCount,,,,3,,,-1
+73014444085,IMPORT,"import { trackProject, untrackProject, getTotalProjectsCount, getTrackedProjectsCount, getLatestCombinedScores, getProjectsNeedingAttention } from '../db/queries'",3,,getLatestCombinedScores,../db/queries:getLatestCombinedScores,,,,3,,,-1
+73014444086,IMPORT,"import { trackProject, untrackProject, getTotalProjectsCount, getTrackedProjectsCount, getLatestCombinedScores, getProjectsNeedingAttention } from '../db/queries'",3,,getProjectsNeedingAttention,../db/queries:getProjectsNeedingAttention,,,,3,,,-1
+73014444087,IMPORT,import projectSyncService from '../services/project/projectSyncService',4,,projectSyncService,../services/project/projectSyncService:projectSyncService,,,,4,,,-1
+73014444088,IMPORT,import projectFetchService from '../services/project/projectFetchService',5,,projectFetchService,../services/project/projectFetchService:projectFetchService,,,,5,,,-1
+73014444089,IMPORT,import projectRefreshService from '../services/project/projectRefreshService',6,,projectRefreshService,../services/project/projectRefreshService:projectRefreshService,,,,6,,,-1
+73014444090,IMPORT,import gitlabGroupService from '../services/gitlab/gitlabGroupService',7,,gitlabGroupService,../services/gitlab/gitlabGroupService:gitlabGroupService,,,,7,,,-1
+73014444091,IMPORT,import gitLabMemberService from '../services/gitlab/gitLabMemberService',8,,gitLabMemberService,../services/gitlab/gitLabMemberService:gitLabMemberService,,,,8,,,-1
+73014444092,IMPORT,"import { Request, Response } from 'express'",5,,Request,express:Request,,,,5,,,-1
+73014444093,IMPORT,"import { Request, Response } from 'express'",5,,Response,express:Response,,,,5,,,-1
+73014444094,IMPORT,import { SonarMaintainabilitySyncService } from '../services/sonarMaintainability/sonarMaintainabilitySyncService',6,,SonarMaintainabilitySyncService,../services/sonarMaintainability/sonarMaintainabilitySyncService:SonarMaintainabilitySyncService,,,,6,,,-1
+73014444095,IMPORT,import { SonarMaintainabilityDbService } from '../services/sonarMaintainability/sonarMaintainabilityDbService',7,,SonarMaintainabilityDbService,../services/sonarMaintainability/sonarMaintainabilityDbService:SonarMaintainabilityDbService,,,,7,,,-1
+73014444096,IMPORT,"import { Request, Response } from 'express'",4,,Request,express:Request,,,,4,,,-1
+73014444097,IMPORT,"import { Request, Response } from 'express'",4,,Response,express:Response,,,,4,,,-1
+73014444098,IMPORT,import { SonarReliabilitySyncService } from '../services/sonarReliability/sonarReliabilitySyncService',5,,SonarReliabilitySyncService,../services/sonarReliability/sonarReliabilitySyncService:SonarReliabilitySyncService,,,,5,,,-1
+73014444099,IMPORT,import { SonarReliabilityDbService } from '../services/sonarReliability/sonarReliabilityDbService',6,,SonarReliabilityDbService,../services/sonarReliability/sonarReliabilityDbService:SonarReliabilityDbService,,,,6,,,-1
+73014444100,IMPORT,"import { Request, Response } from 'express'",4,,Request,express:Request,,,,4,,,-1
+73014444101,IMPORT,"import { Request, Response } from 'express'",4,,Response,express:Response,,,,4,,,-1
+73014444102,IMPORT,import { SonarSecuritySyncService } from '../services/sonarSecurity/sonarSecuritySyncService',5,,SonarSecuritySyncService,../services/sonarSecurity/sonarSecuritySyncService:SonarSecuritySyncService,,,,5,,,-1
+73014444103,IMPORT,import { SonarSecurityDbService } from '../services/sonarSecurity/sonarSecurityDbService',6,,SonarSecurityDbService,../services/sonarSecurity/sonarSecurityDbService:SonarSecurityDbService,,,,6,,,-1
+73014444104,IMPORT,import 'dotenv/config',2,,dotenv/config,dotenv/config,,,,2,,,-1
+73014444105,IMPORT,import { getPool } from './connection',3,,getPool,./connection:getPool,,,,3,,,-1
+73014444106,IMPORT,import 'dotenv/config',2,,dotenv/config,dotenv/config,,,,2,,,-1
+73014444107,IMPORT,import { getPool } from './connection',3,,getPool,./connection:getPool,,,,3,,,-1
+73014444108,IMPORT,import * as fs from 'fs',4,,fs,fs:fs,,,,4,,,-1
+73014444109,IMPORT,import * as path from 'path',5,,path,path:path,,,,5,,,-1
+73014444110,IMPORT,import { Pool } from 'pg',2,,Pool,pg:Pool,,,,2,,,-1
+73014444111,IMPORT,import 'dotenv/config',2,,dotenv/config,dotenv/config,,,,2,,,-1
+73014444112,IMPORT,import { getPool } from './connection',3,,getPool,./connection:getPool,,,,3,,,-1
+73014444113,IMPORT,import * as fs from 'fs',4,,fs,fs:fs,,,,4,,,-1
+73014444114,IMPORT,import * as path from 'path',5,,path,path:path,,,,5,,,-1
+73014444115,IMPORT,import { getPool } from './connection',2,,getPool,./connection:getPool,,,,2,,,-1
+73014444116,IMPORT,import * as fs from 'fs',3,,fs,fs:fs,,,,3,,,-1
+73014444117,IMPORT,import * as path from 'path',4,,path,path:path,,,,4,,,-1
+73014444118,IMPORT,"import express, { Application, Request, Response, NextFunction } from 'express'",1,,express,express:express,,,,1,,,-1
+73014444119,IMPORT,"import express, { Application, Request, Response, NextFunction } from 'express'",1,,Application,express:Application,,,,1,,,-1
+73014444120,IMPORT,"import express, { Application, Request, Response, NextFunction } from 'express'",1,,Request,express:Request,,,,1,,,-1
+73014444121,IMPORT,"import express, { Application, Request, Response, NextFunction } from 'express'",1,,Response,express:Response,,,,1,,,-1
+73014444122,IMPORT,"import express, { Application, Request, Response, NextFunction } from 'express'",1,,NextFunction,express:NextFunction,,,,1,,,-1
+73014444123,IMPORT,import cors from 'cors',2,,cors,cors:cors,,,,2,,,-1
+73014444124,IMPORT,import dotenv from 'dotenv',3,,dotenv,dotenv:dotenv,,,,3,,,-1
+73014444125,IMPORT,import apiRoutes from './routes',11,,apiRoutes,./routes:apiRoutes,,,,11,,,-1
+73014444126,IMPORT,import { errorHandler } from './middleware/errorHandler',12,,errorHandler,./middleware/errorHandler:errorHandler,,,,12,,,-1
+73014444127,IMPORT,import { connectDB } from './db/connection',13,,connectDB,./db/connection:connectDB,,,,13,,,-1
+73014444128,IMPORT,import { initializeTables } from './db/queries',14,,initializeTables,./db/queries:initializeTables,,,,14,,,-1
+73014444129,IMPORT,import { autoMapSonarProjectKeys } from './services/sonarqube/autoMapSonarProjectKeys',15,,autoMapSonarProjectKeys,./services/sonarqube/autoMapSonarProjectKeys:autoMapSonarProjectKeys,,,,15,,,-1
+73014444130,IMPORT,import { initWeeklyDoraSnapshotScheduler } from './schedulers/weeklyDoraSnapshotScheduler',16,,initWeeklyDoraSnapshotScheduler,./schedulers/weeklyDoraSnapshotScheduler:initWeeklyDoraSnapshotScheduler,,,,16,,,-1
+73014444131,IMPORT,"import { Request, Response, NextFunction } from 'express'",2,,Request,express:Request,,,,2,,,-1
+73014444132,IMPORT,"import { Request, Response, NextFunction } from 'express'",2,,Response,express:Response,,,,2,,,-1
+73014444133,IMPORT,"import { Request, Response, NextFunction } from 'express'",2,,NextFunction,express:NextFunction,,,,2,,,-1
+73014444134,IMPORT,import { Router } from 'express',4,,Router,express:Router,,,,4,,,-1
+73014444135,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,createDeploymentFrequency,../controllers/doraMetricsController:createDeploymentFrequency,,,,5,,,-1
+73014444136,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,createLeadTimeChange,../controllers/doraMetricsController:createLeadTimeChange,,,,5,,,-1
+73014444137,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,createChangeFailureRate,../controllers/doraMetricsController:createChangeFailureRate,,,,5,,,-1
+73014444138,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,createTimeToRestoreService,../controllers/doraMetricsController:createTimeToRestoreService,,,,5,,,-1
+73014444139,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,getDeploymentFrequency,../controllers/doraMetricsController:getDeploymentFrequency,,,,5,,,-1
+73014444140,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,getLeadTimeChanges,../controllers/doraMetricsController:getLeadTimeChanges,,,,5,,,-1
+73014444141,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,getChangeFailureRates,../controllers/doraMetricsController:getChangeFailureRates,,,,5,,,-1
+73014444142,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,getTimeToRestoreServices,../controllers/doraMetricsController:getTimeToRestoreServices,,,,5,,,-1
+73014444143,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,getDoraMetricsSummary,../controllers/doraMetricsController:getDoraMetricsSummary,,,,5,,,-1
+73014444144,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,deleteDeploymentFrequencyRecord,../controllers/doraMetricsController:deleteDeploymentFrequencyRecord,,,,5,,,-1
+73014444145,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,deleteLeadTimeChangeRecord,../controllers/doraMetricsController:deleteLeadTimeChangeRecord,,,,5,,,-1
+73014444146,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,deleteChangeFailureRateRecord,../controllers/doraMetricsController:deleteChangeFailureRateRecord,,,,5,,,-1
+73014444147,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,deleteTimeToRestoreServiceRecord,../controllers/doraMetricsController:deleteTimeToRestoreServiceRecord,,,,5,,,-1
+73014444148,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,searchDeployments,../controllers/doraMetricsController:searchDeployments,,,,5,,,-1
+73014444149,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,getWeeklySnapshots,../controllers/doraMetricsController:getWeeklySnapshots,,,,5,,,-1
+73014444150,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,manualCaptureLastWeek,../controllers/doraMetricsController:manualCaptureLastWeek,,,,5,,,-1
+73014444151,IMPORT,"import {
+  createDeploymentFrequency,
+  createLeadTimeChange,
+  createChangeFailureRate,
+  createTimeToRestoreService,
+  getDeploymentFrequency,
+  getLeadTimeChanges,
+  getChangeFailureRates,
+  getTimeToRestoreServices,
+  getDoraMetricsSummary,
+  deleteDeploymentFrequencyRecord,
+  deleteLeadTimeChangeRecord,
+  deleteChangeFailureRateRecord,
+  deleteTimeToRestoreServiceRecord,
+  searchDeployments,
+  getWeeklySnapshots,
+  manualCaptureLastWeek,
+  getDoraTrendsController,
+} from '../controllers/doraMetricsController'",5,,getDoraTrendsController,../controllers/doraMetricsController:getDoraTrendsController,,,,5,,,-1
+73014444152,IMPORT,import { Router } from 'express',1,,Router,express:Router,,,,1,,,-1
+73014444153,IMPORT,import projectController from '../controllers/projectController',2,,projectController,../controllers/projectController:projectController,,,,2,,,-1
+73014444154,IMPORT,import aiController from '../controllers/aiController',3,,aiController,../controllers/aiController:aiController,,,,3,,,-1
+73014444155,IMPORT,import * as issueMetricsController from '../controllers/issueMetricsController',4,,issueMetricsController,../controllers/issueMetricsController:issueMetricsController,,,,4,,,-1
+73014444156,IMPORT,import * as mrMetricsController from '../controllers/mrMetricsController',5,,mrMetricsController,../controllers/mrMetricsController:mrMetricsController,,,,5,,,-1
+73014444157,IMPORT,import * as commitMetricsController from '../controllers/commitMetricsController',6,,commitMetricsController,../controllers/commitMetricsController:commitMetricsController,,,,6,,,-1
+73014444158,IMPORT,import * as sonarQubeMaintainabilityController from '../controllers/sonarQubeMaintainabilityController',7,,sonarQubeMaintainabilityController,../controllers/sonarQubeMaintainabilityController:sonarQubeMaintainabilityController,,,,7,,,-1
+73014444159,IMPORT,import * as sonarQubeReliabilityController from '../controllers/sonarQubeReliabilityController',8,,sonarQubeReliabilityController,../controllers/sonarQubeReliabilityController:sonarQubeReliabilityController,,,,8,,,-1
+73014444160,IMPORT,import * as sonarQubeSecurityController from '../controllers/sonarQubeSecurityController',9,,sonarQubeSecurityController,../controllers/sonarQubeSecurityController:sonarQubeSecurityController,,,,9,,,-1
+73014444161,IMPORT,import * as healthScoreController from '../controllers/healthScoreController',10,,healthScoreController,../controllers/healthScoreController:healthScoreController,,,,10,,,-1
+73014444162,IMPORT,import * as milestoneMetricsController from '../controllers/milestoneMetricsController',11,,milestoneMetricsController,../controllers/milestoneMetricsController:milestoneMetricsController,,,,11,,,-1
+73014444163,IMPORT,import gitlabAuthService from '../services/gitlab/gitlabAuthService',12,,gitlabAuthService,../services/gitlab/gitlabAuthService:gitlabAuthService,,,,12,,,-1
+73014444164,IMPORT,import trackingRoutes from './trackingRoutes',13,,trackingRoutes,./trackingRoutes:trackingRoutes,,,,13,,,-1
+73014444165,IMPORT,import doraMetricsRoutes from './doraMetricsRoutes',14,,doraMetricsRoutes,./doraMetricsRoutes:doraMetricsRoutes,,,,14,,,-1
+73014444166,IMPORT,import { Router } from 'express',2,,Router,express:Router,,,,2,,,-1
+73014444167,IMPORT,import projectController from '../controllers/projectController',3,,projectController,../controllers/projectController:projectController,,,,3,,,-1
+73014444168,IMPORT,import cron from 'node-cron',4,,cron,node-cron:cron,,,,4,,,-1
+73014444169,IMPORT,import { captureLastWeekSnapshots } from '../services/doraMetrics/weeklyDoraSnapshotService',5,,captureLastWeekSnapshots,../services/doraMetrics/weeklyDoraSnapshotService:captureLastWeekSnapshots,,,,5,,,-1
+73014444170,IMPORT,import { GoogleGenerativeAI } from '@google/generative-ai',2,,GoogleGenerativeAI,@google/generative-ai:GoogleGenerativeAI,,,,2,,,-1
+73014444171,IMPORT,import * as XLSX from 'xlsx',3,,XLSX,xlsx:XLSX,,,,3,,,-1
+73014444172,IMPORT,import { getLatestSnapshotByProjectName } from '../../db/queries',4,,getLatestSnapshotByProjectName,../../db/queries:getLatestSnapshotByProjectName,,,,4,,,-1
+73014444173,IMPORT,import axios from 'axios',2,,axios,axios:axios,,,,2,,,-1
+73014444174,IMPORT,import geminiService from './geminiService',2,,geminiService,./geminiService:geminiService,,,,2,,,-1
+73014444175,IMPORT,import googleSheetsService from './googleSheetsService',3,,googleSheetsService,./googleSheetsService:googleSheetsService,,,,3,,,-1
+73014444176,IMPORT,import { getLatestSnapshotByProjectName } from '../../db/queries',4,,getLatestSnapshotByProjectName,../../db/queries:getLatestSnapshotByProjectName,,,,4,,,-1
+73014444177,IMPORT,import * as XLSX from 'xlsx',5,,XLSX,xlsx:XLSX,,,,5,,,-1
+73014444178,IMPORT,import * as fs from 'fs',6,,fs,fs:fs,,,,6,,,-1
+73014444179,IMPORT,import * as path from 'path',7,,path,path:path,,,,7,,,-1
+73014444180,IMPORT,import { GitLabCommit } from '../../types/gitlab.types',4,,GitLabCommit,../../types/gitlab.types:GitLabCommit,,,,4,,,-1
+73014444181,IMPORT,"import { CommitMetricsCalculationResult, ContributorCommitData } from '../../types/commitMetrics.types'",5,,CommitMetricsCalculationResult,../../types/commitMetrics.types:CommitMetricsCalculationResult,,,,5,,,-1
+73014444182,IMPORT,"import { CommitMetricsCalculationResult, ContributorCommitData } from '../../types/commitMetrics.types'",5,,ContributorCommitData,../../types/commitMetrics.types:ContributorCommitData,,,,5,,,-1
+73014444183,IMPORT,import { getPool } from '../../db/connection',5,,getPool,../../db/connection:getPool,,,,5,,,-1
+73014444184,IMPORT,"import { CommitHealthMetrics, CommitMetricsHistory, CommitMetricsCalculationResult } from '../../types/commitMetrics.types'",6,,CommitHealthMetrics,../../types/commitMetrics.types:CommitHealthMetrics,,,,6,,,-1
+73014444185,IMPORT,"import { CommitHealthMetrics, CommitMetricsHistory, CommitMetricsCalculationResult } from '../../types/commitMetrics.types'",6,,CommitMetricsHistory,../../types/commitMetrics.types:CommitMetricsHistory,,,,6,,,-1
+73014444186,IMPORT,"import { CommitHealthMetrics, CommitMetricsHistory, CommitMetricsCalculationResult } from '../../types/commitMetrics.types'",6,,CommitMetricsCalculationResult,../../types/commitMetrics.types:CommitMetricsCalculationResult,,,,6,,,-1
+73014444187,IMPORT,import { calculateCommitHealthScore } from '../../utils/healthScoreCalculator',7,,calculateCommitHealthScore,../../utils/healthScoreCalculator:calculateCommitHealthScore,,,,7,,,-1
+73014444188,IMPORT,import gitLabCommitService from '../gitlab/gitLabCommitService',5,,gitLabCommitService,../gitlab/gitLabCommitService:gitLabCommitService,,,,5,,,-1
+73014444189,IMPORT,import commitMetricsCalculationService from './commitMetricsCalculationService',6,,commitMetricsCalculationService,./commitMetricsCalculationService:commitMetricsCalculationService,,,,6,,,-1
+73014444190,IMPORT,import commitMetricsDbService from './commitMetricsDbService',7,,commitMetricsDbService,./commitMetricsDbService:commitMetricsDbService,,,,7,,,-1
+73014444191,IMPORT,import { CommitHealthMetrics } from '../../types/commitMetrics.types',8,,CommitHealthMetrics,../../types/commitMetrics.types:CommitHealthMetrics,,,,8,,,-1
+73014444192,IMPORT,import { getPool } from '../../db/connection',4,,getPool,../../db/connection:getPool,,,,4,,,-1
+73014444193,IMPORT,import { DoraMetricsSummary } from '../../types/doraMetrics.types',5,,DoraMetricsSummary,../../types/doraMetrics.types:DoraMetricsSummary,,,,5,,,-1
+73014444194,IMPORT,import { getPool } from '../../db/connection',4,,getPool,../../db/connection:getPool,,,,4,,,-1
+73014444195,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,DeploymentFrequency,../../types/doraMetrics.types:DeploymentFrequency,,,,5,,,-1
+73014444196,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,DeploymentFrequencyInput,../../types/doraMetrics.types:DeploymentFrequencyInput,,,,5,,,-1
+73014444197,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,LeadTimeChange,../../types/doraMetrics.types:LeadTimeChange,,,,5,,,-1
+73014444198,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,LeadTimeChangeInput,../../types/doraMetrics.types:LeadTimeChangeInput,,,,5,,,-1
+73014444199,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,ChangeFailureRate,../../types/doraMetrics.types:ChangeFailureRate,,,,5,,,-1
+73014444200,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,ChangeFailureRateInput,../../types/doraMetrics.types:ChangeFailureRateInput,,,,5,,,-1
+73014444201,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,TimeToRestoreService,../../types/doraMetrics.types:TimeToRestoreService,,,,5,,,-1
+73014444202,IMPORT,"import {
+  DeploymentFrequency,
+  DeploymentFrequencyInput,
+  LeadTimeChange,
+  LeadTimeChangeInput,
+  ChangeFailureRate,
+  ChangeFailureRateInput,
+  TimeToRestoreService,
+  TimeToRestoreServiceInput,
+} from '../../types/doraMetrics.types'",5,,TimeToRestoreServiceInput,../../types/doraMetrics.types:TimeToRestoreServiceInput,,,,5,,,-1
+73014444203,IMPORT,import { getPool } from '../../db/connection',4,,getPool,../../db/connection:getPool,,,,4,,,-1
+73014444204,IMPORT,import { getPool } from '../../db/connection',4,,getPool,../../db/connection:getPool,,,,4,,,-1
+73014444205,IMPORT,import gitlabClient from './gitlabClient',2,,gitlabClient,./gitlabClient:gitlabClient,,,,2,,,-1
+73014444206,IMPORT,import { GitLabCommit } from '../../types',3,,GitLabCommit,../../types:GitLabCommit,,,,3,,,-1
+73014444207,IMPORT,import gitlabClient from './gitlabClient',2,,gitlabClient,./gitlabClient:gitlabClient,,,,2,,,-1
+73014444208,IMPORT,import { GitLabIssues } from '../../types',3,,GitLabIssues,../../types:GitLabIssues,,,,3,,,-1
+73014444209,IMPORT,"import { GitLabIssueStateEvent, GitLabIssueMRReference } from '../../types/issueMetrics.types'",4,,GitLabIssueStateEvent,../../types/issueMetrics.types:GitLabIssueStateEvent,,,,4,,,-1
+73014444210,IMPORT,"import { GitLabIssueStateEvent, GitLabIssueMRReference } from '../../types/issueMetrics.types'",4,,GitLabIssueMRReference,../../types/issueMetrics.types:GitLabIssueMRReference,,,,4,,,-1
+73014444211,IMPORT,import gitlabClient from './gitlabClient',2,,gitlabClient,./gitlabClient:gitlabClient,,,,2,,,-1
+73014444212,IMPORT,import { GitLabMergeRequest } from '../../types',3,,GitLabMergeRequest,../../types:GitLabMergeRequest,,,,3,,,-1
+73014444213,IMPORT,import gitlabClient from './gitlabClient',2,,gitlabClient,./gitlabClient:gitlabClient,,,,2,,,-1
+73014444214,IMPORT,import gitlabClient from './gitlabClient',2,,gitlabClient,./gitlabClient:gitlabClient,,,,2,,,-1
+73014444215,IMPORT,"import axios, { AxiosInstance } from 'axios'",2,,axios,axios:axios,,,,2,,,-1
+73014444216,IMPORT,"import axios, { AxiosInstance } from 'axios'",2,,AxiosInstance,axios:AxiosInstance,,,,2,,,-1
+73014444217,IMPORT,import gitlabClient from './gitlabClient',2,,gitlabClient,./gitlabClient:gitlabClient,,,,2,,,-1
+73014444218,IMPORT,import { GitLabGroup } from '../../types',3,,GitLabGroup,../../types:GitLabGroup,,,,3,,,-1
+73014444219,IMPORT,import gitlabClient from './gitlabClient',1,,gitlabClient,./gitlabClient:gitlabClient,,,,1,,,-1
+73014444220,IMPORT,import { GitLabMilestone } from '../../types',2,,GitLabMilestone,../../types:GitLabMilestone,,,,2,,,-1
+73014444221,IMPORT,import gitlabClient from './gitlabClient',2,,gitlabClient,./gitlabClient:gitlabClient,,,,2,,,-1
+73014444222,IMPORT,import { GitLabProject } from '../../types',3,,GitLabProject,../../types:GitLabProject,,,,3,,,-1
+73014444223,IMPORT,import { GitLabIssues } from '../../types/gitlab.types',4,,GitLabIssues,../../types/gitlab.types:GitLabIssues,,,,4,,,-1
+73014444224,IMPORT,"import { 
+  IssueMetricsCalculationResult, 
+  GitLabIssueStateEvent 
+} from '../../types/issueMetrics.types'",5,,IssueMetricsCalculationResult,../../types/issueMetrics.types:IssueMetricsCalculationResult,,,,5,,,-1
+73014444225,IMPORT,"import { 
+  IssueMetricsCalculationResult, 
+  GitLabIssueStateEvent 
+} from '../../types/issueMetrics.types'",5,,GitLabIssueStateEvent,../../types/issueMetrics.types:GitLabIssueStateEvent,,,,5,,,-1
+73014444226,IMPORT,import { getPool } from '../../db/connection',4,,getPool,../../db/connection:getPool,,,,4,,,-1
+73014444227,IMPORT,"import { 
+  IssueHealthMetrics, 
+  IssueMetricsHistory, 
+  WeekOverWeekComparison 
+} from '../../types/issueMetrics.types'",5,,IssueHealthMetrics,../../types/issueMetrics.types:IssueHealthMetrics,,,,5,,,-1
+73014444228,IMPORT,"import { 
+  IssueHealthMetrics, 
+  IssueMetricsHistory, 
+  WeekOverWeekComparison 
+} from '../../types/issueMetrics.types'",5,,IssueMetricsHistory,../../types/issueMetrics.types:IssueMetricsHistory,,,,5,,,-1
+73014444229,IMPORT,"import { 
+  IssueHealthMetrics, 
+  IssueMetricsHistory, 
+  WeekOverWeekComparison 
+} from '../../types/issueMetrics.types'",5,,WeekOverWeekComparison,../../types/issueMetrics.types:WeekOverWeekComparison,,,,5,,,-1
+73014444230,IMPORT,import { calculateIssueHealthScore } from '../../utils/healthScoreCalculator',10,,calculateIssueHealthScore,../../utils/healthScoreCalculator:calculateIssueHealthScore,,,,10,,,-1
+73014444231,IMPORT,import gitLabIssueService from '../gitlab/gitLabIssueService',4,,gitLabIssueService,../gitlab/gitLabIssueService:gitLabIssueService,,,,4,,,-1
+73014444232,IMPORT,import issueMetricsCalculationService from './issueMetricsCalculationService',5,,issueMetricsCalculationService,./issueMetricsCalculationService:issueMetricsCalculationService,,,,5,,,-1
+73014444233,IMPORT,import issueMetricsDbService from './issueMetricsDbService',6,,issueMetricsDbService,./issueMetricsDbService:issueMetricsDbService,,,,6,,,-1
+73014444234,IMPORT,import { IssueHealthMetrics } from '../../types/issueMetrics.types',7,,IssueHealthMetrics,../../types/issueMetrics.types:IssueHealthMetrics,,,,7,,,-1
+73014444235,IMPORT,"import { MilestoneMetrics, MilestoneWithIssueCount } from '../../types/milestoneMetrics.types'",4,,MilestoneMetrics,../../types/milestoneMetrics.types:MilestoneMetrics,,,,4,,,-1
+73014444236,IMPORT,"import { MilestoneMetrics, MilestoneWithIssueCount } from '../../types/milestoneMetrics.types'",4,,MilestoneWithIssueCount,../../types/milestoneMetrics.types:MilestoneWithIssueCount,,,,4,,,-1
+73014444237,IMPORT,import { getPool } from '../../db/connection',4,,getPool,../../db/connection:getPool,,,,4,,,-1
+73014444238,IMPORT,import { MilestoneMetrics } from '../../types/milestoneMetrics.types',5,,MilestoneMetrics,../../types/milestoneMetrics.types:MilestoneMetrics,,,,5,,,-1
+73014444239,IMPORT,import gitlabMilestoneService from '../gitlab/gitlabMilestoneService',4,,gitlabMilestoneService,../gitlab/gitlabMilestoneService:gitlabMilestoneService,,,,4,,,-1
+73014444240,IMPORT,import gitlabClient from '../gitlab/gitlabClient',5,,gitlabClient,../gitlab/gitlabClient:gitlabClient,,,,5,,,-1
+73014444241,IMPORT,import milestoneMetricsCalculationService from './milestoneMetricsCalculationService',6,,milestoneMetricsCalculationService,./milestoneMetricsCalculationService:milestoneMetricsCalculationService,,,,6,,,-1
+73014444242,IMPORT,import milestoneMetricsDbService from './milestoneMetricsDbService',7,,milestoneMetricsDbService,./milestoneMetricsDbService:milestoneMetricsDbService,,,,7,,,-1
+73014444243,IMPORT,import { MilestoneMetrics } from '../../types/milestoneMetrics.types',8,,MilestoneMetrics,../../types/milestoneMetrics.types:MilestoneMetrics,,,,8,,,-1
+73014444244,IMPORT,import { GitLabMergeRequest } from '../../types/gitlab.types',5,,GitLabMergeRequest,../../types/gitlab.types:GitLabMergeRequest,,,,5,,,-1
+73014444245,IMPORT,import { GitLabMRNote } from '../../types/mrMetrics.types',6,,GitLabMRNote,../../types/mrMetrics.types:GitLabMRNote,,,,6,,,-1
+73014444246,IMPORT,import { getPool } from '../../db/connection',5,,getPool,../../db/connection:getPool,,,,5,,,-1
+73014444247,IMPORT,"import { 
+  MRHealthMetrics, 
+  MRMetricsHistory, 
+  MRWeekOverWeekComparison 
+} from '../../types/mrMetrics.types'",6,,MRHealthMetrics,../../types/mrMetrics.types:MRHealthMetrics,,,,6,,,-1
+73014444248,IMPORT,"import { 
+  MRHealthMetrics, 
+  MRMetricsHistory, 
+  MRWeekOverWeekComparison 
+} from '../../types/mrMetrics.types'",6,,MRMetricsHistory,../../types/mrMetrics.types:MRMetricsHistory,,,,6,,,-1
+73014444249,IMPORT,"import { 
+  MRHealthMetrics, 
+  MRMetricsHistory, 
+  MRWeekOverWeekComparison 
+} from '../../types/mrMetrics.types'",6,,MRWeekOverWeekComparison,../../types/mrMetrics.types:MRWeekOverWeekComparison,,,,6,,,-1
+73014444250,IMPORT,import { calculateMRHealthScore } from '../../utils/healthScoreCalculator',11,,calculateMRHealthScore,../../utils/healthScoreCalculator:calculateMRHealthScore,,,,11,,,-1
+73014444251,IMPORT,import gitLabMRService from '../gitlab/gitLabMRService',5,,gitLabMRService,../gitlab/gitLabMRService:gitLabMRService,,,,5,,,-1
+73014444252,IMPORT,import mrMetricsCalculationService from './mrMetricsCalculationService',6,,mrMetricsCalculationService,./mrMetricsCalculationService:mrMetricsCalculationService,,,,6,,,-1
+73014444253,IMPORT,import mrMetricsDbService from './mrMetricsDbService',7,,mrMetricsDbService,./mrMetricsDbService:mrMetricsDbService,,,,7,,,-1
+73014444254,IMPORT,import { MRHealthMetrics } from '../../types/mrMetrics.types',8,,MRHealthMetrics,../../types/mrMetrics.types:MRHealthMetrics,,,,8,,,-1
+73014444255,IMPORT,import { GitLabProject } from '../../types',2,,GitLabProject,../../types:GitLabProject,,,,2,,,-1
+73014444256,IMPORT,import gitlabGroupService from '../gitlab/gitlabGroupService',3,,gitlabGroupService,../gitlab/gitlabGroupService:gitlabGroupService,,,,3,,,-1
+73014444257,IMPORT,import gitLabIssueService from '../gitlab/gitLabIssueService',4,,gitLabIssueService,../gitlab/gitLabIssueService:gitLabIssueService,,,,4,,,-1
+73014444258,IMPORT,import gitLabMRService from '../gitlab/gitLabMRService',5,,gitLabMRService,../gitlab/gitLabMRService:gitLabMRService,,,,5,,,-1
+73014444259,IMPORT,import gitLabMilestoneService from '../gitlab/gitlabMilestoneService',6,,gitLabMilestoneService,../gitlab/gitlabMilestoneService:gitLabMilestoneService,,,,6,,,-1
+73014444260,IMPORT,import { SonarQubeService } from '../sonarqube/sonarQubeService',7,,SonarQubeService,../sonarqube/sonarQubeService:SonarQubeService,,,,7,,,-1
+73014444261,IMPORT,import { getSonarProjectKey } from '../sonarqube/autoMapSonarProjectKeys',8,,getSonarProjectKey,../sonarqube/autoMapSonarProjectKeys:getSonarProjectKey,,,,8,,,-1
+73014444262,IMPORT,"mport { getAllProjectsFromRegistry, getLatestSnapshotsForTrackedProjects, getProjectById } from '../../db/queries'",3,,getAllProjectsFromRegistry,../../db/queries:getAllProjectsFromRegistry,,,,3,,,-1
+73014444263,IMPORT,"mport { getAllProjectsFromRegistry, getLatestSnapshotsForTrackedProjects, getProjectById } from '../../db/queries'",3,,getLatestSnapshotsForTrackedProjects,../../db/queries:getLatestSnapshotsForTrackedProjects,,,,3,,,-1
+73014444264,IMPORT,"mport { getAllProjectsFromRegistry, getLatestSnapshotsForTrackedProjects, getProjectById } from '../../db/queries'",3,,getProjectById,../../db/queries:getProjectById,,,,3,,,-1
+73014444265,IMPORT,mport projectTransformService from './projectTransformService',4,,projectTransformService,./projectTransformService:projectTransformService,,,,4,,,-1
+73014444266,IMPORT,import { GitLabProject } from '../../types',2,,GitLabProject,../../types:GitLabProject,,,,2,,,-1
+73014444267,IMPORT,import gitlabProjectService from '../gitlab/gitlabProjectService',3,,gitlabProjectService,../gitlab/gitlabProjectService:gitlabProjectService,,,,3,,,-1
+73014444268,IMPORT,import gitLabIssueService from '../gitlab/gitLabIssueService',4,,gitLabIssueService,../gitlab/gitLabIssueService:gitLabIssueService,,,,4,,,-1
+73014444269,IMPORT,import gitLabMRService from '../gitlab/gitLabMRService',5,,gitLabMRService,../gitlab/gitLabMRService:gitLabMRService,,,,5,,,-1
+73014444270,IMPORT,import gitLabMilestoneService from '../gitlab/gitlabMilestoneService',6,,gitLabMilestoneService,../gitlab/gitlabMilestoneService:gitLabMilestoneService,,,,6,,,-1
+73014444271,IMPORT,import { SonarQubeService } from '../sonarqube/sonarQubeService',7,,SonarQubeService,../sonarqube/sonarQubeService:SonarQubeService,,,,7,,,-1
+73014444272,IMPORT,import { getSonarProjectKey } from '../sonarqube/autoMapSonarProjectKeys',8,,getSonarProjectKey,../sonarqube/autoMapSonarProjectKeys:getSonarProjectKey,,,,8,,,-1
+73014444273,IMPORT,"import { insertProjectSnapshot, getTrackedProjectIds } from '../../db/queries'",9,,insertProjectSnapshot,../../db/queries:insertProjectSnapshot,,,,9,,,-1
+73014444274,IMPORT,"import { insertProjectSnapshot, getTrackedProjectIds } from '../../db/queries'",9,,getTrackedProjectIds,../../db/queries:getTrackedProjectIds,,,,9,,,-1
+73014444275,IMPORT,import gitlabProjectService from '../gitlab/gitlabProjectService',2,,gitlabProjectService,../gitlab/gitlabProjectService:gitlabProjectService,,,,2,,,-1
+73014444276,IMPORT,import gitLabMemberService from '../gitlab/gitLabMemberService',3,,gitLabMemberService,../gitlab/gitLabMemberService:gitLabMemberService,,,,3,,,-1
+73014444277,IMPORT,import projectEnrichmentService from './projectEnrichmentService',4,,projectEnrichmentService,./projectEnrichmentService:projectEnrichmentService,,,,4,,,-1
+73014444278,IMPORT,import projectTransformService from './projectTransformService',5,,projectTransformService,./projectTransformService:projectTransformService,,,,5,,,-1
+73014444279,IMPORT,"import { syncProjectsToRegistry, getAllProjectsFromRegistry } from '../../db/queries'",6,,syncProjectsToRegistry,../../db/queries:syncProjectsToRegistry,,,,6,,,-1
+73014444280,IMPORT,"import { syncProjectsToRegistry, getAllProjectsFromRegistry } from '../../db/queries'",6,,getAllProjectsFromRegistry,../../db/queries:getAllProjectsFromRegistry,,,,6,,,-1
+73014444281,IMPORT,import { autoMapSonarProjectKeys } from '../sonarqube/autoMapSonarProjectKeys',7,,autoMapSonarProjectKeys,../sonarqube/autoMapSonarProjectKeys:autoMapSonarProjectKeys,,,,7,,,-1
+73014444282,IMPORT,import axios from 'axios',1,,axios,axios:axios,,,,1,,,-1
+73014444283,IMPORT,import { SonarQubeComponentMeasures } from '../../types/sonarQubeMetrics.types',2,,SonarQubeComponentMeasures,../../types/sonarQubeMetrics.types:SonarQubeComponentMeasures,,,,2,,,-1
+73014444284,IMPORT,"import { 
+  SonarQubeComponentMeasures, 
+  SonarQubeMaintainabilityCalculationResult 
+} from '../../types/sonarQubeMetrics.types'",1,,SonarQubeComponentMeasures,../../types/sonarQubeMetrics.types:SonarQubeComponentMeasures,,,,1,,,-1
+73014444285,IMPORT,"import { 
+  SonarQubeComponentMeasures, 
+  SonarQubeMaintainabilityCalculationResult 
+} from '../../types/sonarQubeMetrics.types'",1,,SonarQubeMaintainabilityCalculationResult,../../types/sonarQubeMetrics.types:SonarQubeMaintainabilityCalculationResult,,,,1,,,-1
+73014444286,IMPORT,import { getPool } from '../../db/connection',1,,getPool,../../db/connection:getPool,,,,1,,,-1
+73014444287,IMPORT,"import {
+  SonarQubeMaintainabilityMetrics,
+  SonarQubeMaintainabilityHistory,
+  SonarQubeMaintainabilityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeMaintainabilityMetrics,../../types/sonarQubeMetrics.types:SonarQubeMaintainabilityMetrics,,,,2,,,-1
+73014444288,IMPORT,"import {
+  SonarQubeMaintainabilityMetrics,
+  SonarQubeMaintainabilityHistory,
+  SonarQubeMaintainabilityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeMaintainabilityHistory,../../types/sonarQubeMetrics.types:SonarQubeMaintainabilityHistory,,,,2,,,-1
+73014444289,IMPORT,"import {
+  SonarQubeMaintainabilityMetrics,
+  SonarQubeMaintainabilityHistory,
+  SonarQubeMaintainabilityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeMaintainabilityCalculationResult,../../types/sonarQubeMetrics.types:SonarQubeMaintainabilityCalculationResult,,,,2,,,-1
+73014444290,IMPORT,import { calculateMaintainabilityHealthScore } from '../../utils/healthScoreCalculator',7,,calculateMaintainabilityHealthScore,../../utils/healthScoreCalculator:calculateMaintainabilityHealthScore,,,,7,,,-1
+73014444291,IMPORT,import { SonarMaintainabilityApiService } from './sonarMaintainabilityApiService',1,,SonarMaintainabilityApiService,./sonarMaintainabilityApiService:SonarMaintainabilityApiService,,,,1,,,-1
+73014444292,IMPORT,import { SonarMaintainabilityCalculationService } from './sonarMaintainabilityCalculationService',2,,SonarMaintainabilityCalculationService,./sonarMaintainabilityCalculationService:SonarMaintainabilityCalculationService,,,,2,,,-1
+73014444293,IMPORT,import { SonarMaintainabilityDbService } from './sonarMaintainabilityDbService',3,,SonarMaintainabilityDbService,./sonarMaintainabilityDbService:SonarMaintainabilityDbService,,,,3,,,-1
+73014444294,IMPORT,import { getSonarProjectKey } from '../sonarqube/autoMapSonarProjectKeys',4,,getSonarProjectKey,../sonarqube/autoMapSonarProjectKeys:getSonarProjectKey,,,,4,,,-1
+73014444295,IMPORT,import axios from 'axios',1,,axios,axios:axios,,,,1,,,-1
+73014444296,IMPORT,import { SonarQubeComponentMeasures } from '../../types/sonarQubeMetrics.types',2,,SonarQubeComponentMeasures,../../types/sonarQubeMetrics.types:SonarQubeComponentMeasures,,,,2,,,-1
+73014444297,IMPORT,import { SonarQubeReliabilityCalculationResult } from '../../types/sonarQubeMetrics.types',1,,SonarQubeReliabilityCalculationResult,../../types/sonarQubeMetrics.types:SonarQubeReliabilityCalculationResult,,,,1,,,-1
+73014444298,IMPORT,import { getPool } from '../../db/connection',1,,getPool,../../db/connection:getPool,,,,1,,,-1
+73014444299,IMPORT,"import {
+  SonarQubeReliabilityMetrics,
+  SonarQubeReliabilityHistory,
+  SonarQubeReliabilityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeReliabilityMetrics,../../types/sonarQubeMetrics.types:SonarQubeReliabilityMetrics,,,,2,,,-1
+73014444300,IMPORT,"import {
+  SonarQubeReliabilityMetrics,
+  SonarQubeReliabilityHistory,
+  SonarQubeReliabilityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeReliabilityHistory,../../types/sonarQubeMetrics.types:SonarQubeReliabilityHistory,,,,2,,,-1
+73014444301,IMPORT,"import {
+  SonarQubeReliabilityMetrics,
+  SonarQubeReliabilityHistory,
+  SonarQubeReliabilityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeReliabilityCalculationResult,../../types/sonarQubeMetrics.types:SonarQubeReliabilityCalculationResult,,,,2,,,-1
+73014444302,IMPORT,import { calculateReliabilityHealthScore } from '../../utils/healthScoreCalculator',7,,calculateReliabilityHealthScore,../../utils/healthScoreCalculator:calculateReliabilityHealthScore,,,,7,,,-1
+73014444303,IMPORT,import { SonarReliabilityApiService } from './sonarReliabilityApiService',1,,SonarReliabilityApiService,./sonarReliabilityApiService:SonarReliabilityApiService,,,,1,,,-1
+73014444304,IMPORT,import { SonarReliabilityCalculationService } from './sonarReliabilityCalculationService',2,,SonarReliabilityCalculationService,./sonarReliabilityCalculationService:SonarReliabilityCalculationService,,,,2,,,-1
+73014444305,IMPORT,import { SonarReliabilityDbService } from './sonarReliabilityDbService',3,,SonarReliabilityDbService,./sonarReliabilityDbService:SonarReliabilityDbService,,,,3,,,-1
+73014444306,IMPORT,import { getSonarProjectKey } from '../sonarqube/autoMapSonarProjectKeys',4,,getSonarProjectKey,../sonarqube/autoMapSonarProjectKeys:getSonarProjectKey,,,,4,,,-1
+73014444307,IMPORT,import axios from 'axios',1,,axios,axios:axios,,,,1,,,-1
+73014444308,IMPORT,import { SonarQubeComponentMeasures } from '../../types/sonarQubeMetrics.types',2,,SonarQubeComponentMeasures,../../types/sonarQubeMetrics.types:SonarQubeComponentMeasures,,,,2,,,-1
+73014444309,IMPORT,import { SonarQubeSecurityCalculationResult } from '../../types/sonarQubeMetrics.types',1,,SonarQubeSecurityCalculationResult,../../types/sonarQubeMetrics.types:SonarQubeSecurityCalculationResult,,,,1,,,-1
+73014444310,IMPORT,import { getPool } from '../../db/connection',1,,getPool,../../db/connection:getPool,,,,1,,,-1
+73014444311,IMPORT,"import {
+  SonarQubeSecurityMetrics,
+  SonarQubeSecurityHistory,
+  SonarQubeSecurityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeSecurityMetrics,../../types/sonarQubeMetrics.types:SonarQubeSecurityMetrics,,,,2,,,-1
+73014444312,IMPORT,"import {
+  SonarQubeSecurityMetrics,
+  SonarQubeSecurityHistory,
+  SonarQubeSecurityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeSecurityHistory,../../types/sonarQubeMetrics.types:SonarQubeSecurityHistory,,,,2,,,-1
+73014444313,IMPORT,"import {
+  SonarQubeSecurityMetrics,
+  SonarQubeSecurityHistory,
+  SonarQubeSecurityCalculationResult
+} from '../../types/sonarQubeMetrics.types'",2,,SonarQubeSecurityCalculationResult,../../types/sonarQubeMetrics.types:SonarQubeSecurityCalculationResult,,,,2,,,-1
+73014444314,IMPORT,import { calculateSecurityHealthScore } from '../../utils/healthScoreCalculator',7,,calculateSecurityHealthScore,../../utils/healthScoreCalculator:calculateSecurityHealthScore,,,,7,,,-1
+73014444315,IMPORT,import { SonarSecurityApiService } from './sonarSecurityApiService',1,,SonarSecurityApiService,./sonarSecurityApiService:SonarSecurityApiService,,,,1,,,-1
+73014444316,IMPORT,import { SonarSecurityCalculationService } from './sonarSecurityCalculationService',2,,SonarSecurityCalculationService,./sonarSecurityCalculationService:SonarSecurityCalculationService,,,,2,,,-1
+73014444317,IMPORT,import { SonarSecurityDbService } from './sonarSecurityDbService',3,,SonarSecurityDbService,./sonarSecurityDbService:SonarSecurityDbService,,,,3,,,-1
+73014444318,IMPORT,import { getSonarProjectKey } from '../sonarqube/autoMapSonarProjectKeys',4,,getSonarProjectKey,../sonarqube/autoMapSonarProjectKeys:getSonarProjectKey,,,,4,,,-1
+73014444319,IMPORT,import { getPool } from '../../db/connection',1,,getPool,../../db/connection:getPool,,,,1,,,-1
+73014444320,IMPORT,import axios from 'axios',2,,axios,axios:axios,,,,2,,,-1
+73014444321,IMPORT,import axios from 'axios',1,,axios,axios:axios,,,,1,,,-1
+73014444322,IMPORT,import { GitLabCommit } from './gitlab.types',4,,GitLabCommit,./gitlab.types:GitLabCommit,,,,4,,,-1
+73014444323,IMPORT,import { GitLabMergeRequest } from './gitlab.types',4,,GitLabMergeRequest,./gitlab.types:GitLabMergeRequest,,,,4,,,-1

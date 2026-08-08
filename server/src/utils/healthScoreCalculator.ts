@@ -2,7 +2,15 @@
 // Calculates 0-5 health scores for all 6 metric types
 
 /**
- * Calculate Issue Metrics Health Score (0-5)
+ * Calculates a normalized health score (0 to 5) for Issue Metrics based on cycle time, reopen rate, velocity, and critical issues.
+ * 
+ * @param metrics - An object containing the raw issue metrics to evaluate.
+ * @param metrics.avg_cycle_time_days - The average number of days it takes to close an issue.
+ * @param metrics.reopen_rate_percent - The percentage of issues that get reopened after being closed.
+ * @param metrics.issues_closed_last_7d - The total number of issues successfully closed in the last 7 days.
+ * @param metrics.critical_issues_open - The current number of open issues with a 'critical' severity.
+ * 
+ * @returns A computed health score rounded to one decimal place, from 0.0 (unhealthy) to 5.0 (perfectly healthy).
  */
 export function calculateIssueHealthScore(metrics: {
   avg_cycle_time_days: number;
@@ -46,7 +54,7 @@ export function calculateIssueHealthScore(metrics: {
   else if (metrics.critical_issues_open <= 20) criticalScore = 1;
   else criticalScore = 0;
 
-  const healthScore = 
+  const healthScore =
     cycleTimeScore * 0.30 +
     reopenRateScore * 0.25 +
     velocityScore * 0.25 +
@@ -100,7 +108,7 @@ export function calculateMRHealthScore(metrics: {
   else if (metrics.avg_review_comments_per_mr > 0) reviewScore = 1;
   else reviewScore = 0;
 
-  const healthScore = 
+  const healthScore =
     mergeTimeScore * 0.35 +
     revertRateScore * 0.25 +
     velocityScore * 0.25 +
@@ -146,7 +154,7 @@ export function calculateCommitHealthScore(metrics: {
   else if (metrics.bus_factor === 1) busFactorScore = 1.5;
   else busFactorScore = 0.5; // Give some credit even if bus factor is 0
 
-  const healthScore = 
+  const healthScore =
     commitFreqScore * 0.40 +
     commitSizeScore * 0.30 +
     busFactorScore * 0.30;
@@ -179,7 +187,7 @@ export function calculateReliabilityHealthScore(metrics: {
   else if (metrics.bugs_total <= 50) bugsScore = 1;
   else bugsScore = 0;
 
-  const healthScore = 
+  const healthScore =
     ratingScore * 0.50 +
     bugsScore * 0.50;
 
@@ -231,7 +239,7 @@ export function calculateMaintainabilityHealthScore(metrics: {
   else if (metrics.duplicated_code_percentage < 30) duplicationScore = 1;
   else duplicationScore = 0;
 
-  const healthScore = 
+  const healthScore =
     ratingScore * 0.30 +
     debtScore * 0.30 +
     smellsScore * 0.20 +
@@ -275,7 +283,7 @@ export function calculateSecurityHealthScore(metrics: {
   else if (metrics.security_hotspots_total <= 50) hotspotsScore = 1;
   else hotspotsScore = 0;
 
-  const healthScore = 
+  const healthScore =
     ratingScore * 0.50 +
     vulnsScore * 0.30 +
     hotspotsScore * 0.20;

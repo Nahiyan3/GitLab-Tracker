@@ -1,0 +1,2065 @@
+{
+  "kind": "SourceFile",
+  "text": "// Project Sync Service - orchestrates project syncing workflow\r\nimport gitlabProjectService from '../gitlab/gitlabProjectService';\r\nimport gitLabMemberService from '../gitlab/gitLabMemberService';\r\nimport projectEnrichmentService from './projectEnrichmentService';\r\nimport projectTransformService from './projectTransformService';\r\nimport { syncProjectsToRegistry, getAllProjectsFromRegistry } from '../../db/queries';\r\nimport { autoMapSonarProjectKeys } from '../sonarqube/autoMapSonarProjectKeys';\r\n\r\nclass ProjectSyncService {\r\n  /**\r\n   * Sync all projects from GitLab to registry (basic info only)\r\n   * This updates the projects table (all projects)\r\n   * Does NOT update snapshots - use refresh for that\r\n   */\r\n  syncAllProjects = async () => {\r\n    // Step 1: Fetch all projects from GitLab\r\n    const gitlabProjects = await gitlabProjectService.getUserProjects();\r\n    \r\n    // Step 2: Extract basic info for registry and fetch member info\r\n    // Fetch members sequentially with delays to avoid rate limiting (503 errors)\r\n    console.log(`🔄 Fetching members for ${gitlabProjects.length} projects (sequential)...`);\r\n    \r\n    const registryData = [];\r\n    \r\n    for (let i = 0; i < gitlabProjects.length; i++) {\r\n      const project = gitlabProjects[i];\r\n      \r\n      // Fetch members for this project\r\n      let members = [];\r\n      try {\r\n        members = await gitLabMemberService.getProjectMembers(project.id);\r\n      } catch (error) {\r\n        // Silently handle errors - members will be empty array\r\n        members = [];\r\n      }\r\n      \r\n      // Add to registry data\r\n      registryData.push({\r\n        id: project.id,\r\n        name: project.name,\r\n        full_path: project.path_with_namespace,\r\n        group_path: project.namespace?.full_path,\r\n        members_count: members.length,\r\n        members: members,\r\n        last_activity_at: project.last_activity_at,\r\n        parent_id: project.namespace?.id,\r\n        visibility: project.visibility,\r\n      });\r\n      \r\n      // Progress indicator every 10 projects\r\n      if ((i + 1) % 10 === 0) {\r\n        console.log(`   Progress: ${i + 1}/${gitlabProjects.length} projects processed`);\r\n      }\r\n      \r\n      // Add delay between requests to avoid rate limiting (200ms)\r\n      if (i < gitlabProjects.length - 1) {\r\n        await new Promise(resolve => setTimeout(resolve, 200));\r\n      }\r\n    }\r\n    \r\n    console.log(`✅ Processed all ${gitlabProjects.length} projects with member data`);\r\n    \r\n    // Step 3: Save to registry\r\n    await syncProjectsToRegistry(registryData);\r\n    \r\n    // Step 4: Auto-map SonarCloud project keys\r\n    try {\r\n      await autoMapSonarProjectKeys();\r\n      console.log('✅ Auto-mapped SonarCloud project keys');\r\n    } catch (e) {\r\n      console.warn('⚠️ Failed to auto-map SonarCloud keys:', (e as any).message);\r\n    }\r\n    \r\n    // Step 5: Get final updated projects from registry\r\n    const dbProjects = await getAllProjectsFromRegistry();\r\n    \r\n    // Step 6: Transform to API response format\r\n    return projectTransformService.toApiResponseList(dbProjects);\r\n  };\r\n\r\n  /**\r\n   * Sync a single project from GitLab to registry (basic info only)\r\n   */\r\n  syncProject = async (projectId: number) => {\r\n    // Step 1: Fetch project from GitLab\r\n    const gitlabProject = await gitlabProjectService.getProjectById(projectId);\r\n    \r\n    // Step 2: Extract basic info for registry and include member info\r\n    const members = await gitLabMemberService.getProjectMembers(gitlabProject.id).catch(() => []);\r\n\r\n    const registryData = {\r\n      id: gitlabProject.id,\r\n      name: gitlabProject.name,\r\n      full_path: gitlabProject.path_with_namespace,\r\n      group_path: gitlabProject.namespace?.full_path,\r\n      members_count: members.length,\r\n      members: members,\r\n      last_activity_at: gitlabProject.last_activity_at,\r\n      parent_id: gitlabProject.namespace?.id,\r\n      visibility: gitlabProject.visibility,\r\n    };\r\n    \r\n    // Step 3: Save to registry\r\n    await syncProjectsToRegistry([registryData]);\r\n    \r\n    // Step 4: Auto-map SonarCloud project keys\r\n    try {\r\n      await autoMapSonarProjectKeys();\r\n    } catch (e) {\r\n      console.warn('⚠️ Failed to auto-map SonarCloud keys:', (e as any).message);\r\n    }\r\n    \r\n    // Step 5: Get updated project from registry\r\n    const dbProjects = await getAllProjectsFromRegistry();\r\n    const updatedProject = dbProjects.find(p => p.id === projectId);\r\n    \r\n    if (!updatedProject) {\r\n      throw new Error('Project not found after sync');\r\n    }\r\n    \r\n    // Step 6: Transform to API response format\r\n    return projectTransformService.toApiResponse(updatedProject);\r\n  };\r\n\r\n  // Note: getProjectsFromDatabase was removed because it was unused.\r\n  // If you need to expose cached registry projects via this service in the future,\r\n  // re-add a method that calls `getAllProjectsFromRegistry()` and transforms the result.\r\n}\r\n\r\nexport default new ProjectSyncService();\r\n",
+  "children": [
+    {
+      "kind": "ImportDeclaration",
+      "children": [
+        {
+          "kind": "ImportClause",
+          "name": "gitlabProjectService",
+          "children": [
+            {
+              "kind": "Identifier",
+              "text": "gitlabProjectService"
+            }
+          ]
+        },
+        {
+          "kind": "StringLiteral",
+          "text": "../gitlab/gitlabProjectService"
+        }
+      ]
+    },
+    {
+      "kind": "ImportDeclaration",
+      "children": [
+        {
+          "kind": "ImportClause",
+          "name": "gitLabMemberService",
+          "children": [
+            {
+              "kind": "Identifier",
+              "text": "gitLabMemberService"
+            }
+          ]
+        },
+        {
+          "kind": "StringLiteral",
+          "text": "../gitlab/gitLabMemberService"
+        }
+      ]
+    },
+    {
+      "kind": "ImportDeclaration",
+      "children": [
+        {
+          "kind": "ImportClause",
+          "name": "projectEnrichmentService",
+          "children": [
+            {
+              "kind": "Identifier",
+              "text": "projectEnrichmentService"
+            }
+          ]
+        },
+        {
+          "kind": "StringLiteral",
+          "text": "./projectEnrichmentService"
+        }
+      ]
+    },
+    {
+      "kind": "ImportDeclaration",
+      "children": [
+        {
+          "kind": "ImportClause",
+          "name": "projectTransformService",
+          "children": [
+            {
+              "kind": "Identifier",
+              "text": "projectTransformService"
+            }
+          ]
+        },
+        {
+          "kind": "StringLiteral",
+          "text": "./projectTransformService"
+        }
+      ]
+    },
+    {
+      "kind": "ImportDeclaration",
+      "children": [
+        {
+          "kind": "ImportClause",
+          "children": [
+            {
+              "kind": "NamedImports",
+              "children": [
+                {
+                  "kind": "ImportSpecifier",
+                  "name": "syncProjectsToRegistry",
+                  "children": [
+                    {
+                      "kind": "Identifier",
+                      "text": "syncProjectsToRegistry"
+                    }
+                  ]
+                },
+                {
+                  "kind": "ImportSpecifier",
+                  "name": "getAllProjectsFromRegistry",
+                  "children": [
+                    {
+                      "kind": "Identifier",
+                      "text": "getAllProjectsFromRegistry"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "StringLiteral",
+          "text": "../../db/queries"
+        }
+      ]
+    },
+    {
+      "kind": "ImportDeclaration",
+      "children": [
+        {
+          "kind": "ImportClause",
+          "children": [
+            {
+              "kind": "NamedImports",
+              "children": [
+                {
+                  "kind": "ImportSpecifier",
+                  "name": "autoMapSonarProjectKeys",
+                  "children": [
+                    {
+                      "kind": "Identifier",
+                      "text": "autoMapSonarProjectKeys"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "StringLiteral",
+          "text": "../sonarqube/autoMapSonarProjectKeys"
+        }
+      ]
+    },
+    {
+      "kind": "ClassDeclaration",
+      "name": "ProjectSyncService",
+      "children": [
+        {
+          "kind": "Identifier",
+          "text": "ProjectSyncService"
+        },
+        {
+          "kind": "PropertyDeclaration",
+          "name": "syncAllProjects",
+          "children": [
+            {
+              "kind": "Identifier",
+              "text": "syncAllProjects"
+            },
+            {
+              "kind": "ArrowFunction",
+              "children": [
+                {
+                  "kind": "AsyncKeyword"
+                },
+                {
+                  "kind": "EqualsGreaterThanToken"
+                },
+                {
+                  "kind": "Block",
+                  "children": [
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "gitlabProjects",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "gitlabProjects"
+                                },
+                                {
+                                  "kind": "AwaitExpression",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "getUserProjects",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProjectService"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "getUserProjects"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ExpressionStatement",
+                      "children": [
+                        {
+                          "kind": "CallExpression",
+                          "children": [
+                            {
+                              "kind": "PropertyAccessExpression",
+                              "name": "log",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "console"
+                                },
+                                {
+                                  "kind": "Identifier",
+                                  "text": "log"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "TemplateExpression",
+                              "children": [
+                                {
+                                  "kind": "TemplateHead",
+                                  "text": "🔄 Fetching members for "
+                                },
+                                {
+                                  "kind": "TemplateSpan",
+                                  "children": [
+                                    {
+                                      "kind": "PropertyAccessExpression",
+                                      "name": "length",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "gitlabProjects"
+                                        },
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "length"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "LastTemplateToken",
+                                      "text": " projects (sequential)..."
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "registryData",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "registryData"
+                                },
+                                {
+                                  "kind": "ArrayLiteralExpression"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ForStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "i",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "i"
+                                },
+                                {
+                                  "kind": "FirstLiteralToken",
+                                  "text": "0"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "BinaryExpression",
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "text": "i"
+                            },
+                            {
+                              "kind": "FirstBinaryOperator"
+                            },
+                            {
+                              "kind": "PropertyAccessExpression",
+                              "name": "length",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "gitlabProjects"
+                                },
+                                {
+                                  "kind": "Identifier",
+                                  "text": "length"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "PostfixUnaryExpression",
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "text": "i"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "Block",
+                          "children": [
+                            {
+                              "kind": "FirstStatement",
+                              "children": [
+                                {
+                                  "kind": "VariableDeclarationList",
+                                  "children": [
+                                    {
+                                      "kind": "VariableDeclaration",
+                                      "name": "project",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "project"
+                                        },
+                                        {
+                                          "kind": "ElementAccessExpression",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProjects"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "i"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "FirstStatement",
+                              "children": [
+                                {
+                                  "kind": "VariableDeclarationList",
+                                  "children": [
+                                    {
+                                      "kind": "VariableDeclaration",
+                                      "name": "members",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "members"
+                                        },
+                                        {
+                                          "kind": "ArrayLiteralExpression"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "TryStatement",
+                              "children": [
+                                {
+                                  "kind": "Block",
+                                  "children": [
+                                    {
+                                      "kind": "ExpressionStatement",
+                                      "children": [
+                                        {
+                                          "kind": "BinaryExpression",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "members"
+                                            },
+                                            {
+                                              "kind": "FirstAssignment"
+                                            },
+                                            {
+                                              "kind": "AwaitExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "CallExpression",
+                                                  "children": [
+                                                    {
+                                                      "kind": "PropertyAccessExpression",
+                                                      "name": "getProjectMembers",
+                                                      "children": [
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "gitLabMemberService"
+                                                        },
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "getProjectMembers"
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "kind": "PropertyAccessExpression",
+                                                      "name": "id",
+                                                      "children": [
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "project"
+                                                        },
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "id"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "kind": "CatchClause",
+                                  "children": [
+                                    {
+                                      "kind": "VariableDeclaration",
+                                      "name": "error",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "error"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "Block",
+                                      "children": [
+                                        {
+                                          "kind": "ExpressionStatement",
+                                          "children": [
+                                            {
+                                              "kind": "BinaryExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "members"
+                                                },
+                                                {
+                                                  "kind": "FirstAssignment"
+                                                },
+                                                {
+                                                  "kind": "ArrayLiteralExpression"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "ExpressionStatement",
+                              "children": [
+                                {
+                                  "kind": "CallExpression",
+                                  "children": [
+                                    {
+                                      "kind": "PropertyAccessExpression",
+                                      "name": "push",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "registryData"
+                                        },
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "push"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "ObjectLiteralExpression",
+                                      "children": [
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "id",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "id"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "id",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "project"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "id"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "name",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "name"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "name",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "project"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "name"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "full_path",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "full_path"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "path_with_namespace",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "project"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "path_with_namespace"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "group_path",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "group_path"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "full_path",
+                                              "children": [
+                                                {
+                                                  "kind": "PropertyAccessExpression",
+                                                  "name": "namespace",
+                                                  "children": [
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "project"
+                                                    },
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "namespace"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "kind": "QuestionDotToken"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "full_path"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "members_count",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "members_count"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "length",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "members"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "length"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "members",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "members"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "members"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "last_activity_at",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "last_activity_at"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "last_activity_at",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "project"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "last_activity_at"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "parent_id",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "parent_id"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "id",
+                                              "children": [
+                                                {
+                                                  "kind": "PropertyAccessExpression",
+                                                  "name": "namespace",
+                                                  "children": [
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "project"
+                                                    },
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "namespace"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "kind": "QuestionDotToken"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "id"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PropertyAssignment",
+                                          "name": "visibility",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "visibility"
+                                            },
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "visibility",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "project"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "visibility"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "IfStatement",
+                              "children": [
+                                {
+                                  "kind": "BinaryExpression",
+                                  "children": [
+                                    {
+                                      "kind": "BinaryExpression",
+                                      "children": [
+                                        {
+                                          "kind": "ParenthesizedExpression",
+                                          "children": [
+                                            {
+                                              "kind": "BinaryExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "i"
+                                                },
+                                                {
+                                                  "kind": "PlusToken"
+                                                },
+                                                {
+                                                  "kind": "FirstLiteralToken",
+                                                  "text": "1"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "PercentToken"
+                                        },
+                                        {
+                                          "kind": "FirstLiteralToken",
+                                          "text": "10"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "EqualsEqualsEqualsToken"
+                                    },
+                                    {
+                                      "kind": "FirstLiteralToken",
+                                      "text": "0"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "kind": "Block",
+                                  "children": [
+                                    {
+                                      "kind": "ExpressionStatement",
+                                      "children": [
+                                        {
+                                          "kind": "CallExpression",
+                                          "children": [
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "log",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "console"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "log"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "TemplateExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "TemplateHead",
+                                                  "text": "   Progress: "
+                                                },
+                                                {
+                                                  "kind": "TemplateSpan",
+                                                  "children": [
+                                                    {
+                                                      "kind": "BinaryExpression",
+                                                      "children": [
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "i"
+                                                        },
+                                                        {
+                                                          "kind": "PlusToken"
+                                                        },
+                                                        {
+                                                          "kind": "FirstLiteralToken",
+                                                          "text": "1"
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "kind": "TemplateMiddle",
+                                                      "text": "/"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "kind": "TemplateSpan",
+                                                  "children": [
+                                                    {
+                                                      "kind": "PropertyAccessExpression",
+                                                      "name": "length",
+                                                      "children": [
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "gitlabProjects"
+                                                        },
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "length"
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "kind": "LastTemplateToken",
+                                                      "text": " projects processed"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "IfStatement",
+                              "children": [
+                                {
+                                  "kind": "BinaryExpression",
+                                  "children": [
+                                    {
+                                      "kind": "Identifier",
+                                      "text": "i"
+                                    },
+                                    {
+                                      "kind": "FirstBinaryOperator"
+                                    },
+                                    {
+                                      "kind": "BinaryExpression",
+                                      "children": [
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "length",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProjects"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "length"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "MinusToken"
+                                        },
+                                        {
+                                          "kind": "FirstLiteralToken",
+                                          "text": "1"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "kind": "Block",
+                                  "children": [
+                                    {
+                                      "kind": "ExpressionStatement",
+                                      "children": [
+                                        {
+                                          "kind": "AwaitExpression",
+                                          "children": [
+                                            {
+                                              "kind": "NewExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "Promise"
+                                                },
+                                                {
+                                                  "kind": "ArrowFunction",
+                                                  "children": [
+                                                    {
+                                                      "kind": "Parameter",
+                                                      "name": "resolve",
+                                                      "children": [
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "resolve"
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "kind": "EqualsGreaterThanToken"
+                                                    },
+                                                    {
+                                                      "kind": "CallExpression",
+                                                      "children": [
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "setTimeout"
+                                                        },
+                                                        {
+                                                          "kind": "Identifier",
+                                                          "text": "resolve"
+                                                        },
+                                                        {
+                                                          "kind": "FirstLiteralToken",
+                                                          "text": "200"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ExpressionStatement",
+                      "children": [
+                        {
+                          "kind": "CallExpression",
+                          "children": [
+                            {
+                              "kind": "PropertyAccessExpression",
+                              "name": "log",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "console"
+                                },
+                                {
+                                  "kind": "Identifier",
+                                  "text": "log"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "TemplateExpression",
+                              "children": [
+                                {
+                                  "kind": "TemplateHead",
+                                  "text": "✅ Processed all "
+                                },
+                                {
+                                  "kind": "TemplateSpan",
+                                  "children": [
+                                    {
+                                      "kind": "PropertyAccessExpression",
+                                      "name": "length",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "gitlabProjects"
+                                        },
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "length"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "LastTemplateToken",
+                                      "text": " projects with member data"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ExpressionStatement",
+                      "children": [
+                        {
+                          "kind": "AwaitExpression",
+                          "children": [
+                            {
+                              "kind": "CallExpression",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "syncProjectsToRegistry"
+                                },
+                                {
+                                  "kind": "Identifier",
+                                  "text": "registryData"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "TryStatement",
+                      "children": [
+                        {
+                          "kind": "Block",
+                          "children": [
+                            {
+                              "kind": "ExpressionStatement",
+                              "children": [
+                                {
+                                  "kind": "AwaitExpression",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "autoMapSonarProjectKeys"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "ExpressionStatement",
+                              "children": [
+                                {
+                                  "kind": "CallExpression",
+                                  "children": [
+                                    {
+                                      "kind": "PropertyAccessExpression",
+                                      "name": "log",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "console"
+                                        },
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "log"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "StringLiteral",
+                                      "text": "✅ Auto-mapped SonarCloud project keys"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "CatchClause",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "e",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "e"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "Block",
+                              "children": [
+                                {
+                                  "kind": "ExpressionStatement",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "warn",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "console"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "warn"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "StringLiteral",
+                                          "text": "⚠️ Failed to auto-map SonarCloud keys:"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "message",
+                                          "children": [
+                                            {
+                                              "kind": "ParenthesizedExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "AsExpression",
+                                                  "children": [
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "e"
+                                                    },
+                                                    {
+                                                      "kind": "AnyKeyword"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "message"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "dbProjects",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "dbProjects"
+                                },
+                                {
+                                  "kind": "AwaitExpression",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "getAllProjectsFromRegistry"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ReturnStatement",
+                      "children": [
+                        {
+                          "kind": "CallExpression",
+                          "children": [
+                            {
+                              "kind": "PropertyAccessExpression",
+                              "name": "toApiResponseList",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "projectTransformService"
+                                },
+                                {
+                                  "kind": "Identifier",
+                                  "text": "toApiResponseList"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "Identifier",
+                              "text": "dbProjects"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "PropertyDeclaration",
+          "name": "syncProject",
+          "children": [
+            {
+              "kind": "Identifier",
+              "text": "syncProject"
+            },
+            {
+              "kind": "ArrowFunction",
+              "children": [
+                {
+                  "kind": "AsyncKeyword"
+                },
+                {
+                  "kind": "Parameter",
+                  "name": "projectId",
+                  "children": [
+                    {
+                      "kind": "Identifier",
+                      "text": "projectId"
+                    },
+                    {
+                      "kind": "NumberKeyword"
+                    }
+                  ]
+                },
+                {
+                  "kind": "EqualsGreaterThanToken"
+                },
+                {
+                  "kind": "Block",
+                  "children": [
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "gitlabProject",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "gitlabProject"
+                                },
+                                {
+                                  "kind": "AwaitExpression",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "getProjectById",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProjectService"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "getProjectById"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "projectId"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "members",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "members"
+                                },
+                                {
+                                  "kind": "AwaitExpression",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "catch",
+                                          "children": [
+                                            {
+                                              "kind": "CallExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "PropertyAccessExpression",
+                                                  "name": "getProjectMembers",
+                                                  "children": [
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "gitLabMemberService"
+                                                    },
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "getProjectMembers"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "kind": "PropertyAccessExpression",
+                                                  "name": "id",
+                                                  "children": [
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "gitlabProject"
+                                                    },
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "id"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "catch"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "ArrowFunction",
+                                          "children": [
+                                            {
+                                              "kind": "EqualsGreaterThanToken"
+                                            },
+                                            {
+                                              "kind": "ArrayLiteralExpression"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "registryData",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "registryData"
+                                },
+                                {
+                                  "kind": "ObjectLiteralExpression",
+                                  "children": [
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "id",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "id"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "id",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProject"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "id"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "name",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "name"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "name",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProject"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "name"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "full_path",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "full_path"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "path_with_namespace",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProject"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "path_with_namespace"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "group_path",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "group_path"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "full_path",
+                                          "children": [
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "namespace",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "gitlabProject"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "namespace"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "QuestionDotToken"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "full_path"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "members_count",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "members_count"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "length",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "members"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "length"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "members",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "members"
+                                        },
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "members"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "last_activity_at",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "last_activity_at"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "last_activity_at",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProject"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "last_activity_at"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "parent_id",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "parent_id"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "id",
+                                          "children": [
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "namespace",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "gitlabProject"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "namespace"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "QuestionDotToken"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "id"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "PropertyAssignment",
+                                      "name": "visibility",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "visibility"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "visibility",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "gitlabProject"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "visibility"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ExpressionStatement",
+                      "children": [
+                        {
+                          "kind": "AwaitExpression",
+                          "children": [
+                            {
+                              "kind": "CallExpression",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "syncProjectsToRegistry"
+                                },
+                                {
+                                  "kind": "ArrayLiteralExpression",
+                                  "children": [
+                                    {
+                                      "kind": "Identifier",
+                                      "text": "registryData"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "TryStatement",
+                      "children": [
+                        {
+                          "kind": "Block",
+                          "children": [
+                            {
+                              "kind": "ExpressionStatement",
+                              "children": [
+                                {
+                                  "kind": "AwaitExpression",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "autoMapSonarProjectKeys"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "CatchClause",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "e",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "e"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "Block",
+                              "children": [
+                                {
+                                  "kind": "ExpressionStatement",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "warn",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "console"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "warn"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "StringLiteral",
+                                          "text": "⚠️ Failed to auto-map SonarCloud keys:"
+                                        },
+                                        {
+                                          "kind": "PropertyAccessExpression",
+                                          "name": "message",
+                                          "children": [
+                                            {
+                                              "kind": "ParenthesizedExpression",
+                                              "children": [
+                                                {
+                                                  "kind": "AsExpression",
+                                                  "children": [
+                                                    {
+                                                      "kind": "Identifier",
+                                                      "text": "e"
+                                                    },
+                                                    {
+                                                      "kind": "AnyKeyword"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "message"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "dbProjects",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "dbProjects"
+                                },
+                                {
+                                  "kind": "AwaitExpression",
+                                  "children": [
+                                    {
+                                      "kind": "CallExpression",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "getAllProjectsFromRegistry"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "FirstStatement",
+                      "children": [
+                        {
+                          "kind": "VariableDeclarationList",
+                          "children": [
+                            {
+                              "kind": "VariableDeclaration",
+                              "name": "updatedProject",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "updatedProject"
+                                },
+                                {
+                                  "kind": "CallExpression",
+                                  "children": [
+                                    {
+                                      "kind": "PropertyAccessExpression",
+                                      "name": "find",
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "dbProjects"
+                                        },
+                                        {
+                                          "kind": "Identifier",
+                                          "text": "find"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "ArrowFunction",
+                                      "children": [
+                                        {
+                                          "kind": "Parameter",
+                                          "name": "p",
+                                          "children": [
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "p"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "EqualsGreaterThanToken"
+                                        },
+                                        {
+                                          "kind": "BinaryExpression",
+                                          "children": [
+                                            {
+                                              "kind": "PropertyAccessExpression",
+                                              "name": "id",
+                                              "children": [
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "p"
+                                                },
+                                                {
+                                                  "kind": "Identifier",
+                                                  "text": "id"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "EqualsEqualsEqualsToken"
+                                            },
+                                            {
+                                              "kind": "Identifier",
+                                              "text": "projectId"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "IfStatement",
+                      "children": [
+                        {
+                          "kind": "PrefixUnaryExpression",
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "text": "updatedProject"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "Block",
+                          "children": [
+                            {
+                              "kind": "ThrowStatement",
+                              "children": [
+                                {
+                                  "kind": "NewExpression",
+                                  "children": [
+                                    {
+                                      "kind": "Identifier",
+                                      "text": "Error"
+                                    },
+                                    {
+                                      "kind": "StringLiteral",
+                                      "text": "Project not found after sync"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ReturnStatement",
+                      "children": [
+                        {
+                          "kind": "CallExpression",
+                          "children": [
+                            {
+                              "kind": "PropertyAccessExpression",
+                              "name": "toApiResponse",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "text": "projectTransformService"
+                                },
+                                {
+                                  "kind": "Identifier",
+                                  "text": "toApiResponse"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "Identifier",
+                              "text": "updatedProject"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "ExportAssignment",
+      "children": [
+        {
+          "kind": "NewExpression",
+          "children": [
+            {
+              "kind": "Identifier",
+              "text": "ProjectSyncService"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "EndOfFileToken"
+    }
+  ]
+}

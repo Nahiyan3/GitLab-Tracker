@@ -1,0 +1,15 @@
+LOAD CSV FROM 'file:/nodes_CONTROL_STRUCTURE_data.csv' AS line
+CREATE (:CONTROL_STRUCTURE {
+id: toInteger(line[0]),
+ARGUMENT_INDEX: toInteger(line[2]),
+ARGUMENT_LABEL: line[3],
+ARGUMENT_NAME: line[4],
+CODE: line[5],
+COLUMN_NUMBER: toInteger(line[6]),
+CONTROL_STRUCTURE_TYPE: line[7],
+LINE_NUMBER: toInteger(line[8]),
+OFFSET: line[9],
+OFFSET_END: line[10],
+ORDER: toInteger(line[11]),
+PARSER_TYPE_NAME: line[12]
+});

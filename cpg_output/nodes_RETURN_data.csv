@@ -1,0 +1,1014 @@
+141733920768,RETURN,-1,,,"return res.status(500).json({ 
+          error: 'Gemini API key not configured. Please set GEMINI_API_KEY in environment variables.' 
+        })",8,15,,,1
+141733920769,RETURN,-1,,,return res.status(400).json({ error: 'Prompt is required' }),8,37,,,1
+141733920770,RETURN,-1,,,return res.status(400).json({ error: 'Prompt is required' }),8,55,,,1
+141733920771,RETURN,-1,,,return res.status(400).json({ error: 'File data is required' }),8,59,,,1
+141733920772,RETURN,-1,,,return res.status(400).json({ error: 'Project name is required' }),8,90,,,1
+141733920773,RETURN,-1,,,return res.status(400).json({ error: 'Project name is required' }),8,128,,,1
+141733920774,RETURN,-1,,,"return res.status(404).json({ 
+          error: 'No insights found for this project',
+          message: 'Generate insights first using POST /api/ai/project-insights'
+        })",8,135,,,1
+141733920775,RETURN,-1,,,return res.status(400).json({ error: 'Project ID is required' }),8,165,,,1
+141733920776,RETURN,-1,,,"return res.json({ 
+          history: [],
+          message: 'No insights history found for this project'
+        })",8,172,,,1
+141733920777,RETURN,-1,,,"return {
+          id: project.id,
+          uuid: project.uuid,
+          name: project.name,
+          group: project.full_path?.split('/')[0] || 'Unknown',
+          metrics: {
+            codeReview: sectionScores.codereview || 0,
+            technicalDebt: sectionScores.technicaldebt || 0,
+            testQuality: sectionScores.testquality || 0,
+            documentation: sectionScores.documentation || 0,
+            deployment: sectionScores.deployment || 0,
+            dependencies: sectionScores.dependencies || 0,
+            teamMorale: sectionScores.teammorale || sectionScores.teamvelocity || sectionScores.teamvelocitymorale || 0,
+            apiScore: project.api_score || 0,
+            combinedScore: project.combined_score || 0,
+          },
+          created_at: project.created_at
+        }",8,216,,,4
+141733920778,RETURN,-1,,,"return res.json({ 
+          projects: [],
+          message: 'No project insights found'
+        })",8,197,,,1
+141733920779,RETURN,-1,,,return res.status(400).json({ error: 'Invalid project ID' }),6,18,,,1
+141733920780,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,48,,,1
+141733920781,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No commit metrics found for this project. Please refresh metrics first.',
+      })",6,57,,,1
+141733920782,RETURN,-1,,,return res.status(400).json({ error: 'Invalid project ID' }),6,86,,,1
+141733920783,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'deployment_id and deployment_timestamp are required',
+      })",6,38,,,1
+141733920784,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'change_id, merged_timestamp, and deployed_timestamp are required',
+      })",6,79,,,1
+141733920785,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'deployed_timestamp must be after merged_timestamp',
+      })",6,90,,,1
+141733920786,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'deployment_id, deployment_timestamp, and has_incident are required',
+      })",6,130,,,1
+141733920787,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'incident_id, start_time, and end_time are required',
+      })",6,171,,,1
+141733920788,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'end_time must be after start_time',
+      })",6,182,,,1
+141733920789,RETURN,-1,,,"return res.json({
+        success: true,
+        data: [],
+      })",6,345,,,1
+141733920790,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid granularity. Must be weekly, monthly, or yearly',
+      })",6,540,,,1
+141733920791,RETURN,-1,,,return map,6,128,,,3
+141733920792,RETURN,-1,,,"{
+        timestamp: date,
+        date: date,
+        issue_health: issueMap.get(date) ?? null,
+        mr_health: mrMap.get(date) ?? null,
+        commit_health: commitMap.get(date) ?? null,
+        reliability_health: reliabilityMap.get(date) ?? null,
+        maintainability_health: maintainabilityMap.get(date) ?? null,
+        security_health: securityMap.get(date) ?? null,
+      }",20,141,,,1
+141733920793,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,17,,,1
+141733920794,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,174,,,1
+141733920795,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,17,,,1
+141733920796,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,53,,,1
+141733920797,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No metrics found for this project. Please refresh metrics first.',
+      })",6,62,,,1
+141733920798,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,90,,,1
+141733920799,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No metrics found for this project. Please refresh metrics first.',
+      })",6,100,,,1
+141733920800,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,139,,,1
+141733920801,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,17,,,1
+141733920802,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,51,,,1
+141733920803,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'Milestone metrics not found. Please refresh metrics first.',
+      })",6,62,,,1
+141733920804,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,18,,,1
+141733920805,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,53,,,1
+141733920806,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No MR metrics found for this project',
+      })",6,62,,,1
+141733920807,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,91,,,1
+141733920808,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No trend data available for this project',
+      })",6,100,,,1
+141733920809,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,130,,,1
+141733920810,RETURN,-1,,,return res.status(400).json({ error: 'Invalid project ID' }),8,35,,,1
+141733920811,RETURN,-1,,,return res.status(404).json({ error: 'Project not found' }),8,41,,,1
+141733920812,RETURN,-1,,,return res.status(400).json({ error: 'Invalid project ID' }),8,86,,,1
+141733920813,RETURN,-1,,,return res.status(400).json({ error: 'Invalid project ID' }),8,106,,,1
+141733920814,RETURN,-1,,,return res.status(400).json({ error: 'Project id is required' }),8,136,,,1
+141733920815,RETURN,-1,,,return res.status(404).json({ error: 'Project not found in database. Please refresh the page.' }),8,142,,,1
+141733920816,RETURN,-1,,,return res.status(404).json({ error: 'Project not found or already untracked' }),8,158,,,1
+141733920817,RETURN,-1,,,"{
+                    id: group.id,
+                    name: group.name
+            }",58,172,,,1
+141733920818,RETURN,-1,,,return res.status(400).json({ error: 'Invalid project ID' }),8,193,,,1
+141733920819,RETURN,-1,,,"return {
+      totalProjects,
+      trackedProjects,
+      averageQuality,
+      needsAttention: needsAttentionCount,
+      qualityDistribution,
+      projectsNeedingAttention,
+    }",4,229,,,8
+141733920820,RETURN,-1,,,acc + parseFloat(p.combined_score),44,245,,,1
+141733920821,RETURN,-1,,,return 0,31,243,,,2
+141733920822,RETURN,-1,,,return parseFloat(average.toFixed(2)),4,247,,,4
+141733920823,RETURN,-1,,,parseFloat(p.combined_score) < 3,32,254,,,1
+141733920824,RETURN,-1,,,return projects.filter(p => parseFloat(p.combined_score) < 3).length,4,254,,,1
+141733920825,RETURN,-1,,,parseFloat(p.combined_score) < 2,37,262,,,1
+141733920826,RETURN,-1,,,parseFloat(p.combined_score) >= 2 && parseFloat(p.combined_score) < 3,36,263,,,1
+141733920827,RETURN,-1,,,parseFloat(p.combined_score) >= 3 && parseFloat(p.combined_score) < 4,33,264,,,1
+141733920828,RETURN,-1,,,parseFloat(p.combined_score) >= 4,38,265,,,1
+141733920829,RETURN,-1,,,"return {
+      critical: projects.filter(p => parseFloat(p.combined_score) < 2).length,
+      warning: projects.filter(p => parseFloat(p.combined_score) >= 2 && parseFloat(p.combined_score) < 3).length,
+      good: projects.filter(p => parseFloat(p.combined_score) >= 3 && parseFloat(p.combined_score) < 4).length,
+      excellent: projects.filter(p => parseFloat(p.combined_score) >= 4).length,
+    }",4,261,,,1
+141733920830,RETURN,-1,,,"return res.status(400).json({ 
+        success: false,
+        error: 'Invalid project ID' 
+      })",6,20,,,1
+141733920831,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,57,,,1
+141733920832,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No maintainability metrics found for this project',
+      })",6,66,,,1
+141733920833,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,98,,,1
+141733920834,RETURN,-1,,,"return res.status(400).json({ 
+        success: false,
+        error: 'Invalid project ID' 
+      })",6,19,,,1
+141733920835,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,55,,,1
+141733920836,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No reliability metrics found for this project',
+      })",6,64,,,1
+141733920837,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,96,,,1
+141733920838,RETURN,-1,,,"return res.status(400).json({ 
+        success: false,
+        error: 'Invalid project ID' 
+      })",6,19,,,1
+141733920839,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,55,,,1
+141733920840,RETURN,-1,,,"return res.status(404).json({
+        success: false,
+        error: 'No security metrics found for this project',
+      })",6,64,,,1
+141733920841,RETURN,-1,,,"return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      })",6,96,,,1
+141733920842,RETURN,-1,,,return pool,2,35,,,2
+141733920843,RETURN,-1,,,return result.rows[0],4,82,,,2
+141733920844,RETURN,-1,,,return result.rows,4,131,,,2
+141733920845,RETURN,-1,,,return result.rows[0] || null,4,155,,,2
+141733920846,RETURN,-1,,,return result.rows[0]?.uuid || null,4,172,,,2
+141733920847,RETURN,-1,,,return result.rows[0],4,195,,,2
+141733920848,RETURN,-1,,,"return setProjectTracked(id, true)",2,206,,,1
+141733920849,RETURN,-1,,,return result.rowCount !== null && result.rowCount > 0,4,224,,,2
+141733920850,RETURN,-1,,,return result.rows.length > 0,4,241,,,2
+141733920851,RETURN,-1,,,row.id,34,258,,,1
+141733920852,RETURN,-1,,,return result.rows.map(row => row.id),4,258,,,2
+141733920853,RETURN,-1,,,return result.rows[0],4,325,,,2
+141733920854,RETURN,-1,,,return result.rows,4,375,,,2
+141733920855,RETURN,-1,,,return result.rows,4,413,,,2
+141733920856,RETURN,-1,,,return result.rows.length > 0 ? result.rows[0] : null,4,454,,,2
+141733920857,RETURN,-1,,,return result.rows.length > 0 ? result.rows[0] : null,4,558,,,2
+141733920858,RETURN,-1,,,return result.rows,4,588,,,2
+141733920859,RETURN,-1,,,return result.rows,4,618,,,2
+141733920860,RETURN,-1,,,return result.rows,4,652,,,2
+141733920861,RETURN,-1,,,return result.rows,4,689,,,2
+141733920862,RETURN,-1,,,return parseInt(result.rows[0].count),4,704,,,2
+141733920863,RETURN,-1,,,return parseInt(result.rows[0].count),4,719,,,2
+141733920864,RETURN,-1,,,return result.rows,4,754,,,2
+141733920865,RETURN,-1,,,return result.rows,4,790,,,2
+141733920866,RETURN,-1,,,return,26,14,,,2
+141733920867,RETURN,-1,,,"setTimeout(resolve, waitTime)",39,53,,,1
+141733920868,RETURN,-1,,,return response.text(),8,44,,,6
+141733920869,RETURN,-1,,,return response.text(),6,93,,,5
+141733920870,RETURN,-1,,,return projectName,10,115,,,2
+141733920871,RETURN,-1,,,return null,4,119,,,2
+141733920872,RETURN,-1,,,return projectSnapshot,8,133,,,2
+141733920873,RETURN,-1,,,return null,8,136,,,2
+141733920874,RETURN,-1,,,return null,6,140,,,3
+141733920875,RETURN,-1,,,return enhancedPrompt,4,191,,,4
+141733920876,RETURN,-1,,,return response.text(),6,239,,,12
+141733920877,RETURN,-1,,,"return this.generateResponseWithFile(prompt, pdfBase64, mimeType)",4,255,,,2
+141733920878,RETURN,-1,,,return !!this.genAI,4,262,,,1
+141733920879,RETURN,-1,,,return match[1],4,15,,,3
+141733920880,RETURN,-1,,,return base64,6,42,,,7
+141733920881,RETURN,-1,,,return score,6,20,,,3
+141733920882,RETURN,-1,,,return score,8,30,,,3
+141733920883,RETURN,-1,,,return score,6,39,,,3
+141733920884,RETURN,-1,,,return null,2,44,,,5
+141733920885,RETURN,-1,,,return cleaned,2,57,,,2
+141733920886,RETURN,-1,,,"return {
+          ...section,
+          score: correctedScore
+        }",8,133,,,4
+141733920887,RETURN,-1,,,return parsed,6,102,,,2
+141733920888,RETURN,-1,,,return parsed,4,247,,,30
+141733920889,RETURN,-1,,,return prompt,6,19,,,2
+141733920890,RETURN,-1,,,"return { sheetName, data: row }",10,51,,,2
+141733920891,RETURN,-1,,,return null,4,56,,,3
+141733920892,RETURN,-1,,,return prompt,4,110,,,6
+141733920893,RETURN,-1,,,return insights,6,164,,,18
+141733920894,RETURN,-1,,,"{
+      sha: commit.id || commit.sha || '',
+      title: commit.title || '',
+      message: commit.message || '',
+      author: commit.author_name || commit.author_email || '',
+      created_at: commit.created_at || commit.committed_date || '',
+    }",77,34,,,1
+141733920895,RETURN,-1,,,"return {
+      total_commits_last_7d: totalCommitCount,
+      total_lines_changed: commitSizeResult.total_lines_changed,
+      commits_analyzed: commitSizeResult.commits_analyzed,
+      avg_commit_size: commitSizeResult.avg_commit_size,
+      total_lines_added: linesResult.total_lines_added,
+      total_lines_deleted: linesResult.total_lines_deleted,
+      lines_added_deleted_ratio: linesResult.lines_added_deleted_ratio,
+      commits_per_week,
+      total_contributors: busFactorResult.total_contributors,
+      contributors_above_50_percent: busFactorResult.contributors_above_50_percent,
+      bus_factor: busFactorResult.bus_factor,
+      commit_details,
+    }",4,42,,,8
+141733920896,RETURN,-1,,,"return {
+      total_lines_changed,
+      commits_analyzed,
+      avg_commit_size: parseFloat(avg_commit_size.toFixed(2)),
+    }",4,80,,,6
+141733920897,RETURN,-1,,,"return {
+      total_lines_added,
+      total_lines_deleted,
+      lines_added_deleted_ratio: parseFloat(lines_added_deleted_ratio.toFixed(2)),
+    }",4,107,,,6
+141733920898,RETURN,-1,,,c.commit_count > threshold,11,151,,,1
+141733920899,RETURN,-1,,,"return {
+        total_contributors: 0,
+        contributors_above_50_percent: 0,
+        bus_factor: 0,
+      }",6,141,,,1
+141733920900,RETURN,-1,,,"return {
+      total_contributors,
+      contributors_above_50_percent,
+      bus_factor,
+    }",4,159,,,11
+141733920901,RETURN,-1,,,return result.rows[0],6,62,,,5
+141733920902,RETURN,-1,,,return result.rows[0],6,118,,,8
+141733920903,RETURN,-1,,,return result.rows[0] || null,6,138,,,3
+141733920904,RETURN,-1,,,return result.rows,6,157,,,3
+141733920905,RETURN,-1,,,return result.rows,6,180,,,3
+141733920906,RETURN,-1,,,return savedMetrics,6,44,,,11
+141733920907,RETURN,-1,,,"return {
+      commitsLast7d,
+      totalCommitCount,
+    }",4,77,,,8
+141733920908,RETURN,-1,,,"return {
+    project_id: projectId,
+    deployment_frequency: {
+      total_deployments: parseInt(deploymentData.total_deployments) || 0,
+      production_deployments: parseInt(deploymentData.production_deployments) || 0,
+      deployments_per_day: deployments_per_day,
+      deployments_per_week: deployments_per_week,
+      deployments_per_month: deployments_per_month,
+    },
+    lead_time: {
+      total_changes: parseInt(leadTimeData.total_changes) || 0,
+      avg_lead_time_hours: parseFloat(leadTimeData.avg_lead_time) || 0,
+      median_lead_time_hours: parseFloat(leadTimeData.median_lead_time) || 0,
+      min_lead_time_hours: parseFloat(leadTimeData.min_lead_time) || 0,
+      max_lead_time_hours: parseFloat(leadTimeData.max_lead_time) || 0,
+    },
+    change_failure_rate: {
+      total_deployments: parseInt(changeFailureData.total_deployments) || 0,
+      failed_deployments: parseInt(changeFailureData.failed_deployments) || 0,
+      failure_rate_percent: parseF...",2,137,,,22
+141733920909,RETURN,-1,,,return result.rows[0],2,44,,,5
+141733920910,RETURN,-1,,,return result.rows[0],2,81,,,8
+141733920911,RETURN,-1,,,return result.rows[0],2,112,,,5
+141733920912,RETURN,-1,,,return result.rows[0],2,151,,,8
+141733920913,RETURN,-1,,,return result.rows,2,171,,,5
+141733920914,RETURN,-1,,,return result.rows,2,191,,,5
+141733920915,RETURN,-1,,,return result.rows,2,211,,,5
+141733920916,RETURN,-1,,,return result.rows,2,231,,,5
+141733920917,RETURN,-1,,,return result.rows,2,253,,,5
+141733920918,RETURN,-1,,,return result.rowCount ? result.rowCount > 0 : false,2,262,,,3
+141733920919,RETURN,-1,,,return result.rowCount ? result.rowCount > 0 : false,2,271,,,3
+141733920920,RETURN,-1,,,return result.rowCount ? result.rowCount > 0 : false,2,280,,,3
+141733920921,RETURN,-1,,,return result.rowCount ? result.rowCount > 0 : false,2,289,,,3
+141733920922,RETURN,-1,,,"return { trend: 'stable', change_percent: 0 }",4,57,,,1
+141733920923,RETURN,-1,,,"return { trend: 'stable', change_percent }",4,64,,,1
+141733920924,RETURN,-1,,,"return {
+    trend: change_percent > 0 ? 'up' : 'down',
+    change_percent,
+  }",2,69,,,5
+141733920925,RETURN,-1,,,allPeriods.add(row.period),39,205,,,1
+141733920926,RETURN,-1,,,allPeriods.add(row.period),37,206,,,1
+141733920927,RETURN,-1,,,allPeriods.add(row.period),36,207,,,1
+141733920928,RETURN,-1,,,allPeriods.add(row.period),36,208,,,1
+141733920929,RETURN,-1,,,a.period.localeCompare(b.period),4,262,,,1
+141733920930,RETURN,-1,,,d.deployment_frequency,40,266,,,1
+141733920931,RETURN,-1,,,d > 0,76,266,,,1
+141733920932,RETURN,-1,,,d.avg_lead_time_hours,34,267,,,1
+141733920933,RETURN,-1,,,d > 0,69,267,,,1
+141733920934,RETURN,-1,,,d.failure_rate_percent,37,268,,,1
+141733920935,RETURN,-1,,,d.avg_restore_time_hours,37,269,,,1
+141733920936,RETURN,-1,,,d > 0,75,269,,,1
+141733920937,RETURN,-1,,,a + b,39,281,,,1
+141733920938,RETURN,-1,,,a + b,33,284,,,1
+141733920939,RETURN,-1,,,a + b,36,287,,,1
+141733920940,RETURN,-1,,,a + b,36,290,,,1
+141733920941,RETURN,-1,,,"return {
+    granularity,
+    data,
+    summary: {
+      deployment_frequency: {
+        current: current.deployment_frequency,
+        avg: avgDeploymentFreq,
+        ...calculateTrend(current.deployment_frequency, previous.deployment_frequency, false),
+      },
+      lead_time: {
+        current: current.avg_lead_time_hours,
+        avg: avgLeadTime,
+        ...calculateTrend(current.avg_lead_time_hours, previous.avg_lead_time_hours, true),
+      },
+      failure_rate: {
+        current: current.failure_rate_percent,
+        avg: avgFailureRate,
+        ...calculateTrend(current.failure_rate_percent, previous.failure_rate_percent, true),
+      },
+      restore_time: {
+        current: current.avg_restore_time_hours,
+        avg: avgRestoreTime,
+        ...calculateTrend(current.avg_restore_time_hours, previous.avg_restore_time_hours, true),
+      },
+    },
+  }",2,293,,,43
+141733920942,RETURN,-1,,,return result.rows[0],2,132,,,13
+141733920943,RETURN,-1,,,row.project_id,52,149,,,1
+141733920944,RETURN,-1,,,"return {
+    weekStart: lastSunday,
+    weekEnd: lastSaturday,
+  }",2,183,,,10
+141733920945,RETURN,-1,,,return result.rows,2,218,,,5
+141733920946,RETURN,-1,,,return response.data,6,29,,,5
+141733920947,RETURN,-1,,,return [],6,32,,,3
+141733920948,RETURN,-1,,,return response.data,6,51,,,3
+141733920949,RETURN,-1,,,return null,6,54,,,3
+141733920950,RETURN,-1,,,"return total ? parseInt(total, 10) : 0",6,81,,,6
+141733920951,RETURN,-1,,,return 0,6,84,,,3
+141733920952,RETURN,-1,,,return response.data,6,22,,,3
+141733920953,RETURN,-1,,,"return total ? parseInt(total, 10) : 0",6,47,,,4
+141733920954,RETURN,-1,,,return 0,6,50,,,3
+141733920955,RETURN,-1,,,return allIssues,16,98,,,1
+141733920956,RETURN,-1,,,"return allIssues.slice(0, maxResults)",6,120,,,7
+141733920957,RETURN,-1,,,return [],6,123,,,3
+141733920958,RETURN,-1,,,"return allIssues.slice(0, maxResults)",6,169,,,6
+141733920959,RETURN,-1,,,return [],6,172,,,3
+141733920960,RETURN,-1,,,return response.data || [],6,198,,,5
+141733920961,RETURN,-1,,,return [],6,201,,,3
+141733920962,RETURN,-1,,,"return allIssues.slice(0, maxResults)",6,243,,,6
+141733920963,RETURN,-1,,,return [],6,246,,,3
+141733920964,RETURN,-1,,,return response.data || [],6,260,,,3
+141733920965,RETURN,-1,,,return [],6,263,,,3
+141733920966,RETURN,-1,,,return response.data || [],6,277,,,3
+141733920967,RETURN,-1,,,return [],6,280,,,2
+141733920968,RETURN,-1,,,return response.data || [],6,294,,,3
+141733920969,RETURN,-1,,,return [],6,296,,,2
+141733920970,RETURN,-1,,,return response.data,6,21,,,3
+141733920971,RETURN,-1,,,"return total ? parseInt(total, 10) : 0",6,42,,,4
+141733920972,RETURN,-1,,,return 0,6,45,,,3
+141733920973,RETURN,-1,,,return response.data,6,68,,,3
+141733920974,RETURN,-1,,,return [],6,71,,,3
+141733920975,RETURN,-1,,,return response.data,6,100,,,5
+141733920976,RETURN,-1,,,return [],6,103,,,3
+141733920977,RETURN,-1,,,return response.data,6,126,,,3
+141733920978,RETURN,-1,,,return [],6,129,,,3
+141733920979,RETURN,-1,,,return response.data,6,148,,,3
+141733920980,RETURN,-1,,,return [],6,151,,,3
+141733920981,RETURN,-1,,,return response.data.reviewers || [],6,171,,,3
+141733920982,RETURN,-1,,,return [],6,174,,,3
+141733920983,RETURN,-1,,,label.toLowerCase().includes('revert'),8,202,,,1
+141733920984,RETURN,-1,,,return true,8,197,,,1
+141733920985,RETURN,-1,,,return true,8,204,,,1
+141733920986,RETURN,-1,,,return false,6,207,,,6
+141733920987,RETURN,-1,,,return false,6,210,,,3
+141733920988,RETURN,-1,,,return parsed,28,21,,,2
+141733920989,RETURN,-1,,,return resp.data.length,36,25,,,2
+141733920990,RETURN,-1,,,return 0,6,27,,,6
+141733920991,RETURN,-1,,,return 0,6,30,,,3
+141733920992,RETURN,-1,,,"{
+        id: m.id,
+        name: m.name || m.username || '',
+        username: m.username,
+        accessLevel: m.access_level || m.accessLevel || undefined,
+      }",38,61,,,1
+141733920993,RETURN,-1,,,"return members.map((m: any) => ({
+        id: m.id,
+        name: m.name || m.username || '',
+        username: m.username,
+        accessLevel: m.access_level || m.accessLevel || undefined,
+      }))",6,61,,,6
+141733920994,RETURN,-1,,,return [],6,69,,,3
+141733920995,RETURN,-1,,,return true,6,12,,,3
+141733920996,RETURN,-1,,,return false,6,15,,,3
+141733920997,RETURN,-1,,,return response.data,6,26,,,3
+141733920998,RETURN,-1,,,return,21,15,,,2
+141733920999,RETURN,-1,,,return this.client!,4,38,,,2
+141733921000,RETURN,-1,,,return response.data,6,17,,,3
+141733921001,RETURN,-1,,,return response.data,6,31,,,3
+141733921002,RETURN,-1,,,return groups.reverse().join('/'),6,54,,,4
+141733921003,RETURN,-1,,,return '',6,57,,,3
+141733921004,RETURN,-1,,,return true,20,28,,,1
+141733921005,RETURN,-1,,,return dueDate >= now,16,33,,,3
+141733921006,RETURN,-1,,,"return milestones.filter(milestone => {
+                if (!milestone.due_date) {
+                    // No due date = not expired, keep it
+                    return true;
+                }
+                
+                const dueDate = new Date(milestone.due_date);
+                // Keep only milestones that are not expired (due date is in future or today)
+                return dueDate >= now;
+            })",12,25,,,5
+141733921007,RETURN,-1,,,return allProjects,6,49,,,8
+141733921008,RETURN,-1,,,return response.data,6,63,,,3
+141733921009,RETURN,-1,,,"return {
+      // Basic counts (using actual totals from API headers, not fetched array length)
+      total_open_issues: totalOpenCount,
+      total_closed_issues: totalClosedCount,
+
+      // Tier 1
+      issues_closed_last_7d,
+      issues_closed_last_30d,
+      total_resolution_hours: cycleTimeResult.total_resolution_hours,
+      issues_with_resolution_time: cycleTimeResult.issues_with_resolution_time,
+      avg_cycle_time_hours: cycleTimeResult.avg_cycle_time_hours,
+      avg_cycle_time_days: cycleTimeResult.avg_cycle_time_days,
+      issues_reopened_count: reopenRateResult.issues_reopened_count,
+      issues_checked_for_reopens: reopenRateResult.issues_checked_for_reopens,
+      reopen_rate_percent: reopenRateResult.reopen_rate_percent,
+      bug_issues_count: bugRatioResult.bug_issues_count,
+      feature_issues_count: bugRatioResult.feature_issues_count,
+      bug_ratio_percent: bugRatioResult.bug_ratio_percent,
+
+      // Tier 2
+      issues_opened_last_7d,...",4,91,,,19
+141733921010,RETURN,-1,,,"return {
+      total_resolution_hours: parseFloat(total_resolution_hours.toFixed(2)),
+      issues_with_resolution_time,
+      avg_cycle_time_hours: parseFloat(avg_cycle_time_hours.toFixed(2)),
+      avg_cycle_time_days: parseFloat(avg_cycle_time_days.toFixed(2)),
+    }",4,176,,,8
+141733921011,RETURN,-1,,,"return {
+      issues_reopened_count: reopenedCount,
+      issues_checked_for_reopens: checkedCount,
+      reopen_rate_percent: parseFloat(reopen_rate_percent.toFixed(2)),
+    }",4,191,,,2
+141733921012,RETURN,-1,,,"return {
+      bug_issues_count: bugCount,
+      feature_issues_count: featureCount,
+      bug_ratio_percent: parseFloat(bug_ratio_percent.toFixed(2)),
+    }",4,205,,,3
+141733921013,RETURN,-1,,,"return {
+      stale_issues_count,
+      stale_issues_percent: parseFloat(stale_issues_percent.toFixed(2)),
+    }",4,233,,,6
+141733921014,RETURN,-1,,,i.state === 'opened',13,247,,,1
+141733921015,RETURN,-1,,,i.state === 'opened',13,250,,,1
+141733921016,RETURN,-1,,,i.state === 'closed',56,254,,,1
+141733921017,RETURN,-1,,,"return {
+      critical_issues_open,
+      blocker_issues_open,
+      critical_avg_resolution_hours: parseFloat(
+        critical_avg_resolution_hours.toFixed(2)
+      ),
+    }",4,270,,,8
+141733921018,RETURN,-1,,,"return {
+      issues_with_mr_links: withLinks,
+      total_closed_issues_checked: checked,
+      issue_mr_link_rate_percent: parseFloat(issue_mr_link_rate_percent.toFixed(2)),
+    }",4,286,,,2
+141733921019,RETURN,-1,,,return 'RED_ALERT',24,299,,,2
+141733921020,RETURN,-1,,,return 'WARNING',23,300,,,2
+141733921021,RETURN,-1,,,return 'NORMAL',4,301,,,3
+141733921022,RETURN,-1,,,return 'RED_ALERT',22,305,,,2
+141733921023,RETURN,-1,,,return 'WARNING',21,306,,,2
+141733921024,RETURN,-1,,,return 'NORMAL',4,307,,,3
+141733921025,RETURN,-1,,,return 'RED_ALERT',25,311,,,2
+141733921026,RETURN,-1,,,return 'WARNING',25,312,,,2
+141733921027,RETURN,-1,,,return 'NORMAL',4,313,,,3
+141733921028,RETURN,-1,,,return 'RED_ALERT',23,317,,,2
+141733921029,RETURN,-1,,,return 'WARNING',23,318,,,2
+141733921030,RETURN,-1,,,return 'NORMAL',4,319,,,3
+141733921031,RETURN,-1,,,return 0,6,327,,,1
+141733921032,RETURN,-1,,,return parseFloat(rate.toFixed(2)),4,330,,,3
+141733921033,RETURN,-1,,,event.state === 'reopened',57,340,,,1
+141733921034,RETURN,-1,,,e.state === 'opened',50,344,,,1
+141733921035,RETURN,-1,,,return false,34,337,,,2
+141733921036,RETURN,-1,,,return true,26,341,,,2
+141733921037,RETURN,-1,,,return openedCount > 1,4,345,,,5
+141733921038,RETURN,-1,,,return result.rows[0],6,102,,,5
+141733921039,RETURN,-1,,,return result.rows[0],6,171,,,8
+141733921040,RETURN,-1,,,return result.rows[0] || null,6,191,,,3
+141733921041,RETURN,-1,,,return result.rows,6,214,,,3
+141733921042,RETURN,-1,,,return null,8,229,,,1
+141733921043,RETURN,-1,,,"return {
+          hasComparison: false,
+          velocity_change: null,
+          cycle_time_change: null,
+          reopen_rate_change: null,
+          bug_ratio_change: null,
+          stale_issues_change: null,
+          critical_issues_change: null,
+        }",8,245,,,1
+141733921044,RETURN,-1,,,"return {
+        hasComparison: true,
+        velocity_change: this.calculateChange(
+          current.issues_closed_last_7d,
+          previous.issues_closed_last_7d
+        ),
+        cycle_time_change: this.calculateChange(
+          current.avg_cycle_time_days,
+          previous.avg_cycle_time_days
+        ),
+        reopen_rate_change: this.calculateChange(
+          current.reopen_rate_percent,
+          previous.reopen_rate_percent
+        ),
+        bug_ratio_change: this.calculateChange(
+          current.bug_ratio_percent,
+          previous.bug_ratio_percent
+        ),
+        stale_issues_change: this.calculateChange(
+          current.stale_issues_count,
+          previous.stale_issues_count
+        ),
+        critical_issues_change: this.calculateChange(
+          current.critical_issues_open,
+          previous.critical_issues_open
+        ),
+      }",6,256,,,7
+141733921045,RETURN,-1,,,return current > 0 ? 100 : 0,24,293,,,2
+141733921046,RETURN,-1,,,return parseFloat((((current - previous) / previous) * 100).toFixed(2)),4,294,,,2
+141733921047,RETURN,-1,,,return result.rows,6,309,,,3
+141733921048,RETURN,-1,,,return savedMetrics,6,54,,,11
+141733921049,RETURN,-1,,,"return {
+      openIssues,
+      closedIssuesLast7d,
+      closedIssuesLast30d,
+      allRecentClosedIssues,
+      openedIssuesLast7d,
+      openedIssuesLast30d,
+      bugIssues,
+      featureIssues,
+      criticalIssues,
+      blockerIssues,
+      totalOpenCount: actualTotalOpenCount,
+      totalClosedCount: actualTotalClosedCount,
+      reopenData,
+      mrLinkData,
+    }",4,169,,,25
+141733921050,RETURN,-1,,,"setTimeout(resolve, 100)",37,207,,,1
+141733921051,RETURN,-1,,,"return {
+      reopened: reopenedCount,
+      checked: checkedCount,
+    }",4,214,,,4
+141733921052,RETURN,-1,,,"setTimeout(resolve, 100)",37,244,,,1
+141733921053,RETURN,-1,,,"return {
+      withLinks: withLinksCount,
+      checked: checkedCount,
+    }",4,251,,,4
+141733921054,RETURN,-1,,,current.issue_count > max.issue_count ? current : max,6,29,,,1
+141733921055,RETURN,-1,,,current.issue_count < min.issue_count ? current : min,6,34,,,1
+141733921056,RETURN,-1,,,sum + milestone.issue_count,26,39,,,1
+141733921057,RETURN,-1,,,"return {
+        max_issues: 0,
+        min_issues: 0,
+        avg_issues: 0,
+        total_milestones: 0,
+        milestone_with_max_issues: null,
+        milestone_with_min_issues: null,
+      }",6,17,,,1
+141733921058,RETURN,-1,,,return metrics,4,55,,,9
+141733921059,RETURN,-1,,,return result.rows[0],4,42,,,7
+141733921060,RETURN,-1,,,return null,8,64,,,2
+141733921061,RETURN,-1,,,return result.rows[0],6,67,,,6
+141733921062,RETURN,-1,,,return emptyMetrics,8,50,,,3
+141733921063,RETURN,-1,,,return calculatedMetrics,6,67,,,12
+141733921064,RETURN,-1,,,"return {
+            id: milestone.id,
+            title: milestone.title,
+            issue_count: allIssues.length,
+            due_date: milestone.due_date,
+          }",10,112,,,6
+141733921065,RETURN,-1,,,"return {
+            id: milestone.id,
+            title: milestone.title,
+            issue_count: 0,
+            due_date: milestone.due_date,
+          }",10,123,,,3
+141733921066,RETURN,-1,,,return milestonesWithCounts,4,133,,,3
+141733921067,RETURN,-1,,,"return {
+      // Basic counts (using actual totals from API headers)
+      total_open_mrs: totalOpenCount,
+      total_merged_mrs: totalMergedCount,
+
+      // Tier 1
+      mrs_merged_last_7d,
+      mrs_merged_last_30d,
+      total_merge_time_hours: mergeTimeResult.total_merge_time_hours,
+      mrs_with_merge_time: mergeTimeResult.mrs_with_merge_time,
+      avg_merge_time_hours: mergeTimeResult.avg_merge_time_hours,
+      avg_merge_time_days: mergeTimeResult.avg_merge_time_days,
+      total_review_comments: commentsResult.total_review_comments,
+      mrs_checked_for_comments: commentsResult.mrs_checked_for_comments,
+      avg_review_comments_per_mr: commentsResult.avg_review_comments_per_mr,
+      reverted_mrs_count: revertResult.reverted_mrs_count,
+      mrs_checked_for_reverts: revertResult.mrs_checked_for_reverts,
+      revert_rate_percent: revertResult.revert_rate_percent,
+
+      // Tier 2
+      mrs_opened_last_7d,
+      mrs_opened_last_30d,
+      net_mr_ch...",4,82,,,16
+141733921068,RETURN,-1,,,"return {
+      total_merge_time_hours: parseFloat(total_merge_time_hours.toFixed(2)),
+      mrs_with_merge_time,
+      avg_merge_time_hours: parseFloat(avg_merge_time_hours.toFixed(2)),
+      avg_merge_time_days: parseFloat(avg_merge_time_days.toFixed(2)),
+    }",4,142,,,6
+141733921069,RETURN,-1,,,"return {
+      total_review_comments: totalComments,
+      mrs_checked_for_comments: checked,
+      avg_review_comments_per_mr: parseFloat(avg_review_comments_per_mr.toFixed(2)),
+    }",4,156,,,2
+141733921070,RETURN,-1,,,"return {
+      reverted_mrs_count: reverted,
+      mrs_checked_for_reverts: checked,
+      revert_rate_percent: parseFloat(revert_rate_percent.toFixed(2)),
+    }",4,169,,,2
+141733921071,RETURN,-1,,,"return {
+      stale_mrs_count,
+      stale_mrs_percent: parseFloat(stale_mrs_percent.toFixed(2)),
+    }",4,197,,,6
+141733921072,RETURN,-1,,,"return {
+      total_reviewers_count: totalReviewers,
+      mrs_checked_for_reviewers: checked,
+      avg_reviewers_per_mr: parseFloat(avg_reviewers_per_mr.toFixed(2)),
+    }",4,209,,,2
+141733921073,RETURN,-1,,,return 'RED_ALERT',29,224,,,2
+141733921074,RETURN,-1,,,return 'WARNING',27,225,,,2
+141733921075,RETURN,-1,,,return 'NORMAL',4,226,,,3
+141733921076,RETURN,-1,,,return 'RED_ALERT',30,233,,,2
+141733921077,RETURN,-1,,,return 'WARNING',30,234,,,2
+141733921078,RETURN,-1,,,return 'NORMAL',4,235,,,3
+141733921079,RETURN,-1,,,return 'RED_ALERT',32,242,,,2
+141733921080,RETURN,-1,,,return 'WARNING',31,243,,,2
+141733921081,RETURN,-1,,,return 'NORMAL',4,244,,,3
+141733921082,RETURN,-1,,,return 0,6,252,,,1
+141733921083,RETURN,-1,,,return parseFloat(rate.toFixed(2)),4,255,,,3
+141733921084,RETURN,-1,,,return 'RED_ALERT',28,262,,,2
+141733921085,RETURN,-1,,,return 'WARNING',27,263,,,2
+141733921086,RETURN,-1,,,return 'NORMAL',4,264,,,3
+141733921087,RETURN,-1,,,return result.rows[0],6,97,,,5
+141733921088,RETURN,-1,,,return result.rows[0],6,166,,,8
+141733921089,RETURN,-1,,,return result.rows[0] || null,6,186,,,3
+141733921090,RETURN,-1,,,return result.rows,6,209,,,3
+141733921091,RETURN,-1,,,return null,8,224,,,1
+141733921092,RETURN,-1,,,"return {
+          hasComparison: false,
+          merge_velocity_change: null,
+          merge_time_change: null,
+          revert_rate_change: null,
+          stale_mrs_change: null,
+        }",8,240,,,1
+141733921093,RETURN,-1,,,"return {
+        hasComparison: true,
+        merge_velocity_change: this.calculateChange(
+          current.mrs_merged_last_7d,
+          previous.mrs_merged_last_7d
+        ),
+        merge_time_change: this.calculateChange(
+          current.avg_merge_time_days,
+          previous.avg_merge_time_days
+        ),
+        revert_rate_change: this.calculateChange(
+          current.revert_rate_percent,
+          previous.revert_rate_percent
+        ),
+        stale_mrs_change: this.calculateChange(
+          current.stale_mrs_count,
+          previous.stale_mrs_count
+        ),
+      }",6,249,,,7
+141733921094,RETURN,-1,,,return current > 0 ? 100 : 0,24,278,,,2
+141733921095,RETURN,-1,,,return parseFloat((((current - previous) / previous) * 100).toFixed(2)),4,279,,,2
+141733921096,RETURN,-1,,,return result.rows,6,294,,,3
+141733921097,RETURN,-1,,,return savedMetrics,6,53,,,11
+141733921098,RETURN,-1,,,"return {
+      openMRs,
+      mergedMRsLast7d,
+      mergedMRsLast30d,
+      allRecentMergedMRs,
+      openedMRsLast7d,
+      openedMRsLast30d,
+      totalOpenCount: actualTotalOpenCount,
+      totalMergedCount: actualTotalMergedCount,
+      commentsData,
+      revertData,
+      reviewersData,
+    }",4,132,,,22
+141733921099,RETURN,-1,,,!note.system,59,160,,,1
+141733921100,RETURN,-1,,,"setTimeout(resolve, 100)",37,164,,,1
+141733921101,RETURN,-1,,,"return {
+      totalComments,
+      checked: checkedCount,
+    }",4,171,,,4
+141733921102,RETURN,-1,,,label.toLowerCase().includes('revert'),8,192,,,1
+141733921103,RETURN,-1,,,"return {
+      reverted: revertedCount,
+      checked: checkedCount,
+    }",4,200,,,4
+141733921104,RETURN,-1,,,"return {
+      totalReviewers,
+      checked: checkedCount,
+    }",4,220,,,4
+141733921105,RETURN,-1,,,return await gitlabGroupService.buildGroupPath(project.namespace.id),6,41,,,1
+141733921106,RETURN,-1,,,return '',4,43,,,2
+141733921107,RETURN,-1,,,return issues.length,6,52,,,2
+141733921108,RETURN,-1,,,return 0,6,55,,,3
+141733921109,RETURN,-1,,,return mrs.length,6,65,,,2
+141733921110,RETURN,-1,,,return 0,6,68,,,3
+141733921111,RETURN,-1,,,return milestones.length,6,75,,,2
+141733921112,RETURN,-1,,,return 0,6,78,,,3
+141733921113,RETURN,-1,,,"return {
+      id: project.id,
+      name: project.name,
+      description: project.description || undefined,
+      web_url: project.web_url,
+      last_activity_at: project.last_activity_at,
+      visibility: project.visibility,
+      star_count: project.star_count,
+      forks_count: project.forks_count,
+      parent_id: project.namespace?.id,
+      group_path: groupPath || undefined,
+      full_path: groupPath ? `${project.name}/${groupPath}` : project.name,
+      total_issues: totalIssues,
+      total_mrs: totalMrs,
+      open_milestones_count: totalMilestones,
+      sonar_project_key: sonarProjectKey || undefined,
+      sonar_security_high: sonarMetrics.security_high,
+      sonar_security_blocker: sonarMetrics.security_blocker,
+      sonar_reliability_high: sonarMetrics.reliability_high,
+      sonar_reliability_blocker: sonarMetrics.reliability_blocker,
+      sonar_maintainability_high: sonarMetrics.maintainability_high,
+      sonar_maintainability_blocker:...",4,116,,,5
+141733921114,RETURN,-1,,,this.enrichProject(p),47,145,,,1
+141733921115,RETURN,-1,,,return await Promise.all(projects.map(p => this.enrichProject(p))),4,145,,,1
+141733921116,RETURN,-1,,,eturn projectTransformService.toApiResponseList(dbProjects),5,14,,,2
+141733921117,RETURN,-1,,,eturn projectTransformService.toApiResponseList(latestSnapshots),5,25,,,2
+141733921118,RETURN,-1,,,eturn null,7,36,,,1
+141733921119,RETURN,-1,,,eturn transformed[0] || null,5,39,,,4
+141733921120,RETURN,-1,,,"return await gitLabIssueService.getIssueCount(projectId, 'opened')",6,36,,,1
+141733921121,RETURN,-1,,,return 0,6,39,,,3
+141733921122,RETURN,-1,,,"return await gitLabMRService.getMRCount(projectId, 'opened')",6,49,,,1
+141733921123,RETURN,-1,,,return 0,6,52,,,3
+141733921124,RETURN,-1,,,m.state === 'active',52,63,,,1
+141733921125,RETURN,-1,,,return openMilestones.length,6,64,,,3
+141733921126,RETURN,-1,,,return 0,6,67,,,3
+141733921127,RETURN,-1,,,"return {
+      project_id: project.id,
+      description: project.description || undefined,
+      web_url: project.web_url,
+      open_issues: openIssues,
+      open_mrs: openMrs,
+      open_milestones_count: openMilestones,
+      sonar_project_key: sonarProjectKey || undefined,
+      sonar_security_high: sonarMetrics.security_high,
+      sonar_security_blocker: sonarMetrics.security_blocker,
+      sonar_reliability_high: sonarMetrics.reliability_high,
+      sonar_reliability_blocker: sonarMetrics.reliability_blocker,
+      sonar_maintainability_high: sonarMetrics.maintainability_high,
+      sonar_maintainability_blocker: sonarMetrics.maintainability_blocker,
+    }",4,102,,,5
+141733921128,RETURN,-1,,,return,6,141,,,2
+141733921129,RETURN,-1,,,"setTimeout(resolve, 200)",37,57,,,1
+141733921130,RETURN,-1,,,return projectTransformService.toApiResponseList(dbProjects),4,78,,,9
+141733921131,RETURN,-1,,,[],94,89,,,1
+141733921132,RETURN,-1,,,p.id === projectId,48,115,,,1
+141733921133,RETURN,-1,,,return projectTransformService.toApiResponse(updatedProject),4,122,,,9
+141733921134,RETURN,-1,,,"return {
+      id: dbProject.id,
+      name: dbProject.name,
+      description: dbProject.description,
+      web_url: dbProject.web_url,
+      lastActivityAt: dbProject.last_activity_at,
+      visibility: dbProject.visibility,
+      membersCount: dbProject.members_count || 0,
+      members: dbProject.members || [],
+      parentId: dbProject.parent_id,
+      groupPath: dbProject.group_path,
+      fullPath: dbProject.full_path,
+      tracked: dbProject.tracked,
+      syncedAt: dbProject.synced_at,
+      
+      // Snapshot data (for tracked projects)
+      openIssues: dbProject.open_issues || 0,
+      openMrs: dbProject.open_mrs || 0,
+      openMilestonesCount: dbProject.open_milestones_count || 0,
+      snapshotDate: dbProject.snapshot_date,
+      
+      // SonarCloud metrics
+      sonarProjectKey: dbProject.sonar_project_key,
+      sonarSecurityHigh: dbProject.sonar_security_high || 0,
+      sonarSecurityBlocker: dbProject.sonar_security_blocker || 0,
+      s...",4,39,,,1
+141733921135,RETURN,-1,,,this.toApiResponse(p),31,75,,,1
+141733921136,RETURN,-1,,,return dbProjects.map(p => this.toApiResponse(p)),4,75,,,1
+141733921137,RETURN,-1,,,return,26,25,,,2
+141733921138,RETURN,-1,,,"return {
+      Authorization: 'Basic ' + Buffer.from(this.token + ':').toString('base64'),
+    }",4,39,,,1
+141733921139,RETURN,-1,,,return response.data,6,70,,,6
+141733921140,RETURN,-1,,,return response.data.total || 0,6,93,,,2
+141733921141,RETURN,-1,,,return response.data,6,116,,,4
+141733921142,RETURN,-1,,,return null,6,123,,,4
+141733921143,RETURN,-1,,,m.metric === key,41,20,,,1
+141733921144,RETURN,-1,,,return 0,20,21,,,2
+141733921145,RETURN,-1,,,return parseFloat(measure.value) || 0,8,25,,,1
+141733921146,RETURN,-1,,,return parseFloat(measure.period.value) || 0,8,30,,,1
+141733921147,RETURN,-1,,,return 0,6,33,,,5
+141733921148,RETURN,-1,,,return result,4,55,,,7
+141733921149,RETURN,-1,,,return 'A',21,62,,,2
+141733921150,RETURN,-1,,,return 'B',21,63,,,2
+141733921151,RETURN,-1,,,return 'C',21,64,,,2
+141733921152,RETURN,-1,,,return 'D',21,65,,,2
+141733921153,RETURN,-1,,,return 'E',4,66,,,5
+141733921154,RETURN,-1,,,return result.rows.length > 0 ? result.rows[0] : null,6,132,,,2
+141733921155,RETURN,-1,,,return result.rows,6,154,,,2
+141733921156,RETURN,-1,,,return result.rows,6,175,,,2
+141733921157,RETURN,-1,,,return map[rating] || 1,4,209,,,2
+141733921158,RETURN,-1,,,"return {
+      measures: measuresResponse.component,
+      highCount,
+      blockerCount
+    }",4,84,,,5
+141733921159,RETURN,-1,,,return,26,15,,,2
+141733921160,RETURN,-1,,,"return {
+      Authorization: 'Basic ' + Buffer.from(this.token + ':').toString('base64'),
+    }",4,29,,,1
+141733921161,RETURN,-1,,,return response.data,6,53,,,4
+141733921162,RETURN,-1,,,return response.data.total || 0,6,74,,,2
+141733921163,RETURN,-1,,,m.metric === key,41,17,,,1
+141733921164,RETURN,-1,,,return 0,20,18,,,2
+141733921165,RETURN,-1,,,return parseFloat(measure.value) || 0,8,22,,,1
+141733921166,RETURN,-1,,,return parseFloat(measure.period.value) || 0,8,27,,,1
+141733921167,RETURN,-1,,,return 0,6,30,,,5
+141733921168,RETURN,-1,,,return result,4,48,,,7
+141733921169,RETURN,-1,,,return 'A',21,55,,,2
+141733921170,RETURN,-1,,,return 'B',21,56,,,2
+141733921171,RETURN,-1,,,return 'C',21,57,,,2
+141733921172,RETURN,-1,,,return 'D',21,58,,,2
+141733921173,RETURN,-1,,,return 'E',4,59,,,5
+141733921174,RETURN,-1,,,return result.rows.length > 0 ? result.rows[0] : null,6,114,,,2
+141733921175,RETURN,-1,,,return result.rows,6,136,,,2
+141733921176,RETURN,-1,,,return map[rating] || 1,4,170,,,2
+141733921177,RETURN,-1,,,"return {
+      measures: measuresResponse.component,
+      criticalCount,
+      blockerCount
+    }",4,66,,,4
+141733921178,RETURN,-1,,,return,26,15,,,2
+141733921179,RETURN,-1,,,"return {
+      Authorization: 'Basic ' + Buffer.from(this.token + ':').toString('base64'),
+    }",4,29,,,1
+141733921180,RETURN,-1,,,return response.data,6,56,,,4
+141733921181,RETURN,-1,,,m.metric === key,41,15,,,1
+141733921182,RETURN,-1,,,return 0,20,16,,,2
+141733921183,RETURN,-1,,,return parseFloat(measure.value) || 0,8,20,,,1
+141733921184,RETURN,-1,,,return parseFloat(measure.period.value) || 0,8,25,,,1
+141733921185,RETURN,-1,,,return 0,6,28,,,5
+141733921186,RETURN,-1,,,return result,4,51,,,9
+141733921187,RETURN,-1,,,return 'A',21,58,,,2
+141733921188,RETURN,-1,,,return 'B',21,59,,,2
+141733921189,RETURN,-1,,,return 'C',21,60,,,2
+141733921190,RETURN,-1,,,return 'D',21,61,,,2
+141733921191,RETURN,-1,,,return 'E',4,62,,,5
+141733921192,RETURN,-1,,,return result.rows.length > 0 ? result.rows[0] : null,6,122,,,2
+141733921193,RETURN,-1,,,return result.rows,6,144,,,2
+141733921194,RETURN,-1,,,return 1,16,172,,,3
+141733921195,RETURN,-1,,,return 2,16,173,,,6
+141733921196,RETURN,-1,,,return 3,16,174,,,9
+141733921197,RETURN,-1,,,return 4,16,175,,,12
+141733921198,RETURN,-1,,,return 5,16,176,,,15
+141733921199,RETURN,-1,,,return 5,15,177,,,17
+141733921200,RETURN,-1,,,"return {
+      measures: measuresResponse.component
+    }",4,58,,,2
+141733921201,RETURN,-1,,,"return str.replace(/[-_]/g, '').trim().toLowerCase()",4,84,,,1
+141733921202,RETURN,-1,,,normalize(p.name) === dbNorm || normalize(p.key) === dbNorm,11,94,,,1
+141733921203,RETURN,-1,,,return keyNorm.endsWith(dbNorm) || keyNorm.includes(dbNorm),8,101,,,2
+141733921204,RETURN,-1,,,return,4,20,,,2
+141733921205,RETURN,-1,,,return,4,28,,,2
+141733921206,RETURN,-1,,,return result.rows[0].sonar_project_key,4,125,,,1
+141733921207,RETURN,-1,,,return null,2,127,,,4
+141733921208,RETURN,-1,,,"return {
+        Authorization: `Bearer ${this.token}`,
+      }",6,35,,,1
+141733921209,RETURN,-1,,,"return {
+      Authorization: 'Basic ' + Buffer.from(this.token + ':').toString('base64'),
+    }",4,39,,,2
+141733921210,RETURN,-1,,,return count,8,54,,,4
+141733921211,RETURN,-1,,,return results,4,78,,,5
+141733921212,RETURN,-1,,,return Math.round(healthScore * 10) / 10,2,55,,,10
+141733921213,RETURN,-1,,,return Math.round(healthScore * 10) / 10,2,109,,,10
+141733921214,RETURN,-1,,,return Math.round(healthScore * 10) / 10,2,154,,,8
+141733921215,RETURN,-1,,,return Math.round(healthScore * 10) / 10,2,186,,,6
+141733921216,RETURN,-1,,,return Math.round(healthScore * 10) / 10,2,240,,,10
+141733921217,RETURN,-1,,,return Math.round(healthScore * 10) / 10,2,283,,,8

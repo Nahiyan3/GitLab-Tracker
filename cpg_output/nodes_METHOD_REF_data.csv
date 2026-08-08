@@ -1,0 +1,364 @@
+120259084288,METHOD_REF,1,,,<lambda>8,46,,210,controllers/aiController.ts::program:AIController:<init>:<lambda>6:<lambda>7:<lambda>8,,,3,,controllers/aiController.ts::program:AIController:<init>:<lambda>6:<lambda>7:<lambda>8
+120259084289,METHOD_REF,1,,,<lambda>7,48,,204,controllers/aiController.ts::program:AIController:<init>:<lambda>6:<lambda>7,,,3,,controllers/aiController.ts::program:AIController:<init>:<lambda>6:<lambda>7
+120259084290,METHOD_REF,2,,,<lambda>0,19,,12,controllers/aiController.ts::program:AIController:<init>:<lambda>0,,,2,,controllers/aiController.ts::program:AIController:<init>:<lambda>0
+120259084291,METHOD_REF,2,,,<lambda>1,17,,32,controllers/aiController.ts::program:AIController:<init>:<lambda>1,,,2,,controllers/aiController.ts::program:AIController:<init>:<lambda>1
+120259084292,METHOD_REF,2,,,<lambda>2,20,,50,controllers/aiController.ts::program:AIController:<init>:<lambda>2,,,2,,controllers/aiController.ts::program:AIController:<init>:<lambda>2
+120259084293,METHOD_REF,2,,,<lambda>3,28,,85,controllers/aiController.ts::program:AIController:<init>:<lambda>3,,,2,,controllers/aiController.ts::program:AIController:<init>:<lambda>3
+120259084294,METHOD_REF,2,,,<lambda>4,23,,123,controllers/aiController.ts::program:AIController:<init>:<lambda>4,,,2,,controllers/aiController.ts::program:AIController:<init>:<lambda>4
+120259084295,METHOD_REF,2,,,<lambda>5,34,,160,controllers/aiController.ts::program:AIController:<init>:<lambda>5,,,2,,controllers/aiController.ts::program:AIController:<init>:<lambda>5
+120259084296,METHOD_REF,2,,,<lambda>6,26,,191,controllers/aiController.ts::program:AIController:<init>:<lambda>6,,,2,,controllers/aiController.ts::program:AIController:<init>:<lambda>6
+120259084297,METHOD_REF,2,,,constructor() {},0,,8,controllers/aiController.ts::program:AIController:<init>,,,2,,controllers/aiController.ts::program:AIController:<init>
+120259084298,METHOD_REF,2,,,<lambda>0,36,,13,controllers/commitMetricsController.ts::program:refreshCommitMetrics,,,2,,controllers/commitMetricsController.ts::program:<lambda>0
+120259084299,METHOD_REF,2,,,<lambda>1,32,,43,controllers/commitMetricsController.ts::program:getCommitMetrics,,,2,,controllers/commitMetricsController.ts::program:<lambda>1
+120259084300,METHOD_REF,2,,,<lambda>2,39,,80,controllers/commitMetricsController.ts::program:getCommitMetricsHistory,,,2,,controllers/commitMetricsController.ts::program:<lambda>2
+120259084301,METHOD_REF,2,,,<lambda>0,41,,31,controllers/doraMetricsController.ts::program:createDeploymentFrequency,,,2,,controllers/doraMetricsController.ts::program:<lambda>0
+120259084302,METHOD_REF,2,,,<lambda>1,36,,72,controllers/doraMetricsController.ts::program:createLeadTimeChange,,,2,,controllers/doraMetricsController.ts::program:<lambda>1
+120259084303,METHOD_REF,2,,,<lambda>2,39,,123,controllers/doraMetricsController.ts::program:createChangeFailureRate,,,2,,controllers/doraMetricsController.ts::program:<lambda>2
+120259084304,METHOD_REF,2,,,<lambda>3,42,,164,controllers/doraMetricsController.ts::program:createTimeToRestoreService,,,2,,controllers/doraMetricsController.ts::program:<lambda>3
+120259084305,METHOD_REF,2,,,<lambda>4,38,,216,controllers/doraMetricsController.ts::program:getDeploymentFrequency,,,2,,controllers/doraMetricsController.ts::program:<lambda>4
+120259084306,METHOD_REF,2,,,<lambda>5,34,,240,controllers/doraMetricsController.ts::program:getLeadTimeChanges,,,2,,controllers/doraMetricsController.ts::program:<lambda>5
+120259084307,METHOD_REF,2,,,<lambda>6,37,,264,controllers/doraMetricsController.ts::program:getChangeFailureRates,,,2,,controllers/doraMetricsController.ts::program:<lambda>6
+120259084308,METHOD_REF,2,,,<lambda>7,40,,288,controllers/doraMetricsController.ts::program:getTimeToRestoreServices,,,2,,controllers/doraMetricsController.ts::program:<lambda>7
+120259084309,METHOD_REF,2,,,<lambda>8,37,,312,controllers/doraMetricsController.ts::program:getDoraMetricsSummary,,,2,,controllers/doraMetricsController.ts::program:<lambda>8
+120259084310,METHOD_REF,2,,,<lambda>9,33,,338,controllers/doraMetricsController.ts::program:searchDeployments,,,2,,controllers/doraMetricsController.ts::program:<lambda>9
+120259084311,METHOD_REF,2,,,<lambda>10,47,,370,controllers/doraMetricsController.ts::program:deleteDeploymentFrequencyRecord,,,2,,controllers/doraMetricsController.ts::program:<lambda>10
+120259084312,METHOD_REF,2,,,<lambda>11,42,,399,controllers/doraMetricsController.ts::program:deleteLeadTimeChangeRecord,,,2,,controllers/doraMetricsController.ts::program:<lambda>11
+120259084313,METHOD_REF,2,,,<lambda>12,45,,428,controllers/doraMetricsController.ts::program:deleteChangeFailureRateRecord,,,2,,controllers/doraMetricsController.ts::program:<lambda>12
+120259084314,METHOD_REF,2,,,<lambda>13,48,,457,controllers/doraMetricsController.ts::program:deleteTimeToRestoreServiceRecord,,,2,,controllers/doraMetricsController.ts::program:<lambda>13
+120259084315,METHOD_REF,2,,,<lambda>14,34,,486,controllers/doraMetricsController.ts::program:getWeeklySnapshots,,,2,,controllers/doraMetricsController.ts::program:<lambda>14
+120259084316,METHOD_REF,2,,,<lambda>15,37,,510,controllers/doraMetricsController.ts::program:manualCaptureLastWeek,,,2,,controllers/doraMetricsController.ts::program:<lambda>15
+120259084317,METHOD_REF,2,,,<lambda>16,39,,531,controllers/doraMetricsController.ts::program:getDoraTrendsController,,,2,,controllers/doraMetricsController.ts::program:<lambda>16
+120259084318,METHOD_REF,1,,,<lambda>2,27,,110,controllers/healthScoreController.ts::program:<lambda>0:<lambda>1:<lambda>2,,,3,,controllers/healthScoreController.ts::program:<lambda>0:<lambda>1:<lambda>2
+120259084319,METHOD_REF,1,,,<lambda>4,27,,125,controllers/healthScoreController.ts::program:<lambda>0:<lambda>3:<lambda>4,,,3,,controllers/healthScoreController.ts::program:<lambda>0:<lambda>3:<lambda>4
+120259084320,METHOD_REF,2,,,<lambda>1,21,,109,controllers/healthScoreController.ts::program:<lambda>0:addDates,,,2,,controllers/healthScoreController.ts::program:<lambda>0:<lambda>1
+120259084321,METHOD_REF,2,,,<lambda>3,26,,123,controllers/healthScoreController.ts::program:<lambda>0:createDateMap,,,2,,controllers/healthScoreController.ts::program:<lambda>0:<lambda>3
+120259084322,METHOD_REF,1,,,<lambda>5,11,,141,controllers/healthScoreController.ts::program:<lambda>0:<lambda>5,,,3,,controllers/healthScoreController.ts::program:<lambda>0:<lambda>5
+120259084323,METHOD_REF,2,,,<lambda>0,37,,11,controllers/healthScoreController.ts::program:getHealthScoreHistory,,,2,,controllers/healthScoreController.ts::program:<lambda>0
+120259084324,METHOD_REF,2,,,<lambda>6,37,,169,controllers/healthScoreController.ts::program:getLatestHealthScores,,,2,,controllers/healthScoreController.ts::program:<lambda>6
+120259084325,METHOD_REF,2,,,<lambda>0,35,,12,controllers/issueMetricsController.ts::program:refreshIssueMetrics,,,2,,controllers/issueMetricsController.ts::program:<lambda>0
+120259084326,METHOD_REF,2,,,<lambda>1,31,,48,controllers/issueMetricsController.ts::program:getIssueMetrics,,,2,,controllers/issueMetricsController.ts::program:<lambda>1
+120259084327,METHOD_REF,2,,,<lambda>2,37,,85,controllers/issueMetricsController.ts::program:getIssueMetricsTrends,,,2,,controllers/issueMetricsController.ts::program:<lambda>2
+120259084328,METHOD_REF,2,,,<lambda>3,38,,133,controllers/issueMetricsController.ts::program:getIssueMetricsHistory,,,2,,controllers/issueMetricsController.ts::program:<lambda>3
+120259084329,METHOD_REF,2,,,<lambda>0,39,,12,controllers/milestoneMetricsController.ts::program:refreshMilestoneMetrics,,,2,,controllers/milestoneMetricsController.ts::program:<lambda>0
+120259084330,METHOD_REF,2,,,<lambda>1,35,,46,controllers/milestoneMetricsController.ts::program:getMilestoneMetrics,,,2,,controllers/milestoneMetricsController.ts::program:<lambda>1
+120259084331,METHOD_REF,2,,,<lambda>0,32,,13,controllers/mrMetricsController.ts::program:refreshMRMetrics,,,2,,controllers/mrMetricsController.ts::program:<lambda>0
+120259084332,METHOD_REF,2,,,<lambda>1,28,,48,controllers/mrMetricsController.ts::program:getMRMetrics,,,2,,controllers/mrMetricsController.ts::program:<lambda>1
+120259084333,METHOD_REF,2,,,<lambda>2,34,,86,controllers/mrMetricsController.ts::program:getMRMetricsTrends,,,2,,controllers/mrMetricsController.ts::program:<lambda>2
+120259084334,METHOD_REF,2,,,<lambda>3,35,,124,controllers/mrMetricsController.ts::program:getMRMetricsHistory,,,2,,controllers/mrMetricsController.ts::program:<lambda>3
+120259084335,METHOD_REF,1,,,<lambda>10,48,,172,controllers/projectController.ts::program:ProjectController:<init>:<lambda>9:<lambda>10,,,3,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>9:<lambda>10
+120259084336,METHOD_REF,1,,,<lambda>15,32,,245,controllers/projectController.ts::program:ProjectController:<init>:<lambda>14:<lambda>15,,,3,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>14:<lambda>15
+120259084337,METHOD_REF,1,,,<lambda>17,27,,254,controllers/projectController.ts::program:ProjectController:<init>:<lambda>16:<lambda>17,,,3,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>16:<lambda>17
+120259084338,METHOD_REF,1,,,<lambda>19,32,,262,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>19,,,3,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>19
+120259084339,METHOD_REF,1,,,<lambda>20,31,,263,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>20,,,3,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>20
+120259084340,METHOD_REF,1,,,<lambda>21,28,,264,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>21,,,3,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>21
+120259084341,METHOD_REF,1,,,<lambda>22,33,,265,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>22,,,3,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18:<lambda>22
+120259084342,METHOD_REF,2,,,<lambda>0,22,,16,controllers/projectController.ts::program:ProjectController:<init>:<lambda>0,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>0
+120259084343,METHOD_REF,2,,,<lambda>1,25,,29,controllers/projectController.ts::program:ProjectController:<init>:<lambda>1,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>1
+120259084344,METHOD_REF,2,,,<lambda>2,29,,54,controllers/projectController.ts::program:ProjectController:<init>:<lambda>2,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>2
+120259084345,METHOD_REF,2,,,<lambda>3,27,,67,controllers/projectController.ts::program:ProjectController:<init>:<lambda>3,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>3
+120259084346,METHOD_REF,2,,,<lambda>4,22,,80,controllers/projectController.ts::program:ProjectController:<init>:<lambda>4,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>4
+120259084347,METHOD_REF,2,,,<lambda>5,25,,100,controllers/projectController.ts::program:ProjectController:<init>:<lambda>5,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>5
+120259084348,METHOD_REF,2,,,<lambda>6,30,,120,controllers/projectController.ts::program:ProjectController:<init>:<lambda>6,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>6
+120259084349,METHOD_REF,2,,,<lambda>7,24,,131,controllers/projectController.ts::program:ProjectController:<init>:<lambda>7,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>7
+120259084350,METHOD_REF,2,,,<lambda>8,26,,151,controllers/projectController.ts::program:ProjectController:<init>:<lambda>8,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>8
+120259084351,METHOD_REF,2,,,<lambda>9,26,,167,controllers/projectController.ts::program:ProjectController:<init>:<lambda>9,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>9
+120259084352,METHOD_REF,2,,,<lambda>11,29,,187,controllers/projectController.ts::program:ProjectController:<init>:<lambda>11,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>11
+120259084353,METHOD_REF,2,,,<lambda>12,29,,206,controllers/projectController.ts::program:ProjectController:<init>:<lambda>12,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>12
+120259084354,METHOD_REF,2,,,<lambda>13,36,,219,controllers/projectController.ts::program:ProjectController:<init>:<lambda>13,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>13
+120259084355,METHOD_REF,2,,,<lambda>14,36,,242,controllers/projectController.ts::program:ProjectController:<init>:<lambda>14,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>14
+120259084356,METHOD_REF,2,,,<lambda>16,42,,253,controllers/projectController.ts::program:ProjectController:<init>:<lambda>16,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>16
+120259084357,METHOD_REF,2,,,<lambda>18,41,,260,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18,,,2,,controllers/projectController.ts::program:ProjectController:<init>:<lambda>18
+120259084358,METHOD_REF,2,,,constructor() {},0,,10,controllers/projectController.ts::program:ProjectController:<init>,,,2,,controllers/projectController.ts::program:ProjectController:<init>
+120259084359,METHOD_REF,2,,,<lambda>0,45,,13,controllers/sonarQubeMaintainabilityController.ts::program:refreshMaintainabilityMetrics,,,2,,controllers/sonarQubeMaintainabilityController.ts::program:<lambda>0
+120259084360,METHOD_REF,2,,,<lambda>1,41,,50,controllers/sonarQubeMaintainabilityController.ts::program:getMaintainabilityMetrics,,,2,,controllers/sonarQubeMaintainabilityController.ts::program:<lambda>1
+120259084361,METHOD_REF,2,,,<lambda>2,48,,90,controllers/sonarQubeMaintainabilityController.ts::program:getMaintainabilityMetricsHistory,,,2,,controllers/sonarQubeMaintainabilityController.ts::program:<lambda>2
+120259084362,METHOD_REF,2,,,<lambda>0,41,,12,controllers/sonarQubeReliabilityController.ts::program:refreshReliabilityMetrics,,,2,,controllers/sonarQubeReliabilityController.ts::program:<lambda>0
+120259084363,METHOD_REF,2,,,<lambda>1,37,,48,controllers/sonarQubeReliabilityController.ts::program:getReliabilityMetrics,,,2,,controllers/sonarQubeReliabilityController.ts::program:<lambda>1
+120259084364,METHOD_REF,2,,,<lambda>2,44,,88,controllers/sonarQubeReliabilityController.ts::program:getReliabilityMetricsHistory,,,2,,controllers/sonarQubeReliabilityController.ts::program:<lambda>2
+120259084365,METHOD_REF,2,,,<lambda>0,38,,12,controllers/sonarQubeSecurityController.ts::program:refreshSecurityMetrics,,,2,,controllers/sonarQubeSecurityController.ts::program:<lambda>0
+120259084366,METHOD_REF,2,,,<lambda>1,34,,48,controllers/sonarQubeSecurityController.ts::program:getSecurityMetrics,,,2,,controllers/sonarQubeSecurityController.ts::program:<lambda>1
+120259084367,METHOD_REF,2,,,<lambda>2,41,,88,controllers/sonarQubeSecurityController.ts::program:getSecurityMetricsHistory,,,2,,controllers/sonarQubeSecurityController.ts::program:<lambda>2
+120259084368,METHOD_REF,2,,,checkMonthlyData,0,,5,db/check-monthly-data.ts::program:checkMonthlyData,,,2,,db/check-monthly-data.ts::program:checkMonthlyData
+120259084369,METHOD_REF,2,,,clearAndRepopulateDoraMetrics,0,,7,db/clear-and-repopulate-dora.ts::program:clearAndRepopulateDoraMetrics,,,2,,db/clear-and-repopulate-dora.ts::program:clearAndRepopulateDoraMetrics
+120259084370,METHOD_REF,2,,,<lambda>1,21,,28,db/connection.ts::program:<lambda>0:<lambda>1,,,4,,db/connection.ts::program:<lambda>0:<lambda>1
+120259084371,METHOD_REF,2,,,<lambda>0,23,,9,db/connection.ts::program:getPool,,,2,,db/connection.ts::program:<lambda>0
+120259084372,METHOD_REF,2,,,<lambda>2,25,,41,db/connection.ts::program:connectDB,,,2,,db/connection.ts::program:<lambda>2
+120259084373,METHOD_REF,2,,,<lambda>3,23,,60,db/connection.ts::program:closeDB,,,2,,db/connection.ts::program:<lambda>3
+120259084374,METHOD_REF,2,,,populateDoraMetrics,0,,7,db/populate-dora-metrics.ts::program:populateDoraMetrics,,,2,,db/populate-dora-metrics.ts::program:populateDoraMetrics
+120259084375,METHOD_REF,1,,,<lambda>11,27,,258,db/queries.ts::program:<lambda>10:<lambda>11,,,3,,db/queries.ts::program:<lambda>10:<lambda>11
+120259084376,METHOD_REF,2,,,<lambda>0,32,,11,db/queries.ts::program:initializeTables,,,2,,db/queries.ts::program:<lambda>0
+120259084377,METHOD_REF,2,,,<lambda>1,37,,35,db/queries.ts::program:syncProjectToRegistry,,,2,,db/queries.ts::program:<lambda>1
+120259084378,METHOD_REF,2,,,<lambda>2,38,,92,db/queries.ts::program:syncProjectsToRegistry,,,2,,db/queries.ts::program:<lambda>2
+120259084379,METHOD_REF,2,,,<lambda>3,42,,117,db/queries.ts::program:getAllProjectsFromRegistry,,,2,,db/queries.ts::program:<lambda>3
+120259084380,METHOD_REF,2,,,<lambda>4,30,,141,db/queries.ts::program:getProjectById,,,2,,db/queries.ts::program:<lambda>4
+120259084381,METHOD_REF,2,,,<lambda>5,30,,165,db/queries.ts::program:getProjectUUID,,,2,,db/queries.ts::program:<lambda>5
+120259084382,METHOD_REF,2,,,<lambda>6,33,,183,db/queries.ts::program:setProjectTracked,,,2,,db/queries.ts::program:<lambda>6
+120259084383,METHOD_REF,2,,,<lambda>7,28,,205,db/queries.ts::program:trackProject,,,2,,db/queries.ts::program:<lambda>7
+120259084384,METHOD_REF,2,,,<lambda>8,30,,212,db/queries.ts::program:untrackProject,,,2,,db/queries.ts::program:<lambda>8
+120259084385,METHOD_REF,2,,,<lambda>9,32,,234,db/queries.ts::program:isProjectTracked,,,2,,db/queries.ts::program:<lambda>9
+120259084386,METHOD_REF,2,,,<lambda>10,36,,251,db/queries.ts::program:getTrackedProjectIds,,,2,,db/queries.ts::program:<lambda>10
+120259084387,METHOD_REF,2,,,<lambda>12,37,,273,db/queries.ts::program:insertProjectSnapshot,,,2,,db/queries.ts::program:<lambda>12
+120259084388,METHOD_REF,2,,,<lambda>13,52,,336,db/queries.ts::program:getLatestSnapshotsForTrackedProjects,,,2,,db/queries.ts::program:<lambda>13
+120259084389,METHOD_REF,2,,,<lambda>14,35,,385,db/queries.ts::program:getProjectSnapshots,,,2,,db/queries.ts::program:<lambda>14
+120259084390,METHOD_REF,2,,,<lambda>15,46,,425,db/queries.ts::program:getLatestSnapshotByProjectName,,,2,,db/queries.ts::program:<lambda>15
+120259084391,METHOD_REF,2,,,<lambda>16,35,,493,db/queries.ts::program:saveProjectInsights,,,2,,db/queries.ts::program:<lambda>16
+120259084392,METHOD_REF,2,,,<lambda>17,40,,536,db/queries.ts::program:getLatestProjectInsights,,,2,,db/queries.ts::program:<lambda>17
+120259084393,METHOD_REF,2,,,<lambda>18,41,,568,db/queries.ts::program:getProjectInsightsHistory,,,2,,db/queries.ts::program:<lambda>18
+120259084394,METHOD_REF,2,,,<lambda>19,45,,598,db/queries.ts::program:getProjectInsightsHistoryById,,,2,,db/queries.ts::program:<lambda>19
+120259084395,METHOD_REF,2,,,<lambda>20,42,,628,db/queries.ts::program:getAllProjectsWithInsights,,,2,,db/queries.ts::program:<lambda>20
+120259084396,METHOD_REF,2,,,<lambda>21,43,,662,db/queries.ts::program:getAllLatestProjectInsights,,,2,,db/queries.ts::program:<lambda>21
+120259084397,METHOD_REF,2,,,<lambda>22,37,,699,db/queries.ts::program:getTotalProjectsCount,,,2,,db/queries.ts::program:<lambda>22
+120259084398,METHOD_REF,2,,,<lambda>23,39,,714,db/queries.ts::program:getTrackedProjectsCount,,,2,,db/queries.ts::program:<lambda>23
+120259084399,METHOD_REF,2,,,<lambda>24,39,,729,db/queries.ts::program:getLatestCombinedScores,,,2,,db/queries.ts::program:<lambda>24
+120259084400,METHOD_REF,2,,,<lambda>25,43,,764,db/queries.ts::program:getProjectsNeedingAttention,,,2,,db/queries.ts::program:<lambda>25
+120259084401,METHOD_REF,2,,,<lambda>3,21,,81,index.ts::program:<lambda>2:<lambda>3,,,4,,index.ts::program:<lambda>2:<lambda>3
+120259084402,METHOD_REF,2,,,<lambda>0,13,,39,index.ts::program:<lambda>0,,,4,,index.ts::program:<lambda>0
+120259084403,METHOD_REF,1,,,<lambda>1,8,,48,index.ts::program:<lambda>1,,,3,,index.ts::program:<lambda>1
+120259084404,METHOD_REF,2,,,<lambda>2,20,,60,index.ts::program:startServer,,,2,,index.ts::program:<lambda>2
+120259084405,METHOD_REF,2,,,<lambda>0,28,,4,middleware/errorHandler.ts::program:errorHandler,,,2,,middleware/errorHandler.ts::program:<lambda>0
+120259084406,METHOD_REF,2,,,<lambda>0,22,,19,routes/index.ts::program:<lambda>0,,,4,,routes/index.ts::program:<lambda>0
+120259084407,METHOD_REF,2,,,<lambda>1,29,,24,routes/index.ts::program:<lambda>1,,,4,,routes/index.ts::program:<lambda>1
+120259084408,METHOD_REF,2,,,<lambda>1,31,,20,schedulers/weeklyDoraSnapshotScheduler.ts::program:<lambda>0:<lambda>1,,,4,,schedulers/weeklyDoraSnapshotScheduler.ts::program:<lambda>0:<lambda>1
+120259084409,METHOD_REF,2,,,<lambda>0,47,,11,schedulers/weeklyDoraSnapshotScheduler.ts::program:initWeeklyDoraSnapshotScheduler,,,2,,schedulers/weeklyDoraSnapshotScheduler.ts::program:<lambda>0
+120259084410,METHOD_REF,1,,,<lambda>0,28,,53,services/ai/geminiService.ts::program:GeminiService:generateTextResponse:<lambda>0,,,3,,services/ai/geminiService.ts::program:GeminiService:generateTextResponse:<lambda>0
+120259084411,METHOD_REF,1,,,<lambda>1,34,,216,services/ai/geminiService.ts::program:GeminiService:generateResponseWithExcel:<lambda>1,,,3,,services/ai/geminiService.ts::program:GeminiService:generateResponseWithExcel:<lambda>1
+120259084412,METHOD_REF,2,,,constructor() {},0,,6,services/ai/geminiService.ts::program:GeminiService:<init>,,,2,,services/ai/geminiService.ts::program:GeminiService:<init>
+120259084413,METHOD_REF,2,,,constructor() {},0,,4,services/ai/googleSheetsService.ts::program:GoogleSheetsService:<init>,,,2,,services/ai/googleSheetsService.ts::program:GoogleSheetsService:<init>
+120259084414,METHOD_REF,1,,,<lambda>3,56,,110,services/ai/insightsParser.ts::program:<lambda>2:<lambda>3,,,3,,services/ai/insightsParser.ts::program:<lambda>2:<lambda>3
+120259084415,METHOD_REF,2,,,<lambda>0,28,,6,services/ai/insightsParser.ts::program:extractSectionScore,,,2,,services/ai/insightsParser.ts::program:<lambda>0
+120259084416,METHOD_REF,2,,,<lambda>1,24,,50,services/ai/insightsParser.ts::program:cleanJsonString,,,2,,services/ai/insightsParser.ts::program:<lambda>1
+120259084417,METHOD_REF,2,,,<lambda>2,39,,63,services/ai/insightsParser.ts::program:parseAndCorrectInsights,,,2,,services/ai/insightsParser.ts::program:<lambda>2
+120259084418,METHOD_REF,1,,,<lambda>0,34,,133,services/ai/projectInsightsService.ts::program:ProjectInsightsService:generateInsights:<lambda>0,,,3,,services/ai/projectInsightsService.ts::program:ProjectInsightsService:generateInsights:<lambda>0
+120259084419,METHOD_REF,2,,,constructor() {},0,,9,services/ai/projectInsightsService.ts::program:ProjectInsightsService:<init>,,,2,,services/ai/projectInsightsService.ts::program:ProjectInsightsService:<init>
+120259084420,METHOD_REF,1,,,<lambda>0,59,,34,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateMetrics:<lambda>0,,,3,,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateMetrics:<lambda>0
+120259084421,METHOD_REF,1,,,<lambda>1,20,,65,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateAvgCommitSize:<lambda>1,,,3,,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateAvgCommitSize:<lambda>1
+120259084422,METHOD_REF,1,,,<lambda>2,20,,94,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateLinesAddedDeleted:<lambda>2,,,3,,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateLinesAddedDeleted:<lambda>2
+120259084423,METHOD_REF,1,,,<lambda>3,20,,121,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateBusFactor:<lambda>3,,,3,,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateBusFactor:<lambda>3
+120259084424,METHOD_REF,1,,,<lambda>4,6,,151,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateBusFactor:<lambda>4,,,3,,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:calculateBusFactor:<lambda>4
+120259084425,METHOD_REF,2,,,constructor() {},0,,7,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:<init>,,,2,,services/commitMetrics/commitMetricsCalculationService.ts::program:CommitMetricsCalculationService:<init>
+120259084426,METHOD_REF,2,,,constructor() {},0,,9,services/commitMetrics/commitMetricsDbService.ts::program:CommitMetricsDbService:<init>,,,2,,services/commitMetrics/commitMetricsDbService.ts::program:CommitMetricsDbService:<init>
+120259084427,METHOD_REF,2,,,constructor() {},0,,10,services/commitMetrics/commitMetricsSyncService.ts::program:CommitMetricsSyncService:<init>,,,2,,services/commitMetrics/commitMetricsSyncService.ts::program:CommitMetricsSyncService:<init>
+120259084428,METHOD_REF,2,,,<lambda>0,43,,12,services/doraMetrics/doraMetricsCalculationService.ts::program:calculateDoraMetricsSummary,,,2,,services/doraMetrics/doraMetricsCalculationService.ts::program:<lambda>0
+120259084429,METHOD_REF,2,,,<lambda>0,39,,19,services/doraMetrics/doraMetricsDbService.ts::program:saveDeploymentFrequency,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>0
+120259084430,METHOD_REF,2,,,<lambda>1,34,,51,services/doraMetrics/doraMetricsDbService.ts::program:saveLeadTimeChange,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>1
+120259084431,METHOD_REF,2,,,<lambda>2,37,,87,services/doraMetrics/doraMetricsDbService.ts::program:saveChangeFailureRate,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>2
+120259084432,METHOD_REF,2,,,<lambda>3,40,,119,services/doraMetrics/doraMetricsDbService.ts::program:saveTimeToRestoreService,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>3
+120259084433,METHOD_REF,2,,,<lambda>4,47,,157,services/doraMetrics/doraMetricsDbService.ts::program:getDeploymentFrequencyByProject,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>4
+120259084434,METHOD_REF,2,,,<lambda>5,43,,177,services/doraMetrics/doraMetricsDbService.ts::program:getLeadTimeChangesByProject,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>5
+120259084435,METHOD_REF,2,,,<lambda>6,45,,197,services/doraMetrics/doraMetricsDbService.ts::program:getChangeFailureRateByProject,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>6
+120259084436,METHOD_REF,2,,,<lambda>7,48,,217,services/doraMetrics/doraMetricsDbService.ts::program:getTimeToRestoreServiceByProject,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>7
+120259084437,METHOD_REF,2,,,<lambda>8,43,,237,services/doraMetrics/doraMetricsDbService.ts::program:searchDeploymentsByIdPrefix,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>8
+120259084438,METHOD_REF,2,,,<lambda>9,41,,259,services/doraMetrics/doraMetricsDbService.ts::program:deleteDeploymentFrequency,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>9
+120259084439,METHOD_REF,2,,,<lambda>10,36,,268,services/doraMetrics/doraMetricsDbService.ts::program:deleteLeadTimeChange,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>10
+120259084440,METHOD_REF,2,,,<lambda>11,39,,277,services/doraMetrics/doraMetricsDbService.ts::program:deleteChangeFailureRate,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>11
+120259084441,METHOD_REF,2,,,<lambda>12,42,,286,services/doraMetrics/doraMetricsDbService.ts::program:deleteTimeToRestoreService,,,2,,services/doraMetrics/doraMetricsDbService.ts::program:<lambda>12
+120259084442,METHOD_REF,1,,,<lambda>1,32,,205,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>1,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>1
+120259084443,METHOD_REF,1,,,<lambda>2,30,,206,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>2,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>2
+120259084444,METHOD_REF,1,,,<lambda>3,29,,207,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>3,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>3
+120259084445,METHOD_REF,1,,,<lambda>4,29,,208,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>4,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>4
+120259084446,METHOD_REF,1,,,<lambda>5,21,,211,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>5,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>5
+120259084447,METHOD_REF,1,,,<lambda>6,32,,226,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>6,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>6
+120259084448,METHOD_REF,1,,,<lambda>7,30,,235,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>7,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>7
+120259084449,METHOD_REF,1,,,<lambda>8,29,,244,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>8,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>8
+120259084450,METHOD_REF,1,,,<lambda>9,29,,253,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>9,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>9
+120259084451,METHOD_REF,1,,,<lambda>10,51,,261,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>10,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>10
+120259084452,METHOD_REF,1,,,<lambda>11,35,,266,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>11,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>11
+120259084453,METHOD_REF,1,,,<lambda>12,71,,266,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>12,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>12
+120259084454,METHOD_REF,1,,,<lambda>13,29,,267,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>13,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>13
+120259084455,METHOD_REF,1,,,<lambda>14,64,,267,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>14,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>14
+120259084456,METHOD_REF,1,,,<lambda>15,32,,268,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>15,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>15
+120259084457,METHOD_REF,1,,,<lambda>16,32,,269,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>16,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>16
+120259084458,METHOD_REF,1,,,<lambda>17,70,,269,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>17,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>17
+120259084459,METHOD_REF,1,,,<lambda>18,29,,281,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>18,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>18
+120259084460,METHOD_REF,1,,,<lambda>19,23,,284,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>19,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>19
+120259084461,METHOD_REF,1,,,<lambda>20,26,,287,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>20,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>20
+120259084462,METHOD_REF,1,,,<lambda>21,26,,290,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>21,,,3,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0:<lambda>21
+120259084463,METHOD_REF,2,,,calculateTrend,0,,52,services/doraMetrics/doraTrendsService.ts::program:calculateTrend,,,2,,services/doraMetrics/doraTrendsService.ts::program:calculateTrend
+120259084464,METHOD_REF,2,,,<lambda>0,29,,82,services/doraMetrics/doraTrendsService.ts::program:getDoraTrends,,,2,,services/doraMetrics/doraTrendsService.ts::program:<lambda>0
+120259084465,METHOD_REF,1,,,<lambda>2,45,,149,services/doraMetrics/weeklyDoraSnapshotService.ts::program:<lambda>1:<lambda>2,,,3,,services/doraMetrics/weeklyDoraSnapshotService.ts::program:<lambda>1:<lambda>2
+120259084466,METHOD_REF,2,,,<lambda>0,38,,24,services/doraMetrics/weeklyDoraSnapshotService.ts::program:saveWeeklyDoraSnapshot,,,2,,services/doraMetrics/weeklyDoraSnapshotService.ts::program:<lambda>0
+120259084467,METHOD_REF,2,,,<lambda>1,49,,138,services/doraMetrics/weeklyDoraSnapshotService.ts::program:saveWeeklySnapshotsForAllProjects,,,2,,services/doraMetrics/weeklyDoraSnapshotService.ts::program:<lambda>1
+120259084468,METHOD_REF,2,,,<lambda>3,36,,168,services/doraMetrics/weeklyDoraSnapshotService.ts::program:getPreviousWeekDates,,,2,,services/doraMetrics/weeklyDoraSnapshotService.ts::program:<lambda>3
+120259084469,METHOD_REF,2,,,<lambda>4,40,,192,services/doraMetrics/weeklyDoraSnapshotService.ts::program:captureLastWeekSnapshots,,,2,,services/doraMetrics/weeklyDoraSnapshotService.ts::program:<lambda>4
+120259084470,METHOD_REF,2,,,<lambda>5,44,,203,services/doraMetrics/weeklyDoraSnapshotService.ts::program:getWeeklySnapshotsForProject,,,2,,services/doraMetrics/weeklyDoraSnapshotService.ts::program:<lambda>5
+120259084471,METHOD_REF,2,,,<lambda>0,15,,9,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>:<lambda>0,,,2,,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>:<lambda>0
+120259084472,METHOD_REF,2,,,<lambda>1,14,,39,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>:<lambda>1,,,2,,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>:<lambda>1
+120259084473,METHOD_REF,2,,,<lambda>2,19,,61,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>:<lambda>2,,,2,,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>:<lambda>2
+120259084474,METHOD_REF,2,,,constructor() {},0,,5,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>,,,2,,services/gitlab/gitLabCommitService.ts::program:GitLabCommitService:<init>
+120259084475,METHOD_REF,2,,,<lambda>0,21,,10,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>0,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>0
+120259084476,METHOD_REF,2,,,<lambda>1,18,,36,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>1,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>1
+120259084477,METHOD_REF,2,,,<lambda>2,20,,58,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>2,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>2
+120259084478,METHOD_REF,2,,,<lambda>3,20,,131,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>3,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>3
+120259084479,METHOD_REF,2,,,<lambda>4,21,,179,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>4,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>4
+120259084480,METHOD_REF,2,,,<lambda>5,18,,209,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>5,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>5
+120259084481,METHOD_REF,2,,,<lambda>6,24,,253,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>6,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>6
+120259084482,METHOD_REF,2,,,<lambda>7,21,,270,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>7,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>7
+120259084483,METHOD_REF,2,,,<lambda>8,18,,287,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>8,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>:<lambda>8
+120259084484,METHOD_REF,2,,,constructor() {},0,,6,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>,,,2,,services/gitlab/gitLabIssueService.ts::program:GitLabIssueService:<init>
+120259084485,METHOD_REF,1,,,<lambda>8,38,,201,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>7:<lambda>8,,,3,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>7:<lambda>8
+120259084486,METHOD_REF,2,,,<lambda>0,28,,9,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>0,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>0
+120259084487,METHOD_REF,2,,,<lambda>1,15,,31,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>1,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>1
+120259084488,METHOD_REF,2,,,<lambda>2,15,,56,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>2,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>2
+120259084489,METHOD_REF,2,,,<lambda>3,17,,78,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>3,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>3
+120259084490,METHOD_REF,2,,,<lambda>4,17,,110,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>4,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>4
+120259084491,METHOD_REF,2,,,<lambda>5,15,,136,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>5,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>5
+120259084492,METHOD_REF,2,,,<lambda>6,19,,158,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>6,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>6
+120259084493,METHOD_REF,2,,,<lambda>7,20,,181,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>7,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>:<lambda>7
+120259084494,METHOD_REF,2,,,constructor() {},0,,5,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>,,,2,,services/gitlab/gitLabMRService.ts::program:GitLabMRService:<init>
+120259084495,METHOD_REF,1,,,<lambda>2,25,,61,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>:<lambda>1:<lambda>2,,,3,,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>:<lambda>1:<lambda>2
+120259084496,METHOD_REF,2,,,<lambda>0,26,,10,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>:<lambda>0,,,2,,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>:<lambda>0
+120259084497,METHOD_REF,2,,,<lambda>1,22,,39,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>:<lambda>1,,,2,,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>:<lambda>1
+120259084498,METHOD_REF,2,,,constructor() {},0,,4,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>,,,2,,services/gitlab/gitLabMemberService.ts::program:GitLabMemberService:<init>
+120259084499,METHOD_REF,2,,,<lambda>0,21,,8,services/gitlab/gitlabAuthService.ts::program:GitLabAuthService:<init>:<lambda>0,,,2,,services/gitlab/gitlabAuthService.ts::program:GitLabAuthService:<init>:<lambda>0
+120259084500,METHOD_REF,2,,,<lambda>1,19,,22,services/gitlab/gitlabAuthService.ts::program:GitLabAuthService:<init>:<lambda>1,,,2,,services/gitlab/gitlabAuthService.ts::program:GitLabAuthService:<init>:<lambda>1
+120259084501,METHOD_REF,2,,,constructor() {},0,,4,services/gitlab/gitlabAuthService.ts::program:GitLabAuthService:<init>,,,2,,services/gitlab/gitlabAuthService.ts::program:GitLabAuthService:<init>
+120259084502,METHOD_REF,2,,,<lambda>0,29,,14,services/gitlab/gitlabClient.ts::program:GitLabClient:<init>:<lambda>0,,,2,,services/gitlab/gitlabClient.ts::program:GitLabClient:<init>:<lambda>0
+120259084503,METHOD_REF,2,,,<lambda>1,14,,34,services/gitlab/gitlabClient.ts::program:GitLabClient:<init>:<lambda>1,,,2,,services/gitlab/gitlabClient.ts::program:GitLabClient:<init>:<lambda>1
+120259084504,METHOD_REF,2,,,"constructor() {
+    this.gitlabUrl = '';
+    this.token = '';
+  }",0,,4,services/gitlab/gitlabClient.ts::program:GitLabClient:<init>,,,2,,services/gitlab/gitlabClient.ts::program:GitLabClient:<init>
+120259084505,METHOD_REF,2,,,<lambda>0,17,,9,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>:<lambda>0,,,2,,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>:<lambda>0
+120259084506,METHOD_REF,2,,,<lambda>1,17,,27,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>:<lambda>1,,,2,,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>:<lambda>1
+120259084507,METHOD_REF,2,,,<lambda>2,19,,41,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>:<lambda>2,,,2,,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>:<lambda>2
+120259084508,METHOD_REF,2,,,constructor() {},0,,5,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>,,,2,,services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:<init>
+120259084509,METHOD_REF,1,,,<lambda>1,37,,25,services/gitlab/gitlabMilestoneService.ts::program:GitLabMilestoneService:<init>:<lambda>0:<lambda>1,,,3,,services/gitlab/gitlabMilestoneService.ts::program:GitLabMilestoneService:<init>:<lambda>0:<lambda>1
+120259084510,METHOD_REF,2,,,<lambda>0,27,,9,services/gitlab/gitlabMilestoneService.ts::program:GitLabMilestoneService:<init>:<lambda>0,,,2,,services/gitlab/gitlabMilestoneService.ts::program:GitLabMilestoneService:<init>:<lambda>0
+120259084511,METHOD_REF,2,,,constructor() {},0,,4,services/gitlab/gitlabMilestoneService.ts::program:GitLabMilestoneService:<init>,,,2,,services/gitlab/gitlabMilestoneService.ts::program:GitLabMilestoneService:<init>
+120259084512,METHOD_REF,2,,,<lambda>0,20,,9,services/gitlab/gitlabProjectService.ts::program:GitLabProjectService:<init>:<lambda>0,,,2,,services/gitlab/gitlabProjectService.ts::program:GitLabProjectService:<init>:<lambda>0
+120259084513,METHOD_REF,2,,,<lambda>1,19,,59,services/gitlab/gitlabProjectService.ts::program:GitLabProjectService:<init>:<lambda>1,,,2,,services/gitlab/gitlabProjectService.ts::program:GitLabProjectService:<init>:<lambda>1
+120259084514,METHOD_REF,2,,,constructor() {},0,,5,services/gitlab/gitlabProjectService.ts::program:GitLabProjectService:<init>,,,2,,services/gitlab/gitlabProjectService.ts::program:GitLabProjectService:<init>
+120259084515,METHOD_REF,1,,,<lambda>0,25,,143,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCycleTime:<lambda>0,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCycleTime:<lambda>0
+120259084516,METHOD_REF,1,,,<lambda>1,23,,221,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateStaleIssues:<lambda>1,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateStaleIssues:<lambda>1
+120259084517,METHOD_REF,1,,,<lambda>2,6,,247,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>2,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>2
+120259084518,METHOD_REF,1,,,<lambda>3,6,,250,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>3,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>3
+120259084519,METHOD_REF,1,,,<lambda>4,49,,254,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>4,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>4
+120259084520,METHOD_REF,1,,,<lambda>5,27,,258,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>5,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:calculateCriticalMetrics:<lambda>5
+120259084521,METHOD_REF,1,,,<lambda>6,46,,340,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:isIssueReopened:<lambda>6,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:isIssueReopened:<lambda>6
+120259084522,METHOD_REF,1,,,<lambda>7,43,,344,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:isIssueReopened:<lambda>7,,,3,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:isIssueReopened:<lambda>7
+120259084523,METHOD_REF,2,,,constructor() {},0,,10,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:<init>,,,2,,services/issueMetrics/issueMetricsCalculationService.ts::program:IssueMetricsCalculationService:<init>
+120259084524,METHOD_REF,2,,,constructor() {},0,,12,services/issueMetrics/issueMetricsDbService.ts::program:IssueMetricsDbService:<init>,,,2,,services/issueMetrics/issueMetricsDbService.ts::program:IssueMetricsDbService:<init>
+120259084525,METHOD_REF,1,,,<lambda>0,26,,207,services/issueMetrics/issueMetricsSyncService.ts::program:IssueMetricsSyncService:calculateReopenRate:<lambda>0,,,3,,services/issueMetrics/issueMetricsSyncService.ts::program:IssueMetricsSyncService:calculateReopenRate:<lambda>0
+120259084526,METHOD_REF,1,,,<lambda>1,26,,244,services/issueMetrics/issueMetricsSyncService.ts::program:IssueMetricsSyncService:calculateMRLinkRate:<lambda>1,,,3,,services/issueMetrics/issueMetricsSyncService.ts::program:IssueMetricsSyncService:calculateMRLinkRate:<lambda>1
+120259084527,METHOD_REF,2,,,constructor() {},0,,9,services/issueMetrics/issueMetricsSyncService.ts::program:IssueMetricsSyncService:<init>,,,2,,services/issueMetrics/issueMetricsSyncService.ts::program:IssueMetricsSyncService:<init>
+120259084528,METHOD_REF,1,,,<lambda>0,53,,28,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:calculateMetrics:<lambda>0,,,3,,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:calculateMetrics:<lambda>0
+120259084529,METHOD_REF,1,,,<lambda>1,53,,33,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:calculateMetrics:<lambda>1,,,3,,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:calculateMetrics:<lambda>1
+120259084530,METHOD_REF,1,,,<lambda>2,6,,39,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:calculateMetrics:<lambda>2,,,3,,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:calculateMetrics:<lambda>2
+120259084531,METHOD_REF,2,,,constructor() {},0,,6,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:<init>,,,2,,services/milestoneMetrics/milestoneMetricsCalculationService.ts::program:MilestoneMetricsCalculationService:<init>
+120259084532,METHOD_REF,2,,,constructor() {},0,,7,services/milestoneMetrics/milestoneMetricsDbService.ts::program:MilestoneMetricsDbService:<init>,,,2,,services/milestoneMetrics/milestoneMetricsDbService.ts::program:MilestoneMetricsDbService:<init>
+120259084533,METHOD_REF,1,,,<lambda>0,21,,81,services/milestoneMetrics/milestoneMetricsSyncService.ts::program:MilestoneMetricsSyncService:fetchIssueCounts:<lambda>0,,,3,,services/milestoneMetrics/milestoneMetricsSyncService.ts::program:MilestoneMetricsSyncService:fetchIssueCounts:<lambda>0
+120259084534,METHOD_REF,2,,,constructor() {},0,,22,services/milestoneMetrics/milestoneMetricsSyncService.ts::program:MilestoneMetricsSyncService:<init>,,,2,,services/milestoneMetrics/milestoneMetricsSyncService.ts::program:MilestoneMetricsSyncService:<init>
+120259084535,METHOD_REF,1,,,<lambda>0,22,,129,services/mrMetrics/mrMetricsCalculationService.ts::program:MRMetricsCalculationService:calculateMergeTime:<lambda>0,,,3,,services/mrMetrics/mrMetricsCalculationService.ts::program:MRMetricsCalculationService:calculateMergeTime:<lambda>0
+120259084536,METHOD_REF,1,,,<lambda>1,20,,185,services/mrMetrics/mrMetricsCalculationService.ts::program:MRMetricsCalculationService:calculateStaleMRs:<lambda>1,,,3,,services/mrMetrics/mrMetricsCalculationService.ts::program:MRMetricsCalculationService:calculateStaleMRs:<lambda>1
+120259084537,METHOD_REF,2,,,constructor() {},0,,8,services/mrMetrics/mrMetricsCalculationService.ts::program:MRMetricsCalculationService:<init>,,,2,,services/mrMetrics/mrMetricsCalculationService.ts::program:MRMetricsCalculationService:<init>
+120259084538,METHOD_REF,2,,,constructor() {},0,,13,services/mrMetrics/mrMetricsDbService.ts::program:MRMetricsDbService:<init>,,,2,,services/mrMetrics/mrMetricsDbService.ts::program:MRMetricsDbService:<init>
+120259084539,METHOD_REF,1,,,<lambda>0,44,,160,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:calculateReviewComments:<lambda>0,,,3,,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:calculateReviewComments:<lambda>0
+120259084540,METHOD_REF,1,,,<lambda>1,26,,164,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:calculateReviewComments:<lambda>1,,,3,,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:calculateReviewComments:<lambda>1
+120259084541,METHOD_REF,1,,,<lambda>2,45,,191,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:calculateRevertRateFromData:<lambda>2,,,3,,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:calculateRevertRateFromData:<lambda>2
+120259084542,METHOD_REF,2,,,constructor() {},0,,10,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:<init>,,,2,,services/mrMetrics/mrMetricsSyncService.ts::program:MRMetricsSyncService:<init>
+120259084543,METHOD_REF,1,,,<lambda>6,42,,145,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>5:<lambda>6,,,3,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>5:<lambda>6
+120259084544,METHOD_REF,2,,,<lambda>0,25,,39,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>0,,,2,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>0
+120259084545,METHOD_REF,2,,,<lambda>1,27,,49,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>1,,,2,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>1
+120259084546,METHOD_REF,2,,,<lambda>2,24,,62,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>2,,,2,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>2
+120259084547,METHOD_REF,2,,,<lambda>3,31,,72,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>3,,,2,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>3
+120259084548,METHOD_REF,2,,,<lambda>4,18,,85,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>4,,,2,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>4
+120259084549,METHOD_REF,2,,,<lambda>5,19,,144,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>5,,,2,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>:<lambda>5
+120259084550,METHOD_REF,2,,,constructor() {},0,,35,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>,,,2,,services/project/projectEnrichmentService.ts::program:ProjectEnrichmentService:<init>
+120259084551,METHOD_REF,2,,,<lambda>0,26,,12,services/project/projectFetchService.ts::program:rojectFetchService:<init>:<lambda>0,,,2,,services/project/projectFetchService.ts::program:rojectFetchService:<init>:<lambda>0
+120259084552,METHOD_REF,2,,,<lambda>1,30,,23,services/project/projectFetchService.ts::program:rojectFetchService:<init>:<lambda>1,,,2,,services/project/projectFetchService.ts::program:rojectFetchService:<init>:<lambda>1
+120259084553,METHOD_REF,2,,,<lambda>2,26,,33,services/project/projectFetchService.ts::program:rojectFetchService:<init>:<lambda>2,,,2,,services/project/projectFetchService.ts::program:rojectFetchService:<init>:<lambda>2
+120259084554,METHOD_REF,2,,,constructor() {},1,,6,services/project/projectFetchService.ts::program:rojectFetchService:<init>,,,2,,services/project/projectFetchService.ts::program:rojectFetchService:<init>
+120259084555,METHOD_REF,1,,,<lambda>3,47,,63,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>2:<lambda>3,,,3,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>2:<lambda>3
+120259084556,METHOD_REF,2,,,<lambda>0,31,,33,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>0,,,2,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>0
+120259084557,METHOD_REF,2,,,<lambda>1,28,,46,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>1,,,2,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>1
+120259084558,METHOD_REF,2,,,<lambda>2,35,,59,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>2,,,2,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>2
+120259084559,METHOD_REF,2,,,<lambda>4,31,,74,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>4,,,2,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>4
+120259084560,METHOD_REF,2,,,<lambda>5,19,,122,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>5,,,2,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>5
+120259084561,METHOD_REF,2,,,<lambda>6,30,,137,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>6,,,2,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>:<lambda>6
+120259084562,METHOD_REF,2,,,constructor() {},0,,27,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>,,,2,,services/project/projectRefreshService.ts::program:ProjectRefreshService:<init>
+120259084563,METHOD_REF,1,,,<lambda>1,26,,57,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>0:<lambda>1,,,3,,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>0:<lambda>1
+120259084564,METHOD_REF,1,,,<lambda>3,88,,89,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>2:<lambda>3,,,3,,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>2:<lambda>3
+120259084565,METHOD_REF,1,,,<lambda>4,43,,115,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>2:<lambda>4,,,3,,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>2:<lambda>4
+120259084566,METHOD_REF,2,,,<lambda>0,20,,15,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>0,,,2,,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>0
+120259084567,METHOD_REF,2,,,<lambda>2,16,,84,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>2,,,2,,services/project/projectSyncService.ts::program:ProjectSyncService:<init>:<lambda>2
+120259084568,METHOD_REF,2,,,constructor() {},0,,9,services/project/projectSyncService.ts::program:ProjectSyncService:<init>,,,2,,services/project/projectSyncService.ts::program:ProjectSyncService:<init>
+120259084569,METHOD_REF,1,,,<lambda>2,26,,75,services/project/projectTransformService.ts::program:ProjectTransformService:<init>:<lambda>1:<lambda>2,,,3,,services/project/projectTransformService.ts::program:ProjectTransformService:<init>:<lambda>1:<lambda>2
+120259084570,METHOD_REF,2,,,<lambda>0,18,,38,services/project/projectTransformService.ts::program:ProjectTransformService:<init>:<lambda>0,,,2,,services/project/projectTransformService.ts::program:ProjectTransformService:<init>:<lambda>0
+120259084571,METHOD_REF,2,,,<lambda>1,22,,74,services/project/projectTransformService.ts::program:ProjectTransformService:<init>:<lambda>1,,,2,,services/project/projectTransformService.ts::program:ProjectTransformService:<init>:<lambda>1
+120259084572,METHOD_REF,2,,,constructor() {},0,,34,services/project/projectTransformService.ts::program:ProjectTransformService:<init>,,,2,,services/project/projectTransformService.ts::program:ProjectTransformService:<init>
+120259084573,METHOD_REF,2,,,"constructor(baseUrl?: string, token?: string) {
+    console.log('[SonarMaintainabilityApiService] Constructor called with:', {
+      baseUrl,
+      token: token ? `${token.substring(0, 10)}...` : undefined,
+      envUrl: process.env.SONARQUBE_URL,
+      envToken: process.env.SONARQUBE_TOKEN ? `${process.env.SONARQUBE_TOKEN.substring(0, 10)}...` : undefined
+    });
+    this.baseUrl = (baseUrl || process.env.SONARQUBE_URL || '').trim().replace(/\\/$/, '');
+    this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+    console.log('[SonarMaintainabilityApiService] After assignment:', {
+      baseUrl: this.baseUrl,
+      token: this.token ? `${this.token.substring(0, 10)}...` : 'EMPTY'
+    });
+  }",7,,4,services/sonarMaintainability/sonarMaintainabilityApiService.ts::program:SonarMaintainabilityApiService:<init>,,,2,,services/sonarMaintainability/sonarMaintainabilityApiService.ts::program:SonarMaintainabilityApiService:<init>
+120259084574,METHOD_REF,1,,,<lambda>1,36,,20,services/sonarMaintainability/sonarMaintainabilityCalculationService.ts::program:SonarMaintainabilityCalculationService:calculateMetrics:<lambda>0:<lambda>1,,,3,,services/sonarMaintainability/sonarMaintainabilityCalculationService.ts::program:SonarMaintainabilityCalculationService:calculateMetrics:<lambda>0:<lambda>1
+120259084575,METHOD_REF,2,,,<lambda>0,23,,19,services/sonarMaintainability/sonarMaintainabilityCalculationService.ts::program:SonarMaintainabilityCalculationService:calculateMetrics:findMetric,,,2,,services/sonarMaintainability/sonarMaintainabilityCalculationService.ts::program:SonarMaintainabilityCalculationService:calculateMetrics:<lambda>0
+120259084576,METHOD_REF,2,,,constructor() {},7,,6,services/sonarMaintainability/sonarMaintainabilityCalculationService.ts::program:SonarMaintainabilityCalculationService:<init>,,,2,,services/sonarMaintainability/sonarMaintainabilityCalculationService.ts::program:SonarMaintainabilityCalculationService:<init>
+120259084577,METHOD_REF,2,,,constructor() {},7,,9,services/sonarMaintainability/sonarMaintainabilityDbService.ts::program:SonarMaintainabilityDbService:<init>,,,2,,services/sonarMaintainability/sonarMaintainabilityDbService.ts::program:SonarMaintainabilityDbService:<init>
+120259084578,METHOD_REF,2,,,"constructor() {
+    this.apiService = new SonarMaintainabilityApiService();
+    this.calculationService = new SonarMaintainabilityCalculationService();
+    this.dbService = new SonarMaintainabilityDbService();
+  }",7,,6,services/sonarMaintainability/sonarMaintainabilitySyncService.ts::program:SonarMaintainabilitySyncService:<init>,,,2,,services/sonarMaintainability/sonarMaintainabilitySyncService.ts::program:SonarMaintainabilitySyncService:<init>
+120259084579,METHOD_REF,2,,,"constructor(baseUrl?: string, token?: string) {
+    this.baseUrl = (baseUrl || process.env.SONARQUBE_URL || '').trim().replace(/\\/$/, '');
+    this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+  }",7,,4,services/sonarReliability/sonarReliabilityApiService.ts::program:SonarReliabilityApiService:<init>,,,2,,services/sonarReliability/sonarReliabilityApiService.ts::program:SonarReliabilityApiService:<init>
+120259084580,METHOD_REF,1,,,<lambda>1,36,,17,services/sonarReliability/sonarReliabilityCalculationService.ts::program:SonarReliabilityCalculationService:calculateMetrics:<lambda>0:<lambda>1,,,3,,services/sonarReliability/sonarReliabilityCalculationService.ts::program:SonarReliabilityCalculationService:calculateMetrics:<lambda>0:<lambda>1
+120259084581,METHOD_REF,2,,,<lambda>0,23,,16,services/sonarReliability/sonarReliabilityCalculationService.ts::program:SonarReliabilityCalculationService:calculateMetrics:findMetric,,,2,,services/sonarReliability/sonarReliabilityCalculationService.ts::program:SonarReliabilityCalculationService:calculateMetrics:<lambda>0
+120259084582,METHOD_REF,2,,,constructor() {},7,,3,services/sonarReliability/sonarReliabilityCalculationService.ts::program:SonarReliabilityCalculationService:<init>,,,2,,services/sonarReliability/sonarReliabilityCalculationService.ts::program:SonarReliabilityCalculationService:<init>
+120259084583,METHOD_REF,2,,,constructor() {},7,,9,services/sonarReliability/sonarReliabilityDbService.ts::program:SonarReliabilityDbService:<init>,,,2,,services/sonarReliability/sonarReliabilityDbService.ts::program:SonarReliabilityDbService:<init>
+120259084584,METHOD_REF,2,,,"constructor() {
+    this.apiService = new SonarReliabilityApiService();
+    this.calculationService = new SonarReliabilityCalculationService();
+    this.dbService = new SonarReliabilityDbService();
+  }",7,,6,services/sonarReliability/sonarReliabilitySyncService.ts::program:SonarReliabilitySyncService:<init>,,,2,,services/sonarReliability/sonarReliabilitySyncService.ts::program:SonarReliabilitySyncService:<init>
+120259084585,METHOD_REF,2,,,"constructor(baseUrl?: string, token?: string) {
+    this.baseUrl = (baseUrl || process.env.SONARQUBE_URL || '').trim().replace(/\\/$/, '');
+    this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+  }",7,,4,services/sonarSecurity/sonarSecurityApiService.ts::program:SonarSecurityApiService:<init>,,,2,,services/sonarSecurity/sonarSecurityApiService.ts::program:SonarSecurityApiService:<init>
+120259084586,METHOD_REF,1,,,<lambda>1,36,,15,services/sonarSecurity/sonarSecurityCalculationService.ts::program:SonarSecurityCalculationService:calculateMetrics:<lambda>0:<lambda>1,,,3,,services/sonarSecurity/sonarSecurityCalculationService.ts::program:SonarSecurityCalculationService:calculateMetrics:<lambda>0:<lambda>1
+120259084587,METHOD_REF,2,,,<lambda>0,23,,14,services/sonarSecurity/sonarSecurityCalculationService.ts::program:SonarSecurityCalculationService:calculateMetrics:findMetric,,,2,,services/sonarSecurity/sonarSecurityCalculationService.ts::program:SonarSecurityCalculationService:calculateMetrics:<lambda>0
+120259084588,METHOD_REF,2,,,constructor() {},7,,3,services/sonarSecurity/sonarSecurityCalculationService.ts::program:SonarSecurityCalculationService:<init>,,,2,,services/sonarSecurity/sonarSecurityCalculationService.ts::program:SonarSecurityCalculationService:<init>
+120259084589,METHOD_REF,2,,,constructor() {},7,,9,services/sonarSecurity/sonarSecurityDbService.ts::program:SonarSecurityDbService:<init>,,,2,,services/sonarSecurity/sonarSecurityDbService.ts::program:SonarSecurityDbService:<init>
+120259084590,METHOD_REF,2,,,"constructor() {
+    this.apiService = new SonarSecurityApiService();
+    this.calculationService = new SonarSecurityCalculationService();
+    this.dbService = new SonarSecurityDbService();
+  }",7,,6,services/sonarSecurity/sonarSecuritySyncService.ts::program:SonarSecuritySyncService:<init>,,,2,,services/sonarSecurity/sonarSecuritySyncService.ts::program:SonarSecuritySyncService:<init>
+120259084591,METHOD_REF,2,,,normalize,2,,83,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys:normalize,,,2,,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys:normalize
+120259084592,METHOD_REF,1,,,<lambda>0,6,,94,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys:<lambda>0,,,3,,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys:<lambda>0
+120259084593,METHOD_REF,1,,,<lambda>1,28,,99,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys:<lambda>1,,,3,,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys:<lambda>1
+120259084594,METHOD_REF,2,,,autoMapSonarProjectKeys,7,,4,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys,,,2,,services/sonarqube/autoMapSonarProjectKeys.ts::program:autoMapSonarProjectKeys
+120259084595,METHOD_REF,2,,,getSonarProjectKey,7,,118,services/sonarqube/autoMapSonarProjectKeys.ts::program:getSonarProjectKey,,,2,,services/sonarqube/autoMapSonarProjectKeys.ts::program:getSonarProjectKey
+120259084596,METHOD_REF,2,,,<lambda>0,23,,48,services/sonarqube/sonarQubeService.ts::program:SonarQubeService:fetchIssueCounts:fetchCount,,,2,,services/sonarqube/sonarQubeService.ts::program:SonarQubeService:fetchIssueCounts:<lambda>0
+120259084597,METHOD_REF,2,,,"constructor(baseUrl?: string, token?: string) {
+    // Trim and remove trailing slash
+    this.baseUrl = (baseUrl || process.env.SONARQUBE_URL || '').trim().replace(/\\/$/, '');
+    this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+    this.isSonarCloud = this.baseUrl.includes('sonarcloud.io');
+    
+    if (!this.baseUrl || !/^https?:\\/\\//.test(this.baseUrl)) {
+      throw new Error('Invalid or missing SONARQUBE_URL. Please set it in your .env file.');
+    }
+    if (!this.token) {
+      throw new Error('Missing SONARQUBE_TOKEN. Please set it in your .env file.');
+    }
+    
+    console.log(`🔧 SonarQubeService initialized with URL: ${this.baseUrl}`);
+  }",7,,12,services/sonarqube/sonarQubeService.ts::program:SonarQubeService:<init>,,,2,,services/sonarqube/sonarQubeService.ts::program:SonarQubeService:<init>
+120259084598,METHOD_REF,2,,,calculateIssueHealthScore,7,,7,utils/healthScoreCalculator.ts::program:calculateIssueHealthScore,,,2,,utils/healthScoreCalculator.ts::program:calculateIssueHealthScore
+120259084599,METHOD_REF,2,,,calculateMRHealthScore,7,,61,utils/healthScoreCalculator.ts::program:calculateMRHealthScore,,,2,,utils/healthScoreCalculator.ts::program:calculateMRHealthScore
+120259084600,METHOD_REF,2,,,calculateCommitHealthScore,7,,115,utils/healthScoreCalculator.ts::program:calculateCommitHealthScore,,,2,,utils/healthScoreCalculator.ts::program:calculateCommitHealthScore
+120259084601,METHOD_REF,2,,,calculateReliabilityHealthScore,7,,160,utils/healthScoreCalculator.ts::program:calculateReliabilityHealthScore,,,2,,utils/healthScoreCalculator.ts::program:calculateReliabilityHealthScore
+120259084602,METHOD_REF,2,,,calculateMaintainabilityHealthScore,7,,192,utils/healthScoreCalculator.ts::program:calculateMaintainabilityHealthScore,,,2,,utils/healthScoreCalculator.ts::program:calculateMaintainabilityHealthScore
+120259084603,METHOD_REF,2,,,calculateSecurityHealthScore,7,,246,utils/healthScoreCalculator.ts::program:calculateSecurityHealthScore,,,2,,utils/healthScoreCalculator.ts::program:calculateSecurityHealthScore

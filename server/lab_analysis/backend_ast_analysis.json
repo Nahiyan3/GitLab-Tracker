@@ -1,0 +1,740 @@
+[
+  {
+    "file": "utils\\healthScoreCalculator.ts",
+    "linesOfCode": 285,
+    "totalNodes": 1714,
+    "variableCount": 26,
+    "functionCount": 6,
+    "cyclomaticComplexity": 101,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "controllers\\doraMetricsController.ts",
+    "linesOfCode": 565,
+    "totalNodes": 2219,
+    "variableCount": 90,
+    "functionCount": 17,
+    "cyclomaticComplexity": 68,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\ai\\insightsParser.ts",
+    "linesOfCode": 268,
+    "totalNodes": 1356,
+    "variableCount": 49,
+    "functionCount": 4,
+    "cyclomaticComplexity": 58,
+    "anyTypeCount": 4
+  },
+  {
+    "file": "db\\queries.ts",
+    "linesOfCode": 798,
+    "totalNodes": 1894,
+    "variableCount": 122,
+    "functionCount": 26,
+    "cyclomaticComplexity": 52,
+    "anyTypeCount": 42
+  },
+  {
+    "file": "services\\ai\\geminiService.ts",
+    "linesOfCode": 267,
+    "totalNodes": 1033,
+    "variableCount": 33,
+    "functionCount": 11,
+    "cyclomaticComplexity": 43,
+    "anyTypeCount": 11
+  },
+  {
+    "file": "controllers\\aiController.ts",
+    "linesOfCode": 248,
+    "totalNodes": 1037,
+    "variableCount": 24,
+    "functionCount": 9,
+    "cyclomaticComplexity": 36,
+    "anyTypeCount": 10
+  },
+  {
+    "file": "services\\gitlab\\gitLabIssueService.ts",
+    "linesOfCode": 302,
+    "totalNodes": 1032,
+    "variableCount": 44,
+    "functionCount": 9,
+    "cyclomaticComplexity": 34,
+    "anyTypeCount": 11
+  },
+  {
+    "file": "controllers\\projectController.ts",
+    "linesOfCode": 270,
+    "totalNodes": 1227,
+    "variableCount": 42,
+    "functionCount": 23,
+    "cyclomaticComplexity": 28,
+    "anyTypeCount": 15
+  },
+  {
+    "file": "services\\doraMetrics\\doraTrendsService.ts",
+    "linesOfCode": 320,
+    "totalNodes": 1367,
+    "variableCount": 33,
+    "functionCount": 23,
+    "cyclomaticComplexity": 28,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\sonarqube\\autoMapSonarProjectKeys.ts",
+    "linesOfCode": 129,
+    "totalNodes": 672,
+    "variableCount": 22,
+    "functionCount": 5,
+    "cyclomaticComplexity": 28,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\doraMetrics\\doraMetricsCalculationService.ts",
+    "linesOfCode": 167,
+    "totalNodes": 619,
+    "variableCount": 28,
+    "functionCount": 1,
+    "cyclomaticComplexity": 27,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\issueMetrics\\issueMetricsCalculationService.ts",
+    "linesOfCode": 350,
+    "totalNodes": 1266,
+    "variableCount": 42,
+    "functionCount": 21,
+    "cyclomaticComplexity": 27,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\ai\\projectInsightsService.ts",
+    "linesOfCode": 173,
+    "totalNodes": 615,
+    "variableCount": 19,
+    "functionCount": 5,
+    "cyclomaticComplexity": 26,
+    "anyTypeCount": 7
+  },
+  {
+    "file": "controllers\\healthScoreController.ts",
+    "linesOfCode": 262,
+    "totalNodes": 804,
+    "variableCount": 23,
+    "functionCount": 7,
+    "cyclomaticComplexity": 22,
+    "anyTypeCount": 4
+  },
+  {
+    "file": "services\\commitMetrics\\commitMetricsCalculationService.ts",
+    "linesOfCode": 168,
+    "totalNodes": 640,
+    "variableCount": 22,
+    "functionCount": 9,
+    "cyclomaticComplexity": 22,
+    "anyTypeCount": 3
+  },
+  {
+    "file": "services\\sonarMaintainability\\sonarMaintainabilityApiService.ts",
+    "linesOfCode": 127,
+    "totalNodes": 685,
+    "variableCount": 10,
+    "functionCount": 5,
+    "cyclomaticComplexity": 20,
+    "anyTypeCount": 4
+  },
+  {
+    "file": "services\\mrMetrics\\mrMetricsCalculationService.ts",
+    "linesOfCode": 269,
+    "totalNodes": 840,
+    "variableCount": 28,
+    "functionCount": 13,
+    "cyclomaticComplexity": 19,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "controllers\\issueMetricsController.ts",
+    "linesOfCode": 159,
+    "totalNodes": 587,
+    "variableCount": 19,
+    "functionCount": 4,
+    "cyclomaticComplexity": 18,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\gitlab\\gitLabMemberService.ts",
+    "linesOfCode": 75,
+    "totalNodes": 338,
+    "variableCount": 11,
+    "functionCount": 3,
+    "cyclomaticComplexity": 17,
+    "anyTypeCount": 4
+  },
+  {
+    "file": "services\\gitlab\\gitLabMRService.ts",
+    "linesOfCode": 216,
+    "totalNodes": 752,
+    "variableCount": 27,
+    "functionCount": 9,
+    "cyclomaticComplexity": 17,
+    "anyTypeCount": 11
+  },
+  {
+    "file": "services\\sonarReliability\\sonarReliabilityApiService.ts",
+    "linesOfCode": 84,
+    "totalNodes": 417,
+    "variableCount": 7,
+    "functionCount": 4,
+    "cyclomaticComplexity": 15,
+    "anyTypeCount": 2
+  },
+  {
+    "file": "services\\issueMetrics\\issueMetricsDbService.ts",
+    "linesOfCode": 333,
+    "totalNodes": 779,
+    "variableCount": 25,
+    "functionCount": 8,
+    "cyclomaticComplexity": 14,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\mrMetrics\\mrMetricsDbService.ts",
+    "linesOfCode": 318,
+    "totalNodes": 736,
+    "variableCount": 25,
+    "functionCount": 8,
+    "cyclomaticComplexity": 14,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\mrMetrics\\mrMetricsSyncService.ts",
+    "linesOfCode": 228,
+    "totalNodes": 732,
+    "variableCount": 32,
+    "functionCount": 8,
+    "cyclomaticComplexity": 13,
+    "anyTypeCount": 4
+  },
+  {
+    "file": "services\\sonarqube\\sonarQubeService.ts",
+    "linesOfCode": 81,
+    "totalNodes": 442,
+    "variableCount": 6,
+    "functionCount": 3,
+    "cyclomaticComplexity": 13,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "controllers\\mrMetricsController.ts",
+    "linesOfCode": 151,
+    "totalNodes": 532,
+    "variableCount": 17,
+    "functionCount": 4,
+    "cyclomaticComplexity": 12,
+    "anyTypeCount": 4
+  },
+  {
+    "file": "services\\doraMetrics\\weeklyDoraSnapshotService.ts",
+    "linesOfCode": 220,
+    "totalNodes": 612,
+    "variableCount": 32,
+    "functionCount": 6,
+    "cyclomaticComplexity": 12,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\project\\projectEnrichmentService.ts",
+    "linesOfCode": 150,
+    "totalNodes": 632,
+    "variableCount": 11,
+    "functionCount": 7,
+    "cyclomaticComplexity": 12,
+    "anyTypeCount": 4
+  },
+  {
+    "file": "services\\project\\projectTransformService.ts",
+    "linesOfCode": 80,
+    "totalNodes": 291,
+    "variableCount": 0,
+    "functionCount": 3,
+    "cyclomaticComplexity": 12,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\sonarSecurity\\sonarSecurityApiService.ts",
+    "linesOfCode": 67,
+    "totalNodes": 319,
+    "variableCount": 4,
+    "functionCount": 3,
+    "cyclomaticComplexity": 12,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\sonarSecurity\\sonarSecurityDbService.ts",
+    "linesOfCode": 181,
+    "totalNodes": 495,
+    "variableCount": 21,
+    "functionCount": 6,
+    "cyclomaticComplexity": 12,
+    "anyTypeCount": 5
+  },
+  {
+    "file": "services\\issueMetrics\\issueMetricsSyncService.ts",
+    "linesOfCode": 259,
+    "totalNodes": 865,
+    "variableCount": 26,
+    "functionCount": 6,
+    "cyclomaticComplexity": 11,
+    "anyTypeCount": 2
+  },
+  {
+    "file": "services\\project\\projectRefreshService.ts",
+    "linesOfCode": 169,
+    "totalNodes": 596,
+    "variableCount": 15,
+    "functionCount": 7,
+    "cyclomaticComplexity": 11,
+    "anyTypeCount": 5
+  },
+  {
+    "file": "services\\sonarMaintainability\\sonarMaintainabilityCalculationService.ts",
+    "linesOfCode": 69,
+    "totalNodes": 236,
+    "variableCount": 6,
+    "functionCount": 4,
+    "cyclomaticComplexity": 11,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\sonarReliability\\sonarReliabilityCalculationService.ts",
+    "linesOfCode": 62,
+    "totalNodes": 214,
+    "variableCount": 6,
+    "functionCount": 4,
+    "cyclomaticComplexity": 11,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\sonarSecurity\\sonarSecurityCalculationService.ts",
+    "linesOfCode": 65,
+    "totalNodes": 230,
+    "variableCount": 8,
+    "functionCount": 4,
+    "cyclomaticComplexity": 11,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "controllers\\commitMetricsController.ts",
+    "linesOfCode": 100,
+    "totalNodes": 378,
+    "variableCount": 13,
+    "functionCount": 3,
+    "cyclomaticComplexity": 10,
+    "anyTypeCount": 3
+  },
+  {
+    "file": "controllers\\sonarQubeMaintainabilityController.ts",
+    "linesOfCode": 119,
+    "totalNodes": 426,
+    "variableCount": 17,
+    "functionCount": 3,
+    "cyclomaticComplexity": 9,
+    "anyTypeCount": 3
+  },
+  {
+    "file": "controllers\\sonarQubeReliabilityController.ts",
+    "linesOfCode": 117,
+    "totalNodes": 418,
+    "variableCount": 17,
+    "functionCount": 3,
+    "cyclomaticComplexity": 9,
+    "anyTypeCount": 3
+  },
+  {
+    "file": "controllers\\sonarQubeSecurityController.ts",
+    "linesOfCode": 117,
+    "totalNodes": 418,
+    "variableCount": 17,
+    "functionCount": 3,
+    "cyclomaticComplexity": 9,
+    "anyTypeCount": 3
+  },
+  {
+    "file": "services\\commitMetrics\\commitMetricsDbService.ts",
+    "linesOfCode": 207,
+    "totalNodes": 479,
+    "variableCount": 20,
+    "functionCount": 6,
+    "cyclomaticComplexity": 9,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\sonarMaintainability\\sonarMaintainabilityDbService.ts",
+    "linesOfCode": 212,
+    "totalNodes": 574,
+    "variableCount": 25,
+    "functionCount": 7,
+    "cyclomaticComplexity": 9,
+    "anyTypeCount": 6
+  },
+  {
+    "file": "controllers\\milestoneMetricsController.ts",
+    "linesOfCode": 80,
+    "totalNodes": 281,
+    "variableCount": 8,
+    "functionCount": 2,
+    "cyclomaticComplexity": 8,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\project\\projectSyncService.ts",
+    "linesOfCode": 131,
+    "totalNodes": 443,
+    "variableCount": 14,
+    "functionCount": 5,
+    "cyclomaticComplexity": 8,
+    "anyTypeCount": 2
+  },
+  {
+    "file": "services\\sonarReliability\\sonarReliabilityDbService.ts",
+    "linesOfCode": 173,
+    "totalNodes": 479,
+    "variableCount": 21,
+    "functionCount": 6,
+    "cyclomaticComplexity": 8,
+    "anyTypeCount": 5
+  },
+  {
+    "file": "services\\doraMetrics\\doraMetricsDbService.ts",
+    "linesOfCode": 291,
+    "totalNodes": 840,
+    "variableCount": 58,
+    "functionCount": 13,
+    "cyclomaticComplexity": 7,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\gitlab\\gitLabCommitService.ts",
+    "linesOfCode": 90,
+    "totalNodes": 286,
+    "variableCount": 12,
+    "functionCount": 3,
+    "cyclomaticComplexity": 7,
+    "anyTypeCount": 6
+  },
+  {
+    "file": "services\\gitlab\\gitlabProjectService.ts",
+    "linesOfCode": 72,
+    "totalNodes": 277,
+    "variableCount": 11,
+    "functionCount": 2,
+    "cyclomaticComplexity": 7,
+    "anyTypeCount": 2
+  },
+  {
+    "file": "services\\gitlab\\gitlabClient.ts",
+    "linesOfCode": 43,
+    "totalNodes": 159,
+    "variableCount": 0,
+    "functionCount": 2,
+    "cyclomaticComplexity": 6,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "db\\connection.ts",
+    "linesOfCode": 69,
+    "totalNodes": 212,
+    "variableCount": 9,
+    "functionCount": 4,
+    "cyclomaticComplexity": 5,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "index.ts",
+    "linesOfCode": 94,
+    "totalNodes": 353,
+    "variableCount": 5,
+    "functionCount": 4,
+    "cyclomaticComplexity": 5,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\gitlab\\gitlabGroupService.ts",
+    "linesOfCode": 63,
+    "totalNodes": 230,
+    "variableCount": 10,
+    "functionCount": 3,
+    "cyclomaticComplexity": 5,
+    "anyTypeCount": 3
+  },
+  {
+    "file": "services\\milestoneMetrics\\milestoneMetricsSyncService.ts",
+    "linesOfCode": 138,
+    "totalNodes": 430,
+    "variableCount": 13,
+    "functionCount": 3,
+    "cyclomaticComplexity": 5,
+    "anyTypeCount": 2
+  },
+  {
+    "file": "services\\milestoneMetrics\\milestoneMetricsCalculationService.ts",
+    "linesOfCode": 60,
+    "totalNodes": 204,
+    "variableCount": 5,
+    "functionCount": 4,
+    "cyclomaticComplexity": 4,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\sonarMaintainability\\sonarMaintainabilitySyncService.ts",
+    "linesOfCode": 91,
+    "totalNodes": 347,
+    "variableCount": 8,
+    "functionCount": 2,
+    "cyclomaticComplexity": 4,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "db\\check-monthly-data.ts",
+    "linesOfCode": 73,
+    "totalNodes": 210,
+    "variableCount": 5,
+    "functionCount": 1,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\ai\\googleSheetsService.ts",
+    "linesOfCode": 51,
+    "totalNodes": 157,
+    "variableCount": 6,
+    "functionCount": 2,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\gitlab\\gitlabAuthService.ts",
+    "linesOfCode": 35,
+    "totalNodes": 109,
+    "variableCount": 5,
+    "functionCount": 2,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 2
+  },
+  {
+    "file": "services\\gitlab\\gitlabMilestoneService.ts",
+    "linesOfCode": 43,
+    "totalNodes": 133,
+    "variableCount": 6,
+    "functionCount": 2,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\milestoneMetrics\\milestoneMetricsDbService.ts",
+    "linesOfCode": 76,
+    "totalNodes": 196,
+    "variableCount": 8,
+    "functionCount": 2,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\project\\projectFetchService.ts",
+    "linesOfCode": 43,
+    "totalNodes": 99,
+    "variableCount": 4,
+    "functionCount": 3,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\sonarReliability\\sonarReliabilitySyncService.ts",
+    "linesOfCode": 73,
+    "totalNodes": 258,
+    "variableCount": 7,
+    "functionCount": 2,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "services\\sonarSecurity\\sonarSecuritySyncService.ts",
+    "linesOfCode": 63,
+    "totalNodes": 222,
+    "variableCount": 5,
+    "functionCount": 2,
+    "cyclomaticComplexity": 3,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "db\\clear-and-repopulate-dora.ts",
+    "linesOfCode": 36,
+    "totalNodes": 134,
+    "variableCount": 4,
+    "functionCount": 1,
+    "cyclomaticComplexity": 2,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "db\\populate-dora-metrics.ts",
+    "linesOfCode": 35,
+    "totalNodes": 128,
+    "variableCount": 4,
+    "functionCount": 1,
+    "cyclomaticComplexity": 2,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "routes\\index.ts",
+    "linesOfCode": 102,
+    "totalNodes": 544,
+    "variableCount": 3,
+    "functionCount": 2,
+    "cyclomaticComplexity": 2,
+    "anyTypeCount": 1
+  },
+  {
+    "file": "schedulers\\weeklyDoraSnapshotScheduler.ts",
+    "linesOfCode": 35,
+    "totalNodes": 69,
+    "variableCount": 2,
+    "functionCount": 2,
+    "cyclomaticComplexity": 2,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\commitMetrics\\commitMetricsSyncService.ts",
+    "linesOfCode": 85,
+    "totalNodes": 234,
+    "variableCount": 8,
+    "functionCount": 2,
+    "cyclomaticComplexity": 2,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "middleware\\errorHandler.ts",
+    "linesOfCode": 13,
+    "totalNodes": 66,
+    "variableCount": 1,
+    "functionCount": 1,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "routes\\doraMetricsRoutes.ts",
+    "linesOfCode": 59,
+    "totalNodes": 173,
+    "variableCount": 1,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "routes\\trackingRoutes.ts",
+    "linesOfCode": 29,
+    "totalNodes": 47,
+    "variableCount": 1,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\gitlab\\index.ts",
+    "linesOfCode": 9,
+    "totalNodes": 44,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "services\\project\\index.ts",
+    "linesOfCode": 6,
+    "totalNodes": 26,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "types\\commitMetrics.types.ts",
+    "linesOfCode": 99,
+    "totalNodes": 193,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "types\\doraMetrics.types.ts",
+    "linesOfCode": 114,
+    "totalNodes": 315,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "types\\gitlab.types.ts",
+    "linesOfCode": 129,
+    "totalNodes": 396,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 2
+  },
+  {
+    "file": "types\\index.ts",
+    "linesOfCode": 5,
+    "totalNodes": 8,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "types\\issueMetrics.types.ts",
+    "linesOfCode": 179,
+    "totalNodes": 442,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 9
+  },
+  {
+    "file": "types\\milestoneMetrics.types.ts",
+    "linesOfCode": 20,
+    "totalNodes": 51,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "types\\mrMetrics.types.ts",
+    "linesOfCode": 160,
+    "totalNodes": 315,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "types\\project.types.ts",
+    "linesOfCode": 41,
+    "totalNodes": 127,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  },
+  {
+    "file": "types\\sonarQubeMetrics.types.ts",
+    "linesOfCode": 119,
+    "totalNodes": 290,
+    "variableCount": 0,
+    "functionCount": 0,
+    "cyclomaticComplexity": 1,
+    "anyTypeCount": 0
+  }
+]

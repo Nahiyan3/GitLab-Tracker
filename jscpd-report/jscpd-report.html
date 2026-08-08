@@ -1,0 +1,4169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy/Paste Detector Report</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f7fafc; color: #2d3748; }
+    a { color: #3182ce; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .header { background: #fff; box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06); padding: 1rem 0; }
+    .header-inner { max-width: 80rem; margin: 0 auto; padding: 0 1rem; }
+    .header h1 { font-size: 1.875rem; font-weight: 600; color: #2d3748; margin: 0; }
+    .main { max-width: 80rem; margin: 2rem auto; padding: 0 1rem; }
+    .card { background: #fff; box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06); border-radius: 0.25rem; padding: 1.5rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.5rem; font-weight: 600; color: #4a5568; margin: 0 0 1rem 0; }
+    .dashboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .stat-card { padding: 1rem; border-radius: 0.25rem; text-align: center; }
+    .stat-card h3 { font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0; }
+    .stat-card .val { font-size: 2.25rem; font-weight: 700; }
+    .stat-blue { background: #bee3f8; color: #2a4365; }
+    .stat-green { background: #c6f6d5; color: #276749; }
+    .stat-yellow { background: #fefcbf; color: #975a16; }
+    .stat-red { background: #fed7d7; color: #9b2c2c; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { background: #edf2f7; color: #718096; text-transform: uppercase; font-size: 0.75rem; font-weight: 600; padding: 0.75rem 1.5rem; text-align: left; }
+    tbody td { padding: 0.75rem 1.5rem; border-bottom: 1px solid #edf2f7; font-size: 0.875rem; }
+    tbody tr:hover { background: #f7fafc; }
+    .clone-section { margin-bottom: 2rem; }
+    .clone-section h2 { border-bottom: 2px solid #edf2f7; padding-bottom: 0.5rem; }
+    .clone-item { padding: 1rem 0; border-bottom: 1px solid #edf2f7; }
+    .clone-item:last-child { border-bottom: none; }
+    .clone-info { color: #718096; font-size: 0.875rem; margin-bottom: 0.25rem; }
+    .toggle-btn { background: #a0aec0; color: #fff; border: none; padding: 0.125rem 0.5rem; font-size: 0.75rem; border-radius: 0.25rem; cursor: pointer; margin-left: 0.5rem; }
+    .toggle-btn:focus { outline: none; }
+    .code-block { background: #f7fafc; border: 1px solid #edf2f7; border-radius: 0.25rem; padding: 1rem; margin-top: 0.5rem; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.875rem; color: #2d3748; white-space: pre-wrap; overflow-x: auto; display: none; }
+    .code-block.visible { display: block; }
+    .no-dupes { color: #27ae60; font-weight: 700; font-size: 1.125rem; }
+    .footer { margin-top: 3rem; padding: 2rem 0; border-top: 1px solid #e0e0e0; text-align: center; font-family: -apple-system, sans-serif; color: #666; }
+    .footer p { margin: 0.5rem 0; font-size: 0.875rem; }
+    .footer a { color: #0066cc; }
+    .footer .small { font-size: 0.75rem; color: #999; }
+    @media (max-width: 768px) { .dashboard { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <h1>jscpd - copy/paste report</h1>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="card">
+      <section>
+        <h2>Dashboard</h2>
+        <div class="dashboard">
+          <div class="stat-card stat-blue">
+            <h3>Total Files</h3>
+            <div class="val">166</div>
+          </div>
+          <div class="stat-card stat-green">
+            <h3>Total Lines of Code</h3>
+            <div class="val">25422</div>
+          </div>
+          <div class="stat-card stat-yellow">
+            <h3>Number of Clones</h3>
+            <div class="val">81</div>
+          </div>
+          <div class="stat-card stat-red">
+            <h3>Duplicated Lines</h3>
+            <div class="val">1379 (5.42%)</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="card">
+      <section>
+        <h2>Formats with Duplications</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Format</th>
+              <th>Files</th>
+              <th>Lines</th>
+              <th>Clones</th>
+              <th>Duplicated Lines</th>
+              <th>Duplicated Tokens</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td><a href="#css-clones">css</a></td>
+              <td>2</td>
+              <td>144</td>
+              <td>1</td>
+              <td>14 (9.72%)</td>
+              <td>94 (9.00%)</td>
+            </tr>
+            
+            <tr>
+              <td><a href="#sql-clones">sql</a></td>
+              <td>3</td>
+              <td>1671</td>
+              <td>10</td>
+              <td>371 (22.20%)</td>
+              <td>1769 (23.00%)</td>
+            </tr>
+            
+            <tr>
+              <td><a href="#tsx-clones">tsx</a></td>
+              <td>78</td>
+              <td>11304</td>
+              <td>28</td>
+              <td>400 (3.54%)</td>
+              <td>2143 (3.33%)</td>
+            </tr>
+            
+            <tr>
+              <td><a href="#txt-clones">txt</a></td>
+              <td>1</td>
+              <td>215</td>
+              <td>0</td>
+              <td>0 (0.00%)</td>
+              <td>0 (0.00%)</td>
+            </tr>
+            
+            <tr>
+              <td><a href="#typescript-clones">typescript</a></td>
+              <td>82</td>
+              <td>12088</td>
+              <td>42</td>
+              <td>594 (4.91%)</td>
+              <td>2992 (6.00%)</td>
+            </tr>
+            
+            <tr style="font-weight: 700;">
+              <td>Total</td>
+              <td>166</td>
+              <td>25422</td>
+              <td>81</td>
+              <td>1379 (5.42%)</td>
+              <td>6998 (5.59%)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    
+    
+    <div class="card">
+      <section class="clone-section">
+        <a name="css-clones"></a>
+        <h2>css</h2>
+        <div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              index.css (Line 27:34 - Line 41:14),
+              index.css (Line 70:35 - Line 84:14)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-css-1')">Show code</button>
+            </div>
+            <pre id="code-css-1" class="code-block">// ====== index.css (Lines 27-41) ======
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+
+// ====== index.css (Lines 70-84) ======
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 222 47% 20%;</pre>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+    
+    <div class="card">
+      <section class="clone-section">
+        <a name="sql-clones"></a>
+        <h2>sql</h2>
+        <div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\schema.sql (Line 348:62 - Line 355:55),
+              db\schema.sql (Line 374:62 - Line 381:53)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-1')">Show code</button>
+            </div>
+            <pre id="code-sql-1" class="code-block">// ====== db\schema.sql (Lines 348-355) ======
+CREATE TABLE IF NOT EXISTS sonarqube_maintainability_metrics (
+  uuid                         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  row_id                       SERIAL NOT NULL,
+  project_id                   INTEGER NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  maintainability_high         INTEGER DEFAULT 0,
+  maintainability_blocker      INTEGER DEFAULT 0,
+  technical_debt_ratio         DOUBLE PRECISION DEFAULT 0,
+  maintainability_rating       VARCHAR(1) DEFAULT 'A',
+
+// ====== db\schema.sql (Lines 374-381) ======
+CREATE TABLE IF NOT EXISTS sonarqube_maintainability_history (
+  uuid                       UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  row_id                     SERIAL NOT NULL,
+  project_id                 INTEGER NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  maintainability_high       INTEGER DEFAULT 0,
+  maintainability_blocker    INTEGER DEFAULT 0,
+  technical_debt_ratio       DOUBLE PRECISION DEFAULT 0,
+  maintainability_rating     VARCHAR(1) DEFAULT 'A',</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 36:5 - Line 44:12),
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 230:5 - Line 238:12)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-2')">Show code</button>
+            </div>
+            <pre id="code-sql-2" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 36-44) ======
+    IF week_num &lt; 13 THEN
+      deployments_per_week := 1;
+    ELSIF week_num &lt; 26 THEN
+      deployments_per_week := CASE WHEN week_num % 2 = 0 THEN 2 ELSE 1 END;
+    ELSIF week_num &lt; 39 THEN
+      deployments_per_week := 2;
+    ELSE
+      deployments_per_week := CASE WHEN week_num % 2 = 0 THEN 2 ELSE 3 END;
+    END IF;
+
+// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 230-238) ======
+    IF week_num &lt; 13 THEN
+      deployments_per_week := 1;
+    ELSIF week_num &lt; 26 THEN
+      deployments_per_week := CASE WHEN week_num % 2 = 0 THEN 2 ELSE 1 END;
+    ELSIF week_num &lt; 39 THEN
+      deployments_per_week := 2;
+    ELSE
+      deployments_per_week := CASE WHEN week_num % 2 = 0 THEN 2 ELSE 3 END;
+    END IF;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 43:75 - Line 65:12),
+              db\seeds\populate_dora_metrics_2_years_fixed.sql (Line 33:32 - Line 55:12)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-3')">Show code</button>
+            </div>
+            <pre id="code-sql-3" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 43-65) ======
+      deployments_per_week := CASE WHEN week_num % 2 = 0 THEN 2 ELSE 3 END;
+    END IF;
+    
+    -- Insert deployments for this week
+    FOR deploy_count IN 1..deployments_per_week LOOP
+      hour_offset := (deploy_count - 1) * (24 * 7 / deployments_per_week);
+      
+      INSERT INTO deployment_frequency (
+        project_id,
+        deployment_id,
+        version,
+        environment,
+        deployment_timestamp
+      ) VALUES (
+        1,
+        'deploy-2024-w' || week_num || '-' || deploy_count,
+        '1.' || (week_num / 4) || '.' || deploy_count,
+        'production',
+        curr_date + (hour_offset || ' hours')::INTERVAL + 
+        (CASE WHEN deploy_count % 2 = 0 THEN '14 hours' ELSE '10 hours' END)::INTERVAL
+      );
+    END LOOP;
+  END LOOP;
+
+// ====== db\seeds\populate_dora_metrics_2_years_fixed.sql (Lines 33-55) ======
+      deployments_per_week := 2;
+    END IF;
+    
+    -- Insert deployments for this week
+    FOR deploy_count IN 1..deployments_per_week LOOP
+      hour_offset := (deploy_count - 1) * (24 * 7 / deployments_per_week);
+      
+      INSERT INTO deployment_frequency (
+        project_id,
+        deployment_id,
+        version,
+        environment,
+        deployment_timestamp
+      ) VALUES (
+        1,
+        'deploy-2024-w' || week_num || '-' || deploy_count,
+        '1.' || (week_num / 4) || '.' || deploy_count,
+        'production',
+        curr_date + (hour_offset || ' hours')::INTERVAL + 
+        (CASE WHEN deploy_count % 2 = 0 THEN '14 hours' ELSE '10 hours' END)::INTERVAL
+      );
+    END LOOP;
+  END LOOP;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 68:3 - Line 104:15),
+              db\seeds\populate_dora_metrics_2_years_fixed.sql (Line 58:3 - Line 94:15)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-4')">Show code</button>
+            </div>
+            <pre id="code-sql-4" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 68-104) ======
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- 2025: 2-5 deployments/week, showing maturity
+    IF week_num &lt; 13 THEN
+      deployments_per_week := 2;
+    ELSIF week_num &lt; 26 THEN
+      deployments_per_week := 3;
+    ELSIF week_num &lt; 39 THEN
+      deployments_per_week := 4;
+    ELSE
+      deployments_per_week := 5;
+    END IF;
+    
+    -- Insert deployments for this week
+    FOR deploy_count IN 1..deployments_per_week LOOP
+      hour_offset := (deploy_count - 1) * (24 * 7 / deployments_per_week);
+      
+      INSERT INTO deployment_frequency (
+        project_id,
+        deployment_id,
+        version,
+        environment,
+        deployment_timestamp
+      ) VALUES (
+        1,
+        'deploy-2025-w' || week_num || '-' || deploy_count,
+        '2.' || (week_num / 4) || '.' || deploy_count,
+        'production',
+        curr_date + (hour_offset || ' hours')::INTERVAL + 
+        (CASE WHEN deploy_count % 2 = 0 THEN '15 hours' ELSE '11 hours' END)::INTERVAL
+      );
+    END LOOP;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted deployment_frequency records for 2024 and 2025';
+
+// ====== db\seeds\populate_dora_metrics_2_years_fixed.sql (Lines 58-94) ======
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- 2025: 2-5 deployments/week, showing maturity
+    IF week_num &lt; 13 THEN
+      deployments_per_week := 2;
+    ELSIF week_num &lt; 26 THEN
+      deployments_per_week := 3;
+    ELSIF week_num &lt; 39 THEN
+      deployments_per_week := 4;
+    ELSE
+      deployments_per_week := 5;
+    END IF;
+    
+    -- Insert deployments for this week
+    FOR deploy_count IN 1..deployments_per_week LOOP
+      hour_offset := (deploy_count - 1) * (24 * 7 / deployments_per_week);
+      
+      INSERT INTO deployment_frequency (
+        project_id,
+        deployment_id,
+        version,
+        environment,
+        deployment_timestamp
+      ) VALUES (
+        1,
+        'deploy-2025-w' || week_num || '-' || deploy_count,
+        '2.' || (week_num / 4) || '.' || deploy_count,
+        'production',
+        curr_date + (hour_offset || ' hours')::INTERVAL + 
+        (CASE WHEN deploy_count % 2 = 0 THEN '15 hours' ELSE '11 hours' END)::INTERVAL
+      );
+    END LOOP;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted deployment_frequency records';</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 139:27 - Line 203:15),
+              db\seeds\populate_dora_metrics_2_years_fixed.sql (Line 128:27 - Line 192:15)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-5')">Show code</button>
+            </div>
+            <pre id="code-sql-5" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 139-203) ======
+      ELSIF week_num &lt; 39 THEN
+        lead_time_hours := 100 + (random() * 40); -- 100-140 hours
+      ELSE
+        lead_time_hours := 72 + (random() * 48);  -- 72-120 hours
+      END IF;
+      
+      merged_ts := curr_date + (change_count * 36 || ' hours')::INTERVAL;
+      deployed_ts := merged_ts + (lead_time_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO lead_time_changes (
+        project_id,
+        change_id,
+        merged_timestamp,
+        deployed_timestamp,
+        lead_time_hours
+      ) VALUES (
+        1,
+        'mr-2024-w' || week_num || '-' || change_count,
+        merged_ts,
+        deployed_ts,
+        ROUND(lead_time_hours, 2)
+      );
+    END LOOP;
+  END LOOP;
+  
+  -- Generate changes for 2025 (52 weeks)
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- 2025: 4-6 changes per week (more frequent, smaller changes)
+    changes_per_week := 4 + (week_num / 13);
+    
+    FOR change_count IN 1..changes_per_week LOOP
+      -- 2025: Much lower lead time
+      IF week_num &lt; 13 THEN
+        lead_time_hours := 60 + (random() * 36); -- 60-96 hours
+      ELSIF week_num &lt; 26 THEN
+        lead_time_hours := 48 + (random() * 24); -- 48-72 hours
+      ELSIF week_num &lt; 39 THEN
+        lead_time_hours := 32 + (random() * 24); -- 32-56 hours
+      ELSE
+        lead_time_hours := 24 + (random() * 24); -- 24-48 hours
+      END IF;
+      
+      merged_ts := curr_date + (change_count * 24 || ' hours')::INTERVAL;
+      deployed_ts := merged_ts + (lead_time_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO lead_time_changes (
+        project_id,
+        change_id,
+        merged_timestamp,
+        deployed_timestamp,
+        lead_time_hours
+      ) VALUES (
+        1,
+        'mr-2025-w' || week_num || '-' || change_count,
+        merged_ts,
+        deployed_ts,
+        ROUND(lead_time_hours, 2)
+      );
+    END LOOP;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted lead_time_changes records for 2024 and 2025';
+
+// ====== db\seeds\populate_dora_metrics_2_years_fixed.sql (Lines 128-192) ======
+      ELSIF week_num &lt; 78 THEN
+        lead_time_hours := 100 + (random() * 40); -- 100-140 hours
+      ELSE
+        lead_time_hours := 72 + (random() * 48);  -- 72-120 hours
+      END IF;
+      
+      merged_ts := curr_date + (change_count * 36 || ' hours')::INTERVAL;
+      deployed_ts := merged_ts + (lead_time_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO lead_time_changes (
+        project_id,
+        change_id,
+        merged_timestamp,
+        deployed_timestamp,
+        lead_time_hours
+      ) VALUES (
+        1,
+        'mr-2024-w' || week_num || '-' || change_count,
+        merged_ts,
+        deployed_ts,
+        ROUND(lead_time_hours, 2)
+      );
+    END LOOP;
+  END LOOP;
+  
+  -- Generate changes for 2025 (52 weeks)
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- 2025: 4-6 changes per week (more frequent, smaller changes)
+    changes_per_week := 4 + (week_num / 13);
+    
+    FOR change_count IN 1..changes_per_week LOOP
+      -- 2025: Much lower lead time
+      IF week_num &lt; 13 THEN
+        lead_time_hours := 60 + (random() * 36); -- 60-96 hours
+      ELSIF week_num &lt; 26 THEN
+        lead_time_hours := 48 + (random() * 24); -- 48-72 hours
+      ELSIF week_num &lt; 39 THEN
+        lead_time_hours := 32 + (random() * 24); -- 32-56 hours
+      ELSE
+        lead_time_hours := 24 + (random() * 24); -- 24-48 hours
+      END IF;
+      
+      merged_ts := curr_date + (change_count * 24 || ' hours')::INTERVAL;
+      deployed_ts := merged_ts + (lead_time_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO lead_time_changes (
+        project_id,
+        change_id,
+        merged_timestamp,
+        deployed_timestamp,
+        lead_time_hours
+      ) VALUES (
+        1,
+        'mr-2025-w' || week_num || '-' || change_count,
+        merged_ts,
+        deployed_ts,
+        ROUND(lead_time_hours, 2)
+      );
+    END LOOP;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted lead_time_changes records';</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 246:27 - Line 350:15),
+              db\seeds\populate_dora_metrics_2_years_fixed.sql (Line 232:27 - Line 336:15)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-6')">Show code</button>
+            </div>
+            <pre id="code-sql-6" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 246-350) ======
+      ELSIF week_num &lt; 39 THEN
+        failure_threshold := 0.22; -- 22% failure rate
+      ELSE
+        failure_threshold := 0.18; -- 18% failure rate
+      END IF;
+      
+      is_failure := random() &lt; failure_threshold;
+      
+      -- Determine remediation type if failure occurred
+      IF is_failure THEN
+        IF random() &lt; 0.4 THEN
+          remediation := 'rollback';
+        ELSIF random() &lt; 0.7 THEN
+          remediation := 'hotfix';
+        ELSE
+          remediation := 'emergency';
+        END IF;
+      ELSE
+        -- Some incidents that don't count as failures
+        IF random() &lt; 0.1 THEN
+          remediation := 'patch'; -- Minor fix, not counted as failure
+        ELSE
+          remediation := 'none';
+        END IF;
+      END IF;
+      
+      INSERT INTO change_failure_rate (
+        project_id,
+        deployment_id,
+        deployment_timestamp,
+        has_incident,
+        remediation_type
+      ) VALUES (
+        1,
+        'deploy-2024-w' || week_num || '-' || deploy_count,
+        curr_date + ((deploy_count - 1) * 72 || ' hours')::INTERVAL + '14 hours'::INTERVAL,
+        is_failure OR remediation = 'patch',
+        remediation
+      );
+    END LOOP;
+  END LOOP;
+  
+  -- Generate failures for 2025 (52 weeks)
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- Match deployment frequency from table 1
+    IF week_num &lt; 13 THEN
+      deployments_per_week := 2;
+    ELSIF week_num &lt; 26 THEN
+      deployments_per_week := 3;
+    ELSIF week_num &lt; 39 THEN
+      deployments_per_week := 4;
+    ELSE
+      deployments_per_week := 5;
+    END IF;
+    
+    FOR deploy_count IN 1..deployments_per_week LOOP
+      -- 2025: Much lower failure rate
+      IF week_num &lt; 13 THEN
+        failure_threshold := 0.15; -- 15% failure rate
+      ELSIF week_num &lt; 26 THEN
+        failure_threshold := 0.12; -- 12% failure rate
+      ELSIF week_num &lt; 39 THEN
+        failure_threshold := 0.10; -- 10% failure rate
+      ELSE
+        failure_threshold := 0.08; -- 8% failure rate
+      END IF;
+      
+      is_failure := random() &lt; failure_threshold;
+      
+      IF is_failure THEN
+        IF random() &lt; 0.3 THEN
+          remediation := 'rollback';
+        ELSIF random() &lt; 0.6 THEN
+          remediation := 'hotfix';
+        ELSE
+          remediation := 'emergency';
+        END IF;
+      ELSE
+        IF random() &lt; 0.08 THEN
+          remediation := 'patch';
+        ELSE
+          remediation := 'none';
+        END IF;
+      END IF;
+      
+      INSERT INTO change_failure_rate (
+        project_id,
+        deployment_id,
+        deployment_timestamp,
+        has_incident,
+        remediation_type
+      ) VALUES (
+        1,
+        'deploy-2025-w' || week_num || '-' || deploy_count,
+        curr_date + ((deploy_count - 1) * 36 || ' hours')::INTERVAL + '15 hours'::INTERVAL,
+        is_failure OR remediation = 'patch',
+        remediation
+      );
+    END LOOP;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted change_failure_rate records for 2024 and 2025';
+
+// ====== db\seeds\populate_dora_metrics_2_years_fixed.sql (Lines 232-336) ======
+      ELSIF week_num &lt; 78 THEN
+        failure_threshold := 0.22; -- 22% failure rate
+      ELSE
+        failure_threshold := 0.18; -- 18% failure rate
+      END IF;
+      
+      is_failure := random() &lt; failure_threshold;
+      
+      -- Determine remediation type if failure occurred
+      IF is_failure THEN
+        IF random() &lt; 0.4 THEN
+          remediation := 'rollback';
+        ELSIF random() &lt; 0.7 THEN
+          remediation := 'hotfix';
+        ELSE
+          remediation := 'emergency';
+        END IF;
+      ELSE
+        -- Some incidents that don't count as failures
+        IF random() &lt; 0.1 THEN
+          remediation := 'patch'; -- Minor fix, not counted as failure
+        ELSE
+          remediation := 'none';
+        END IF;
+      END IF;
+      
+      INSERT INTO change_failure_rate (
+        project_id,
+        deployment_id,
+        deployment_timestamp,
+        has_incident,
+        remediation_type
+      ) VALUES (
+        1,
+        'deploy-2024-w' || week_num || '-' || deploy_count,
+        curr_date + ((deploy_count - 1) * 72 || ' hours')::INTERVAL + '14 hours'::INTERVAL,
+        is_failure OR remediation = 'patch',
+        remediation
+      );
+    END LOOP;
+  END LOOP;
+  
+  -- Generate failures for 2025 (52 weeks)
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- Match deployment frequency from table 1
+    IF week_num &lt; 13 THEN
+      deployments_per_week := 2;
+    ELSIF week_num &lt; 26 THEN
+      deployments_per_week := 3;
+    ELSIF week_num &lt; 39 THEN
+      deployments_per_week := 4;
+    ELSE
+      deployments_per_week := 5;
+    END IF;
+    
+    FOR deploy_count IN 1..deployments_per_week LOOP
+      -- 2025: Much lower failure rate
+      IF week_num &lt; 13 THEN
+        failure_threshold := 0.15; -- 15% failure rate
+      ELSIF week_num &lt; 26 THEN
+        failure_threshold := 0.12; -- 12% failure rate
+      ELSIF week_num &lt; 39 THEN
+        failure_threshold := 0.10; -- 10% failure rate
+      ELSE
+        failure_threshold := 0.08; -- 8% failure rate
+      END IF;
+      
+      is_failure := random() &lt; failure_threshold;
+      
+      IF is_failure THEN
+        IF random() &lt; 0.3 THEN
+          remediation := 'rollback';
+        ELSIF random() &lt; 0.6 THEN
+          remediation := 'hotfix';
+        ELSE
+          remediation := 'emergency';
+        END IF;
+      ELSE
+        IF random() &lt; 0.08 THEN
+          remediation := 'patch';
+        ELSE
+          remediation := 'none';
+        END IF;
+      END IF;
+      
+      INSERT INTO change_failure_rate (
+        project_id,
+        deployment_id,
+        deployment_timestamp,
+        has_incident,
+        remediation_type
+      ) VALUES (
+        1,
+        'deploy-2025-w' || week_num || '-' || deploy_count,
+        curr_date + ((deploy_count - 1) * 36 || ' hours')::INTERVAL + '15 hours'::INTERVAL,
+        is_failure OR remediation = 'patch',
+        remediation
+      );
+    END LOOP;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted change_failure_rate records';</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 362:17 - Line 382:6),
+              db\seeds\populate_dora_metrics_2_years_fixed.sql (Line 348:33 - Line 368:6)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-7')">Show code</button>
+            </div>
+            <pre id="code-sql-7" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 362-382) ======
+  base_date DATE;
+  curr_date DATE;
+  week_num INTEGER;
+  incident_count INTEGER;
+  total_incidents INTEGER := 0;
+  restore_hours DECIMAL;
+  start_ts TIMESTAMP;
+  end_ts TIMESTAMP;
+  incident_descriptions TEXT[] := ARRAY[
+    'Database connection pool exhausted',
+    'Memory leak in API service',
+    'Third-party service timeout',
+    'Configuration error after deployment',
+    'SSL certificate expiration',
+    'Load balancer misconfiguration',
+    'Cache invalidation issue',
+    'Rate limiting bug',
+    'Authentication service outage',
+    'Database query performance degradation'
+  ];
+BEGIN
+
+// ====== db\seeds\populate_dora_metrics_2_years_fixed.sql (Lines 348-368) ======
+  base_date DATE := '2024-01-01';
+  curr_date DATE;
+  week_num INTEGER;
+  incident_count INTEGER;
+  total_incidents INTEGER := 0;
+  restore_hours DECIMAL;
+  start_ts TIMESTAMP;
+  end_ts TIMESTAMP;
+  incident_descriptions TEXT[] := ARRAY[
+    'Database connection pool exhausted',
+    'Memory leak in API service',
+    'Third-party service timeout',
+    'Configuration error after deployment',
+    'SSL certificate expiration',
+    'Load balancer misconfiguration',
+    'Cache invalidation issue',
+    'Rate limiting bug',
+    'Authentication service outage',
+    'Database query performance degradation'
+  ];
+BEGIN</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 395:25 - Line 407:20),
+              db\seeds\populate_dora_metrics_2_years_fixed.sql (Line 380:25 - Line 392:20)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-8')">Show code</button>
+            </div>
+            <pre id="code-sql-8" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 395-407) ======
+    ELSIF week_num &lt; 39 THEN
+      -- Q3: 0-1 incidents every 2 weeks
+      incident_count := CASE WHEN random() &lt; 0.3 THEN 1 ELSE 0 END;
+    ELSE
+      -- Q4: 0-1 incidents every 2 weeks
+      incident_count := CASE WHEN random() &lt; 0.25 THEN 1 ELSE 0 END;
+    END IF;
+    
+    IF incident_count &gt; 0 THEN
+      total_incidents := total_incidents + 1;
+      
+      -- 2024: Longer restore times, gradually improving
+      IF week_num &lt; 13 THEN
+
+// ====== db\seeds\populate_dora_metrics_2_years_fixed.sql (Lines 380-392) ======
+    ELSIF week_num &lt; 78 THEN
+      -- Q3: 0-1 incidents every 2 weeks
+      incident_count := CASE WHEN random() &lt; 0.3 THEN 1 ELSE 0 END;
+    ELSE
+      -- Q4: 0-1 incidents every 2 weeks
+      incident_count := CASE WHEN random() &lt; 0.25 THEN 1 ELSE 0 END;
+    END IF;
+    
+    IF incident_count &gt; 0 THEN
+      total_incidents := total_incidents + 1;
+      
+      -- 2024: Longer restore times, gradually improving
+      IF week_num &lt; 26 THEN</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 411:27 - Line 495:15),
+              db\seeds\populate_dora_metrics_2_years_fixed.sql (Line 396:27 - Line 480:15)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-9')">Show code</button>
+            </div>
+            <pre id="code-sql-9" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 411-495) ======
+      ELSIF week_num &lt; 39 THEN
+        restore_hours := 6 + (random() * 8);   -- 6-14 hours
+      ELSE
+        restore_hours := 4 + (random() * 6);   -- 4-10 hours
+      END IF;
+      
+      start_ts := curr_date + ((random() * 6)::INTEGER || ' days')::INTERVAL + 
+                  ((random() * 24)::INTEGER || ' hours')::INTERVAL;
+      end_ts := start_ts + (restore_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO time_to_restore_service (
+        project_id,
+        incident_id,
+        start_time,
+        end_time,
+        restore_time_hours,
+        description
+      ) VALUES (
+        1,
+        'incident-2024-' || total_incidents,
+        start_ts,
+        end_ts,
+        ROUND(restore_hours, 2),
+        incident_descriptions[(random() * 9 + 1)::INTEGER]
+      );
+    END IF;
+  END LOOP;
+  
+  -- Generate incidents for 2025 (52 weeks)
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- 2025: Fewer incidents overall
+    IF week_num &lt; 13 THEN
+      -- Q1: 0-1 incidents every 2 weeks
+      incident_count := CASE WHEN random() &lt; 0.2 THEN 1 ELSE 0 END;
+    ELSIF week_num &lt; 26 THEN
+      -- Q2: 0-1 incidents every 3 weeks
+      incident_count := CASE WHEN random() &lt; 0.15 THEN 1 ELSE 0 END;
+    ELSIF week_num &lt; 39 THEN
+      -- Q3: 0-1 incidents every 3 weeks
+      incident_count := CASE WHEN random() &lt; 0.12 THEN 1 ELSE 0 END;
+    ELSE
+      -- Q4: 0-1 incidents every 4 weeks
+      incident_count := CASE WHEN random() &lt; 0.10 THEN 1 ELSE 0 END;
+    END IF;
+    
+    IF incident_count &gt; 0 THEN
+      total_incidents := total_incidents + 1;
+      
+      -- 2025: Much faster restore times
+      IF week_num &lt; 13 THEN
+        restore_hours := 3 + (random() * 5);   -- 3-8 hours
+      ELSIF week_num &lt; 26 THEN
+        restore_hours := 2 + (random() * 4);   -- 2-6 hours
+      ELSIF week_num &lt; 39 THEN
+        restore_hours := 1.5 + (random() * 3); -- 1.5-4.5 hours
+      ELSE
+        restore_hours := 1 + (random() * 2);   -- 1-3 hours
+      END IF;
+      
+      start_ts := curr_date + ((random() * 6)::INTEGER || ' days')::INTERVAL + 
+                  ((random() * 24)::INTEGER || ' hours')::INTERVAL;
+      end_ts := start_ts + (restore_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO time_to_restore_service (
+        project_id,
+        incident_id,
+        start_time,
+        end_time,
+        restore_time_hours,
+        description
+      ) VALUES (
+        1,
+        'incident-2025-' || total_incidents,
+        start_ts,
+        end_ts,
+        ROUND(restore_hours, 2),
+        incident_descriptions[(random() * 9 + 1)::INTEGER]
+      );
+    END IF;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted time_to_restore_service records for 2024 and 2025';
+
+// ====== db\seeds\populate_dora_metrics_2_years_fixed.sql (Lines 396-480) ======
+      ELSIF week_num &lt; 78 THEN
+        restore_hours := 6 + (random() * 8);   -- 6-14 hours
+      ELSE
+        restore_hours := 4 + (random() * 6);   -- 4-10 hours
+      END IF;
+      
+      start_ts := curr_date + ((random() * 6)::INTEGER || ' days')::INTERVAL + 
+                  ((random() * 24)::INTEGER || ' hours')::INTERVAL;
+      end_ts := start_ts + (restore_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO time_to_restore_service (
+        project_id,
+        incident_id,
+        start_time,
+        end_time,
+        restore_time_hours,
+        description
+      ) VALUES (
+        1,
+        'incident-2024-' || total_incidents,
+        start_ts,
+        end_ts,
+        ROUND(restore_hours, 2),
+        incident_descriptions[(random() * 9 + 1)::INTEGER]
+      );
+    END IF;
+  END LOOP;
+  
+  -- Generate incidents for 2025 (52 weeks)
+  base_date := '2025-01-01';
+  FOR week_num IN 0..51 LOOP
+    curr_date := base_date + (week_num * 7);
+    
+    -- 2025: Fewer incidents overall
+    IF week_num &lt; 13 THEN
+      -- Q1: 0-1 incidents every 2 weeks
+      incident_count := CASE WHEN random() &lt; 0.2 THEN 1 ELSE 0 END;
+    ELSIF week_num &lt; 26 THEN
+      -- Q2: 0-1 incidents every 3 weeks
+      incident_count := CASE WHEN random() &lt; 0.15 THEN 1 ELSE 0 END;
+    ELSIF week_num &lt; 39 THEN
+      -- Q3: 0-1 incidents every 3 weeks
+      incident_count := CASE WHEN random() &lt; 0.12 THEN 1 ELSE 0 END;
+    ELSE
+      -- Q4: 0-1 incidents every 4 weeks
+      incident_count := CASE WHEN random() &lt; 0.10 THEN 1 ELSE 0 END;
+    END IF;
+    
+    IF incident_count &gt; 0 THEN
+      total_incidents := total_incidents + 1;
+      
+      -- 2025: Much faster restore times
+      IF week_num &lt; 13 THEN
+        restore_hours := 3 + (random() * 5);   -- 3-8 hours
+      ELSIF week_num &lt; 26 THEN
+        restore_hours := 2 + (random() * 4);   -- 2-6 hours
+      ELSIF week_num &lt; 39 THEN
+        restore_hours := 1.5 + (random() * 3); -- 1.5-4.5 hours
+      ELSE
+        restore_hours := 1 + (random() * 2);   -- 1-3 hours
+      END IF;
+      
+      start_ts := curr_date + ((random() * 6)::INTEGER || ' days')::INTERVAL + 
+                  ((random() * 24)::INTEGER || ' hours')::INTERVAL;
+      end_ts := start_ts + (restore_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO time_to_restore_service (
+        project_id,
+        incident_id,
+        start_time,
+        end_time,
+        restore_time_hours,
+        description
+      ) VALUES (
+        1,
+        'incident-2025-' || total_incidents,
+        start_ts,
+        end_ts,
+        ROUND(restore_hours, 2),
+        incident_descriptions[(random() * 9 + 1)::INTEGER]
+      );
+    END IF;
+  END LOOP;
+  
+  RAISE NOTICE 'Inserted time_to_restore_service records';</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 415:7 - Line 429:11),
+              db\seeds\clear_and_repopulate_dora_metrics.sql (Line 471:7 - Line 485:11)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-sql-10')">Show code</button>
+            </div>
+            <pre id="code-sql-10" class="code-block">// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 415-429) ======
+      END IF;
+      
+      start_ts := curr_date + ((random() * 6)::INTEGER || ' days')::INTERVAL + 
+                  ((random() * 24)::INTEGER || ' hours')::INTERVAL;
+      end_ts := start_ts + (restore_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO time_to_restore_service (
+        project_id,
+        incident_id,
+        start_time,
+        end_time,
+        restore_time_hours,
+        description
+      ) VALUES (
+        1,
+
+// ====== db\seeds\clear_and_repopulate_dora_metrics.sql (Lines 471-485) ======
+      END IF;
+      
+      start_ts := curr_date + ((random() * 6)::INTEGER || ' days')::INTERVAL + 
+                  ((random() * 24)::INTEGER || ' hours')::INTERVAL;
+      end_ts := start_ts + (restore_hours || ' hours')::INTERVAL;
+      
+      INSERT INTO time_to_restore_service (
+        project_id,
+        incident_id,
+        start_time,
+        end_time,
+        restore_time_hours,
+        description
+      ) VALUES (
+        1,</pre>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+    
+    <div class="card">
+      <section class="clone-section">
+        <a name="tsx-clones"></a>
+        <h2>tsx</h2>
+        <div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 34:63 - Line 49:42),
+              components\IssueMetricsCard.tsx (Line 57:62 - Line 72:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-1')">Show code</button>
+            </div>
+            <pre id="code-tsx-1" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 34-49) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\IssueMetricsCard.tsx (Lines 57-72) ======
+          &lt;CardTitle className="text-lg"&gt;Issue Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Issue Health Metrics&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 34:63 - Line 49:42),
+              components\MRMetricsCard.tsx (Line 57:59 - Line 72:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-2')">Show code</button>
+            </div>
+            <pre id="code-tsx-2" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 34-49) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\MRMetricsCard.tsx (Lines 57-72) ======
+          &lt;CardTitle className="text-lg"&gt;MR Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;MR Health Metrics&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 34:63 - Line 49:42),
+              components\MilestoneMetricsCard.tsx (Line 24:66 - Line 39:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-3')">Show code</button>
+            </div>
+            <pre id="code-tsx-3" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 34-49) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\MilestoneMetricsCard.tsx (Lines 24-39) ======
+          &lt;CardTitle className="text-lg"&gt;Active Milestone Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Active Milestone Metrics&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 34:63 - Line 49:42),
+              components\SonarMaintainabilityCard.tsx (Line 36:67 - Line 51:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-4')">Show code</button>
+            </div>
+            <pre id="code-tsx-4" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 34-49) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\SonarMaintainabilityCard.tsx (Lines 36-51) ======
+          &lt;CardTitle className="text-lg"&gt;SonarQube Maintainability&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;SonarQube Maintainability&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 34:63 - Line 49:42),
+              components\SonarReliabilityCard.tsx (Line 31:63 - Line 46:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-5')">Show code</button>
+            </div>
+            <pre id="code-tsx-5" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 34-49) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\SonarReliabilityCard.tsx (Lines 31-46) ======
+          &lt;CardTitle className="text-lg"&gt;SonarQube Reliability&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;SonarQube Reliability&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 34:63 - Line 49:42),
+              components\SonarSecurityCard.tsx (Line 34:60 - Line 49:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-6')">Show code</button>
+            </div>
+            <pre id="code-tsx-6" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 34-49) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\SonarSecurityCard.tsx (Lines 34-49) ======
+          &lt;CardTitle className="text-lg"&gt;SonarQube Security&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;SonarQube Security&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 37:65 - Line 49:32),
+              components\DoraMetricsOverviewCard.tsx (Line 21:65 - Line 33:32)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-7')">Show code</button>
+            </div>
+            <pre id="code-tsx-7" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 37-49) ======
+          &lt;div className="flex items-center justify-center py-8"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\DoraMetricsOverviewCard.tsx (Lines 21-33) ======
+          &lt;div className="flex items-center justify-center h-48"&gt;
+            &lt;div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  if (!metrics) {
+    return (
+      &lt;Card&gt;
+        &lt;CardHeader&gt;
+          &lt;CardTitle className="flex items-center gap-2"&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 66:77 - Line 76:18),
+              components\IssueMetricsCard.tsx (Line 95:62 - Line 105:18)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-8')">Show code</button>
+            </div>
+            <pre id="code-tsx-8" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 66-76) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics (Last 7 Days)&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Summary Stats */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;GitCommit className="h-4 w-4 text-blue-500" /&gt;
+
+// ====== components\IssueMetricsCard.tsx (Lines 95-105) ======
+          &lt;CardTitle className="text-lg"&gt;Issue Health Metrics&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Summary Stats */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;AlertCircle className="h-4 w-4 text-orange-500" /&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 66:77 - Line 76:18),
+              components\MRMetricsCard.tsx (Line 95:59 - Line 105:18)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-9')">Show code</button>
+            </div>
+            <pre id="code-tsx-9" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 66-76) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics (Last 7 Days)&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Summary Stats */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;GitCommit className="h-4 w-4 text-blue-500" /&gt;
+
+// ====== components\MRMetricsCard.tsx (Lines 95-105) ======
+          &lt;CardTitle className="text-lg"&gt;MR Health Metrics&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Summary Stats */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;GitMerge className="h-4 w-4 text-blue-500" /&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 66:77 - Line 76:18),
+              components\SonarMaintainabilityCard.tsx (Line 88:67 - Line 98:18)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-10')">Show code</button>
+            </div>
+            <pre id="code-tsx-10" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 66-76) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics (Last 7 Days)&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Summary Stats */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;GitCommit className="h-4 w-4 text-blue-500" /&gt;
+
+// ====== components\SonarMaintainabilityCard.tsx (Lines 88-98) ======
+          &lt;CardTitle className="text-lg"&gt;SonarQube Maintainability&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Priority Issues &amp; Rating */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;AlertTriangle className="h-4 w-4 text-red-500" /&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 66:77 - Line 77:65),
+              components\SonarReliabilityCard.tsx (Line 92:63 - Line 103:65)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-11')">Show code</button>
+            </div>
+            <pre id="code-tsx-11" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 66-77) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics (Last 7 Days)&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Summary Stats */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;GitCommit className="h-4 w-4 text-blue-500" /&gt;
+                &lt;span className="text-sm text-muted-foreground"&gt;Total Commits&lt;/span&gt;
+
+// ====== components\SonarReliabilityCard.tsx (Lines 92-103) ======
+          &lt;CardTitle className="text-lg"&gt;SonarQube Reliability&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Priority Bugs &amp; Rating */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;AlertTriangle className="h-4 w-4 text-red-500" /&gt;
+                &lt;span className="text-sm text-muted-foreground"&gt;Priority Bugs&lt;/span&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\CommitMetricsCard.tsx (Line 66:77 - Line 76:18),
+              components\SonarSecurityCard.tsx (Line 102:60 - Line 112:18)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-12')">Show code</button>
+            </div>
+            <pre id="code-tsx-12" class="code-block">// ====== components\CommitMetricsCard.tsx (Lines 66-76) ======
+          &lt;CardTitle className="text-lg"&gt;Commit Health Metrics (Last 7 Days)&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Summary Stats */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;GitCommit className="h-4 w-4 text-blue-500" /&gt;
+
+// ====== components\SonarSecurityCard.tsx (Lines 102-112) ======
+          &lt;CardTitle className="text-lg"&gt;SonarQube Security&lt;/CardTitle&gt;
+          &lt;span className="text-xs text-muted-foreground"&gt;Updated {lastUpdated}&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardContent&gt;
+        &lt;div className="space-y-6"&gt;
+          {/* Vulnerabilities &amp; Rating */}
+          &lt;div className="grid grid-cols-2 gap-4"&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;ShieldAlert className="h-4 w-4 text-red-500" /&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\IssueMetricsCard.tsx (Line 35:25 - Line 52:13),
+              components\MRMetricsCard.tsx (Line 35:22 - Line 52:13)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-13')">Show code</button>
+            </div>
+            <pre id="code-tsx-13" class="code-block">// ====== components\IssueMetricsCard.tsx (Lines 35-52) ======
+  metrics: IssueMetrics | null;
+  loading: boolean;
+}
+
+const getAlertBadge = (level: string | null) =&gt; {
+  if (!level || level === 'NORMAL') {
+    return &lt;Badge variant="outline" className="bg-green-50 text-green-700 border-green-200"&gt;Normal&lt;/Badge&gt;;
+  }
+  if (level === 'WARNING') {
+    return &lt;Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200"&gt;Warning&lt;/Badge&gt;;
+  }
+  if (level === 'RED_ALERT') {
+    return &lt;Badge variant="destructive"&gt;Alert&lt;/Badge&gt;;
+  }
+  return null;
+};
+
+export const IssueMetricsCard = ({ metrics, loading }: IssueMetricsCardProps) =&gt; {
+
+// ====== components\MRMetricsCard.tsx (Lines 35-52) ======
+  metrics: MRMetrics | null;
+  loading: boolean;
+}
+
+const getAlertBadge = (level: string | null) =&gt; {
+  if (!level || level === 'NORMAL') {
+    return &lt;Badge variant="outline" className="bg-green-50 text-green-700 border-green-200"&gt;Normal&lt;/Badge&gt;;
+  }
+  if (level === 'WARNING') {
+    return &lt;Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200"&gt;Warning&lt;/Badge&gt;;
+  }
+  if (level === 'RED_ALERT') {
+    return &lt;Badge variant="destructive"&gt;Alert&lt;/Badge&gt;;
+  }
+  return null;
+};
+
+export const MRMetricsCard = ({ metrics, loading }: MRMetricsCardProps) =&gt; {</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\IssueMetricsCard.tsx (Line 72:62 - Line 95:42),
+              components\MRMetricsCard.tsx (Line 72:59 - Line 95:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-14')">Show code</button>
+            </div>
+            <pre id="code-tsx-14" class="code-block">// ====== components\IssueMetricsCard.tsx (Lines 72-95) ======
+          &lt;CardTitle className="text-lg"&gt;Issue Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="text-center py-8 text-muted-foreground"&gt;
+            &lt;AlertCircle className="h-12 w-12 mx-auto mb-2 opacity-50" /&gt;
+            &lt;p&gt;No metrics available. Click "Refresh Data" to calculate metrics.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  return (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;CardTitle className="text-lg"&gt;Issue Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\MRMetricsCard.tsx (Lines 72-95) ======
+          &lt;CardTitle className="text-lg"&gt;MR Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="text-center py-8 text-muted-foreground"&gt;
+            &lt;AlertCircle className="h-12 w-12 mx-auto mb-2 opacity-50" /&gt;
+            &lt;p&gt;No metrics available. Click "Refresh Data" to calculate metrics.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  return (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;CardTitle className="text-lg"&gt;MR Health Metrics&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\IssueMetricsCard.tsx (Line 72:62 - Line 95:42),
+              components\MilestoneMetricsCard.tsx (Line 39:66 - Line 62:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-15')">Show code</button>
+            </div>
+            <pre id="code-tsx-15" class="code-block">// ====== components\IssueMetricsCard.tsx (Lines 72-95) ======
+          &lt;CardTitle className="text-lg"&gt;Issue Health Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="text-center py-8 text-muted-foreground"&gt;
+            &lt;AlertCircle className="h-12 w-12 mx-auto mb-2 opacity-50" /&gt;
+            &lt;p&gt;No metrics available. Click "Refresh Data" to calculate metrics.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  return (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;CardTitle className="text-lg"&gt;Issue Health Metrics&lt;/CardTitle&gt;
+
+// ====== components\MilestoneMetricsCard.tsx (Lines 39-62) ======
+          &lt;CardTitle className="text-lg"&gt;Active Milestone Metrics&lt;/CardTitle&gt;
+        &lt;/CardHeader&gt;
+        &lt;CardContent&gt;
+          &lt;div className="text-center py-8 text-muted-foreground"&gt;
+            &lt;AlertCircle className="h-12 w-12 mx-auto mb-2 opacity-50" /&gt;
+            &lt;p&gt;No metrics available. Click "Refresh Data" to calculate metrics.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  return (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;CardTitle className="text-lg"&gt;Active Milestone Metrics&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\IssueMetricsCard.tsx (Line 115:77 - Line 129:56),
+              components\MRMetricsCard.tsx (Line 115:74 - Line 129:56)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-16')">Show code</button>
+            </div>
+            <pre id="code-tsx-16" class="code-block">// ====== components\IssueMetricsCard.tsx (Lines 115-129) ======
+              &lt;p className="text-2xl font-bold"&gt;{metrics.total_closed_issues}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div className="border-t pt-4 space-y-4"&gt;
+            {/* Tier 1: Critical Metrics */}
+            &lt;div className="space-y-3"&gt;
+              &lt;h4 className="text-sm font-semibold text-muted-foreground uppercase"&gt;Critical Metrics&lt;/h4&gt;
+              
+              {/* Velocity */}
+              &lt;div className="flex items-center justify-between"&gt;
+                &lt;div className="flex items-center gap-2"&gt;
+                  &lt;TrendingUp className="h-4 w-4 text-blue-500" /&gt;
+                  &lt;div&gt;
+                    &lt;p className="text-sm font-medium"&gt;Velocity (30d)&lt;/p&gt;
+
+// ====== components\MRMetricsCard.tsx (Lines 115-129) ======
+              &lt;p className="text-2xl font-bold"&gt;{metrics.total_merged_mrs}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div className="border-t pt-4 space-y-4"&gt;
+            {/* Tier 1: Critical Metrics */}
+            &lt;div className="space-y-3"&gt;
+              &lt;h4 className="text-sm font-semibold text-muted-foreground uppercase"&gt;Critical Metrics&lt;/h4&gt;
+              
+              {/* Merge Velocity */}
+              &lt;div className="flex items-center justify-between"&gt;
+                &lt;div className="flex items-center gap-2"&gt;
+                  &lt;TrendingUp className="h-4 w-4 text-blue-500" /&gt;
+                  &lt;div&gt;
+                    &lt;p className="text-sm font-medium"&gt;Merge Velocity (30d)&lt;/p&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\IssueMetricsCard.tsx (Line 169:61 - Line 179:64),
+              components\MRMetricsCard.tsx (Line 168:63 - Line 178:64)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-17')">Show code</button>
+            </div>
+            <pre id="code-tsx-17" class="code-block">// ====== components\IssueMetricsCard.tsx (Lines 169-179) ======
+                {getAlertBadge(metrics.bug_ratio_alert_level)}
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            {/* Tier 2: Important Metrics */}
+            &lt;div className="space-y-3 pt-2 border-t"&gt;
+              &lt;h4 className="text-sm font-semibold text-muted-foreground uppercase"&gt;Additional Metrics&lt;/h4&gt;
+              
+              &lt;div className="grid grid-cols-2 gap-3"&gt;
+                &lt;div className="space-y-1"&gt;
+                  &lt;p className="text-xs text-muted-foreground"&gt;Stale Issues&lt;/p&gt;
+
+// ====== components\MRMetricsCard.tsx (Lines 168-178) ======
+                {getAlertBadge(metrics.revert_rate_alert_level)}
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            {/* Tier 2: Important Metrics */}
+            &lt;div className="space-y-3 pt-2 border-t"&gt;
+              &lt;h4 className="text-sm font-semibold text-muted-foreground uppercase"&gt;Additional Metrics&lt;/h4&gt;
+              
+              &lt;div className="grid grid-cols-2 gap-3"&gt;
+                &lt;div className="space-y-1"&gt;
+                  &lt;p className="text-xs text-muted-foreground"&gt;Stale MRs&lt;/p&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\SonarMaintainabilityCard.tsx (Line 56:11 - Line 77:8),
+              components\SonarReliabilityCard.tsx (Line 51:11 - Line 72:8)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-18')">Show code</button>
+            </div>
+            <pre id="code-tsx-18" class="code-block">// ====== components\SonarMaintainabilityCard.tsx (Lines 56-77) ======
+          &lt;/p&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString();
+
+  // Helper to get rating badge color
+  const getRatingColor = (rating: string) =&gt; {
+    switch (rating) {
+      case 'A': return 'bg-green-500';
+      case 'B': return 'bg-lime-500';
+      case 'C': return 'bg-yellow-500';
+      case 'D': return 'bg-orange-500';
+      case 'E': return 'bg-red-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  // Helper to get priority issues badge
+  const getPriorityBadge = () =&gt; {
+
+// ====== components\SonarReliabilityCard.tsx (Lines 51-72) ======
+          &lt;/p&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString();
+
+  // Helper to get rating badge color
+  const getRatingColor = (rating: string) =&gt; {
+    switch (rating) {
+      case 'A': return 'bg-green-500';
+      case 'B': return 'bg-lime-500';
+      case 'C': return 'bg-yellow-500';
+      case 'D': return 'bg-orange-500';
+      case 'E': return 'bg-red-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  // Helper to format time (minutes to hours/days)
+  const formatRemediationTime = (minutes: number): string =&gt; {</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\SonarMaintainabilityCard.tsx (Line 56:11 - Line 81:26),
+              components\SonarSecurityCard.tsx (Line 54:11 - Line 84:8)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-19')">Show code</button>
+            </div>
+            <pre id="code-tsx-19" class="code-block">// ====== components\SonarMaintainabilityCard.tsx (Lines 56-81) ======
+          &lt;/p&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString();
+
+  // Helper to get rating badge color
+  const getRatingColor = (rating: string) =&gt; {
+    switch (rating) {
+      case 'A': return 'bg-green-500';
+      case 'B': return 'bg-lime-500';
+      case 'C': return 'bg-yellow-500';
+      case 'D': return 'bg-orange-500';
+      case 'E': return 'bg-red-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  // Helper to get priority issues badge
+  const getPriorityBadge = () =&gt; {
+    const total = metrics.maintainability_high + metrics.maintainability_blocker;
+    if (total === 0) return &lt;Badge variant="outline" className="bg-green-50"&gt;Healthy&lt;/Badge&gt;;
+    if (total &lt;= 5) return &lt;Badge variant="outline" className="bg-yellow-50"&gt;Warning&lt;/Badge&gt;;
+    return &lt;Badge variant="destructive"&gt;Risk&lt;/Badge&gt;;
+
+// ====== components\SonarSecurityCard.tsx (Lines 54-84) ======
+          &lt;/p&gt;
+        &lt;/CardContent&gt;
+      &lt;/Card&gt;
+    );
+  }
+
+  const lastUpdated = new Date(metrics.calculated_at).toLocaleString();
+
+  // Helper to get rating badge color
+  const getRatingColor = (rating: string) =&gt; {
+    switch (rating) {
+      case 'A': return 'bg-green-500';
+      case 'B': return 'bg-lime-500';
+      case 'C': return 'bg-yellow-500';
+      case 'D': return 'bg-orange-500';
+      case 'E': return 'bg-red-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  // Helper to format time (minutes to hours/days)
+  const formatRemediationTime = (minutes: number): string =&gt; {
+    if (minutes &lt; 60) return `${minutes}m`;
+    const hours = Math.floor(minutes / 60);
+    if (hours &lt; 24) return `${hours}h`;
+    const days = Math.floor(hours / 24);
+    return `${days}d`;
+  };
+
+  // Helper to get vulnerability badge
+  const getVulnerabilityBadge = () =&gt; {</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\SonarMaintainabilityCard.tsx (Line 78:81 - Line 88:42),
+              components\SonarReliabilityCard.tsx (Line 82:63 - Line 92:42)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-20')">Show code</button>
+            </div>
+            <pre id="code-tsx-20" class="code-block">// ====== components\SonarMaintainabilityCard.tsx (Lines 78-88) ======
+    const total = metrics.maintainability_high + metrics.maintainability_blocker;
+    if (total === 0) return &lt;Badge variant="outline" className="bg-green-50"&gt;Healthy&lt;/Badge&gt;;
+    if (total &lt;= 5) return &lt;Badge variant="outline" className="bg-yellow-50"&gt;Warning&lt;/Badge&gt;;
+    return &lt;Badge variant="destructive"&gt;Risk&lt;/Badge&gt;;
+  };
+
+  return (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;CardTitle className="text-lg"&gt;SonarQube Maintainability&lt;/CardTitle&gt;
+
+// ====== components\SonarReliabilityCard.tsx (Lines 82-92) ======
+    const total = metrics.bugs_critical + metrics.bugs_blocker;
+    if (total === 0) return &lt;Badge variant="outline" className="bg-green-50"&gt;Healthy&lt;/Badge&gt;;
+    if (total &lt;= 5) return &lt;Badge variant="outline" className="bg-yellow-50"&gt;Warning&lt;/Badge&gt;;
+    return &lt;Badge variant="destructive"&gt;Risk&lt;/Badge&gt;;
+  };
+
+  return (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;CardTitle className="text-lg"&gt;SonarQube Reliability&lt;/CardTitle&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\SonarMaintainabilityCard.tsx (Line 108:86 - Line 117:61),
+              components\SonarReliabilityCard.tsx (Line 112:72 - Line 121:61)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-21')">Show code</button>
+            </div>
+            <pre id="code-tsx-21" class="code-block">// ====== components\SonarMaintainabilityCard.tsx (Lines 108-117) ======
+                {metrics.maintainability_high} High, {metrics.maintainability_blocker} Blocker
+              &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;Gauge className="h-4 w-4 text-blue-500" /&gt;
+                &lt;span className="text-sm text-muted-foreground"&gt;Rating&lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;Badge className={`${getRatingColor(metrics.maintainability_rating)} text-white text-xl px-3 py-1`}&gt;
+
+// ====== components\SonarReliabilityCard.tsx (Lines 112-121) ======
+                {metrics.bugs_critical} Critical, {metrics.bugs_blocker} Blocker
+              &lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div className="space-y-1"&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;Gauge className="h-4 w-4 text-blue-500" /&gt;
+                &lt;span className="text-sm text-muted-foreground"&gt;Rating&lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div className="flex items-center gap-2"&gt;
+                &lt;Badge className={`${getRatingColor(metrics.reliability_rating)} text-white text-xl px-3 py-1`}&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              components\SonarReliabilityCard.tsx (Line 151:84 - Line 165:54),
+              components\SonarSecurityCard.tsx (Line 178:24 - Line 192:54)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-22')">Show code</button>
+            </div>
+            <pre id="code-tsx-22" class="code-block">// ====== components\SonarReliabilityCard.tsx (Lines 151-165) ======
+                &lt;Badge variant={metrics.bugs_new &gt; 0 ? "destructive" : "outline"} /&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            {/* Remediation Effort */}
+            &lt;div className="space-y-3"&gt;
+              &lt;h4 className="text-sm font-semibold text-muted-foreground uppercase"&gt;Remediation&lt;/h4&gt;
+              
+              &lt;div className="flex items-center justify-between"&gt;
+                &lt;div className="flex items-center gap-2"&gt;
+                  &lt;Clock className="h-4 w-4 text-blue-500" /&gt;
+                  &lt;div&gt;
+                    &lt;p className="text-sm font-medium"&gt;Fix Time Estimate&lt;/p&gt;
+                    &lt;p className="text-xs text-muted-foreground"&gt;
+                      {formatRemediationTime(metrics.reliability_remediation_effort)} estimated to fix all bugs
+
+// ====== components\SonarSecurityCard.tsx (Lines 178-192) ======
+                &lt;/Badge&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            {/* Remediation Effort */}
+            &lt;div className="space-y-3"&gt;
+              &lt;h4 className="text-sm font-semibold text-muted-foreground uppercase"&gt;Remediation&lt;/h4&gt;
+              
+              &lt;div className="flex items-center justify-between"&gt;
+                &lt;div className="flex items-center gap-2"&gt;
+                  &lt;Clock className="h-4 w-4 text-blue-500" /&gt;
+                  &lt;div&gt;
+                    &lt;p className="text-sm font-medium"&gt;Fix Time Estimate&lt;/p&gt;
+                    &lt;p className="text-xs text-muted-foreground"&gt;
+                      {formatRemediationTime(metrics.security_remediation_effort)} to fix vulnerabilities</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              pages\DORADashboard.tsx (Line 410:25 - Line 422:57),
+              pages\DORADashboard.tsx (Line 464:39 - Line 476:57)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-23')">Show code</button>
+            </div>
+            <pre id="code-tsx-23" class="code-block">// ====== pages\DORADashboard.tsx (Lines 410-422) ======
+                  &lt;/defs&gt;
+                  &lt;CartesianGrid strokeDasharray="3 3" /&gt;
+                  &lt;XAxis 
+                    dataKey="period" 
+                    tickFormatter={formatPeriodLabel}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  /&gt;
+                  &lt;YAxis /&gt;
+                  &lt;Tooltip 
+                    labelFormatter={formatPeriodLabel}
+                    formatter={(value: number) =&gt; [value, 'Deployments']}
+
+// ====== pages\DORADashboard.tsx (Lines 464-476) ======
+                &lt;LineChart data={data}&gt;
+                  &lt;CartesianGrid strokeDasharray="3 3" /&gt;
+                  &lt;XAxis 
+                    dataKey="period" 
+                    tickFormatter={formatPeriodLabel}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  /&gt;
+                  &lt;YAxis /&gt;
+                  &lt;Tooltip 
+                    labelFormatter={formatPeriodLabel}
+                    formatter={(value: number) =&gt; [value.toFixed(2) + ' hrs', 'Lead Time']}</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              pages\DORADashboard.tsx (Line 459:13 - Line 473:25),
+              pages\DORADashboard.tsx (Line 595:13 - Line 609:25)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-24')">Show code</button>
+            </div>
+            <pre id="code-tsx-24" class="code-block">// ====== pages\DORADashboard.tsx (Lines 459-473) ======
+            &lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent&gt;
+            &lt;div className="h-80"&gt;
+              &lt;ResponsiveContainer width="100%" height="100%"&gt;
+                &lt;LineChart data={data}&gt;
+                  &lt;CartesianGrid strokeDasharray="3 3" /&gt;
+                  &lt;XAxis 
+                    dataKey="period" 
+                    tickFormatter={formatPeriodLabel}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  /&gt;
+                  &lt;YAxis /&gt;
+
+// ====== pages\DORADashboard.tsx (Lines 595-609) ======
+            &lt;/CardDescription&gt;
+          &lt;/CardHeader&gt;
+          &lt;CardContent&gt;
+            &lt;div className="h-80"&gt;
+              &lt;ResponsiveContainer width="100%" height="100%"&gt;
+                &lt;LineChart data={data}&gt;
+                  &lt;CartesianGrid strokeDasharray="3 3" /&gt;
+                  &lt;XAxis 
+                    dataKey="period" 
+                    tickFormatter={formatPeriodLabel}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  /&gt;
+                  &lt;YAxis unit=" hrs" /&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              pages\DORADashboard.tsx (Line 481:42 - Line 492:62),
+              pages\DORADashboard.tsx (Line 617:40 - Line 628:62)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-25')">Show code</button>
+            </div>
+            <pre id="code-tsx-25" class="code-block">// ====== pages\DORADashboard.tsx (Lines 481-492) ======
+                    stroke={COLORS.purple} 
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  /&gt;
+                &lt;/LineChart&gt;
+              &lt;/ResponsiveContainer&gt;
+            &lt;/div&gt;
+            &lt;div className="mt-4 grid grid-cols-3 gap-4 text-center"&gt;
+              &lt;div&gt;
+                &lt;div className="text-sm text-gray-600"&gt;Current&lt;/div&gt;
+                &lt;div className="text-2xl font-bold"&gt;{summary.lead_time.current.toFixed(1)} hrs&lt;/div&gt;
+
+// ====== pages\DORADashboard.tsx (Lines 617-628) ======
+                    stroke={COLORS.cyan} 
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  /&gt;
+                &lt;/LineChart&gt;
+              &lt;/ResponsiveContainer&gt;
+            &lt;/div&gt;
+            &lt;div className="mt-4 grid grid-cols-3 gap-4 text-center"&gt;
+              &lt;div&gt;
+                &lt;div className="text-sm text-gray-600"&gt;Current&lt;/div&gt;
+                &lt;div className="text-2xl font-bold"&gt;{summary.restore_time.current.toFixed(1)} hrs&lt;/div&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              pages\DoraMetricsInput.tsx (Line 496:20 - Line 509:52),
+              pages\DoraMetricsInput.tsx (Line 578:22 - Line 591:52)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-26')">Show code</button>
+            </div>
+            <pre id="code-tsx-26" class="code-block">// ====== pages\DoraMetricsInput.tsx (Lines 496-509) ======
+                  /&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;div className="flex justify-end gap-2"&gt;
+                &lt;Button
+                  type="button"
+                  variant="outline"
+                  onClick={() =&gt; setSelectedMetric(null)}
+                &gt;
+                  Cancel
+                &lt;/Button&gt;
+                &lt;Button type="submit"&gt;
+                  &lt;Save className="h-4 w-4 mr-2" /&gt;
+
+// ====== pages\DoraMetricsInput.tsx (Lines 578-591) ======
+                  &lt;/p&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;div className="flex justify-end gap-2"&gt;
+                &lt;Button
+                  type="button"
+                  variant="outline"
+                  onClick={() =&gt; setSelectedMetric(null)}
+                &gt;
+                  Cancel
+                &lt;/Button&gt;
+                &lt;Button type="submit"&gt;
+                  &lt;Save className="h-4 w-4 mr-2" /&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              pages\DoraMetricsInput.tsx (Line 497:22 - Line 509:52),
+              pages\DoraMetricsInput.tsx (Line 815:18 - Line 827:52)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-27')">Show code</button>
+            </div>
+            <pre id="code-tsx-27" class="code-block">// ====== pages\DoraMetricsInput.tsx (Lines 497-509) ======
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;div className="flex justify-end gap-2"&gt;
+                &lt;Button
+                  type="button"
+                  variant="outline"
+                  onClick={() =&gt; setSelectedMetric(null)}
+                &gt;
+                  Cancel
+                &lt;/Button&gt;
+                &lt;Button type="submit"&gt;
+                  &lt;Save className="h-4 w-4 mr-2" /&gt;
+
+// ====== pages\DoraMetricsInput.tsx (Lines 815-827) ======
+                /&gt;
+              &lt;/div&gt;
+
+              &lt;div className="flex justify-end gap-2"&gt;
+                &lt;Button
+                  type="button"
+                  variant="outline"
+                  onClick={() =&gt; setSelectedMetric(null)}
+                &gt;
+                  Cancel
+                &lt;/Button&gt;
+                &lt;Button type="submit"&gt;
+                  &lt;Save className="h-4 w-4 mr-2" /&gt;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              pages\GeminiTest.tsx (Line 106:34 - Line 125:21),
+              pages\GeminiTest.tsx (Line 174:44 - Line 193:21)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-tsx-28')">Show code</button>
+            </div>
+            <pre id="code-tsx-28" class="code-block">// ====== pages\GeminiTest.tsx (Lines 106-125) ======
+      console.log('API Response:', result); // Debug log
+      
+      // Check if response contains an error
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      
+      // Handle both direct response and wrapped response
+      const responseText = result.response || result;
+      
+      // Make sure we're setting a string, not an object
+      if (typeof responseText === 'string') {
+        setResponse(responseText);
+      } else {
+        setResponse(JSON.stringify(responseText, null, 2));
+      }
+      
+      toast({
+        title: "Success",
+        description: "Response generated successfully",
+
+// ====== pages\GeminiTest.tsx (Lines 174-193) ======
+      console.log('API Response with file:', result); // Debug log
+      
+      // Check if response contains an error
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      
+      // Handle both direct response and wrapped response
+      const responseText = result.response || result;
+      
+      // Make sure we're setting a string, not an object
+      if (typeof responseText === 'string') {
+        setResponse(responseText);
+      } else {
+        setResponse(JSON.stringify(responseText, null, 2));
+      }
+      
+      toast({
+        title: "Success",
+        description: "Response generated with PDF successfully",</pre>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+    
+    <div class="card">
+      <section class="clone-section">
+        <a name="typescript-clones"></a>
+        <h2>typescript</h2>
+        <div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 43:31 - Line 54:10),
+              controllers\healthScoreController.ts (Line 169:36 - Line 180:10)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-1')">Show code</button>
+            </div>
+            <pre id="code-typescript-1" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 43-54) ======
+export const getCommitMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await commitMetricsDbService.getMetrics(projectId);
+
+// ====== controllers\healthScoreController.ts (Lines 169-180) ======
+export const getLatestHealthScores = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const pool = getPool();</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 43:31 - Line 52:6),
+              controllers\issueMetricsController.ts (Line 12:34 - Line 21:6)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-2')">Show code</button>
+            </div>
+            <pre id="code-typescript-2" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 43-52) ======
+export const getCommitMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+// ====== controllers\issueMetricsController.ts (Lines 12-21) ======
+export const refreshIssueMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 43:31 - Line 54:26),
+              controllers\issueMetricsController.ts (Line 48:30 - Line 59:26)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-3')">Show code</button>
+            </div>
+            <pre id="code-typescript-3" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 43-54) ======
+export const getCommitMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await commitMetricsDbService.getMetrics(projectId);
+
+// ====== controllers\issueMetricsController.ts (Lines 48-59) ======
+export const getIssueMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await issueMetricsDbService.getMetrics(projectId);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 43:31 - Line 54:10),
+              controllers\issueMetricsController.ts (Line 85:36 - Line 97:10)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-4')">Show code</button>
+            </div>
+            <pre id="code-typescript-4" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 43-54) ======
+export const getCommitMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await commitMetricsDbService.getMetrics(projectId);
+
+// ====== controllers\issueMetricsController.ts (Lines 85-97) ======
+export const getIssueMetricsTrends = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    // Get current metrics
+    const currentMetrics = await issueMetricsDbService.getMetrics(projectId);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 43:31 - Line 54:26),
+              controllers\milestoneMetricsController.ts (Line 12:38 - Line 23:17)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-5')">Show code</button>
+            </div>
+            <pre id="code-typescript-5" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 43-54) ======
+export const getCommitMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await commitMetricsDbService.getMetrics(projectId);
+
+// ====== controllers\milestoneMetricsController.ts (Lines 12-23) ======
+export const refreshMilestoneMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    console.log(`[MilestoneMetricsController] Refresh requested for project ${projectId}`);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 43:31 - Line 54:26),
+              controllers\milestoneMetricsController.ts (Line 46:34 - Line 57:17)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-6')">Show code</button>
+            </div>
+            <pre id="code-typescript-6" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 43-54) ======
+export const getCommitMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await commitMetricsDbService.getMetrics(projectId);
+
+// ====== controllers\milestoneMetricsController.ts (Lines 46-57) ======
+export const getMilestoneMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    console.log(`[MilestoneMetricsController] Get metrics requested for project ${projectId}`);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 80:38 - Line 86:36),
+              controllers\healthScoreController.ts (Line 11:36 - Line 17:36)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-7')">Show code</button>
+            </div>
+            <pre id="code-typescript-7" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 80-86) ======
+export const getCommitMetricsHistory = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({ error: 'Invalid project ID' });
+
+// ====== controllers\healthScoreController.ts (Lines 11-17) ======
+export const getHealthScoreHistory = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\commitMetricsController.ts (Line 80:38 - Line 89:50),
+              controllers\issueMetricsController.ts (Line 133:37 - Line 145:10)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-8')">Show code</button>
+            </div>
+            <pre id="code-typescript-8" class="code-block">// ====== controllers\commitMetricsController.ts (Lines 80-89) ======
+export const getCommitMetricsHistory = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({ error: 'Invalid project ID' });
+    }
+
+    const history = await commitMetricsDbService.getMetricsHistory(projectId, days);
+
+// ====== controllers\issueMetricsController.ts (Lines 133-145) ======
+export const getIssueMetricsHistory = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const history = await issueMetricsDbService.getMetricsHistory(projectId, days);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\healthScoreController.ts (Line 12:3 - Line 23:25),
+              controllers\sonarQubeMaintainabilityController.ts (Line 93:3 - Line 104:26)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-9')">Show code</button>
+            </div>
+            <pre id="code-typescript-9" class="code-block">// ====== controllers\healthScoreController.ts (Lines 12-23) ======
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const pool = getPool();
+
+// ====== controllers\sonarQubeMaintainabilityController.ts (Lines 93-104) ======
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const history = await dbService.getMetricsHistory(projectId, days);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\mrMetricsController.ts (Line 13:31 - Line 22:6),
+              controllers\mrMetricsController.ts (Line 48:27 - Line 57:6)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-10')">Show code</button>
+            </div>
+            <pre id="code-typescript-10" class="code-block">// ====== controllers\mrMetricsController.ts (Lines 13-22) ======
+export const refreshMRMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id, 10);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+// ====== controllers\mrMetricsController.ts (Lines 48-57) ======
+export const getMRMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id, 10);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\mrMetricsController.ts (Line 13:31 - Line 24:12),
+              controllers\mrMetricsController.ts (Line 86:33 - Line 97:10)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-11')">Show code</button>
+            </div>
+            <pre id="code-typescript-11" class="code-block">// ====== controllers\mrMetricsController.ts (Lines 13-24) ======
+export const refreshMRMetrics = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id, 10);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    console.log(`[MRMetricsController] Refreshing MR metrics for project ${projectId}`);
+
+// ====== controllers\mrMetricsController.ts (Lines 86-97) ======
+export const getMRMetricsTrends = async (req: Request, res: Response) =&gt; {
+  try {
+    const projectId = parseInt(req.params.id, 10);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const trends = await mrMetricsDbService.getWeekOverWeekTrends(projectId);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\projectController.ts (Line 29:24 - Line 38:28),
+              controllers\projectController.ts (Line 80:21 - Line 89:28)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-12')">Show code</button>
+            </div>
+            <pre id="code-typescript-12" class="code-block">// ====== controllers\projectController.ts (Lines 29-38) ======
+  getProjectByIdFromDB = async (req: Request, res: Response) =&gt; {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+      const project = await projectFetchService.getProjectByIdFromDB(projectId);
+
+// ====== controllers\projectController.ts (Lines 80-89) ======
+  syncSingleProject = async (req: Request, res: Response) =&gt; {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+      const project = await projectSyncService.syncProject(projectId);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\projectController.ts (Line 29:24 - Line 36:8),
+              controllers\projectController.ts (Line 100:24 - Line 107:8)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-13')">Show code</button>
+            </div>
+            <pre id="code-typescript-13" class="code-block">// ====== controllers\projectController.ts (Lines 29-36) ======
+  getProjectByIdFromDB = async (req: Request, res: Response) =&gt; {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+// ====== controllers\projectController.ts (Lines 100-107) ======
+  refreshSingleProject = async (req: Request, res: Response) =&gt; {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\projectController.ts (Line 29:24 - Line 38:12),
+              controllers\projectController.ts (Line 187:28 - Line 196:12)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-14')">Show code</button>
+            </div>
+            <pre id="code-typescript-14" class="code-block">// ====== controllers\projectController.ts (Lines 29-38) ======
+  getProjectByIdFromDB = async (req: Request, res: Response) =&gt; {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+      const project = await projectFetchService.getProjectByIdFromDB(projectId);
+
+// ====== controllers\projectController.ts (Lines 187-196) ======
+  getProjectMembersHandler = async (req: Request, res: Response) =&gt; {
+    try {
+      const { id } = req.params;
+      const projectId = Number(id);
+
+      if (!projectId || isNaN(projectId)) {
+        return res.status(400).json({ error: 'Invalid project ID' });
+      }
+
+      const members = await gitLabMemberService.getProjectMembers(projectId);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\sonarQubeMaintainabilityController.ts (Line 15:54 - Line 26:17),
+              controllers\sonarQubeReliabilityController.ts (Line 14:50 - Line 25:17)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-15')">Show code</button>
+            </div>
+            <pre id="code-typescript-15" class="code-block">// ====== controllers\sonarQubeMaintainabilityController.ts (Lines 15-26) ======
+  const dbService = new SonarMaintainabilityDbService();
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Invalid project ID' 
+      });
+    }
+
+    console.log(`[SonarQubeMaintainabilityController] Refreshing metrics for project ${projectId}`);
+
+// ====== controllers\sonarQubeReliabilityController.ts (Lines 14-25) ======
+  const dbService = new SonarReliabilityDbService();
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Invalid project ID' 
+      });
+    }
+
+    console.log(`[SonarReliabilityController] Refreshing metrics for project ${projectId}`);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\sonarQubeMaintainabilityController.ts (Line 15:54 - Line 26:17),
+              controllers\sonarQubeSecurityController.ts (Line 14:47 - Line 25:17)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-16')">Show code</button>
+            </div>
+            <pre id="code-typescript-16" class="code-block">// ====== controllers\sonarQubeMaintainabilityController.ts (Lines 15-26) ======
+  const dbService = new SonarMaintainabilityDbService();
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Invalid project ID' 
+      });
+    }
+
+    console.log(`[SonarQubeMaintainabilityController] Refreshing metrics for project ${projectId}`);
+
+// ====== controllers\sonarQubeSecurityController.ts (Lines 14-25) ======
+  const dbService = new SonarSecurityDbService();
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Invalid project ID' 
+      });
+    }
+
+    console.log(`[SonarSecurityController] Refreshing metrics for project ${projectId}`);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\sonarQubeMaintainabilityController.ts (Line 51:54 - Line 68:15),
+              controllers\sonarQubeReliabilityController.ts (Line 49:50 - Line 66:15)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-17')">Show code</button>
+            </div>
+            <pre id="code-typescript-17" class="code-block">// ====== controllers\sonarQubeMaintainabilityController.ts (Lines 51-68) ======
+  const dbService = new SonarMaintainabilityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await dbService.getMetrics(projectId);
+
+    if (!metrics) {
+      return res.status(404).json({
+        success: false,
+        error: 'No maintainability metrics found for this project',
+
+// ====== controllers\sonarQubeReliabilityController.ts (Lines 49-66) ======
+  const dbService = new SonarReliabilityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await dbService.getMetrics(projectId);
+
+    if (!metrics) {
+      return res.status(404).json({
+        success: false,
+        error: 'No reliability metrics found for this project',</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\sonarQubeMaintainabilityController.ts (Line 51:54 - Line 68:15),
+              controllers\sonarQubeSecurityController.ts (Line 49:47 - Line 66:15)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-18')">Show code</button>
+            </div>
+            <pre id="code-typescript-18" class="code-block">// ====== controllers\sonarQubeMaintainabilityController.ts (Lines 51-68) ======
+  const dbService = new SonarMaintainabilityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await dbService.getMetrics(projectId);
+
+    if (!metrics) {
+      return res.status(404).json({
+        success: false,
+        error: 'No maintainability metrics found for this project',
+
+// ====== controllers\sonarQubeSecurityController.ts (Lines 49-66) ======
+  const dbService = new SonarSecurityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const metrics = await dbService.getMetrics(projectId);
+
+    if (!metrics) {
+      return res.status(404).json({
+        success: false,
+        error: 'No security metrics found for this project',</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\sonarQubeMaintainabilityController.ts (Line 91:54 - Line 111:19),
+              controllers\sonarQubeReliabilityController.ts (Line 89:50 - Line 109:19)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-19')">Show code</button>
+            </div>
+            <pre id="code-typescript-19" class="code-block">// ====== controllers\sonarQubeMaintainabilityController.ts (Lines 91-111) ======
+  const dbService = new SonarMaintainabilityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const history = await dbService.getMetricsHistory(projectId, days);
+
+    res.json({
+      success: true,
+      data: history,
+    });
+  } catch (error: any) {
+    console.error('[SonarQubeMaintainabilityController] Error fetching history:', error);
+
+// ====== controllers\sonarQubeReliabilityController.ts (Lines 89-109) ======
+  const dbService = new SonarReliabilityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const history = await dbService.getMetricsHistory(projectId, days);
+
+    res.json({
+      success: true,
+      data: history,
+    });
+  } catch (error: any) {
+    console.error('[SonarReliabilityController] Error fetching history:', error);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              controllers\sonarQubeMaintainabilityController.ts (Line 91:54 - Line 111:19),
+              controllers\sonarQubeSecurityController.ts (Line 89:47 - Line 109:19)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-20')">Show code</button>
+            </div>
+            <pre id="code-typescript-20" class="code-block">// ====== controllers\sonarQubeMaintainabilityController.ts (Lines 91-111) ======
+  const dbService = new SonarMaintainabilityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const history = await dbService.getMetricsHistory(projectId, days);
+
+    res.json({
+      success: true,
+      data: history,
+    });
+  } catch (error: any) {
+    console.error('[SonarQubeMaintainabilityController] Error fetching history:', error);
+
+// ====== controllers\sonarQubeSecurityController.ts (Lines 89-109) ======
+  const dbService = new SonarSecurityDbService();
+  
+  try {
+    const projectId = parseInt(req.params.id);
+    const days = parseInt(req.query.days as string) || 30;
+
+    if (isNaN(projectId)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid project ID',
+      });
+    }
+
+    const history = await dbService.getMetricsHistory(projectId, days);
+
+    res.json({
+      success: true,
+      data: history,
+    });
+  } catch (error: any) {
+    console.error('[SonarSecurityController] Error fetching metrics history:', error);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              db\queries.ts (Line 273:59 - Line 287:2),
+              services\project\projectRefreshService.ts (Line 11:24 - Line 25:2)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-21')">Show code</button>
+            </div>
+            <pre id="code-typescript-21" class="code-block">// ====== db\queries.ts (Lines 273-287) ======
+export const insertProjectSnapshot = async (snapshotData: {
+  project_id: number;  // GitLab project ID
+  description?: string;
+  web_url?: string;
+  open_issues?: number;
+  open_mrs?: number;
+  open_milestones_count?: number;
+  sonar_project_key?: string;
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
+}): Promise&lt;any&gt; =&gt; {
+
+// ====== services\project\projectRefreshService.ts (Lines 11-25) ======
+interface SnapshotData {
+  project_id: number;
+  description?: string;
+  web_url?: string;
+  open_issues?: number;
+  open_mrs?: number;
+  open_milestones_count?: number;
+  sonar_project_key?: string;
+  sonar_security_high?: number;
+  sonar_security_blocker?: number;
+  sonar_reliability_high?: number;
+  sonar_reliability_blocker?: number;
+  sonar_maintainability_high?: number;
+  sonar_maintainability_blocker?: number;
+}</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\ai\geminiService.ts (Line 160:49 - Line 172:30),
+              services\ai\projectInsightsService.ts (Line 83:26 - Line 95:30)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-22')">Show code</button>
+            </div>
+            <pre id="code-typescript-22" class="code-block">// ====== services\ai\geminiService.ts (Lines 160-172) ======
+      const snapshotDataString = JSON.stringify({
+        project_info: {
+          name: projectSnapshot.project_name,
+          full_path: projectSnapshot.full_path,
+          last_activity_at: projectSnapshot.last_activity_at,
+          snapshot_date: projectSnapshot.snapshot_date
+        },
+        gitlab_metrics: {
+          open_issues: projectSnapshot.open_issues || 0,
+          open_mrs: projectSnapshot.open_mrs || 0,
+          open_milestones: projectSnapshot.open_milestones_count || 0
+        },
+        sonarcloud_metrics: {
+
+// ====== services\ai\projectInsightsService.ts (Lines 83-95) ======
+      const apiMetrics = {
+        project_info: {
+          name: projectSnapshot.project_name,
+          full_path: projectSnapshot.full_path,
+          last_activity_at: projectSnapshot.last_activity_at,
+          snapshot_date: projectSnapshot.snapshot_date
+        },
+        gitlab_metrics: {
+          open_issues: projectSnapshot.open_issues || 0,
+          open_mrs: projectSnapshot.open_mrs || 0,
+          open_milestones: projectSnapshot.open_milestones_count || 0
+        },
+        sonarcloud_metrics: {</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\ai\geminiService.ts (Line 211:7 - Line 222:12),
+              services\ai\projectInsightsService.ts (Line 130:7 - Line 139:12)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-23')">Show code</button>
+            </div>
+            <pre id="code-typescript-23" class="code-block">// ====== services\ai\geminiService.ts (Lines 211-222) ======
+      const buffer = Buffer.from(excelBase64, 'base64');
+      const workbook = XLSX.read(buffer, { type: 'buffer' });
+      
+      // Convert all sheets to JSON
+      const sheets: { [key: string]: any[] } = {};
+      workbook.SheetNames.forEach((sheetName) =&gt; {
+        const worksheet = workbook.Sheets[sheetName];
+        sheets[sheetName] = XLSX.utils.sheet_to_json(worksheet);
+      });
+
+      // Extract project name from Excel
+      const projectName = this.extractProjectNameFromExcel(sheets);
+
+// ====== services\ai\projectInsightsService.ts (Lines 130-139) ======
+      const buffer = Buffer.from(excelBase64, 'base64');
+      const workbook = XLSX.read(buffer, { type: 'buffer' });
+      const sheets: { [key: string]: any[] } = {};
+      workbook.SheetNames.forEach((sheetName) =&gt; {
+        const worksheet = workbook.Sheets[sheetName];
+        sheets[sheetName] = XLSX.utils.sheet_to_json(worksheet);
+      });
+
+      // Step 4: Extract project row
+      const projectRow = this.extractProjectRow(sheets, projectName);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\commitMetrics\commitMetricsSyncService.ts (Line 47:70 - Line 58:56),
+              services\issueMetrics\issueMetricsSyncService.ts (Line 57:69 - Line 68:56)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-24')">Show code</button>
+            </div>
+            <pre id="code-typescript-24" class="code-block">// ====== services\commitMetrics\commitMetricsSyncService.ts (Lines 47-58) ======
+      console.error(`[CommitMetricsSync] ❌ Error syncing project ${projectId}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch all required data from GitLab API
+   */
+  private async fetchGitLabData(projectId: number) {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysAgoISO = sevenDaysAgo.toISOString();
+
+// ====== services\issueMetrics\issueMetricsSyncService.ts (Lines 57-68) ======
+      console.error(`[IssueMetricsSync] ❌ Error syncing project ${projectId}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch all required data from GitLab API
+   */
+  private async fetchGitLabData(projectId: number) {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysAgoISO = sevenDaysAgo.toISOString();</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\commitMetrics\commitMetricsSyncService.ts (Line 47:70 - Line 73:6),
+              services\mrMetrics\mrMetricsSyncService.ts (Line 56:66 - Line 73:17)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-25')">Show code</button>
+            </div>
+            <pre id="code-typescript-25" class="code-block">// ====== services\commitMetrics\commitMetricsSyncService.ts (Lines 47-73) ======
+      console.error(`[CommitMetricsSync] ❌ Error syncing project ${projectId}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch all required data from GitLab API
+   */
+  private async fetchGitLabData(projectId: number) {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysAgoISO = sevenDaysAgo.toISOString();
+
+    console.log('[CommitMetricsSync] Fetching commits from last 7 days...');
+
+    // Fetch commits from last 7 days (with stats)
+    const commitsLast7d = await gitLabCommitService.getCommits(
+      projectId,
+      sevenDaysAgoISO,
+      100
+    );
+
+    // Get total commit count using header
+    const totalCommitCount = await gitLabCommitService.getCommitCount(
+      projectId,
+      sevenDaysAgoISO
+    );
+
+// ====== services\mrMetrics\mrMetricsSyncService.ts (Lines 56-73) ======
+      console.error(`[MRMetricsSync] ❌ Error syncing project ${projectId}:`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch all required data from GitLab API
+   */
+  private async fetchGitLabData(projectId: number) {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysAgoISO = sevenDaysAgo.toISOString();
+
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const thirtyDaysAgoISO = thirtyDaysAgo.toISOString();
+
+    console.log('[MRMetricsSync] Fetching basic counts...');</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\gitlab\gitLabIssueService.ts (Line 39:72 - Line 49:21),
+              services\gitlab\gitLabMRService.ts (Line 34:80 - Line 44:21)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-26')">Show code</button>
+            </div>
+            <pre id="code-typescript-26" class="code-block">// ====== services\gitlab\gitLabIssueService.ts (Lines 39-49) ======
+      const response = await client.get(`/projects/${projectId}/issues`, {
+        params: {
+          state,
+          per_page: 1,
+        },
+      });
+      
+      const total = response.headers['x-total'];
+      return total ? parseInt(total, 10) : 0;
+    } catch (error: any) {
+      console.error(`Error fetching issue count for project ${projectId}:`, error.message);
+
+// ====== services\gitlab\gitLabMRService.ts (Lines 34-44) ======
+      const response = await client.get(`/projects/${projectId}/merge_requests`, {
+        params: {
+          state,
+          per_page: 1, // Minimize data transfer
+        },
+      });
+      
+      const total = response.headers['x-total'];
+      return total ? parseInt(total, 10) : 0;
+    } catch (error: any) {
+      console.error(`Error fetching MR count for project ${projectId}:`, error.message);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\gitlab\gitLabIssueService.ts (Line 133:25 - Line 144:20),
+              services\gitlab\gitLabIssueService.ts (Line 209:43 - Line 218:20)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-27')">Show code</button>
+            </div>
+            <pre id="code-typescript-27" class="code-block">// ====== services\gitlab\gitLabIssueService.ts (Lines 133-144) ======
+    createdAfter: string,
+    maxResults: number = 10000
+  ): Promise&lt;GitLabIssues[]&gt; =&gt; {
+    try {
+      const client = gitlabClient.getClient();
+      const allIssues: GitLabIssues[] = [];
+      let page = 1;
+      const perPage = 100; // GitLab max per page
+      
+      while (allIssues.length &lt; maxResults) {
+        const response = await client.get(`/projects/${projectId}/issues`, {
+          params: {
+
+// ====== services\gitlab\gitLabIssueService.ts (Lines 209-218) ======
+  getOpenIssues = async (projectId: number, maxResults: number = 10000): Promise&lt;GitLabIssues[]&gt; =&gt; {
+    try {
+      const client = gitlabClient.getClient();
+      const allIssues: GitLabIssues[] = [];
+      let page = 1;
+      const perPage = 100; // GitLab max per page
+      
+      while (allIssues.length &lt; maxResults) {
+        const response = await client.get(`/projects/${projectId}/issues`, {
+          params: {</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\gitlab\gitLabIssueService.ts (Line 147:25 - Line 171:21),
+              services\gitlab\gitLabIssueService.ts (Line 221:24 - Line 245:21)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-28')">Show code</button>
+            </div>
+            <pre id="code-typescript-28" class="code-block">// ====== services\gitlab\gitLabIssueService.ts (Lines 147-171) ======
+            sort: 'desc',
+            per_page: perPage,
+            page,
+          },
+        });
+        
+        const issues = response.data || [];
+        
+        if (issues.length === 0) {
+          break; // No more issues
+        }
+        
+        allIssues.push(...issues);
+        
+        // If we got less than perPage, we've reached the end
+        if (issues.length &lt; perPage) {
+          break;
+        }
+        
+        page++;
+      }
+      
+      return allIssues.slice(0, maxResults);
+    } catch (error: any) {
+      console.error(`Error fetching opened issues for project ${projectId}:`, error.message);
+
+// ====== services\gitlab\gitLabIssueService.ts (Lines 221-245) ======
+            sort: 'asc',  // Oldest first (for stale detection)
+            per_page: perPage,
+            page,
+          },
+        });
+        
+        const issues = response.data || [];
+        
+        if (issues.length === 0) {
+          break; // No more issues
+        }
+        
+        allIssues.push(...issues);
+        
+        // If we got less than perPage, we've reached the end
+        if (issues.length &lt; perPage) {
+          break;
+        }
+        
+        page++;
+      }
+      
+      return allIssues.slice(0, maxResults);
+    } catch (error: any) {
+      console.error(`Error fetching open issues for project ${projectId}:`, error.message);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\gitlab\gitLabMRService.ts (Line 9:53 - Line 17:20),
+              services\gitlab\gitLabMRService.ts (Line 56:63 - Line 64:20)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-29')">Show code</button>
+            </div>
+            <pre id="code-typescript-29" class="code-block">// ====== services\gitlab\gitLabMRService.ts (Lines 9-17) ======
+  getProjectMergeRequests = async (projectId: number): Promise&lt;GitLabMergeRequest[]&gt; =&gt; {
+    try {
+      const client = gitlabClient.getClient();
+      const response = await client.get(`/projects/${projectId}/merge_requests`, {
+        params: {
+          state: 'opened', // Fetch only open merge requests
+          order_by: 'updated_at',
+          sort: 'desc',
+          per_page: 100,
+
+// ====== services\gitlab\gitLabMRService.ts (Lines 56-64) ======
+  getOpenMRs = async (projectId: number, perPage: number = 500): Promise&lt;GitLabMergeRequest[]&gt; =&gt; {
+    try {
+      const client = gitlabClient.getClient();
+      const response = await client.get(`/projects/${projectId}/merge_requests`, {
+        params: {
+          state: 'opened',
+          order_by: 'updated_at',
+          sort: 'desc',
+          per_page: perPage,</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\issueMetrics\issueMetricsDbService.ts (Line 284:65 - Line 300:51),
+              services\mrMetrics\mrMetricsDbService.ts (Line 269:62 - Line 285:51)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-30')">Show code</button>
+            </div>
+            <pre id="code-typescript-30" class="code-block">// ====== services\issueMetrics\issueMetricsDbService.ts (Lines 284-300) ======
+      console.error('[IssueMetricsDb] Error calculating trends:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Calculate percentage change between two values
+   */
+  private calculateChange(current: number, previous: number): number {
+    if (previous === 0) return current &gt; 0 ? 100 : 0;
+    return parseFloat((((current - previous) / previous) * 100).toFixed(2));
+  }
+
+  /**
+   * Get ALL metrics snapshots for a project (complete history)
+   */
+  async getAllMetrics(projectId: number): Promise&lt;IssueHealthMetrics[]&gt; {
+
+// ====== services\mrMetrics\mrMetricsDbService.ts (Lines 269-285) ======
+      console.error('[MRMetricsDb] Error calculating trends:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Calculate percentage change between two values
+   */
+  private calculateChange(current: number, previous: number): number {
+    if (previous === 0) return current &gt; 0 ? 100 : 0;
+    return parseFloat((((current - previous) / previous) * 100).toFixed(2));
+  }
+
+  /**
+   * Get ALL metrics snapshots for a project (complete history)
+   */
+  async getAllMetrics(projectId: number): Promise&lt;MRHealthMetrics[]&gt; {</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\project\projectEnrichmentService.ts (Line 90:30 - Line 107:81),
+              services\project\projectRefreshService.ts (Line 78:34 - Line 96:81)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-31')">Show code</button>
+            </div>
+            <pre id="code-typescript-31" class="code-block">// ====== services\project\projectEnrichmentService.ts (Lines 90-107) ======
+      this.getMilestonesCount(project.id),
+    ]);
+
+    // SonarQube metrics: fetch from database mapping
+    const sonarProjectKey = await getSonarProjectKey(project.id);
+    let sonarMetrics = {
+      security_high: 0,
+      security_blocker: 0,
+      reliability_high: 0,
+      reliability_blocker: 0,
+      maintainability_high: 0,
+      maintainability_blocker: 0,
+    };
+    
+    if (sonarProjectKey) {
+      try {
+        const sonarQubeService = new SonarQubeService();
+        sonarMetrics = await sonarQubeService.fetchIssueCounts(sonarProjectKey);
+
+// ====== services\project\projectRefreshService.ts (Lines 78-96) ======
+      this.getOpenMilestonesCount(project.id),
+    ]);
+
+    // SonarQube metrics: fetch from database mapping
+    const sonarProjectKey = await getSonarProjectKey(project.id);
+    
+    let sonarMetrics = {
+      security_high: 0,
+      security_blocker: 0,
+      reliability_high: 0,
+      reliability_blocker: 0,
+      maintainability_high: 0,
+      maintainability_blocker: 0,
+    };
+    
+    if (sonarProjectKey) {
+      try {
+        const sonarQubeService = new SonarQubeService();
+        sonarMetrics = await sonarQubeService.fetchIssueCounts(sonarProjectKey);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarMaintainability\sonarMaintainabilityApiService.ts (Line 21:6 - Line 35:17),
+              services\sonarReliability\sonarReliabilityApiService.ts (Line 11:68 - Line 25:17)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-32')">Show code</button>
+            </div>
+            <pre id="code-typescript-32" class="code-block">// ====== services\sonarMaintainability\sonarMaintainabilityApiService.ts (Lines 21-35) ======
+    });
+  }
+
+  private ensureInitialized() {
+    if (this.initialized) return;
+
+    if (!this.baseUrl || !/^https?:\/\//.test(this.baseUrl)) {
+      throw new Error('Invalid or missing SONARQUBE_URL. Please set it in your .env file.');
+    }
+    if (!this.token) {
+      throw new Error('Missing SONARQUBE_TOKEN. Please set it in your .env file.');
+    }
+
+    this.initialized = true;
+    console.log(`🔧 SonarMaintainabilityApiService initialized with URL: ${this.baseUrl}`);
+
+// ====== services\sonarReliability\sonarReliabilityApiService.ts (Lines 11-25) ======
+    this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+  }
+
+  private ensureInitialized() {
+    if (this.initialized) return;
+
+    if (!this.baseUrl || !/^https?:\/\//.test(this.baseUrl)) {
+      throw new Error('Invalid or missing SONARQUBE_URL. Please set it in your .env file.');
+    }
+    if (!this.token) {
+      throw new Error('Missing SONARQUBE_TOKEN. Please set it in your .env file.');
+    }
+
+    this.initialized = true;
+    console.log(`🔧 SonarReliabilityApiService initialized with URL: ${this.baseUrl}`);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Line 15:48 - Line 37:36),
+              services\sonarReliability\sonarReliabilityCalculationService.ts (Line 12:44 - Line 34:36)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-33')">Show code</button>
+            </div>
+            <pre id="code-typescript-33" class="code-block">// ====== services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Lines 15-37) ======
+  ): SonarQubeMaintainabilityCalculationResult {
+    const measures = component.measures || [];
+    
+    // Helper to find metric value (handles both direct value and period.value)
+    const findMetric = (key: string): number =&gt; {
+      const measure = measures.find(m =&gt; m.metric === key);
+      if (!measure) return 0;
+      
+      // Check for direct value first
+      if (measure.value !== undefined) {
+        return parseFloat(measure.value) || 0;
+      }
+      
+      // Check for period value (for "new" metrics)
+      if (measure.period?.value !== undefined) {
+        return parseFloat(measure.period.value) || 0;
+      }
+      
+      return 0;
+    };
+
+    // Get maintainability rating (1-5) and convert to letter (A-E)
+    const ratingValue = findMetric('sqale_rating');
+
+// ====== services\sonarReliability\sonarReliabilityCalculationService.ts (Lines 12-34) ======
+  ): SonarQubeReliabilityCalculationResult {
+    const measures = component.measures || [];
+    
+    // Helper to find metric value (handles both direct value and period.value)
+    const findMetric = (key: string): number =&gt; {
+      const measure = measures.find(m =&gt; m.metric === key);
+      if (!measure) return 0;
+      
+      // Check for direct value first
+      if (measure.value !== undefined) {
+        return parseFloat(measure.value) || 0;
+      }
+      
+      // Check for period value (for "new" metrics)
+      if (measure.period?.value !== undefined) {
+        return parseFloat(measure.period.value) || 0;
+      }
+      
+      return 0;
+    };
+
+    // Get reliability rating (1-5) and convert to letter (A-E)
+    const ratingValue = findMetric('reliability_rating');</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Line 15:48 - Line 37:10),
+              services\sonarSecurity\sonarSecurityCalculationService.ts (Line 10:41 - Line 32:10)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-34')">Show code</button>
+            </div>
+            <pre id="code-typescript-34" class="code-block">// ====== services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Lines 15-37) ======
+  ): SonarQubeMaintainabilityCalculationResult {
+    const measures = component.measures || [];
+    
+    // Helper to find metric value (handles both direct value and period.value)
+    const findMetric = (key: string): number =&gt; {
+      const measure = measures.find(m =&gt; m.metric === key);
+      if (!measure) return 0;
+      
+      // Check for direct value first
+      if (measure.value !== undefined) {
+        return parseFloat(measure.value) || 0;
+      }
+      
+      // Check for period value (for "new" metrics)
+      if (measure.period?.value !== undefined) {
+        return parseFloat(measure.period.value) || 0;
+      }
+      
+      return 0;
+    };
+
+    // Get maintainability rating (1-5) and convert to letter (A-E)
+    const ratingValue = findMetric('sqale_rating');
+
+// ====== services\sonarSecurity\sonarSecurityCalculationService.ts (Lines 10-32) ======
+  ): SonarQubeSecurityCalculationResult {
+    const measures = component.measures || [];
+    
+    // Helper to find metric value (handles both direct value and period.value)
+    const findMetric = (key: string): number =&gt; {
+      const measure = measures.find(m =&gt; m.metric === key);
+      if (!measure) return 0;
+      
+      // Check for direct value first
+      if (measure.value !== undefined) {
+        return parseFloat(measure.value) || 0;
+      }
+      
+      // Check for period value (for "new" metrics)
+      if (measure.period?.value !== undefined) {
+        return parseFloat(measure.period.value) || 0;
+      }
+      
+      return 0;
+    };
+
+    // Get security rating (1-5) and convert to letter (A-E)
+    const securityRatingValue = findMetric('security_rating');</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Line 53:54 - Line 68:2),
+              services\sonarReliability\sonarReliabilityCalculationService.ts (Line 46:55 - Line 61:2)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-35')">Show code</button>
+            </div>
+            <pre id="code-typescript-35" class="code-block">// ====== services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Lines 53-68) ======
+    console.log('📊 Calculated metrics (detailed):', result);
+
+    return result;
+  }
+
+  /**
+   * Convert SonarQube rating (1-5) to letter grade (A-E)
+   */
+  private getRatingLetter(rating: number): string {
+    if (rating &lt;= 1) return 'A';
+    if (rating &lt;= 2) return 'B';
+    if (rating &lt;= 3) return 'C';
+    if (rating &lt;= 4) return 'D';
+    return 'E';
+  }
+}
+
+// ====== services\sonarReliability\sonarReliabilityCalculationService.ts (Lines 46-61) ======
+    console.log('📊 Calculated reliability metrics:', result);
+
+    return result;
+  }
+
+  /**
+   * Convert SonarQube rating (1-5) to letter grade (A-E)
+   */
+  private getRatingLetter(rating: number): string {
+    if (rating &lt;= 1) return 'A';
+    if (rating &lt;= 2) return 'B';
+    if (rating &lt;= 3) return 'C';
+    if (rating &lt;= 4) return 'D';
+    return 'E';
+  }
+}</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Line 53:54 - Line 68:2),
+              services\sonarSecurity\sonarSecurityCalculationService.ts (Line 49:52 - Line 64:2)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-36')">Show code</button>
+            </div>
+            <pre id="code-typescript-36" class="code-block">// ====== services\sonarMaintainability\sonarMaintainabilityCalculationService.ts (Lines 53-68) ======
+    console.log('📊 Calculated metrics (detailed):', result);
+
+    return result;
+  }
+
+  /**
+   * Convert SonarQube rating (1-5) to letter grade (A-E)
+   */
+  private getRatingLetter(rating: number): string {
+    if (rating &lt;= 1) return 'A';
+    if (rating &lt;= 2) return 'B';
+    if (rating &lt;= 3) return 'C';
+    if (rating &lt;= 4) return 'D';
+    return 'E';
+  }
+}
+
+// ====== services\sonarSecurity\sonarSecurityCalculationService.ts (Lines 49-64) ======
+    console.log('📊 Calculated security metrics:', result);
+
+    return result;
+  }
+
+  /**
+   * Convert SonarQube rating (1-5) to letter grade (A-E)
+   */
+  private getRatingLetter(rating: number): string {
+    if (rating &lt;= 1) return 'A';
+    if (rating &lt;= 2) return 'B';
+    if (rating &lt;= 3) return 'C';
+    if (rating &lt;= 4) return 'D';
+    return 'E';
+  }
+}</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarMaintainability\sonarMaintainabilityDbService.ts (Line 193:81 - Line 211:2),
+              services\sonarReliability\sonarReliabilityDbService.ts (Line 154:77 - Line 172:2)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-37')">Show code</button>
+            </div>
+            <pre id="code-typescript-37" class="code-block">// ====== services\sonarMaintainability\sonarMaintainabilityDbService.ts (Lines 193-211) ======
+      console.error(`❌ Failed to delete maintainability metrics for project ${projectId}:`, error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Convert rating letter to numeric value
+   */
+  private getRatingValue(rating: string): number {
+    const map: { [key: string]: number } = {
+      'A': 1,
+      'B': 2,
+      'C': 3,
+      'D': 4,
+      'E': 5
+    };
+    return map[rating] || 1;
+  }
+}
+
+// ====== services\sonarReliability\sonarReliabilityDbService.ts (Lines 154-172) ======
+      console.error(`❌ Failed to delete reliability metrics for project ${projectId}:`, error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Convert rating letter to numeric value
+   */
+  private getRatingValue(rating: string): number {
+    const map: { [key: string]: number } = {
+      'A': 1,
+      'B': 2,
+      'C': 3,
+      'D': 4,
+      'E': 5
+    };
+    return map[rating] || 1;
+  }
+}</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarReliability\sonarReliabilityApiService.ts (Line 4:41 - Line 25:17),
+              services\sonarSecurity\sonarSecurityApiService.ts (Line 4:38 - Line 25:17)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-38')">Show code</button>
+            </div>
+            <pre id="code-typescript-38" class="code-block">// ====== services\sonarReliability\sonarReliabilityApiService.ts (Lines 4-25) ======
+export class SonarReliabilityApiService {
+  private baseUrl: string;
+  private token: string;
+  private initialized: boolean = false;
+
+  constructor(baseUrl?: string, token?: string) {
+    this.baseUrl = (baseUrl || process.env.SONARQUBE_URL || '').trim().replace(/\/$/, '');
+    this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+  }
+
+  private ensureInitialized() {
+    if (this.initialized) return;
+
+    if (!this.baseUrl || !/^https?:\/\//.test(this.baseUrl)) {
+      throw new Error('Invalid or missing SONARQUBE_URL. Please set it in your .env file.');
+    }
+    if (!this.token) {
+      throw new Error('Missing SONARQUBE_TOKEN. Please set it in your .env file.');
+    }
+
+    this.initialized = true;
+    console.log(`🔧 SonarReliabilityApiService initialized with URL: ${this.baseUrl}`);
+
+// ====== services\sonarSecurity\sonarSecurityApiService.ts (Lines 4-25) ======
+export class SonarSecurityApiService {
+  private baseUrl: string;
+  private token: string;
+  private initialized: boolean = false;
+
+  constructor(baseUrl?: string, token?: string) {
+    this.baseUrl = (baseUrl || process.env.SONARQUBE_URL || '').trim().replace(/\/$/, '');
+    this.token = (token || process.env.SONARQUBE_TOKEN || '').trim();
+  }
+
+  private ensureInitialized() {
+    if (this.initialized) return;
+
+    if (!this.baseUrl || !/^https?:\/\//.test(this.baseUrl)) {
+      throw new Error('Invalid or missing SONARQUBE_URL. Please set it in your .env file.');
+    }
+    if (!this.token) {
+      throw new Error('Missing SONARQUBE_TOKEN. Please set it in your .env file.');
+    }
+
+    this.initialized = true;
+    console.log(`🔧 SonarSecurityApiService initialized with URL: ${this.baseUrl}`);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarReliability\sonarReliabilityApiService.ts (Line 50:69 - Line 55:21),
+              services\sonarSecurity\sonarSecurityApiService.ts (Line 53:66 - Line 58:21)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-39')">Show code</button>
+            </div>
+            <pre id="code-typescript-39" class="code-block">// ====== services\sonarReliability\sonarReliabilityApiService.ts (Lines 50-55) ======
+      console.log(`📊 Fetching reliability metrics for project: ${projectKey}`);
+      const response = await axios.get(url, { headers: this.getAuthHeader() });
+      console.log(`✅ Received response with ${response.data.component?.measures?.length || 0} measures`);
+      return response.data;
+    } catch (err: any) {
+      console.error(`[SonarReliabilityApiService] Error fetching metrics for ${projectKey}`);
+
+// ====== services\sonarSecurity\sonarSecurityApiService.ts (Lines 53-58) ======
+      console.log(`📊 Fetching security metrics for project: ${projectKey}`);
+      const response = await axios.get(url, { headers: this.getAuthHeader() });
+      console.log(`✅ Received response with ${response.data.component?.measures?.length || 0} measures`);
+      return response.data;
+    } catch (err: any) {
+      console.error(`[SonarSecurityApiService] Error fetching metrics for ${projectKey}`);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              services\sonarReliability\sonarReliabilitySyncService.ts (Line 21:73 - Line 37:27),
+              services\sonarSecurity\sonarSecuritySyncService.ts (Line 21:70 - Line 36:82)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-40')">Show code</button>
+            </div>
+            <pre id="code-typescript-40" class="code-block">// ====== services\sonarReliability\sonarReliabilitySyncService.ts (Lines 21-37) ======
+    console.log(`\n🔄 Starting reliability metrics sync for project ${projectId}`);
+
+    try {
+      // Step 1: Get SonarQube project key
+      const sonarProjectKey = await getSonarProjectKey(projectId);
+      if (!sonarProjectKey) {
+        throw new Error(`No SonarQube project key found for project ${projectId}`);
+      }
+
+      console.log(`📌 SonarQube project key: ${sonarProjectKey}`);
+
+      // Step 2: Fetch data from SonarQube API
+      const sonarData = await this.fetchSonarQubeData(sonarProjectKey);
+
+      // Step 3: Calculate metrics
+      const metrics = this.calculationService.calculateMetrics(
+        sonarData.measures,
+
+// ====== services\sonarSecurity\sonarSecuritySyncService.ts (Lines 21-36) ======
+    console.log(`\n🔄 Starting security metrics sync for project ${projectId}`);
+
+    try {
+      // Step 1: Get SonarQube project key
+      const sonarProjectKey = await getSonarProjectKey(projectId);
+      if (!sonarProjectKey) {
+        throw new Error(`No SonarQube project key found for project ${projectId}`);
+      }
+
+      console.log(`📌 SonarQube project key: ${sonarProjectKey}`);
+
+      // Step 2: Fetch data from SonarQube API
+      const sonarData = await this.fetchSonarQubeData(sonarProjectKey);
+
+      // Step 3: Calculate metrics
+      const metrics = this.calculationService.calculateMetrics(sonarData.measures);</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              types\commitMetrics.types.ts (Line 16:3 - Line 37:110),
+              types\commitMetrics.types.ts (Line 66:3 - Line 77:110)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-41')">Show code</button>
+            </div>
+            <pre id="code-typescript-41" class="code-block">// ====== types\commitMetrics.types.ts (Lines 16-37) ======
+  total_commits_last_7d: number;
+
+  // Metric 1: Average Commit Size
+  total_lines_changed: number;
+  commits_analyzed: number;
+  avg_commit_size: number;
+
+  // Metric 2: Lines Added vs Deleted
+  total_lines_added: number;
+  total_lines_deleted: number;
+  lines_added_deleted_ratio: number;
+
+  // Metric 3: Commits Per Week
+  commits_per_week: number;
+
+  // Metric 4: Bus Factor
+  total_contributors: number;
+  contributors_above_50_percent: number;
+  bus_factor: number;
+
+  // Raw commit data (for future analysis)
+  commit_details: Array&lt;{ sha: string; title: string; message: string; author: string; created_at: string }&gt;;
+
+// ====== types\commitMetrics.types.ts (Lines 66-77) ======
+  total_commits_last_7d: number;
+  total_lines_changed: number;
+  commits_analyzed: number;
+  avg_commit_size: number;
+  total_lines_added: number;
+  total_lines_deleted: number;
+  lines_added_deleted_ratio: number;
+  commits_per_week: number;
+  total_contributors: number;
+  contributors_above_50_percent: number;
+  bus_factor: number;
+  commit_details: Array&lt;{ sha: string; title: string; message: string; author: string; created_at: string }&gt;;</pre>
+          </div>
+          
+          <div class="clone-item">
+            <div class="clone-info">
+              types\issueMetrics.types.ts (Line 9:3 - Line 43:31),
+              types\issueMetrics.types.ts (Line 123:3 - Line 157:31)
+            </div>
+            <div>
+              <button class="toggle-btn" onclick="toggle('code-typescript-42')">Show code</button>
+            </div>
+            <pre id="code-typescript-42" class="code-block">// ====== types\issueMetrics.types.ts (Lines 9-43) ======
+  total_open_issues: number;
+  total_closed_issues: number;
+  
+  // Tier 1: Critical Metrics
+  issues_closed_last_7d: number;
+  issues_closed_last_30d: number;
+  total_resolution_hours: number;
+  issues_with_resolution_time: number;
+  avg_cycle_time_hours: number;
+  avg_cycle_time_days: number;
+  issues_reopened_count: number;
+  issues_checked_for_reopens: number;
+  reopen_rate_percent: number;
+  bug_issues_count: number;
+  feature_issues_count: number;
+  bug_ratio_percent: number;
+  
+  // Tier 2: Important Metrics
+  issues_opened_last_7d: number;
+  issues_opened_last_30d: number;
+  net_issue_change_7d: number;
+  stale_issues_count: number;
+  stale_issues_percent: number;
+  critical_issues_open: number;
+  blocker_issues_open: number;
+  critical_avg_resolution_hours: number;
+  issues_with_mr_links: number;
+  total_closed_issues_checked: number;
+  issue_mr_link_rate_percent: number;
+  
+  // Closure Rate
+  closure_rate_percent: number;
+  
+  // Alert Levels
+  velocity_alert_level: string | null;
+
+// ====== types\issueMetrics.types.ts (Lines 123-157) ======
+  total_open_issues: number;
+  total_closed_issues: number;
+  
+  // Tier 1
+  issues_closed_last_7d: number;
+  issues_closed_last_30d: number;
+  total_resolution_hours: number;
+  issues_with_resolution_time: number;
+  avg_cycle_time_hours: number;
+  avg_cycle_time_days: number;
+  issues_reopened_count: number;
+  issues_checked_for_reopens: number;
+  reopen_rate_percent: number;
+  bug_issues_count: number;
+  feature_issues_count: number;
+  bug_ratio_percent: number;
+  
+  // Tier 2
+  issues_opened_last_7d: number;
+  issues_opened_last_30d: number;
+  net_issue_change_7d: number;
+  stale_issues_count: number;
+  stale_issues_percent: number;
+  critical_issues_open: number;
+  blocker_issues_open: number;
+  critical_avg_resolution_hours: number;
+  issues_with_mr_links: number;
+  total_closed_issues_checked: number;
+  issue_mr_link_rate_percent: number;
+
+  // Closure Rate
+  closure_rate_percent: number;
+
+  // Alert levels
+  velocity_alert_level: string;</pre>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+    
+    
+  </div>
+
+  <div class="footer">
+    <p>Generated by <a href="https://jscpd.dev" target="_blank">jscpd</a> v0.1.7 by <a href="https://github.com/kucherenko" target="_blank">Andrey Kucherenko</a></p>
+    <p><a href="https://www.npmjs.com/package/jscpd" target="_blank"><img src="https://img.shields.io/npm/dw/jscpd.svg?style=flat-square" alt="npm weekly downloads" style="vertical-align: middle;"></a></p>
+  </div>
+
+  <script>
+    function toggle(id) {
+      var el = document.getElementById(id);
+      if (el) { el.classList.toggle('visible'); }
+    }
+  </script>
+</body>
+</html>

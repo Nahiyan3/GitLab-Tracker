@@ -121,7 +121,7 @@ export const getHealthScoreHistory = async (req: Request, res: Response) => {
 
     // Create a map for quick lookup
     const createDateMap = (history: { rows: any[] }) => {
-      const map = new Map<string, number>();
+      const map = new Map<string, number | null>();
       history.rows.forEach((row: any) => {
         map.set(row.date, row.health_score ? parseFloat(row.health_score) : null);
       });

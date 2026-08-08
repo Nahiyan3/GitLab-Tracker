@@ -1,0 +1,976 @@
+124554051584,METHOD_RETURN,RET,19,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,12,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051585,METHOD_RETURN,RET,17,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,32,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051586,METHOD_RETURN,RET,20,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,50,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051587,METHOD_RETURN,RET,28,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,85,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051588,METHOD_RETURN,RET,23,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,123,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051589,METHOD_RETURN,RET,34,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:json:<returnValue>",BY_VALUE,160,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051590,METHOD_RETURN,RET,46,,BY_VALUE,210,,,6,void,void
+124554051591,METHOD_RETURN,RET,48,{ id: ANY; uuid: ANY; name: ANY; group: ANY; metrics: { codeReview: ANY; technicalDebt: ANY; testQuality: ANY; documentation: ANY; deployment: ANY; dependencies: ANY; teamMorale: ANY; apiScore: ANY; combinedScore: ANY; }; created_at: ANY; },BY_VALUE,204,,,6,{ id: ANY; uuid: ANY; name: ANY; group: ANY; metrics: { codeReview: ANY; technicalDebt: ANY; testQuality: ANY; documentation: ANY; deployment: ANY; dependencies: ANY; teamMorale: ANY; apiScore: ANY; combinedScore: ANY; }; created_at: ANY; },{ id: ANY; uuid: ANY; name: ANY; group: ANY; metrics: { codeReview: ANY; technicalDebt: ANY; testQuality: ANY; documentation: ANY; deployment: ANY; dependencies: ANY; teamMorale: ANY; apiScore: ANY; combinedScore: ANY; }; created_at: ANY; }
+124554051592,METHOD_RETURN,RET,26,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:json:<returnValue>",BY_VALUE,191,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051593,METHOD_RETURN,RET,0,controllers/aiController:ts::program:AIController:<init>;AIController,BY_VALUE,8,,,4,AIController,ANY
+124554051594,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051595,METHOD_RETURN,RET,36,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,13,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051596,METHOD_RETURN,RET,32,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,43,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051597,METHOD_RETURN,RET,39,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,80,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051598,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051599,METHOD_RETURN,RET,41,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,31,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051600,METHOD_RETURN,RET,36,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,72,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051601,METHOD_RETURN,RET,39,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,123,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051602,METHOD_RETURN,RET,42,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,164,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051603,METHOD_RETURN,RET,38,,BY_VALUE,216,,,7,Promise<void>,Promise<void>
+124554051604,METHOD_RETURN,RET,34,,BY_VALUE,240,,,7,Promise<void>,Promise<void>
+124554051605,METHOD_RETURN,RET,37,,BY_VALUE,264,,,7,Promise<void>,Promise<void>
+124554051606,METHOD_RETURN,RET,40,,BY_VALUE,288,,,7,Promise<void>,Promise<void>
+124554051607,METHOD_RETURN,RET,37,,BY_VALUE,312,,,7,Promise<void>,Promise<void>
+124554051608,METHOD_RETURN,RET,33,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:json:<returnValue>",BY_VALUE,338,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051609,METHOD_RETURN,RET,47,,BY_VALUE,370,,,7,Promise<void>,Promise<void>
+124554051610,METHOD_RETURN,RET,42,,BY_VALUE,399,,,7,Promise<void>,Promise<void>
+124554051611,METHOD_RETURN,RET,45,,BY_VALUE,428,,,7,Promise<void>,Promise<void>
+124554051612,METHOD_RETURN,RET,48,,BY_VALUE,457,,,7,Promise<void>,Promise<void>
+124554051613,METHOD_RETURN,RET,34,,BY_VALUE,486,,,7,Promise<void>,Promise<void>
+124554051614,METHOD_RETURN,RET,37,,BY_VALUE,510,,,7,Promise<void>,Promise<void>
+124554051615,METHOD_RETURN,RET,39,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,531,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051616,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051617,METHOD_RETURN,RET,27,,BY_VALUE,110,,,6,void,void
+124554051618,METHOD_RETURN,RET,21,,BY_VALUE,109,,,6,void,void
+124554051619,METHOD_RETURN,RET,27,,BY_VALUE,125,,,6,void,void
+124554051620,METHOD_RETURN,RET,26,"Map<string, __ecma.Number>;__ecma.Map",BY_VALUE,123,,,6,"Map<string, __ecma.Number>",ANY
+124554051621,METHOD_RETURN,RET,11,{ timestamp: __ecma.String; date: __ecma.String; issue_health: __ecma.Number | __ecma.Null; mr_health: __ecma.Number | __ecma.Null; commit_health: __ecma.Number | __ecma.Null; reliability_health: __ecma.Number | __ecma.Null; maintainability_health: __ecma.Number | __ecma.Null; security_health: __ecma.Number | __ecma.Null; },BY_VALUE,141,,,6,{ timestamp: __ecma.String; date: __ecma.String; issue_health: __ecma.Number | __ecma.Null; mr_health: __ecma.Number | __ecma.Null; commit_health: __ecma.Number | __ecma.Null; reliability_health: __ecma.Number | __ecma.Null; maintainability_health: __ecma.Number | __ecma.Null; security_health: __ecma.Number | __ecma.Null; },{ timestamp: __ecma.String; date: __ecma.String; issue_health: __ecma.Number | __ecma.Null; mr_health: __ecma.Number | __ecma.Null; commit_health: __ecma.Number | __ecma.Null; reliability_health: __ecma.Number | __ecma.Null; maintainability_health: __ecma.Number | __ecma.Null; security_health: __ecma.Number | __ecma.Null; }
+124554051622,METHOD_RETURN,RET,37,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,11,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051623,METHOD_RETURN,RET,37,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,169,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051624,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051625,METHOD_RETURN,RET,35,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,12,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051626,METHOD_RETURN,RET,31,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,48,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051627,METHOD_RETURN,RET,37,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,85,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051628,METHOD_RETURN,RET,38,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,133,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051629,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051630,METHOD_RETURN,RET,39,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,12,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051631,METHOD_RETURN,RET,35,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,46,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051632,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051633,METHOD_RETURN,RET,32,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,13,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051634,METHOD_RETURN,RET,28,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,48,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051635,METHOD_RETURN,RET,34,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,86,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051636,METHOD_RETURN,RET,35,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,124,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051637,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051638,METHOD_RETURN,RET,22,,BY_VALUE,16,,,7,Promise<void>,Promise<void>
+124554051639,METHOD_RETURN,RET,25,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,29,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051640,METHOD_RETURN,RET,29,,BY_VALUE,54,,,7,Promise<void>,Promise<void>
+124554051641,METHOD_RETURN,RET,27,,BY_VALUE,67,,,7,Promise<void>,Promise<void>
+124554051642,METHOD_RETURN,RET,22,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,80,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051643,METHOD_RETURN,RET,25,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,100,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051644,METHOD_RETURN,RET,30,,BY_VALUE,120,,,7,Promise<void>,Promise<void>
+124554051645,METHOD_RETURN,RET,24,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,131,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051646,METHOD_RETURN,RET,26,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,151,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051647,METHOD_RETURN,RET,48,{ id: __ecma.Number; name: __ecma.String; },BY_VALUE,172,,,6,{ id: __ecma.Number; name: __ecma.String; },{ id: __ecma.Number; name: __ecma.String; }
+124554051648,METHOD_RETURN,RET,26,,BY_VALUE,167,,,7,Promise<void>,Promise<void>
+124554051649,METHOD_RETURN,RET,29,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,187,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051650,METHOD_RETURN,RET,29,,BY_VALUE,206,,,7,Promise<void>,Promise<void>
+124554051651,METHOD_RETURN,RET,36,Promise<{ totalProjects: __ecma.Number; trackedProjects: __ecma.Number; averageQuality: __ecma.Number; needsAttention: __ecma.Number; qualityDistribution: { critical: __ecma.Number; warning: __ecma.Number; good: __ecma.Number; excellent: __ecma.Number; }; projectsNeedingAttention: __ecma.Array; }>,BY_VALUE,219,,,5,Promise<{ totalProjects: __ecma.Number; trackedProjects: __ecma.Number; averageQuality: __ecma.Number; needsAttention: __ecma.Number; qualityDistribution: { critical: __ecma.Number; warning: __ecma.Number; good: __ecma.Number; excellent: __ecma.Number; }; projectsNeedingAttention: __ecma.Array; }>,Promise<{ totalProjects: __ecma.Number; trackedProjects: __ecma.Number; averageQuality: __ecma.Number; needsAttention: __ecma.Number; qualityDistribution: { critical: __ecma.Number; warning: __ecma.Number; good: __ecma.Number; excellent: __ecma.Number; }; projectsNeedingAttention: __ecma.Array; }>
+124554051652,METHOD_RETURN,RET,32,,BY_VALUE,245,,,7,ANY,ANY
+124554051653,METHOD_RETURN,RET,36,__ecma.Number,BY_VALUE,242,,,6,__ecma.Number,__ecma.Number
+124554051654,METHOD_RETURN,RET,27,parseFloat:<operator>.lessThan:<returnValue>;__ecma.Boolean,BY_VALUE,254,,,6,__ecma.Boolean,__ecma.Boolean
+124554051655,METHOD_RETURN,RET,42,__ecma.Number,BY_VALUE,253,,,6,__ecma.Number,__ecma.Number
+124554051656,METHOD_RETURN,RET,32,parseFloat:<operator>.lessThan:<returnValue>;__ecma.Boolean,BY_VALUE,262,,,6,__ecma.Boolean,__ecma.Boolean
+124554051657,METHOD_RETURN,RET,31,__ecma.Boolean,BY_VALUE,263,,,6,__ecma.Boolean,__ecma.Boolean
+124554051658,METHOD_RETURN,RET,28,__ecma.Boolean,BY_VALUE,264,,,6,__ecma.Boolean,__ecma.Boolean
+124554051659,METHOD_RETURN,RET,33,parseFloat:<operator>.greaterEqualsThan:<returnValue>;__ecma.Boolean,BY_VALUE,265,,,6,__ecma.Boolean,__ecma.Boolean
+124554051660,METHOD_RETURN,RET,41,{ critical: __ecma.Number; warning: __ecma.Number; good: __ecma.Number; excellent: __ecma.Number; },BY_VALUE,260,,,6,{ critical: __ecma.Number; warning: __ecma.Number; good: __ecma.Number; excellent: __ecma.Number; },{ critical: __ecma.Number; warning: __ecma.Number; good: __ecma.Number; excellent: __ecma.Number; }
+124554051661,METHOD_RETURN,RET,0,controllers/projectController:ts::program:ProjectController:<init>;ProjectController,BY_VALUE,10,,,4,ProjectController,ANY
+124554051662,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051663,METHOD_RETURN,RET,45,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,13,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051664,METHOD_RETURN,RET,41,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,50,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051665,METHOD_RETURN,RET,48,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,90,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051666,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051667,METHOD_RETURN,RET,41,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,12,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051668,METHOD_RETURN,RET,37,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,48,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051669,METHOD_RETURN,RET,44,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,88,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051670,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051671,METHOD_RETURN,RET,38,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,12,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051672,METHOD_RETURN,RET,34,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,48,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051673,METHOD_RETURN,RET,41,"Promise<Response<any, Record<string, ANY>> | ANY>;express:Response:status:<returnValue>:json:<returnValue>",BY_VALUE,88,,,7,"Promise<Response<any, Record<string, ANY>> | ANY>","Promise<Response<any, Record<string, ANY>> | ANY>"
+124554051674,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051675,METHOD_RETURN,RET,0,,BY_VALUE,5,,,4,Promise<void>,Promise<void>
+124554051676,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051677,METHOD_RETURN,RET,0,,BY_VALUE,7,,,4,Promise<void>,Promise<void>
+124554051678,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051679,METHOD_RETURN,RET,21,,BY_VALUE,28,,,6,void,void
+124554051680,METHOD_RETURN,RET,23,pg:Pool;Pool | __ecma.Null;Pool;__ecma.Null,BY_VALUE,9,,,5,Pool,ANY
+124554051681,METHOD_RETURN,RET,25,,BY_VALUE,41,,,5,Promise<void>,Promise<void>
+124554051682,METHOD_RETURN,RET,23,,BY_VALUE,60,,,5,Promise<void>,Promise<void>
+124554051683,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051684,METHOD_RETURN,RET,0,,BY_VALUE,7,,,4,Promise<void>,Promise<void>
+124554051685,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051686,METHOD_RETURN,RET,32,,BY_VALUE,11,,,5,Promise<void>,Promise<void>
+124554051687,METHOD_RETURN,RET,37,Promise<any>,BY_VALUE,35,,,6,Promise<any>,Promise<any>
+124554051688,METHOD_RETURN,RET,38,,BY_VALUE,92,,,6,Promise<void>,Promise<void>
+124554051689,METHOD_RETURN,RET,42,Promise<any[]>,BY_VALUE,117,,,5,Promise<any[]>,Promise<any[]>
+124554051690,METHOD_RETURN,RET,30,Promise<any>,BY_VALUE,141,,,6,Promise<any>,Promise<any>
+124554051691,METHOD_RETURN,RET,30,Promise<string | __ecma.Null>,BY_VALUE,165,,,6,Promise<string | __ecma.Null>,Promise<string | __ecma.Null>
+124554051692,METHOD_RETURN,RET,33,Promise<any>,BY_VALUE,183,,,7,Promise<any>,Promise<any>
+124554051693,METHOD_RETURN,RET,28,Promise<any>,BY_VALUE,205,,,6,Promise<any>,Promise<any>
+124554051694,METHOD_RETURN,RET,30,Promise<boolean>,BY_VALUE,212,,,6,Promise<boolean>,Promise<boolean>
+124554051695,METHOD_RETURN,RET,32,Promise<boolean>,BY_VALUE,234,,,6,Promise<boolean>,Promise<boolean>
+124554051696,METHOD_RETURN,RET,27,,BY_VALUE,258,,,6,ANY,ANY
+124554051697,METHOD_RETURN,RET,36,QueryResult<any>:<member>(rows):map:<returnValue>;Promise<number[]>,BY_VALUE,251,,,5,Promise<number[]>,Promise<number[]>
+124554051698,METHOD_RETURN,RET,37,Promise<any>,BY_VALUE,273,,,6,Promise<any>,Promise<any>
+124554051699,METHOD_RETURN,RET,52,Promise<any[]>,BY_VALUE,336,,,5,Promise<any[]>,Promise<any[]>
+124554051700,METHOD_RETURN,RET,35,Promise<any[]>,BY_VALUE,385,,,6,Promise<any[]>,Promise<any[]>
+124554051701,METHOD_RETURN,RET,46,Promise<any>,BY_VALUE,425,,,6,Promise<any>,Promise<any>
+124554051702,METHOD_RETURN,RET,35,,BY_VALUE,493,,,7,Promise<void>,Promise<void>
+124554051703,METHOD_RETURN,RET,40,Promise<any | __ecma.Null>,BY_VALUE,536,,,6,Promise<any | __ecma.Null>,Promise<any | __ecma.Null>
+124554051704,METHOD_RETURN,RET,41,Promise<any[]>,BY_VALUE,568,,,6,Promise<any[]>,Promise<any[]>
+124554051705,METHOD_RETURN,RET,45,Promise<any[]>,BY_VALUE,598,,,6,Promise<any[]>,Promise<any[]>
+124554051706,METHOD_RETURN,RET,42,Promise<any[]>,BY_VALUE,628,,,5,Promise<any[]>,Promise<any[]>
+124554051707,METHOD_RETURN,RET,43,Promise<any[]>,BY_VALUE,662,,,5,Promise<any[]>,Promise<any[]>
+124554051708,METHOD_RETURN,RET,37,Promise<number>;parseInt:<returnValue>,BY_VALUE,699,,,5,Promise<number>,Promise<number>
+124554051709,METHOD_RETURN,RET,39,Promise<number>;parseInt:<returnValue>,BY_VALUE,714,,,5,Promise<number>,Promise<number>
+124554051710,METHOD_RETURN,RET,39,Promise<any[]>,BY_VALUE,729,,,5,Promise<any[]>,Promise<any[]>
+124554051711,METHOD_RETURN,RET,43,Promise<any[]>,BY_VALUE,764,,,6,Promise<any[]>,Promise<any[]>
+124554051712,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051713,METHOD_RETURN,RET,13,,BY_VALUE,39,,,7,void,void
+124554051714,METHOD_RETURN,RET,8,,BY_VALUE,48,,,7,void,void
+124554051715,METHOD_RETURN,RET,21,,BY_VALUE,81,,,5,void,void
+124554051716,METHOD_RETURN,RET,20,,BY_VALUE,60,,,5,Promise<void>,Promise<void>
+124554051717,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051718,METHOD_RETURN,RET,28,,BY_VALUE,4,,,9,void,void
+124554051719,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051720,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051721,METHOD_RETURN,RET,22,,BY_VALUE,19,,,7,void,void
+124554051722,METHOD_RETURN,RET,29,,BY_VALUE,24,,,7,Promise<void>,Promise<void>
+124554051723,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051724,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051725,METHOD_RETURN,RET,31,,BY_VALUE,20,,,5,Promise<void>,Promise<void>
+124554051726,METHOD_RETURN,RET,47,,BY_VALUE,11,,,5,void,void
+124554051727,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051728,METHOD_RETURN,RET,0,services/ai/geminiService:ts::program:GeminiService:<init>;GeminiService,BY_VALUE,6,,,4,GeminiService,ANY
+124554051729,METHOD_RETURN,RET,2,void,BY_VALUE,13,,,4,void,void
+124554051730,METHOD_RETURN,RET,28,services/ai/geminiService.ts::program:setTimeout:<returnValue>;Timeout,BY_VALUE,53,,,6,Timeout,Timeout
+124554051731,METHOD_RETURN,RET,2,EnhancedGenerateContentResponse:text:<returnValue>;Promise<string>,BY_VALUE,29,,,6,Promise<string>,Promise<string>
+124554051732,METHOD_RETURN,RET,2,EnhancedGenerateContentResponse:text:<returnValue>;Promise<string>,BY_VALUE,70,,,7,Promise<string>,Promise<string>
+124554051733,METHOD_RETURN,RET,2,services/ai/geminiService.ts::program:GeminiService:extractProjectNameFromExcel:<returnValue>;__ecma.String,BY_VALUE,105,,,5,ANY,__ecma.String
+124554051734,METHOD_RETURN,RET,2,Promise<any | __ecma.Null>;__ecma.Null,BY_VALUE,127,,,5,Promise<any | __ecma.Null>,ANY
+124554051735,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,151,,,7,__ecma.String,__ecma.String
+124554051736,METHOD_RETURN,RET,34,,BY_VALUE,216,,,6,void,void
+124554051737,METHOD_RETURN,RET,2,EnhancedGenerateContentResponse:text:<returnValue>;Promise<string>,BY_VALUE,199,,,6,Promise<string>,Promise<string>
+124554051738,METHOD_RETURN,RET,2,EnhancedGenerateContentResponse:text:<returnValue>;Promise<string>,BY_VALUE,250,,,7,Promise<string>,Promise<string>
+124554051739,METHOD_RETURN,RET,2,__ecma.Boolean;GoogleGenerativeAI | __ecma.Null;__ecma.Null;@google/generative-ai:GoogleGenerativeAI,BY_VALUE,261,,,4,__ecma.Boolean,ANY
+124554051740,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051741,METHOD_RETURN,RET,0,services/ai/googleSheetsService:ts::program:GoogleSheetsService:<init>;GoogleSheetsService,BY_VALUE,4,,,4,GoogleSheetsService,ANY
+124554051742,METHOD_RETURN,RET,2,RegExpMatchArray | __ecma.Null:<operator>.indexAccess:<returnValue>;__ecma.String:match:<returnValue>:<operator>.indexAccess:<returnValue>;__ecma.String,BY_VALUE,10,,,5,__ecma.String,__ecma.String
+124554051743,METHOD_RETURN,RET,2,Promise<string>;__ecma.String,BY_VALUE,23,,,5,Promise<string>,ANY
+124554051744,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051745,METHOD_RETURN,RET,28,parseFloat:<returnValue>;__ecma.Number,BY_VALUE,6,,,7,ANY,__ecma.Number
+124554051746,METHOD_RETURN,RET,24,__ecma.String:replace:<returnValue>;__ecma.String,BY_VALUE,50,,,6,__ecma.String,__ecma.String
+124554051747,METHOD_RETURN,RET,56,,BY_VALUE,110,,,6,ANY,ANY
+124554051748,METHOD_RETURN,RET,39,JSON.parse:<returnValue>,BY_VALUE,63,,,6,ANY,JSON.parse:<returnValue>
+124554051749,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051750,METHOD_RETURN,RET,0,services/ai/projectInsightsService:ts::program:ProjectInsightsService:<init>;ProjectInsightsService,BY_VALUE,9,,,4,ProjectInsightsService,ANY
+124554051751,METHOD_RETURN,RET,2,Promise<string>;__ecma.String,BY_VALUE,16,,,4,Promise<string>,ANY
+124554051752,METHOD_RETURN,RET,2,,BY_VALUE,32,,,6,ANY,ANY
+124554051753,METHOD_RETURN,RET,2,services/ai/projectInsightsService.ts::program:readFileSync:<returnValue>;__ecma.String,BY_VALUE,67,,,8,__ecma.String,__ecma.String
+124554051754,METHOD_RETURN,RET,34,,BY_VALUE,133,,,6,void,void
+124554051755,METHOD_RETURN,RET,2,Promise<string>;__ecma.String,BY_VALUE,118,,,5,Promise<string>,ANY
+124554051756,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051757,METHOD_RETURN,RET,0,services/commitMetrics/commitMetricsCalculationService:ts::program:CommitMetricsCalculationService:<init>;CommitMetricsCalculationService,BY_VALUE,7,,,4,CommitMetricsCalculationService,ANY
+124554051758,METHOD_RETURN,RET,59,{ sha: ANY; title: ANY; message: ANY; author: ANY; created_at: ANY; },BY_VALUE,34,,,6,{ sha: ANY; title: ANY; message: ANY; author: ANY; created_at: ANY; },{ sha: ANY; title: ANY; message: ANY; author: ANY; created_at: ANY; }
+124554051759,METHOD_RETURN,RET,2,CommitMetricsCalculationResult,BY_VALUE,12,,,7,CommitMetricsCalculationResult,CommitMetricsCalculationResult
+124554051760,METHOD_RETURN,RET,20,,BY_VALUE,65,,,6,void,void
+124554051761,METHOD_RETURN,RET,2,{ total_lines_changed: __ecma.Number; commits_analyzed: __ecma.Number; avg_commit_size: __ecma.Number; },BY_VALUE,61,,,5,{ total_lines_changed: __ecma.Number; commits_analyzed: __ecma.Number; avg_commit_size: __ecma.Number; },{ total_lines_changed: __ecma.Number; commits_analyzed: __ecma.Number; avg_commit_size: __ecma.Number; }
+124554051762,METHOD_RETURN,RET,20,,BY_VALUE,94,,,6,void,void
+124554051763,METHOD_RETURN,RET,2,{ total_lines_added: __ecma.Number; total_lines_deleted: __ecma.Number; lines_added_deleted_ratio: __ecma.Number; },BY_VALUE,90,,,5,{ total_lines_added: __ecma.Number; total_lines_deleted: __ecma.Number; lines_added_deleted_ratio: __ecma.Number; },{ total_lines_added: __ecma.Number; total_lines_deleted: __ecma.Number; lines_added_deleted_ratio: __ecma.Number; }
+124554051764,METHOD_RETURN,RET,20,,BY_VALUE,121,,,6,void,void
+124554051765,METHOD_RETURN,RET,6,__ecma.Boolean,BY_VALUE,151,,,6,__ecma.Boolean,__ecma.Boolean
+124554051766,METHOD_RETURN,RET,2,{ total_contributors: __ecma.Number; contributors_above_50_percent: __ecma.Number; bus_factor: __ecma.Number; },BY_VALUE,117,,,5,{ total_contributors: __ecma.Number; contributors_above_50_percent: __ecma.Number; bus_factor: __ecma.Number; },{ total_contributors: __ecma.Number; contributors_above_50_percent: __ecma.Number; bus_factor: __ecma.Number; }
+124554051767,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051768,METHOD_RETURN,RET,0,services/commitMetrics/commitMetricsDbService:ts::program:CommitMetricsDbService:<init>;CommitMetricsDbService,BY_VALUE,9,,,4,CommitMetricsDbService,ANY
+124554051769,METHOD_RETURN,RET,2,Promise<CommitHealthMetrics>,BY_VALUE,14,,,6,Promise<CommitHealthMetrics>,Promise<CommitHealthMetrics>
+124554051770,METHOD_RETURN,RET,2,Promise<CommitMetricsHistory>,BY_VALUE,72,,,5,Promise<CommitMetricsHistory>,Promise<CommitMetricsHistory>
+124554051771,METHOD_RETURN,RET,2,Promise<CommitHealthMetrics | __ecma.Null>,BY_VALUE,128,,,5,Promise<CommitHealthMetrics | __ecma.Null>,Promise<CommitHealthMetrics | __ecma.Null>
+124554051772,METHOD_RETURN,RET,2,Promise<CommitHealthMetrics[]>,BY_VALUE,148,,,5,Promise<CommitHealthMetrics[]>,Promise<CommitHealthMetrics[]>
+124554051773,METHOD_RETURN,RET,2,Promise<CommitMetricsHistory[]>,BY_VALUE,167,,,6,Promise<CommitMetricsHistory[]>,Promise<CommitMetricsHistory[]>
+124554051774,METHOD_RETURN,RET,2,,BY_VALUE,190,,,5,Promise<void>,Promise<void>
+124554051775,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051776,METHOD_RETURN,RET,0,services/commitMetrics/commitMetricsSyncService:ts::program:CommitMetricsSyncService:<init>;CommitMetricsSyncService,BY_VALUE,10,,,4,CommitMetricsSyncService,ANY
+124554051777,METHOD_RETURN,RET,2,Promise<CommitHealthMetrics>;CommitHealthMetrics;types/commitMetrics.types.ts::program:CommitHealthMetrics,BY_VALUE,15,,,5,Promise<CommitHealthMetrics>,ANY
+124554051778,METHOD_RETURN,RET,2,Promise<{ commitsLast7d: __ecma.Array; totalCommitCount: __ecma.Number; }>,BY_VALUE,55,,,5,Promise<{ commitsLast7d: __ecma.Array; totalCommitCount: __ecma.Number; }>,Promise<{ commitsLast7d: __ecma.Array; totalCommitCount: __ecma.Number; }>
+124554051779,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051780,METHOD_RETURN,RET,43,Promise<DoraMetricsSummary>,BY_VALUE,12,,,7,Promise<DoraMetricsSummary>,Promise<DoraMetricsSummary>
+124554051781,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051782,METHOD_RETURN,RET,39,Promise<DeploymentFrequency>,BY_VALUE,19,,,6,Promise<DeploymentFrequency>,Promise<DeploymentFrequency>
+124554051783,METHOD_RETURN,RET,34,Promise<LeadTimeChange>,BY_VALUE,51,,,6,Promise<LeadTimeChange>,Promise<LeadTimeChange>
+124554051784,METHOD_RETURN,RET,37,Promise<ChangeFailureRate>,BY_VALUE,87,,,6,Promise<ChangeFailureRate>,Promise<ChangeFailureRate>
+124554051785,METHOD_RETURN,RET,40,Promise<TimeToRestoreService>,BY_VALUE,119,,,6,Promise<TimeToRestoreService>,Promise<TimeToRestoreService>
+124554051786,METHOD_RETURN,RET,47,Promise<DeploymentFrequency[]>,BY_VALUE,157,,,7,Promise<DeploymentFrequency[]>,Promise<DeploymentFrequency[]>
+124554051787,METHOD_RETURN,RET,43,Promise<LeadTimeChange[]>,BY_VALUE,177,,,7,Promise<LeadTimeChange[]>,Promise<LeadTimeChange[]>
+124554051788,METHOD_RETURN,RET,45,Promise<ChangeFailureRate[]>,BY_VALUE,197,,,7,Promise<ChangeFailureRate[]>,Promise<ChangeFailureRate[]>
+124554051789,METHOD_RETURN,RET,48,Promise<TimeToRestoreService[]>,BY_VALUE,217,,,7,Promise<TimeToRestoreService[]>,Promise<TimeToRestoreService[]>
+124554051790,METHOD_RETURN,RET,43,Promise<DeploymentFrequency[]>,BY_VALUE,237,,,8,Promise<DeploymentFrequency[]>,Promise<DeploymentFrequency[]>
+124554051791,METHOD_RETURN,RET,41,Promise<boolean>,BY_VALUE,259,,,6,Promise<boolean>,Promise<boolean>
+124554051792,METHOD_RETURN,RET,36,Promise<boolean>,BY_VALUE,268,,,6,Promise<boolean>,Promise<boolean>
+124554051793,METHOD_RETURN,RET,39,Promise<boolean>,BY_VALUE,277,,,6,Promise<boolean>,Promise<boolean>
+124554051794,METHOD_RETURN,RET,42,Promise<boolean>,BY_VALUE,286,,,6,Promise<boolean>,Promise<boolean>
+124554051795,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051796,METHOD_RETURN,RET,0,,BY_VALUE,52,,,7,ANY,ANY
+124554051797,METHOD_RETURN,RET,7,,BY_VALUE,6,,,4,ANY,ANY
+124554051798,METHOD_RETURN,RET,7,,BY_VALUE,18,,,4,ANY,ANY
+124554051799,METHOD_RETURN,RET,32,__ecma.Set:add:<returnValue>;Set<string>:add:<returnValue>;Set<string>,BY_VALUE,205,,,6,Set<string>,Set<string>
+124554051800,METHOD_RETURN,RET,30,__ecma.Set:add:<returnValue>;Set<string>:add:<returnValue>;Set<string>,BY_VALUE,206,,,6,Set<string>,Set<string>
+124554051801,METHOD_RETURN,RET,29,__ecma.Set:add:<returnValue>;Set<string>:add:<returnValue>;Set<string>,BY_VALUE,207,,,6,Set<string>,Set<string>
+124554051802,METHOD_RETURN,RET,29,__ecma.Set:add:<returnValue>;Set<string>:add:<returnValue>;Set<string>,BY_VALUE,208,,,6,Set<string>,Set<string>
+124554051803,METHOD_RETURN,RET,21,,BY_VALUE,211,,,6,void,void
+124554051804,METHOD_RETURN,RET,32,,BY_VALUE,226,,,6,void,void
+124554051805,METHOD_RETURN,RET,30,,BY_VALUE,235,,,6,void,void
+124554051806,METHOD_RETURN,RET,29,,BY_VALUE,244,,,6,void,void
+124554051807,METHOD_RETURN,RET,29,,BY_VALUE,253,,,6,void,void
+124554051808,METHOD_RETURN,RET,51,__ecma.Number;__ecma.String:localeCompare:<returnValue>,BY_VALUE,261,,,7,__ecma.Number,__ecma.Number
+124554051809,METHOD_RETURN,RET,35,__ecma.Number,BY_VALUE,266,,,6,__ecma.Number,__ecma.Number
+124554051810,METHOD_RETURN,RET,71,__ecma.Boolean;__ecma.Number:<operator>.greaterThan:<returnValue>,BY_VALUE,266,,,6,__ecma.Boolean,__ecma.Boolean
+124554051811,METHOD_RETURN,RET,29,__ecma.Number,BY_VALUE,267,,,6,__ecma.Number,__ecma.Number
+124554051812,METHOD_RETURN,RET,64,__ecma.Boolean;__ecma.Number:<operator>.greaterThan:<returnValue>,BY_VALUE,267,,,6,__ecma.Boolean,__ecma.Boolean
+124554051813,METHOD_RETURN,RET,32,__ecma.Number,BY_VALUE,268,,,6,__ecma.Number,__ecma.Number
+124554051814,METHOD_RETURN,RET,32,__ecma.Number,BY_VALUE,269,,,6,__ecma.Number,__ecma.Number
+124554051815,METHOD_RETURN,RET,70,__ecma.Boolean;__ecma.Number:<operator>.greaterThan:<returnValue>,BY_VALUE,269,,,6,__ecma.Boolean,__ecma.Boolean
+124554051816,METHOD_RETURN,RET,29,__ecma.Number:<operator>.addition:<returnValue>;__ecma.Number,BY_VALUE,281,,,7,__ecma.Number,__ecma.Number
+124554051817,METHOD_RETURN,RET,23,__ecma.Number:<operator>.addition:<returnValue>;__ecma.Number,BY_VALUE,284,,,7,__ecma.Number,__ecma.Number
+124554051818,METHOD_RETURN,RET,26,__ecma.Number:<operator>.addition:<returnValue>;__ecma.Number,BY_VALUE,287,,,7,__ecma.Number,__ecma.Number
+124554051819,METHOD_RETURN,RET,26,__ecma.Number:<operator>.addition:<returnValue>;__ecma.Number,BY_VALUE,290,,,7,__ecma.Number,__ecma.Number
+124554051820,METHOD_RETURN,RET,29,Promise<DoraTrendResponse>,BY_VALUE,82,,,9,Promise<DoraTrendResponse>,Promise<DoraTrendResponse>
+124554051821,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051822,METHOD_RETURN,RET,0,,BY_VALUE,6,,,4,WeeklyDoraSnapshot,WeeklyDoraSnapshot
+124554051823,METHOD_RETURN,RET,38,Promise<WeeklyDoraSnapshot>,BY_VALUE,24,,,8,Promise<WeeklyDoraSnapshot>,Promise<WeeklyDoraSnapshot>
+124554051824,METHOD_RETURN,RET,45,,BY_VALUE,149,,,6,ANY,ANY
+124554051825,METHOD_RETURN,RET,49,,BY_VALUE,138,,,7,Promise<void>,Promise<void>
+124554051826,METHOD_RETURN,RET,36,,BY_VALUE,168,,,5,ANY,ANY
+124554051827,METHOD_RETURN,RET,40,,BY_VALUE,192,,,5,Promise<void>,Promise<void>
+124554051828,METHOD_RETURN,RET,44,Promise<WeeklyDoraSnapshot[]>,BY_VALUE,203,,,7,Promise<WeeklyDoraSnapshot[]>,Promise<WeeklyDoraSnapshot[]>
+124554051829,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051830,METHOD_RETURN,RET,15,__ecma.Array.factory:<returnValue>;Promise<GitLabCommit[]>,BY_VALUE,9,,,8,Promise<GitLabCommit[]>,Promise<GitLabCommit[]>
+124554051831,METHOD_RETURN,RET,14,Promise<any>;__ecma.Null,BY_VALUE,39,,,7,Promise<any>,ANY
+124554051832,METHOD_RETURN,RET,19,Promise<number>;__ecma.Number,BY_VALUE,61,,,7,Promise<number>,ANY
+124554051833,METHOD_RETURN,RET,0,services/gitlab/gitLabCommitService:ts::program:GitLabCommitService:<init>;GitLabCommitService,BY_VALUE,5,,,4,GitLabCommitService,ANY
+124554051834,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051835,METHOD_RETURN,RET,21,Promise<GitLabIssues[]>,BY_VALUE,10,,,6,Promise<GitLabIssues[]>,Promise<GitLabIssues[]>
+124554051836,METHOD_RETURN,RET,18,Promise<number>;__ecma.Number,BY_VALUE,36,,,7,Promise<number>,ANY
+124554051837,METHOD_RETURN,RET,20,Promise<GitLabIssues[]>;__ecma.Array,BY_VALUE,58,,,8,Promise<GitLabIssues[]>,ANY
+124554051838,METHOD_RETURN,RET,20,__ecma.Array.factory:<returnValue>;Promise<GitLabIssues[]>,BY_VALUE,131,,,8,Promise<GitLabIssues[]>,Promise<GitLabIssues[]>
+124554051839,METHOD_RETURN,RET,21,__ecma.Array.factory:<returnValue>;Promise<GitLabIssues[]>,BY_VALUE,179,,,9,Promise<GitLabIssues[]>,Promise<GitLabIssues[]>
+124554051840,METHOD_RETURN,RET,18,__ecma.Array.factory:<returnValue>;Promise<GitLabIssues[]>,BY_VALUE,209,,,7,Promise<GitLabIssues[]>,Promise<GitLabIssues[]>
+124554051841,METHOD_RETURN,RET,24,Promise<GitLabIssueStateEvent[]>;__ecma.Array.factory:<returnValue>,BY_VALUE,253,,,7,Promise<GitLabIssueStateEvent[]>,Promise<GitLabIssueStateEvent[]>
+124554051842,METHOD_RETURN,RET,21,__ecma.Array.factory:<returnValue>;Promise<GitLabIssueMRReference[]>,BY_VALUE,270,,,7,Promise<GitLabIssueMRReference[]>,Promise<GitLabIssueMRReference[]>
+124554051843,METHOD_RETURN,RET,18,__ecma.Array.factory:<returnValue>;Promise<any[]>,BY_VALUE,287,,,7,Promise<any[]>,Promise<any[]>
+124554051844,METHOD_RETURN,RET,0,services/gitlab/gitLabIssueService:ts::program:GitLabIssueService:<init>;GitLabIssueService,BY_VALUE,6,,,4,GitLabIssueService,ANY
+124554051845,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051846,METHOD_RETURN,RET,28,Promise<GitLabMergeRequest[]>,BY_VALUE,9,,,6,Promise<GitLabMergeRequest[]>,Promise<GitLabMergeRequest[]>
+124554051847,METHOD_RETURN,RET,15,Promise<number>;__ecma.Number,BY_VALUE,31,,,7,Promise<number>,ANY
+124554051848,METHOD_RETURN,RET,15,Promise<GitLabMergeRequest[]>;__ecma.Array.factory:<returnValue>,BY_VALUE,56,,,7,Promise<GitLabMergeRequest[]>,Promise<GitLabMergeRequest[]>
+124554051849,METHOD_RETURN,RET,17,Promise<GitLabMergeRequest[]>;__ecma.Array.factory:<returnValue>,BY_VALUE,78,,,8,Promise<GitLabMergeRequest[]>,Promise<GitLabMergeRequest[]>
+124554051850,METHOD_RETURN,RET,17,Promise<GitLabMergeRequest[]>;__ecma.Array.factory:<returnValue>,BY_VALUE,110,,,8,Promise<GitLabMergeRequest[]>,Promise<GitLabMergeRequest[]>
+124554051851,METHOD_RETURN,RET,15,__ecma.Array.factory:<returnValue>;Promise<any[]>,BY_VALUE,136,,,7,Promise<any[]>,Promise<any[]>
+124554051852,METHOD_RETURN,RET,19,__ecma.Array.factory:<returnValue>;Promise<any[]>,BY_VALUE,158,,,7,Promise<any[]>,Promise<any[]>
+124554051853,METHOD_RETURN,RET,38,__ecma.String:toLowerCase:<returnValue>:includes:<returnValue>;__ecma.Boolean,BY_VALUE,201,,,6,__ecma.Boolean,__ecma.Boolean
+124554051854,METHOD_RETURN,RET,20,Promise<boolean>;__ecma.Boolean,BY_VALUE,181,,,7,Promise<boolean>,ANY
+124554051855,METHOD_RETURN,RET,0,services/gitlab/gitLabMRService:ts::program:GitLabMRService:<init>;GitLabMRService,BY_VALUE,5,,,4,GitLabMRService,ANY
+124554051856,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051857,METHOD_RETURN,RET,26,Promise<number>;__ecma.Number,BY_VALUE,10,,,6,Promise<number>,ANY
+124554051858,METHOD_RETURN,RET,25,{ id: ANY; name: ANY; username: ANY; accessLevel: ANY; },BY_VALUE,61,,,6,{ id: ANY; name: ANY; username: ANY; accessLevel: ANY; },{ id: ANY; name: ANY; username: ANY; accessLevel: ANY; }
+124554051859,METHOD_RETURN,RET,22,Promise<Array<{id:number; name:string; username:string; accessLevel?: __ecma.Number;}>>;__ecma.Array.factory:<returnValue>,BY_VALUE,39,,,6,Promise<Array<{id:number; name:string; username:string; accessLevel?: __ecma.Number;}>>,Promise<Array<{id:number; name:string; username:string; accessLevel?: __ecma.Number;}>>
+124554051860,METHOD_RETURN,RET,0,services/gitlab/gitLabMemberService:ts::program:GitLabMemberService:<init>;GitLabMemberService,BY_VALUE,4,,,4,GitLabMemberService,ANY
+124554051861,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051862,METHOD_RETURN,RET,21,Promise<boolean>;__ecma.Boolean,BY_VALUE,8,,,5,Promise<boolean>,ANY
+124554051863,METHOD_RETURN,RET,19,Promise<any>,BY_VALUE,22,,,5,Promise<any>,Promise<any>
+124554051864,METHOD_RETURN,RET,0,services/gitlab/gitlabAuthService:ts::program:GitLabAuthService:<init>;GitLabAuthService,BY_VALUE,4,,,4,GitLabAuthService,ANY
+124554051865,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051866,METHOD_RETURN,RET,29,void,BY_VALUE,14,,,5,void,void
+124554051867,METHOD_RETURN,RET,14,axios:AxiosInstance;__ecma.Null;AxiosInstance;AxiosInstance | __ecma.Null,BY_VALUE,34,,,5,AxiosInstance,ANY
+124554051868,METHOD_RETURN,RET,2,services/gitlab/gitlabClient:ts::program:GitLabClient:<init>;GitLabClient,BY_VALUE,9,,,4,GitLabClient,ANY
+124554051869,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051870,METHOD_RETURN,RET,17,Promise<GitLabGroup[]>,BY_VALUE,9,,,5,Promise<GitLabGroup[]>,Promise<GitLabGroup[]>
+124554051871,METHOD_RETURN,RET,17,Promise<GitLabGroup>,BY_VALUE,27,,,6,Promise<GitLabGroup>,Promise<GitLabGroup>
+124554051872,METHOD_RETURN,RET,19,Promise<string>;__ecma.String,BY_VALUE,41,,,6,Promise<string>,ANY
+124554051873,METHOD_RETURN,RET,0,services/gitlab/gitlabGroupService:ts::program:GitLabGroupService:<init>;GitLabGroupService,BY_VALUE,5,,,4,GitLabGroupService,ANY
+124554051874,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051875,METHOD_RETURN,RET,37,__ecma.Boolean,BY_VALUE,25,,,6,__ecma.Boolean,__ecma.Boolean
+124554051876,METHOD_RETURN,RET,27,Promise<GitLabMilestone[]>;__ecma.Array:filter:<returnValue>;<operator>.cast:filter:<returnValue>,BY_VALUE,9,,,6,Promise<GitLabMilestone[]>,Promise<GitLabMilestone[]>
+124554051877,METHOD_RETURN,RET,0,services/gitlab/gitlabMilestoneService:ts::program:GitLabMilestoneService:<init>;GitLabMilestoneService,BY_VALUE,4,,,4,GitLabMilestoneService,ANY
+124554051878,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051879,METHOD_RETURN,RET,20,Promise<GitLabProject[]>;__ecma.Array,BY_VALUE,9,,,5,Promise<GitLabProject[]>,ANY
+124554051880,METHOD_RETURN,RET,19,Promise<GitLabProject>,BY_VALUE,59,,,6,Promise<GitLabProject>,Promise<GitLabProject>
+124554051881,METHOD_RETURN,RET,0,services/gitlab/gitlabProjectService:ts::program:GitLabProjectService:<init>;GitLabProjectService,BY_VALUE,5,,,4,GitLabProjectService,ANY
+124554051882,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051883,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051884,METHOD_RETURN,RET,0,services/issueMetrics/issueMetricsCalculationService:ts::program:IssueMetricsCalculationService:<init>;IssueMetricsCalculationService,BY_VALUE,10,,,4,IssueMetricsCalculationService,ANY
+124554051885,METHOD_RETURN,RET,2,IssueMetricsCalculationResult,BY_VALUE,15,,,18,IssueMetricsCalculationResult,IssueMetricsCalculationResult
+124554051886,METHOD_RETURN,RET,25,,BY_VALUE,143,,,7,void,void
+124554051887,METHOD_RETURN,RET,2,{ total_resolution_hours: __ecma.Number; issues_with_resolution_time: __ecma.Number; avg_cycle_time_hours: __ecma.Number; avg_cycle_time_days: __ecma.Number; },BY_VALUE,137,,,5,{ total_resolution_hours: __ecma.Number; issues_with_resolution_time: __ecma.Number; avg_cycle_time_hours: __ecma.Number; avg_cycle_time_days: __ecma.Number; },{ total_resolution_hours: __ecma.Number; issues_with_resolution_time: __ecma.Number; avg_cycle_time_hours: __ecma.Number; avg_cycle_time_days: __ecma.Number; }
+124554051888,METHOD_RETURN,RET,2,{ issues_reopened_count: __ecma.Number; issues_checked_for_reopens: __ecma.Number; reopen_rate_percent: __ecma.Number; },BY_VALUE,187,,,6,{ issues_reopened_count: __ecma.Number; issues_checked_for_reopens: __ecma.Number; reopen_rate_percent: __ecma.Number; },{ issues_reopened_count: __ecma.Number; issues_checked_for_reopens: __ecma.Number; reopen_rate_percent: __ecma.Number; }
+124554051889,METHOD_RETURN,RET,2,{ bug_issues_count: __ecma.Number; feature_issues_count: __ecma.Number; bug_ratio_percent: __ecma.Number; },BY_VALUE,201,,,6,{ bug_issues_count: __ecma.Number; feature_issues_count: __ecma.Number; bug_ratio_percent: __ecma.Number; },{ bug_issues_count: __ecma.Number; feature_issues_count: __ecma.Number; bug_ratio_percent: __ecma.Number; }
+124554051890,METHOD_RETURN,RET,23,,BY_VALUE,221,,,6,void,void
+124554051891,METHOD_RETURN,RET,2,{ stale_issues_count: __ecma.Number; stale_issues_percent: __ecma.Number; },BY_VALUE,215,,,5,{ stale_issues_count: __ecma.Number; stale_issues_percent: __ecma.Number; },{ stale_issues_count: __ecma.Number; stale_issues_percent: __ecma.Number; }
+124554051892,METHOD_RETURN,RET,6,__ecma.Boolean,BY_VALUE,247,,,6,__ecma.Boolean,__ecma.Boolean
+124554051893,METHOD_RETURN,RET,6,__ecma.Boolean,BY_VALUE,250,,,6,__ecma.Boolean,__ecma.Boolean
+124554051894,METHOD_RETURN,RET,49,__ecma.Boolean,BY_VALUE,254,,,6,__ecma.Boolean,__ecma.Boolean
+124554051895,METHOD_RETURN,RET,27,,BY_VALUE,258,,,6,void,void
+124554051896,METHOD_RETURN,RET,2,{ critical_issues_open: __ecma.Number; blocker_issues_open: __ecma.Number; critical_avg_resolution_hours: __ecma.Number; },BY_VALUE,242,,,6,{ critical_issues_open: __ecma.Number; blocker_issues_open: __ecma.Number; critical_avg_resolution_hours: __ecma.Number; },{ critical_issues_open: __ecma.Number; blocker_issues_open: __ecma.Number; critical_avg_resolution_hours: __ecma.Number; }
+124554051897,METHOD_RETURN,RET,2,{ issues_with_mr_links: __ecma.Number; total_closed_issues_checked: __ecma.Number; issue_mr_link_rate_percent: __ecma.Number; },BY_VALUE,282,,,6,{ issues_with_mr_links: __ecma.Number; total_closed_issues_checked: __ecma.Number; issue_mr_link_rate_percent: __ecma.Number; },{ issues_with_mr_links: __ecma.Number; total_closed_issues_checked: __ecma.Number; issue_mr_link_rate_percent: __ecma.Number; }
+124554051898,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,297,,,5,__ecma.String,__ecma.String
+124554051899,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,304,,,5,__ecma.String,__ecma.String
+124554051900,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,310,,,5,__ecma.String,__ecma.String
+124554051901,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,316,,,5,__ecma.String,__ecma.String
+124554051902,METHOD_RETURN,RET,2,__ecma.Number,BY_VALUE,325,,,6,__ecma.Number,__ecma.Number
+124554051903,METHOD_RETURN,RET,46,__ecma.Boolean,BY_VALUE,340,,,6,__ecma.Boolean,__ecma.Boolean
+124554051904,METHOD_RETURN,RET,43,__ecma.Boolean,BY_VALUE,344,,,6,__ecma.Boolean,__ecma.Boolean
+124554051905,METHOD_RETURN,RET,2,__ecma.Boolean,BY_VALUE,336,,,5,__ecma.Boolean,__ecma.Boolean
+124554051906,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051907,METHOD_RETURN,RET,0,services/issueMetrics/issueMetricsDbService:ts::program:IssueMetricsDbService:<init>;IssueMetricsDbService,BY_VALUE,12,,,4,IssueMetricsDbService,ANY
+124554051908,METHOD_RETURN,RET,2,Promise<IssueHealthMetrics>,BY_VALUE,17,,,6,Promise<IssueHealthMetrics>,Promise<IssueHealthMetrics>
+124554051909,METHOD_RETURN,RET,2,Promise<IssueMetricsHistory>,BY_VALUE,112,,,5,Promise<IssueMetricsHistory>,Promise<IssueMetricsHistory>
+124554051910,METHOD_RETURN,RET,2,Promise<IssueHealthMetrics | __ecma.Null>,BY_VALUE,181,,,5,Promise<IssueHealthMetrics | __ecma.Null>,Promise<IssueHealthMetrics | __ecma.Null>
+124554051911,METHOD_RETURN,RET,2,Promise<IssueMetricsHistory[]>,BY_VALUE,201,,,6,Promise<IssueMetricsHistory[]>,Promise<IssueMetricsHistory[]>
+124554051912,METHOD_RETURN,RET,2,Promise<WeekOverWeekComparison | __ecma.Null>,BY_VALUE,224,,,5,Promise<WeekOverWeekComparison | __ecma.Null>,Promise<WeekOverWeekComparison | __ecma.Null>
+124554051913,METHOD_RETURN,RET,2,__ecma.Number,BY_VALUE,292,,,6,__ecma.Number,__ecma.Number
+124554051914,METHOD_RETURN,RET,2,Promise<IssueHealthMetrics[]>,BY_VALUE,300,,,5,Promise<IssueHealthMetrics[]>,Promise<IssueHealthMetrics[]>
+124554051915,METHOD_RETURN,RET,2,,BY_VALUE,319,,,5,Promise<void>,Promise<void>
+124554051916,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051917,METHOD_RETURN,RET,0,services/issueMetrics/issueMetricsSyncService:ts::program:IssueMetricsSyncService:<init>;IssueMetricsSyncService,BY_VALUE,9,,,4,IssueMetricsSyncService,ANY
+124554051918,METHOD_RETURN,RET,2,Promise<IssueHealthMetrics>;types/issueMetrics.types.ts::program:IssueHealthMetrics;IssueHealthMetrics,BY_VALUE,14,,,5,Promise<IssueHealthMetrics>,ANY
+124554051919,METHOD_RETURN,RET,2,Promise<{ openIssues: __ecma.Array; ... 9 more ...; mrLinkData: { ...; }; }>,BY_VALUE,65,,,5,Promise<{ openIssues: __ecma.Array; ... 9 more ...; mrLinkData: { ...; }; }>,Promise<{ openIssues: __ecma.Array; ... 9 more ...; mrLinkData: { ...; }; }>
+124554051920,METHOD_RETURN,RET,26,services/issueMetrics/issueMetricsSyncService.ts::program:setTimeout:<returnValue>;Timeout,BY_VALUE,207,,,6,Timeout,Timeout
+124554051921,METHOD_RETURN,RET,2,Promise<{ reopened: __ecma.Number; checked: __ecma.Number; }>,BY_VALUE,190,,,6,Promise<{ reopened: __ecma.Number; checked: __ecma.Number; }>,Promise<{ reopened: __ecma.Number; checked: __ecma.Number; }>
+124554051922,METHOD_RETURN,RET,26,services/issueMetrics/issueMetricsSyncService.ts::program:setTimeout:<returnValue>;Timeout,BY_VALUE,244,,,6,Timeout,Timeout
+124554051923,METHOD_RETURN,RET,2,Promise<{ withLinks: __ecma.Number; checked: __ecma.Number; }>,BY_VALUE,223,,,6,Promise<{ withLinks: __ecma.Number; checked: __ecma.Number; }>,Promise<{ withLinks: __ecma.Number; checked: __ecma.Number; }>
+124554051924,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051925,METHOD_RETURN,RET,0,services/milestoneMetrics/milestoneMetricsCalculationService:ts::program:MilestoneMetricsCalculationService:<init>;MilestoneMetricsCalculationService,BY_VALUE,6,,,4,MilestoneMetricsCalculationService,ANY
+124554051926,METHOD_RETURN,RET,53,MilestoneWithIssueCount,BY_VALUE,28,,,7,MilestoneWithIssueCount,MilestoneWithIssueCount
+124554051927,METHOD_RETURN,RET,53,MilestoneWithIssueCount,BY_VALUE,33,,,7,MilestoneWithIssueCount,MilestoneWithIssueCount
+124554051928,METHOD_RETURN,RET,6,__ecma.Number:<operator>.addition:<returnValue>;__ecma.Number,BY_VALUE,39,,,7,__ecma.Number,__ecma.Number
+124554051929,METHOD_RETURN,RET,2,MilestoneMetrics,BY_VALUE,10,,,5,MilestoneMetrics,MilestoneMetrics
+124554051930,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051931,METHOD_RETURN,RET,0,services/milestoneMetrics/milestoneMetricsDbService:ts::program:MilestoneMetricsDbService:<init>;MilestoneMetricsDbService,BY_VALUE,7,,,4,MilestoneMetricsDbService,ANY
+124554051932,METHOD_RETURN,RET,2,Promise<MilestoneMetrics>,BY_VALUE,11,,,6,Promise<MilestoneMetrics>,Promise<MilestoneMetrics>
+124554051933,METHOD_RETURN,RET,2,Promise<MilestoneMetrics | __ecma.Null>;__ecma.Null,BY_VALUE,48,,,5,Promise<MilestoneMetrics | __ecma.Null>,ANY
+124554051934,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051935,METHOD_RETURN,RET,0,,BY_VALUE,10,,,4,GitLabMilestone,GitLabMilestone
+124554051936,METHOD_RETURN,RET,0,services/milestoneMetrics/milestoneMetricsSyncService:ts::program:MilestoneMetricsSyncService:<init>;MilestoneMetricsSyncService,BY_VALUE,22,,,4,MilestoneMetricsSyncService,ANY
+124554051937,METHOD_RETURN,RET,2,Promise<MilestoneMetrics>;types/milestoneMetrics.types.ts::program:MilestoneMetrics;MilestoneMetrics,BY_VALUE,26,,,5,Promise<MilestoneMetrics>,ANY
+124554051938,METHOD_RETURN,RET,21,Promise<{ id: ANY; title: ANY; issue_count: __ecma.Number; due_date: ANY; }>,BY_VALUE,81,,,6,Promise<{ id: ANY; title: ANY; issue_count: __ecma.Number; due_date: ANY; }>,Promise<{ id: ANY; title: ANY; issue_count: __ecma.Number; due_date: ANY; }>
+124554051939,METHOD_RETURN,RET,2,Promise<{ id: ANY; title: ANY; issue_count: __ecma.Number; due_date: __ecma.Array>;__ecma.Array,BY_VALUE,77,,,6,Promise<{ id: ANY; title: ANY; issue_count: __ecma.Number; due_date: __ecma.Array>,ANY
+124554051940,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051941,METHOD_RETURN,RET,0,services/mrMetrics/mrMetricsCalculationService:ts::program:MRMetricsCalculationService:<init>;MRMetricsCalculationService,BY_VALUE,8,,,4,MRMetricsCalculationService,ANY
+124554051942,METHOD_RETURN,RET,2,{ total_open_mrs: __ecma.Number; total_merged_mrs: __ecma.Number; mrs_merged_last_7d: __ecma.Number; mrs_merged_last_30d: __ecma.Number; total_merge_time_hours: __ecma.Number; mrs_with_merge_time: __ecma.Number; avg_merge_time_hours: __ecma.Number; ... 19 more ...; stale_mrs_alert_level: __ecma.String; },BY_VALUE,13,,,16,{ total_open_mrs: __ecma.Number; total_merged_mrs: __ecma.Number; mrs_merged_last_7d: __ecma.Number; mrs_merged_last_30d: __ecma.Number; total_merge_time_hours: __ecma.Number; mrs_with_merge_time: __ecma.Number; avg_merge_time_hours: __ecma.Number; ... 19 more ...; stale_mrs_alert_level: __ecma.String; },{ total_open_mrs: __ecma.Number; total_merged_mrs: __ecma.Number; mrs_merged_last_7d: __ecma.Number; mrs_merged_last_30d: __ecma.Number; total_merge_time_hours: __ecma.Number; mrs_with_merge_time: __ecma.Number; avg_merge_time_hours: __ecma.Number; ... 19 more ...; stale_mrs_alert_level: __ecma.String; }
+124554051943,METHOD_RETURN,RET,22,,BY_VALUE,129,,,6,void,void
+124554051944,METHOD_RETURN,RET,2,{ total_merge_time_hours: __ecma.Number; mrs_with_merge_time: __ecma.Number; avg_merge_time_hours: __ecma.Number; avg_merge_time_days: __ecma.Number; },BY_VALUE,125,,,5,{ total_merge_time_hours: __ecma.Number; mrs_with_merge_time: __ecma.Number; avg_merge_time_hours: __ecma.Number; avg_merge_time_days: __ecma.Number; },{ total_merge_time_hours: __ecma.Number; mrs_with_merge_time: __ecma.Number; avg_merge_time_hours: __ecma.Number; avg_merge_time_days: __ecma.Number; }
+124554051945,METHOD_RETURN,RET,2,{ total_review_comments: __ecma.Number; mrs_checked_for_comments: __ecma.Number; avg_review_comments_per_mr: __ecma.Number; },BY_VALUE,153,,,6,{ total_review_comments: __ecma.Number; mrs_checked_for_comments: __ecma.Number; avg_review_comments_per_mr: __ecma.Number; },{ total_review_comments: __ecma.Number; mrs_checked_for_comments: __ecma.Number; avg_review_comments_per_mr: __ecma.Number; }
+124554051946,METHOD_RETURN,RET,2,{ reverted_mrs_count: __ecma.Number; mrs_checked_for_reverts: __ecma.Number; revert_rate_percent: __ecma.Number; },BY_VALUE,166,,,6,{ reverted_mrs_count: __ecma.Number; mrs_checked_for_reverts: __ecma.Number; revert_rate_percent: __ecma.Number; },{ reverted_mrs_count: __ecma.Number; mrs_checked_for_reverts: __ecma.Number; revert_rate_percent: __ecma.Number; }
+124554051947,METHOD_RETURN,RET,20,,BY_VALUE,185,,,6,void,void
+124554051948,METHOD_RETURN,RET,2,{ stale_mrs_count: __ecma.Number; stale_mrs_percent: __ecma.Number; },BY_VALUE,179,,,5,{ stale_mrs_count: __ecma.Number; stale_mrs_percent: __ecma.Number; },{ stale_mrs_count: __ecma.Number; stale_mrs_percent: __ecma.Number; }
+124554051949,METHOD_RETURN,RET,2,{ total_reviewers_count: __ecma.Number; mrs_checked_for_reviewers: __ecma.Number; avg_reviewers_per_mr: __ecma.Number; },BY_VALUE,206,,,6,{ total_reviewers_count: __ecma.Number; mrs_checked_for_reviewers: __ecma.Number; avg_reviewers_per_mr: __ecma.Number; },{ total_reviewers_count: __ecma.Number; mrs_checked_for_reviewers: __ecma.Number; avg_reviewers_per_mr: __ecma.Number; }
+124554051950,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,223,,,5,__ecma.String,__ecma.String
+124554051951,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,232,,,5,__ecma.String,__ecma.String
+124554051952,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,241,,,5,__ecma.String,__ecma.String
+124554051953,METHOD_RETURN,RET,2,__ecma.Number,BY_VALUE,250,,,6,__ecma.Number,__ecma.Number
+124554051954,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,261,,,5,__ecma.String,__ecma.String
+124554051955,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051956,METHOD_RETURN,RET,0,services/mrMetrics/mrMetricsDbService:ts::program:MRMetricsDbService:<init>;MRMetricsDbService,BY_VALUE,13,,,4,MRMetricsDbService,ANY
+124554051957,METHOD_RETURN,RET,2,Promise<MRHealthMetrics>,BY_VALUE,18,,,6,Promise<MRHealthMetrics>,Promise<MRHealthMetrics>
+124554051958,METHOD_RETURN,RET,2,Promise<MRMetricsHistory>,BY_VALUE,107,,,5,Promise<MRMetricsHistory>,Promise<MRMetricsHistory>
+124554051959,METHOD_RETURN,RET,2,Promise<MRHealthMetrics | __ecma.Null>,BY_VALUE,176,,,5,Promise<MRHealthMetrics | __ecma.Null>,Promise<MRHealthMetrics | __ecma.Null>
+124554051960,METHOD_RETURN,RET,2,Promise<MRMetricsHistory[]>,BY_VALUE,196,,,6,Promise<MRMetricsHistory[]>,Promise<MRMetricsHistory[]>
+124554051961,METHOD_RETURN,RET,2,Promise<MRWeekOverWeekComparison | __ecma.Null>,BY_VALUE,219,,,5,Promise<MRWeekOverWeekComparison | __ecma.Null>,Promise<MRWeekOverWeekComparison | __ecma.Null>
+124554051962,METHOD_RETURN,RET,2,__ecma.Number,BY_VALUE,277,,,6,__ecma.Number,__ecma.Number
+124554051963,METHOD_RETURN,RET,2,Promise<MRHealthMetrics[]>,BY_VALUE,285,,,5,Promise<MRHealthMetrics[]>,Promise<MRHealthMetrics[]>
+124554051964,METHOD_RETURN,RET,2,,BY_VALUE,304,,,5,Promise<void>,Promise<void>
+124554051965,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051966,METHOD_RETURN,RET,0,services/mrMetrics/mrMetricsSyncService:ts::program:MRMetricsSyncService:<init>;MRMetricsSyncService,BY_VALUE,10,,,4,MRMetricsSyncService,ANY
+124554051967,METHOD_RETURN,RET,2,Promise<MRHealthMetrics>;MRHealthMetrics;types/mrMetrics.types.ts::program:MRHealthMetrics,BY_VALUE,15,,,5,Promise<MRHealthMetrics>,ANY
+124554051968,METHOD_RETURN,RET,2,Promise<{ openMRs: __ecma.Array; ... 6 more ...; reviewersData: { ...; }; }>,BY_VALUE,64,,,5,Promise<{ openMRs: __ecma.Array; ... 6 more ...; reviewersData: { ...; }; }>,Promise<{ openMRs: __ecma.Array; ... 6 more ...; reviewersData: { ...; }; }>
+124554051969,METHOD_RETURN,RET,44,__ecma.Boolean,BY_VALUE,160,,,6,__ecma.Boolean,__ecma.Boolean
+124554051970,METHOD_RETURN,RET,26,services/mrMetrics/mrMetricsSyncService.ts::program:setTimeout:<returnValue>;Timeout,BY_VALUE,164,,,6,Timeout,Timeout
+124554051971,METHOD_RETURN,RET,2,Promise<{ totalComments: __ecma.Number; checked: __ecma.Number; }>,BY_VALUE,150,,,6,Promise<{ totalComments: __ecma.Number; checked: __ecma.Number; }>,Promise<{ totalComments: __ecma.Number; checked: __ecma.Number; }>
+124554051972,METHOD_RETURN,RET,45,__ecma.String:toLowerCase:<returnValue>:includes:<returnValue>;__ecma.Boolean,BY_VALUE,191,,,6,__ecma.Boolean,__ecma.Boolean
+124554051973,METHOD_RETURN,RET,2,{ reverted: __ecma.Number; checked: __ecma.Number; },BY_VALUE,180,,,5,{ reverted: __ecma.Number; checked: __ecma.Number; },{ reverted: __ecma.Number; checked: __ecma.Number; }
+124554051974,METHOD_RETURN,RET,2,{ totalReviewers: __ecma.Number; checked: __ecma.Number; },BY_VALUE,209,,,5,{ totalReviewers: __ecma.Number; checked: __ecma.Number; },{ totalReviewers: __ecma.Number; checked: __ecma.Number; }
+124554051975,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051976,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051977,METHOD_RETURN,RET,0,,BY_VALUE,10,,,4,EnrichedProject,EnrichedProject
+124554051978,METHOD_RETURN,RET,25,Promise<string>;services/gitlab/gitlabGroupService.ts::program:GitLabGroupService:buildGroupPath:<returnValue>;GitLabGroupService:buildGroupPath:<returnValue>,BY_VALUE,39,,,6,Promise<string>,Promise<string>
+124554051979,METHOD_RETURN,RET,27,Promise<number>;__ecma.Number,BY_VALUE,49,,,6,Promise<number>,ANY
+124554051980,METHOD_RETURN,RET,24,Promise<number>;__ecma.Number,BY_VALUE,62,,,6,Promise<number>,ANY
+124554051981,METHOD_RETURN,RET,31,Promise<number>;__ecma.Number,BY_VALUE,72,,,6,Promise<number>,ANY
+124554051982,METHOD_RETURN,RET,18,Promise<EnrichedProject>,BY_VALUE,85,,,6,Promise<EnrichedProject>,Promise<EnrichedProject>
+124554051983,METHOD_RETURN,RET,42,Promise<EnrichedProject>,BY_VALUE,145,,,6,Promise<EnrichedProject>,Promise<EnrichedProject>
+124554051984,METHOD_RETURN,RET,19,Promise.all:<operator>.await:<returnValue>;Promise<EnrichedProject[]>,BY_VALUE,144,,,6,Promise<EnrichedProject[]>,Promise<EnrichedProject[]>
+124554051985,METHOD_RETURN,RET,0,services/project/projectEnrichmentService:ts::program:ProjectEnrichmentService:<init>;ProjectEnrichmentService,BY_VALUE,35,,,4,ProjectEnrichmentService,ANY
+124554051986,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051987,METHOD_RETURN,RET,26,,BY_VALUE,12,,,5,ANY,ANY
+124554051988,METHOD_RETURN,RET,30,,BY_VALUE,23,,,5,ANY,ANY
+124554051989,METHOD_RETURN,RET,26,__ecma.Null,BY_VALUE,33,,,6,ANY,__ecma.Null
+124554051990,METHOD_RETURN,RET,1,,BY_VALUE,6,,,4,ANY,ANY
+124554051991,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554051992,METHOD_RETURN,RET,0,,BY_VALUE,11,,,4,SnapshotData,SnapshotData
+124554051993,METHOD_RETURN,RET,31,Promise<number>;__ecma.Number,BY_VALUE,33,,,6,Promise<number>,ANY
+124554051994,METHOD_RETURN,RET,28,Promise<number>;__ecma.Number,BY_VALUE,46,,,6,Promise<number>,ANY
+124554051995,METHOD_RETURN,RET,47,__ecma.Boolean,BY_VALUE,63,,,6,__ecma.Boolean,__ecma.Boolean
+124554051996,METHOD_RETURN,RET,35,Promise<number>;__ecma.Number,BY_VALUE,59,,,6,Promise<number>,ANY
+124554051997,METHOD_RETURN,RET,31,Promise<SnapshotData>,BY_VALUE,74,,,6,Promise<SnapshotData>,Promise<SnapshotData>
+124554051998,METHOD_RETURN,RET,19,,BY_VALUE,122,,,6,Promise<void>,Promise<void>
+124554051999,METHOD_RETURN,RET,30,Promise<void>,BY_VALUE,137,,,5,Promise<void>,Promise<void>
+124554052000,METHOD_RETURN,RET,0,services/project/projectRefreshService:ts::program:ProjectRefreshService:<init>;ProjectRefreshService,BY_VALUE,27,,,4,ProjectRefreshService,ANY
+124554052001,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052002,METHOD_RETURN,RET,26,services/project/projectSyncService.ts::program:setTimeout:<returnValue>;Timeout,BY_VALUE,57,,,6,Timeout,Timeout
+124554052003,METHOD_RETURN,RET,20,Promise<{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }[]>;ProjectTransformService:toApiResponseList:<returnValue>;services/project/projectTransformService.ts::program:ProjectTransformService:toApiResponseList:<returnValue>,BY_VALUE,15,,,5,Promise<{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }[]>,Promise<{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }[]>
+124554052004,METHOD_RETURN,RET,88,__ecma.Array.factory:<returnValue>;__ecma.Array,BY_VALUE,89,,,5,__ecma.Array,__ecma.Array
+124554052005,METHOD_RETURN,RET,43,__ecma.Boolean,BY_VALUE,115,,,6,__ecma.Boolean,__ecma.Boolean
+124554052006,METHOD_RETURN,RET,16,Promise<{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }>;ProjectTransformService:toApiResponse:<returnValue>;services/project/projectTransformService.ts::program:ProjectTransformService:toApiResponse:<returnValue>,BY_VALUE,84,,,6,Promise<{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }>,Promise<{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }>
+124554052007,METHOD_RETURN,RET,0,services/project/projectSyncService:ts::program:ProjectSyncService:<init>;ProjectSyncService,BY_VALUE,9,,,4,ProjectSyncService,ANY
+124554052008,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052009,METHOD_RETURN,RET,0,,BY_VALUE,2,,,4,DbProject,DbProject
+124554052010,METHOD_RETURN,RET,18,{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; },BY_VALUE,38,,,6,{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; },{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }
+124554052011,METHOD_RETURN,RET,26,{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; },BY_VALUE,75,,,6,{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; },{ id: __ecma.Number; name: __ecma.String; description: __ecma.String | ANY; web_url: __ecma.String | ANY; lastActivityAt: __ecma.String | ANY; visibility: __ecma.String | ANY; membersCount: __ecma.Number; ... 16 more ...; sonarMaintainabilityBlocker: __ecma.Number; }
+124554052012,METHOD_RETURN,RET,22,__ecma.Array;__ecma.Array:map:<returnValue>,BY_VALUE,74,,,6,__ecma.Array,__ecma.Array
+124554052013,METHOD_RETURN,RET,0,services/project/projectTransformService:ts::program:ProjectTransformService:<init>;ProjectTransformService,BY_VALUE,34,,,4,ProjectTransformService,ANY
+124554052014,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052015,METHOD_RETURN,RET,2,services/sonarMaintainability/sonarMaintainabilityApiService:ts::program:SonarMaintainabilityApiService:<init>;SonarMaintainabilityApiService,BY_VALUE,9,,,6,SonarMaintainabilityApiService,ANY
+124554052016,METHOD_RETURN,RET,2,void,BY_VALUE,24,,,4,void,void
+124554052017,METHOD_RETURN,RET,2,{ Authorization: __ecma.String; },BY_VALUE,38,,,4,{ Authorization: __ecma.String; },{ Authorization: __ecma.String; }
+124554052018,METHOD_RETURN,RET,2,Promise<SonarQubeComponentMeasures>,BY_VALUE,47,,,5,Promise<SonarQubeComponentMeasures>,Promise<SonarQubeComponentMeasures>
+124554052019,METHOD_RETURN,RET,2,Promise<number>,BY_VALUE,86,,,7,Promise<number>,Promise<number>
+124554052020,METHOD_RETURN,RET,2,Promise<any>;__ecma.Null,BY_VALUE,107,,,5,Promise<any>,ANY
+124554052021,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052022,METHOD_RETURN,RET,7,,BY_VALUE,6,,,4,ANY,ANY
+124554052023,METHOD_RETURN,RET,36,__ecma.Boolean,BY_VALUE,20,,,6,__ecma.Boolean,__ecma.Boolean
+124554052024,METHOD_RETURN,RET,23,parseFloat:<operator>.logicalOr:<returnValue>;__ecma.Number,BY_VALUE,19,,,6,__ecma.Number,__ecma.Number
+124554052025,METHOD_RETURN,RET,2,SonarQubeMaintainabilityCalculationResult;{ maintainability_high: __ecma.Number; maintainability_blocker: __ecma.Number; technical_debt_ratio: __ecma.Number; maintainability_rating: __ecma.String; code_smells_total: __ecma.Number; code_smells_new: __ecma.Number; cyclomatic_complexity: __ecma.Number; cognitive_complexity: __ecma.Number; duplicated_code_percentage: __ecma.Number; duplicated_lines_new: __ecma.Number; },BY_VALUE,11,,,7,SonarQubeMaintainabilityCalculationResult,ANY
+124554052026,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,61,,,5,__ecma.String,__ecma.String
+124554052027,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052028,METHOD_RETURN,RET,7,,BY_VALUE,9,,,4,ANY,ANY
+124554052029,METHOD_RETURN,RET,2,,BY_VALUE,14,,,6,Promise<void>,Promise<void>
+124554052030,METHOD_RETURN,RET,2,,BY_VALUE,68,,,6,Promise<void>,Promise<void>
+124554052031,METHOD_RETURN,RET,2,Promise<SonarQubeMaintainabilityMetrics | __ecma.Null>,BY_VALUE,120,,,5,Promise<SonarQubeMaintainabilityMetrics | __ecma.Null>,Promise<SonarQubeMaintainabilityMetrics | __ecma.Null>
+124554052032,METHOD_RETURN,RET,2,Promise<SonarQubeMaintainabilityHistory[]>,BY_VALUE,142,,,6,Promise<SonarQubeMaintainabilityHistory[]>,Promise<SonarQubeMaintainabilityHistory[]>
+124554052033,METHOD_RETURN,RET,2,Promise<SonarQubeMaintainabilityMetrics[]>,BY_VALUE,164,,,5,Promise<SonarQubeMaintainabilityMetrics[]>,Promise<SonarQubeMaintainabilityMetrics[]>
+124554052034,METHOD_RETURN,RET,2,,BY_VALUE,185,,,5,Promise<void>,Promise<void>
+124554052035,METHOD_RETURN,RET,2,__ecma.Number,BY_VALUE,201,,,5,__ecma.Number,__ecma.Number
+124554052036,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052037,METHOD_RETURN,RET,2,services/sonarMaintainability/sonarMaintainabilitySyncService:ts::program:SonarMaintainabilitySyncService:<init>;SonarMaintainabilitySyncService,BY_VALUE,11,,,4,SonarMaintainabilitySyncService,ANY
+124554052038,METHOD_RETURN,RET,2,,BY_VALUE,20,,,5,Promise<void>,Promise<void>
+124554052039,METHOD_RETURN,RET,2,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; highCount: __ecma.Number; blockerCount: __ecma.Number; }>,BY_VALUE,70,,,5,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; highCount: __ecma.Number; blockerCount: __ecma.Number; }>,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; highCount: __ecma.Number; blockerCount: __ecma.Number; }>
+124554052040,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052041,METHOD_RETURN,RET,2,services/sonarReliability/sonarReliabilityApiService:ts::program:SonarReliabilityApiService:<init>;SonarReliabilityApiService,BY_VALUE,9,,,6,SonarReliabilityApiService,ANY
+124554052042,METHOD_RETURN,RET,2,void,BY_VALUE,14,,,4,void,void
+124554052043,METHOD_RETURN,RET,2,{ Authorization: __ecma.String; },BY_VALUE,28,,,4,{ Authorization: __ecma.String; },{ Authorization: __ecma.String; }
+124554052044,METHOD_RETURN,RET,2,Promise<SonarQubeComponentMeasures>,BY_VALUE,37,,,5,Promise<SonarQubeComponentMeasures>,Promise<SonarQubeComponentMeasures>
+124554052045,METHOD_RETURN,RET,2,Promise<number>,BY_VALUE,67,,,6,Promise<number>,Promise<number>
+124554052046,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052047,METHOD_RETURN,RET,7,,BY_VALUE,3,,,4,ANY,ANY
+124554052048,METHOD_RETURN,RET,36,__ecma.Boolean,BY_VALUE,17,,,6,__ecma.Boolean,__ecma.Boolean
+124554052049,METHOD_RETURN,RET,23,parseFloat:<operator>.logicalOr:<returnValue>;__ecma.Number,BY_VALUE,16,,,6,__ecma.Number,__ecma.Number
+124554052050,METHOD_RETURN,RET,2,SonarQubeReliabilityCalculationResult;{ bugs_total: __ecma.Number; bugs_critical: __ecma.Number; bugs_blocker: __ecma.Number; bugs_new: __ecma.Number; reliability_rating: __ecma.String; reliability_remediation_effort: __ecma.Number; },BY_VALUE,8,,,7,SonarQubeReliabilityCalculationResult,ANY
+124554052051,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,54,,,5,__ecma.String,__ecma.String
+124554052052,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052053,METHOD_RETURN,RET,7,,BY_VALUE,9,,,4,ANY,ANY
+124554052054,METHOD_RETURN,RET,2,,BY_VALUE,14,,,6,Promise<void>,Promise<void>
+124554052055,METHOD_RETURN,RET,2,,BY_VALUE,60,,,6,Promise<void>,Promise<void>
+124554052056,METHOD_RETURN,RET,2,Promise<SonarQubeReliabilityMetrics | __ecma.Null>,BY_VALUE,102,,,5,Promise<SonarQubeReliabilityMetrics | __ecma.Null>,Promise<SonarQubeReliabilityMetrics | __ecma.Null>
+124554052057,METHOD_RETURN,RET,2,Promise<SonarQubeReliabilityHistory[]>,BY_VALUE,124,,,6,Promise<SonarQubeReliabilityHistory[]>,Promise<SonarQubeReliabilityHistory[]>
+124554052058,METHOD_RETURN,RET,2,,BY_VALUE,146,,,5,Promise<void>,Promise<void>
+124554052059,METHOD_RETURN,RET,2,__ecma.Number,BY_VALUE,162,,,5,__ecma.Number,__ecma.Number
+124554052060,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052061,METHOD_RETURN,RET,2,services/sonarReliability/sonarReliabilitySyncService:ts::program:SonarReliabilitySyncService:<init>;SonarReliabilitySyncService,BY_VALUE,11,,,4,SonarReliabilitySyncService,ANY
+124554052062,METHOD_RETURN,RET,2,,BY_VALUE,20,,,5,Promise<void>,Promise<void>
+124554052063,METHOD_RETURN,RET,2,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; criticalCount: __ecma.Number; blockerCount: __ecma.Number; }>,BY_VALUE,58,,,5,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; criticalCount: __ecma.Number; blockerCount: __ecma.Number; }>,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; criticalCount: __ecma.Number; blockerCount: __ecma.Number; }>
+124554052064,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052065,METHOD_RETURN,RET,2,services/sonarSecurity/sonarSecurityApiService:ts::program:SonarSecurityApiService:<init>;SonarSecurityApiService,BY_VALUE,9,,,6,SonarSecurityApiService,ANY
+124554052066,METHOD_RETURN,RET,2,void,BY_VALUE,14,,,4,void,void
+124554052067,METHOD_RETURN,RET,2,{ Authorization: __ecma.String; },BY_VALUE,28,,,4,{ Authorization: __ecma.String; },{ Authorization: __ecma.String; }
+124554052068,METHOD_RETURN,RET,2,Promise<SonarQubeComponentMeasures>,BY_VALUE,37,,,5,Promise<SonarQubeComponentMeasures>,Promise<SonarQubeComponentMeasures>
+124554052069,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052070,METHOD_RETURN,RET,7,,BY_VALUE,3,,,4,ANY,ANY
+124554052071,METHOD_RETURN,RET,36,__ecma.Boolean,BY_VALUE,15,,,6,__ecma.Boolean,__ecma.Boolean
+124554052072,METHOD_RETURN,RET,23,parseFloat:<operator>.logicalOr:<returnValue>;__ecma.Number,BY_VALUE,14,,,6,__ecma.Number,__ecma.Number
+124554052073,METHOD_RETURN,RET,2,SonarQubeSecurityCalculationResult;{ vulnerabilities_total: __ecma.Number; vulnerabilities_new: __ecma.Number; security_rating: __ecma.String; security_hotspots_total: __ecma.Number; security_hotspots_reviewed: __ecma.Number; security_review_rating: __ecma.String; security_remediation_effort: __ecma.Number; },BY_VALUE,8,,,5,SonarQubeSecurityCalculationResult,ANY
+124554052074,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,57,,,5,__ecma.String,__ecma.String
+124554052075,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052076,METHOD_RETURN,RET,7,,BY_VALUE,9,,,4,ANY,ANY
+124554052077,METHOD_RETURN,RET,2,,BY_VALUE,14,,,6,Promise<void>,Promise<void>
+124554052078,METHOD_RETURN,RET,2,,BY_VALUE,65,,,6,Promise<void>,Promise<void>
+124554052079,METHOD_RETURN,RET,2,Promise<SonarQubeSecurityMetrics | __ecma.Null>,BY_VALUE,110,,,5,Promise<SonarQubeSecurityMetrics | __ecma.Null>,Promise<SonarQubeSecurityMetrics | __ecma.Null>
+124554052080,METHOD_RETURN,RET,2,Promise<SonarQubeSecurityHistory[]>,BY_VALUE,132,,,6,Promise<SonarQubeSecurityHistory[]>,Promise<SonarQubeSecurityHistory[]>
+124554052081,METHOD_RETURN,RET,2,,BY_VALUE,154,,,5,Promise<void>,Promise<void>
+124554052082,METHOD_RETURN,RET,2,__ecma.Number,BY_VALUE,170,,,5,__ecma.Number,__ecma.Number
+124554052083,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052084,METHOD_RETURN,RET,2,services/sonarSecurity/sonarSecuritySyncService:ts::program:SonarSecuritySyncService:<init>;SonarSecuritySyncService,BY_VALUE,11,,,4,SonarSecuritySyncService,ANY
+124554052085,METHOD_RETURN,RET,2,,BY_VALUE,20,,,5,Promise<void>,Promise<void>
+124554052086,METHOD_RETURN,RET,2,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; }>,BY_VALUE,54,,,5,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; }>,Promise<{ measures: { key: __ecma.String; name: __ecma.String; qualifier: __ecma.String; measures: __ecma.Array; }; }>
+124554052087,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052088,METHOD_RETURN,RET,2,__ecma.String,BY_VALUE,83,,,5,__ecma.String,__ecma.String
+124554052089,METHOD_RETURN,RET,6,__ecma.Boolean,BY_VALUE,94,,,6,__ecma.Boolean,__ecma.Boolean
+124554052090,METHOD_RETURN,RET,28,__ecma.Boolean,BY_VALUE,99,,,6,__ecma.Boolean,__ecma.Boolean
+124554052091,METHOD_RETURN,RET,7,,BY_VALUE,4,,,4,ANY,ANY
+124554052092,METHOD_RETURN,RET,7,Promise<string | __ecma.Null>,BY_VALUE,118,,,5,Promise<string | __ecma.Null>,Promise<string | __ecma.Null>
+124554052093,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052094,METHOD_RETURN,RET,7,,BY_VALUE,3,,,4,ANY,ANY
+124554052095,METHOD_RETURN,RET,2,services/sonarqube/sonarQubeService:ts::program:SonarQubeService:<init>;SonarQubeService,BY_VALUE,17,,,6,SonarQubeService,ANY
+124554052096,METHOD_RETURN,RET,2,{ Authorization: __ecma.String; },BY_VALUE,33,,,4,{ Authorization: __ecma.String; },{ Authorization: __ecma.String; }
+124554052097,METHOD_RETURN,RET,23,Promise<any>,BY_VALUE,48,,,7,Promise<any>,Promise<any>
+124554052098,METHOD_RETURN,RET,2,Promise<SonarIssueCounts>;{ security_high: ANY; security_blocker: ANY; reliability_high: ANY; reliability_blocker: ANY; maintainability_high: ANY; maintainability_blocker: ANY; },BY_VALUE,44,,,5,Promise<SonarIssueCounts>,ANY
+124554052099,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052100,METHOD_RETURN,RET,7,,BY_VALUE,10,,,4,ANY,ANY
+124554052101,METHOD_RETURN,RET,7,,BY_VALUE,47,,,4,ANY,ANY
+124554052102,METHOD_RETURN,RET,7,,BY_VALUE,65,,,4,ANY,ANY
+124554052103,METHOD_RETURN,RET,7,,BY_VALUE,83,,,4,ANY,ANY
+124554052104,METHOD_RETURN,RET,7,,BY_VALUE,94,,,4,ANY,ANY
+124554052105,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052106,METHOD_RETURN,RET,7,,BY_VALUE,3,,,4,ANY,ANY
+124554052107,METHOD_RETURN,RET,7,,BY_VALUE,15,,,4,ANY,ANY
+124554052108,METHOD_RETURN,RET,7,,BY_VALUE,23,,,4,ANY,ANY
+124554052109,METHOD_RETURN,RET,7,,BY_VALUE,35,,,4,ANY,ANY
+124554052110,METHOD_RETURN,RET,7,,BY_VALUE,42,,,4,ANY,ANY
+124554052111,METHOD_RETURN,RET,7,,BY_VALUE,55,,,4,ANY,ANY
+124554052112,METHOD_RETURN,RET,7,,BY_VALUE,63,,,4,ANY,ANY
+124554052113,METHOD_RETURN,RET,7,,BY_VALUE,76,,,4,ANY,ANY
+124554052114,METHOD_RETURN,RET,7,,BY_VALUE,85,,,4,ANY,ANY
+124554052115,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052116,METHOD_RETURN,RET,7,,BY_VALUE,2,,,4,ANY,ANY
+124554052117,METHOD_RETURN,RET,7,,BY_VALUE,23,,,4,ANY,ANY
+124554052118,METHOD_RETURN,RET,7,,BY_VALUE,32,,,4,ANY,ANY
+124554052119,METHOD_RETURN,RET,7,,BY_VALUE,41,,,4,ANY,ANY
+124554052120,METHOD_RETURN,RET,7,,BY_VALUE,55,,,4,ANY,ANY
+124554052121,METHOD_RETURN,RET,7,,BY_VALUE,67,,,4,ANY,ANY
+124554052122,METHOD_RETURN,RET,7,,BY_VALUE,80,,,4,ANY,ANY
+124554052123,METHOD_RETURN,RET,7,,BY_VALUE,96,,,4,ANY,ANY
+124554052124,METHOD_RETURN,RET,7,,BY_VALUE,115,,,4,ANY,ANY
+124554052125,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052126,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052127,METHOD_RETURN,RET,7,,BY_VALUE,3,,,4,ANY,ANY
+124554052128,METHOD_RETURN,RET,7,,BY_VALUE,52,,,4,ANY,ANY
+124554052129,METHOD_RETURN,RET,7,,BY_VALUE,72,,,4,ANY,ANY
+124554052130,METHOD_RETURN,RET,7,,BY_VALUE,85,,,4,ANY,ANY
+124554052131,METHOD_RETURN,RET,7,,BY_VALUE,97,,,4,ANY,ANY
+124554052132,METHOD_RETURN,RET,7,,BY_VALUE,108,,,4,ANY,ANY
+124554052133,METHOD_RETURN,RET,7,,BY_VALUE,121,,,4,ANY,ANY
+124554052134,METHOD_RETURN,RET,7,,BY_VALUE,163,,,4,ANY,ANY
+124554052135,METHOD_RETURN,RET,7,,BY_VALUE,173,,,4,ANY,ANY
+124554052136,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052137,METHOD_RETURN,RET,7,,BY_VALUE,4,,,4,ANY,ANY
+124554052138,METHOD_RETURN,RET,7,,BY_VALUE,14,,,4,ANY,ANY
+124554052139,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052140,METHOD_RETURN,RET,7,,BY_VALUE,10,,,4,ANY,ANY
+124554052141,METHOD_RETURN,RET,7,,BY_VALUE,74,,,4,ANY,ANY
+124554052142,METHOD_RETURN,RET,7,,BY_VALUE,97,,,4,ANY,ANY
+124554052143,METHOD_RETURN,RET,7,,BY_VALUE,108,,,4,ANY,ANY
+124554052144,METHOD_RETURN,RET,7,,BY_VALUE,127,,,4,ANY,ANY
+124554052145,METHOD_RETURN,RET,7,,BY_VALUE,138,,,4,ANY,ANY
+124554052146,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052147,METHOD_RETURN,RET,7,,BY_VALUE,2,,,4,ANY,ANY
+124554052148,METHOD_RETURN,RET,7,,BY_VALUE,18,,,4,ANY,ANY
+124554052149,METHOD_RETURN,RET,7,,BY_VALUE,26,,,4,ANY,ANY
+124554052150,METHOD_RETURN,RET,7,,BY_VALUE,38,,,4,ANY,ANY
+124554052151,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052152,METHOD_RETURN,RET,7,,BY_VALUE,1,,,4,ANY,ANY
+124554052153,METHOD_RETURN,RET,7,,BY_VALUE,16,,,4,ANY,ANY
+124554052154,METHOD_RETURN,RET,7,,BY_VALUE,27,,,4,ANY,ANY
+124554052155,METHOD_RETURN,RET,7,,BY_VALUE,41,,,4,ANY,ANY
+124554052156,METHOD_RETURN,RET,7,,BY_VALUE,52,,,4,ANY,ANY
+124554052157,METHOD_RETURN,RET,7,,BY_VALUE,62,,,4,ANY,ANY
+124554052158,METHOD_RETURN,RET,7,,BY_VALUE,73,,,4,ANY,ANY
+124554052159,METHOD_RETURN,RET,7,,BY_VALUE,80,,,4,ANY,ANY
+124554052160,METHOD_RETURN,RET,7,,BY_VALUE,90,,,4,ANY,ANY
+124554052161,METHOD_RETURN,RET,7,,BY_VALUE,102,,,4,ANY,ANY
+124554052162,METHOD_RETURN,RET,7,,BY_VALUE,110,,,4,ANY,ANY
+124554052163,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052164,METHOD_RETURN,RET,7,__ecma.Number,BY_VALUE,7,,,5,__ecma.Number,__ecma.Number
+124554052165,METHOD_RETURN,RET,7,__ecma.Number,BY_VALUE,61,,,5,__ecma.Number,__ecma.Number
+124554052166,METHOD_RETURN,RET,7,__ecma.Number,BY_VALUE,115,,,5,__ecma.Number,__ecma.Number
+124554052167,METHOD_RETURN,RET,7,__ecma.Number,BY_VALUE,160,,,5,__ecma.Number,__ecma.Number
+124554052168,METHOD_RETURN,RET,7,__ecma.Number,BY_VALUE,192,,,5,__ecma.Number,__ecma.Number
+124554052169,METHOD_RETURN,RET,7,__ecma.Number,BY_VALUE,246,,,5,__ecma.Number,__ecma.Number
+124554052170,METHOD_RETURN,RET,0,,BY_VALUE,1,,,4,,ANY
+124554052171,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052172,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052173,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052174,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052175,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052176,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052177,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052178,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052179,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052180,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052181,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052182,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052183,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052184,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052185,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052186,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052187,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052188,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052189,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052190,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052191,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052192,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052193,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052194,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052195,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052196,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052197,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052198,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052199,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052200,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052201,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052202,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052203,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052204,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052205,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052206,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052207,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052208,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052209,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052210,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052211,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052212,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052213,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052214,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052215,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052216,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052217,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052218,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052219,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052220,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052221,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052222,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052223,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052224,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052225,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052226,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052227,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052228,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052229,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052230,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052231,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052232,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052233,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052234,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052235,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052236,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052237,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052238,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052239,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052240,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052241,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052242,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052243,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052244,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052245,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052246,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052247,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052248,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052249,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052250,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052251,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052252,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052253,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052254,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052255,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052256,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052257,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052258,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052259,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052260,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052261,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052262,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052263,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052264,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052265,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052266,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052267,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052268,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052269,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052270,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052271,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052272,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052273,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052274,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052275,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052276,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052277,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052278,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052279,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052280,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052281,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052282,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052283,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052284,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052285,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052286,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052287,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052288,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052289,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052290,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052291,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052292,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052293,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052294,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052295,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052296,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052297,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052298,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052299,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052300,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052301,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052302,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052303,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052304,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052305,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052306,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052307,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052308,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052309,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052310,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052311,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052312,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052313,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052314,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052315,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052316,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052317,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052318,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052319,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052320,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052321,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052322,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052323,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052324,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052325,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052326,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052327,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052328,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052329,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052330,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052331,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052332,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052333,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052334,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052335,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052336,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052337,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052338,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052339,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052340,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052341,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052342,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052343,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052344,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052345,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052346,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052347,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052348,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052349,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052350,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052351,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052352,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052353,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052354,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052355,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052356,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052357,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052358,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052359,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052360,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052361,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052362,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052363,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052364,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052365,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052366,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052367,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052368,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052369,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052370,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052371,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052372,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052373,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052374,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052375,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052376,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052377,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052378,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052379,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052380,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052381,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052382,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052383,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052384,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052385,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052386,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052387,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052388,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052389,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052390,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052391,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052392,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052393,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052394,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052395,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052396,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052397,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052398,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052399,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052400,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052401,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052402,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052403,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052404,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052405,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052406,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052407,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052408,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052409,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052410,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052411,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052412,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052413,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052414,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052415,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052416,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052417,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052418,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052419,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052420,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052421,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052422,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052423,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052424,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052425,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052426,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052427,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052428,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052429,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052430,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052431,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052432,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052433,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052434,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052435,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052436,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052437,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052438,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052439,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052440,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052441,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052442,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052443,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052444,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052445,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052446,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052447,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052448,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052449,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052450,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052451,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052452,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052453,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052454,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052455,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052456,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052457,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052458,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052459,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052460,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052461,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052462,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052463,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052464,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052465,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052466,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052467,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052468,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052469,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052470,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052471,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052472,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052473,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052474,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052475,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052476,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052477,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052478,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052479,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052480,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052481,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052482,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052483,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052484,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052485,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052486,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052487,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052488,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052489,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052490,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052491,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052492,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052493,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052494,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052495,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052496,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052497,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052498,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052499,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052500,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052501,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052502,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052503,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052504,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052505,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052506,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052507,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052508,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052509,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052510,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052511,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052512,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052513,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052514,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052515,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052516,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052517,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052518,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052519,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052520,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052521,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052522,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052523,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052524,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052525,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052526,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052527,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052528,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052529,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052530,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052531,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052532,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052533,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052534,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052535,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052536,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052537,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052538,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052539,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052540,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052541,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052542,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052543,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052544,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052545,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052546,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052547,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052548,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052549,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052550,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052551,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052552,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052553,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052554,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052555,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052556,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052557,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052558,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
+124554052559,METHOD_RETURN,RET,,,BY_VALUE,,,,2,,ANY
